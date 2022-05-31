@@ -1,0 +1,66 @@
+<ion-content [scrollY]="false">
+
+  <div style="width: 100vw;height: 100vh;">
+
+    <div
+      style="background: linear-gradient(135deg, rgba(198,152,80,1) 30%, rgba(161,118,53,1) 30%, rgba(204,150,68,1) 82%, rgba(193,137,52,1) 82%);
+      height: 150px; padding: 40px 20px 10px 20px; display: flex;align-items: center; justify-content: space-between; border-radius: 0 0 10px 10px;box-shadow: 0 3px 5px #adadad;">
+
+      <div style="display: flex;align-items: center;">
+
+        <div style="padding-right: 15px;">
+
+          <div style="font-size: 11px;font-weight: 400;color: white;">Name:</div>
+          <div style="margin-bottom: 10px;font-size: 15px;font-weight: 500;color: white;">
+            Joseph Joseph Joseph Joseph
+          </div>
+
+          <div style="font-size: 11px;font-weight: 400;color: white;">Position:</div>
+          <div style="font-size: 15px;font-weight: 500;color: white;">
+            Tech
+          </div>
+
+        </div>
+
+      </div>
+
+      <img
+        style="min-height: 70px;min-width: 70px;max-height: 60px;max-width: 60px;object-fit: cover;border-radius: 50px;border: 2px solid white;"
+        src="https://cdn.britannica.com/92/215392-050-96A4BC1D/Australian-actor-Chris-Hemsworth-2019.jpg" alt="">
+
+      <!-- <div style="display: flex;color: white;">
+        <ion-icon style="font-size:20px" name="log-out-outline"></ion-icon>
+        Logout
+      </div> -->
+
+    </div>
+
+    <div
+      style="height: 50px;margin-top: 50px;display: flex;align-items: center;padding-left: 20px;justify-content: space-between;box-shadow: 0 2px 4px #adadad;
+    background: linear-gradient(195deg, rgba(218,172,104,1) 7%, rgba(205,162,93,1) 28%, rgba(192,148,79,1) 66%, rgba(177,132,64,1) 100%, rgba(161,118,53,1) 100%);">
+      <div style="display: flex;">
+        <ion-icon style="font-size:20px;color: white;margin-right: 15px;" name="create-outline"></ion-icon>
+        <div style="color: white;font-size: 15px;font-weight: 500;margin-right: 15px;">|</div>
+        <div style="color: white;font-size: 15px;font-weight: 500;display: flex;align-items: center;">Edit Profile</div>
+      </div>
+      <div  style="display: flex;justify-content: center;">
+        <ion-icon style="color: white;margin-right: 15px;" name="chevron-forward-outline"></ion-icon>
+      </div>
+    </div>
+
+    <div (click)="logout()"
+      style="height: 50px;margin-top: 20px;display: flex;align-items: center;padding-left: 20px;justify-content: space-between;box-shadow: 0 2px 4px #adadad;
+      background: linear-gradient(195deg, rgba(218,172,104,1) 7%, rgba(205,162,93,1) 28%, rgba(192,148,79,1) 66%, rgba(177,132,64,1) 100%, rgba(161,118,53,1) 100%);">
+      <div style="display: flex;">
+        <ion-icon style="font-size:20px;color: white;margin-right: 15px;" name="log-out-outline"></ion-icon>
+        <div style="color: white;font-size: 15px;font-weight: 500;margin-right: 15px;">|</div>
+        <div style="color: white;font-size: 15px;font-weight: 500;display: flex;align-items: center;">Logout</div>
+      </div>
+      <div style="display: flex;justify-content: center;">
+        <ion-icon style="color: white;margin-right: 15px;" name="chevron-forward-outline"></ion-icon>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>

@@ -1,0 +1,48 @@
+<ion-content>
+
+  <div style="height: 100vh;width: 100vw; ">
+    <div style="display: flex;align-items: center;justify-content: center;">
+      <img style="width: 500px;" src="assets/icon/logo.png" alt="">
+    </div>
+
+    <div style="padding: 0 20px; ">
+
+      <div style="display: flex; align-items: center;justify-content: center; width: 100%; ">
+        <ion-item class="ion-no-padding" style="width: 100%;max-width: 500px;--border-color: #A17635">
+          <ion-icon style="color: #A17635; font-size: 16px;" name="mail-outline"></ion-icon>
+          <ion-input style="font-size: 14px;margin: 5px;color: rgb(222,178,120);" class="ion-no-padding" type="text"
+            placeholder="Email">
+          </ion-input>
+        </ion-item>
+      </div>
+      <!-- 
+      #A17635 curtain gold color 
+      background: linear-gradient(90deg, rgba(222,178,120,1) 0%, rgba(179,114,66,1) 100%);
+      -->
+      <div style="margin-top: 30px;display: flex; align-items: center;justify-content: center; width: 100%;">
+        <ion-item class="ion-no-padding" style="width: 100%;max-width: 500px;--border-color: #A17635">
+
+          <ion-icon style="color: #A17635; font-size: 16px;" name="lock-closed-outline"></ion-icon>
+          <ion-input (keyup.enter)="loginUser(user)" style="font-size: 14px;margin: 5px;color:rgb(222,178,120); "
+            class="ion-no-padding" [type]="show ? 'text' : 'password'" placeholder="Password">
+          </ion-input>
+          <ion-icon (click)="show = !show" style="color: #A17635; font-size: 16px;"
+            [name]="(show ? 'eye' : 'eye-off') + '-outline'"></ion-icon>
+        </ion-item>
+
+      </div>
+
+    </div>
+    <!-- (click)="loginUser(user)" -->
+    <div
+      style="width: 100%;display: flex;align-items: center;justify-content: center;margin-top: 100px;padding: 0 20px;">
+      <div (click)="tohome()" style="border-radius: 30px;padding: 10px 20px;width: 100%;max-width: 400px;
+      background: linear-gradient(90deg, rgba(222,178,120,1) 0%, rgba(179,114,66,1) 100%); font-size:14px; border-top: 1px solid #ffbea8;
+       color: white; font-weight: 600;  text-align: center;  box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
+        Log in
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>

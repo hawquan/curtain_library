@@ -1,0 +1,15 @@
+* {
+    font-size: 13px;
+  }
+
+.selected {
+    border: 5px solid #a17635;
+    border-radius: 5px;
+    
+}
+
+::ng-deep .mycomponent-wider-popover
+{
+  --width: 80%;
+  --max-width: 400px;
+}
