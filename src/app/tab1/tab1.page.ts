@@ -21,32 +21,40 @@ export class Tab1Page implements OnInit {
     address: 'No.123 Jalan 4 dddddddd dddddddddd dddddddd ddddddddd ddddddddddd',
     contact: '010-1234567',
     house_type: 'semi-d',
-    img: ['https://wallpaperaccess.com/full/3292878.jpg','https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
+    img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
   }, {
     client: 'Lorem Ipsum2',
     address: 'No.123 Jalan 4 dddddddd dddddddddd',
     contact: '010-1234567',
     house_type: 'bangalow',
-    img: ['https://wallpaperaccess.com/full/3292878.jpg','https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
+    img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
   }, {
     client: 'Lorem Ipsum3',
     address: 'No.123 Jalan 4 dddddddd dddddddddd dddddddd ddddddddd ddddddddddd',
     contact: '010-1234567',
     house_type: 'semi-d',
-    img: ['https://wallpaperaccess.com/full/3292878.jpg','https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
+    img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
   }, {
     client: 'Lorem Ipsum4',
     address: 'No.123 Jalan 4 dddddddd dddddddddd dddddddd ddddddddd ddddddddddd',
     contact: '010-1234567',
     house_type: 'bangalow',
-    img: ['https://wallpaperaccess.com/full/3292878.jpg','https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
+    img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
   }, {
     client: 'Lorem Ipsum5',
     address: 'No.123 Jalan 4 dddddddd dddddddddd',
     contact: '010-1234567',
     house_type: 'semi-d',
-    img: ['https://wallpaperaccess.com/full/3292878.jpg','https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
+    img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
   },]
+
+  pendingListTailor = [{
+    height: 100,
+    width: 100,
+    type: "Tailor-Made Curtains",
+    header: "Ripple Fold",
+  }]
+
   statusPending = true
   statusOnGoing = false
   statusCompleted = false
@@ -56,7 +64,7 @@ export class Tab1Page implements OnInit {
     this.position = 'sales'
   }
 
-  changeStatus(x){
+  changeStatus(x) {
     this.position = x
   }
 
@@ -80,11 +88,70 @@ export class Tab1Page implements OnInit {
   toDetail(x) {
 
     let navExtra: NavigationExtras = {
-      queryParams:{
+      queryParams: {
         info: JSON.stringify(x),
       }
-    }    
+    }
     this.nav.navigateForward(['task-detail'], navExtra)
+  }
+
+  toTechDetail(x) {
+
+    let item = {
+      colours: "c0192",
+      fabric: "f9283",
+      header: "Ripple Fold",
+      height: 100,
+      patterns: "p7652",
+      type: "Tailor-Made Curtains",
+      width: 100,
+    }
+    let navExtra: NavigationExtras = {
+      queryParams: {
+        info: JSON.stringify(x),
+        item: JSON.stringify(item)
+      }
+    }
+    this.nav.navigateForward(['tech-task-detail'], navExtra)
+  }
+
+  toTailorDetail(x) {
+
+    let item = {
+      colours: "c0192",
+      fabric: "f9283",
+      header: "Ripple Fold",
+      height: 100,
+      patterns: "p7652",
+      type: "Tailor-Made Curtains",
+      width: 100,
+    }
+    let navExtra: NavigationExtras = {
+      queryParams: {
+        item: JSON.stringify(item)
+      }
+    }
+    this.nav.navigateForward(['tailor-task-detail'], navExtra)
+  }
+
+  toInstallerDetail(x) {
+
+    let item = {
+      colours: "c0192",
+      fabric: "f9283",
+      header: "Ripple Fold",
+      height: 100,
+      patterns: "p7652",
+      type: "Tailor-Made Curtains",
+      width: 100,
+    }
+    let navExtra: NavigationExtras = {
+      queryParams: {
+        info: JSON.stringify(x),
+        item: JSON.stringify(item)
+      }
+    }
+    this.nav.navigateForward(['installer-task-detail'], navExtra)
   }
 
 }

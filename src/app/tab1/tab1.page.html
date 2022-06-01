@@ -166,7 +166,7 @@
     <div *ngIf="statusPending"
       style="height: calc(100vh - 170px);padding: 25px 10px 10px 10px;display: flex;align-items: center;flex-direction: column;overflow-y: auto;">
 
-      <div  *ngFor="let x of pendingList; let i = index" (click)="toDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
+      <div  *ngFor="let x of pendingList; let i = index" (click)="toTechDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
        border-radius: 7px;margin-bottom: 15px;">
 
         <div style="display: flex;flex-direction: column;justify-content: center;padding: 5px 20px 0 5px;">
@@ -273,7 +273,7 @@
     <div *ngIf="statusPending"
       style="height: calc(100vh - 170px);padding: 25px 10px 10px 10px;display: flex;align-items: center;flex-direction: column;overflow-y: auto;">
 
-      <div  *ngFor="let x of pendingList; let i = index" (click)="toDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
+      <div  *ngFor="let x of pendingListTailor; let i = index" (click)="toTailorDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
        border-radius: 7px;margin-bottom: 15px;">
 
         <div style="display: flex;flex-direction: column;justify-content: center;padding: 5px 20px 0 5px;">
@@ -284,23 +284,23 @@
           </div>
 
           <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-            <div style="font-weight: 700;">Client :</div>
-            <div style="font-weight: 400;padding-left: 10px;">{{x.client}}</div>
+            <div style="font-weight: 700;">Height :</div>
+            <div style="font-weight: 400;padding-left: 10px;">{{x.height}}</div>
           </div>
 
           <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-            <div style="min-width: 56px;font-weight: 700;">Address :</div>
-            <div style="font-weight: 400;padding-left: 10px;">{{x.address}}</div>
+            <div style="font-weight: 700;">Width :</div>
+            <div style="font-weight: 400;padding-left: 10px;">{{x.width}}</div>
           </div>
 
           <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-            <div style="font-weight: 700;">Contact :</div>
-            <div style="font-weight: 400;padding-left: 10px;">{{x.contact}}</div>
+            <div style="font-weight: 700;">Type :</div>
+            <div style="font-weight: 400;padding-left: 10px;">{{x.type}}</div>
           </div>
 
           <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-            <div style="font-weight: 700;">House Type :</div>
-            <div style="font-weight: 400;padding-left: 10px;">{{x.house_type}}</div>
+            <div style="font-weight: 700;">Header Type :</div>
+            <div style="font-weight: 400;padding-left: 10px;">{{x.header}}</div>
           </div>
 
           <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
@@ -380,7 +380,7 @@
     <div *ngIf="statusPending"
       style="height: calc(100vh - 170px);padding: 25px 10px 10px 10px;display: flex;align-items: center;flex-direction: column;overflow-y: auto;">
 
-      <div  *ngFor="let x of pendingList; let i = index" (click)="toDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
+      <div  *ngFor="let x of pendingList; let i = index" (click)="toInstallerDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
        border-radius: 7px;margin-bottom: 15px;">
 
         <div style="display: flex;flex-direction: column;justify-content: center;padding: 5px 20px 0 5px;">
