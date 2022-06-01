@@ -21,6 +21,18 @@ const routes: Routes = [
   {
     path: 'task-editor',
     loadChildren: () => import('./task-editor/task-editor.module').then( m => m.TaskEditorPageModule)
+  },
+  {
+    path: 'tech-task-detail',
+    loadChildren: () => import('./tech-task-detail/tech-task-detail.module').then( m => m.TechTaskDetailPageModule)
+  },
+  {
+    path: 'tailor-task-detail',
+    loadChildren: () => import('./tailor-task-detail/tailor-task-detail.module').then( m => m.TailorTaskDetailPageModule)
+  },
+  {
+    path: 'installer-task-detail',
+    loadChildren: () => import('./installer-task-detail/installer-task-detail.module').then( m => m.InstallerTaskDetailPageModule)
   }
 ];
 @NgModule({
