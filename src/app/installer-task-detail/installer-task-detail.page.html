@@ -1,18 +1,18 @@
-<ion-header>
-
-  <div
-    style="height: 50px; width: 100%; display: flex; align-items: center; padding: 15px;justify-content: center;background: black;">
-    <ion-icon (click)="back()" style="font-size: 24px; position: absolute; left: 20px; top: 14px;color: white;"
-      name="chevron-back-outline"></ion-icon>
-
-    <div style="font-weight: 700;color: white;">Task Details</div>
-  </div>
-
-</ion-header>
-
 <ion-content>
 
-  <div style="margin: 15px;">
+  <div style="height: 90px; width: 100%; display: flex; padding: 20px 15px 15px 15px;background: #323232;">
+    <div
+      style="height: 24px;width: 24px;background: #636161;border-radius: 5px;display: flex;justify-content: center;align-items: center;">
+      <ion-icon (click)="back()" style="font-size: 18px; color: white;" name="chevron-back-outline"></ion-icon>
+    </div>
+
+    <div style="font-weight: 700;color: white;font-size: 20px;margin-left: 15px;letter-spacing: 0.5px;">Task Details
+    </div>
+
+  </div>
+
+  <div style="border-radius: 15px;background: white;padding: 15px; margin: -25px 15px 5px 15px;box-shadow: 0 3px 5px #c2c2c2">
+
     <div style="margin-bottom: 5px;display: flex;">
       <div style="font-weight: 700;">Client :</div>
       <div style="font-weight: 400;padding-left: 10px;">{{info.client}}</div>
@@ -32,6 +32,10 @@
       <div style="font-weight: 700;">House Type :</div>
       <div style="font-weight: 400;padding-left: 10px;">{{info.house_type}}</div>
     </div>
+
+  </div>
+
+  <div style="margin: 15px;">
 
     <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
 
@@ -77,6 +81,7 @@
         </ion-input>
       </div>
 
+      <!-- Curtains -->
       <div *ngIf="item['type'] == 'Tailor-Made Curtains' || item['type'] == 'Motorised Curtains'">
 
         <div style="display: flex;margin: 15px 15px 5px 0;">
@@ -179,6 +184,7 @@
 
       </div>
 
+      <!-- Blinds -->
       <div *ngIf="item['type'] == 'Blinds' ">
 
         <div style="display: flex;margin: 15px 15px 5px 0;">
@@ -263,6 +269,7 @@
 
       </div>
 
+      <!-- Wallpaper -->
       <div *ngIf="item['type'] == 'Wallpaper' ">
 
         <div style="display: flex;margin: 15px 15px 5px 0;">
@@ -372,25 +379,20 @@
 
 <ion-footer>
 
-  <div
-    style="height: 50px; width: 100%; display: flex; align-items: center; padding: 15px;justify-content: center;background: black;">
-    
-    <div style="width: 100%;display: flex;justify-content: space-evenly;align-items: center;">
-      
+    <div style="width: 100%;height: 50px;display: flex;justify-content: center;align-items: center;background: #323232;">
+<!--       
       <ion-button (click)="reject()"
         style="width: 40%;height: 35px;--background: #a17635;margin: 15px 0;font-size: 0.7rem;
         --border-radius: 100px;border-radius: 100px;font-weight: 350px;letter-spacing: 0.7px;--background-activated: ">
         Reject & Adjust
-      </ion-button>
+      </ion-button> -->
 
       <ion-button (click)="approve()"
-        style="width: 40%;height: 35px;--background: #a17635;margin: 15px 0;font-size: 0.7rem;
+        style="width: 70%;height: 35px;--background: #a17635;margin: 15px 0;font-size: 0.7rem;
         --border-radius: 100px;border-radius: 100px;font-weight: 350px;letter-spacing: 0.7px;--background-activated: ">
-        Approve
+        Completed
       </ion-button>
 
     </div>
-
-  </div>
 
 </ion-footer>

@@ -8,19 +8,23 @@
       <div style="display: flex;justify-content: center;align-items: center;">
 
         <div>
-          <div (click)="changeStatus('sales')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('sales')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             sales
           </div>
-          <div (click)="changeStatus('tech')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('tech')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             tech
           </div>
         </div>
 
         <div>
-          <div (click)="changeStatus('tailor')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('tailor')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             tailor
           </div>
-          <div (click)="changeStatus('installer')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('installer')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             installer
           </div>
         </div>
@@ -48,25 +52,28 @@
 
     <div style="margin-top: 15px;margin-bottom: 2px;display: flex;align-items: center;">
 
-      <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''" style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
+      <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''"
+        style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
       <div>|</div>
-      <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''" style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
+      <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''"
+        style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
       <div>|</div>
-      <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"style="width: 33%;padding: 5px;text-align: center;;">Completed</div>
+      <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"
+        style="width: 33%;padding: 5px;text-align: center;;">Completed</div>
 
     </div>
 
     <div *ngIf="statusPending"
       style="height: calc(100vh - 170px);padding: 25px 10px 10px 10px;display: flex;align-items: center;flex-direction: column;overflow-y: auto;">
 
-      <div  *ngFor="let x of pendingList; let i = index" (click)="toDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
+      <div *ngFor="let x of filterPendingList('sales'); let i = index;" (click)="toDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
        border-radius: 7px;margin-bottom: 15px;">
 
         <div style="display: flex;flex-direction: column;justify-content: center;padding: 5px 20px 0 5px;">
 
-          <div style="margin-bottom: 5px;font-weight: 400;display: flex;align-items: center;justify-content: space-between;">
+          <div
+            style="margin-bottom: 5px;font-weight: 400;display: flex;align-items: center;justify-content: space-between;">
             <div>#{{i+1}}</div>
-            <div>color</div>
           </div>
 
           <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
@@ -87,6 +94,31 @@
           <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
             <div style="font-weight: 700;">House Type :</div>
             <div style="font-weight: 400;padding-left: 10px;">{{x.house_type}}</div>
+          </div>
+
+          <div style="padding: 0 35px;margin-top: 5px;margin-bottom: 3px;">
+            <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
+
+            <div style="margin-top: -10px;display: flex;justify-content: space-between;">
+              <div [ngClass]="x.step == 1 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;"></div>
+              <div [ngClass]="x.step == 2 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+              </div>
+              <div [ngClass]="x.step == 3 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+              </div>
+              <div [ngClass]="x.step == 4 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+              </div>
+            </div>
+          </div>
+
+          <div style="height: 40px;display: flex;justify-content: space-between;padding: 0 30px;">
+            <ion-icon style="font-size: 24px;" name="pricetags-outline"></ion-icon>
+            <ion-icon style="font-size: 24px;" name="cog-outline"></ion-icon>
+            <ion-icon style="font-size: 24px;" name="cut-outline"></ion-icon>
+            <ion-icon style="font-size: 24px;" name="construct-outline"></ion-icon>
           </div>
 
           <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
@@ -115,19 +147,23 @@
       <div style="display: flex;justify-content: center;align-items: center;">
 
         <div>
-          <div (click)="changeStatus('sales')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('sales')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             sales
           </div>
-          <div (click)="changeStatus('tech')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('tech')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             tech
           </div>
         </div>
 
         <div>
-          <div (click)="changeStatus('tailor')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('tailor')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             tailor
           </div>
-          <div (click)="changeStatus('installer')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('installer')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             installer
           </div>
         </div>
@@ -155,25 +191,29 @@
 
     <div style="margin-top: 15px;margin-bottom: 2px;display: flex;align-items: center;">
 
-      <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''" style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
+      <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''"
+        style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
       <div>|</div>
-      <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''" style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
+      <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''"
+        style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
       <div>|</div>
-      <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"style="width: 33%;padding: 5px;text-align: center;;">Completed</div>
+      <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"
+        style="width: 33%;padding: 5px;text-align: center;;">Completed</div>
 
     </div>
 
     <div *ngIf="statusPending"
       style="height: calc(100vh - 170px);padding: 25px 10px 10px 10px;display: flex;align-items: center;flex-direction: column;overflow-y: auto;">
 
-      <div  *ngFor="let x of pendingList; let i = index" (click)="toTechDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
+      <div *ngFor="let x of filterPendingList('tech'); let i = index" (click)="toTechDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
        border-radius: 7px;margin-bottom: 15px;">
 
         <div style="display: flex;flex-direction: column;justify-content: center;padding: 5px 20px 0 5px;">
 
-          <div style="margin-bottom: 5px;font-weight: 400;display: flex;align-items: center;justify-content: space-between;">
+          <div
+            style="margin-bottom: 5px;font-weight: 400;display: flex;align-items: center;justify-content: space-between;">
             <div>#{{i+1}}</div>
-            <div>color</div>
+            
           </div>
 
           <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
@@ -194,6 +234,31 @@
           <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
             <div style="font-weight: 700;">House Type :</div>
             <div style="font-weight: 400;padding-left: 10px;">{{x.house_type}}</div>
+          </div>
+
+          <div style="padding: 0 35px;margin-top: 5px;margin-bottom: 3px;">
+            <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
+
+            <div style="margin-top: -10px;display: flex;justify-content: space-between;">
+              <div [ngClass]="x.step == 1 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;"></div>
+              <div [ngClass]="x.step == 2 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+              </div>
+              <div [ngClass]="x.step == 3 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+              </div>
+              <div [ngClass]="x.step == 4 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+              </div>
+            </div>
+          </div>
+
+          <div style="height: 40px;display: flex;justify-content: space-between;padding: 0 30px;">
+            <ion-icon style="font-size: 24px;" name="pricetags-outline"></ion-icon>
+            <ion-icon style="font-size: 24px;" name="cog-outline"></ion-icon>
+            <ion-icon style="font-size: 24px;" name="cut-outline"></ion-icon>
+            <ion-icon style="font-size: 24px;" name="construct-outline"></ion-icon>
           </div>
 
           <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
@@ -222,19 +287,23 @@
       <div style="display: flex;justify-content: center;align-items: center;">
 
         <div>
-          <div (click)="changeStatus('sales')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('sales')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             sales
           </div>
-          <div (click)="changeStatus('tech')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('tech')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             tech
           </div>
         </div>
 
         <div>
-          <div (click)="changeStatus('tailor')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('tailor')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             tailor
           </div>
-          <div (click)="changeStatus('installer')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('installer')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             installer
           </div>
         </div>
@@ -262,25 +331,29 @@
 
     <div style="margin-top: 15px;margin-bottom: 2px;display: flex;align-items: center;">
 
-      <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''" style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
+      <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''"
+        style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
       <div>|</div>
-      <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''" style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
+      <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''"
+        style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
       <div>|</div>
-      <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"style="width: 33%;padding: 5px;text-align: center;;">Completed</div>
+      <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"
+        style="width: 33%;padding: 5px;text-align: center;;">Completed</div>
 
     </div>
 
     <div *ngIf="statusPending"
       style="height: calc(100vh - 170px);padding: 25px 10px 10px 10px;display: flex;align-items: center;flex-direction: column;overflow-y: auto;">
 
-      <div  *ngFor="let x of pendingListTailor; let i = index" (click)="toTailorDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
+      <div *ngFor="let x of filterPendingList('tailor'); let i = index" (click)="toTailorDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
        border-radius: 7px;margin-bottom: 15px;">
 
         <div style="display: flex;flex-direction: column;justify-content: center;padding: 5px 20px 0 5px;">
 
-          <div style="margin-bottom: 5px;font-weight: 400;display: flex;align-items: center;justify-content: space-between;">
+          <div
+            style="margin-bottom: 5px;font-weight: 400;display: flex;align-items: center;justify-content: space-between;">
             <div>#{{i+1}}</div>
-            <div>color</div>
+            
           </div>
 
           <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
@@ -301,6 +374,31 @@
           <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
             <div style="font-weight: 700;">Header Type :</div>
             <div style="font-weight: 400;padding-left: 10px;">{{x.header}}</div>
+          </div>
+
+          <div style="padding: 0 35px;margin-top: 5px;margin-bottom: 3px;">
+            <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
+
+            <div style="margin-top: -10px;display: flex;justify-content: space-between;">
+              <div [ngClass]="x.step == 1 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;"></div>
+              <div [ngClass]="x.step == 2 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+              </div>
+              <div [ngClass]="x.step == 3 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+              </div>
+              <div [ngClass]="x.step == 4 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+              </div>
+            </div>
+          </div>
+
+          <div style="height: 40px;display: flex;justify-content: space-between;padding: 0 30px;">
+            <ion-icon style="font-size: 24px;" name="pricetags-outline"></ion-icon>
+            <ion-icon style="font-size: 24px;" name="cog-outline"></ion-icon>
+            <ion-icon style="font-size: 24px;" name="cut-outline"></ion-icon>
+            <ion-icon style="font-size: 24px;" name="construct-outline"></ion-icon>
           </div>
 
           <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
@@ -329,19 +427,23 @@
       <div style="display: flex;justify-content: center;align-items: center;">
 
         <div>
-          <div (click)="changeStatus('sales')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('sales')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             sales
           </div>
-          <div (click)="changeStatus('tech')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('tech')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             tech
           </div>
         </div>
 
         <div>
-          <div (click)="changeStatus('tailor')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('tailor')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             tailor
           </div>
-          <div (click)="changeStatus('installer')" style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
+          <div (click)="changeStatus('installer')"
+            style="border: 1px solid black;margin: 4px;padding: 3px;border-radius: 5px;">
             installer
           </div>
         </div>
@@ -369,25 +471,29 @@
 
     <div style="margin-top: 15px;margin-bottom: 2px;display: flex;align-items: center;">
 
-      <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''" style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
+      <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''"
+        style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
       <div>|</div>
-      <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''" style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
+      <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''"
+        style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
       <div>|</div>
-      <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"style="width: 33%;padding: 5px;text-align: center;;">Completed</div>
+      <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"
+        style="width: 33%;padding: 5px;text-align: center;;">Completed</div>
 
     </div>
 
     <div *ngIf="statusPending"
       style="height: calc(100vh - 170px);padding: 25px 10px 10px 10px;display: flex;align-items: center;flex-direction: column;overflow-y: auto;">
 
-      <div  *ngFor="let x of pendingList; let i = index" (click)="toInstallerDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
+      <div *ngFor="let x of filterPendingList('installer'); let i = index" (click)="toInstallerDetail(x)" style="width: 100%;box-shadow: 0 3px 5px #c2c2c2;
        border-radius: 7px;margin-bottom: 15px;">
 
         <div style="display: flex;flex-direction: column;justify-content: center;padding: 5px 20px 0 5px;">
 
-          <div style="margin-bottom: 5px;font-weight: 400;display: flex;align-items: center;justify-content: space-between;">
+          <div
+            style="margin-bottom: 5px;font-weight: 400;display: flex;align-items: center;justify-content: space-between;">
             <div>#{{i+1}}</div>
-            <div>color</div>
+            
           </div>
 
           <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
@@ -410,6 +516,31 @@
             <div style="font-weight: 400;padding-left: 10px;">{{x.house_type}}</div>
           </div>
 
+          <div style="padding: 0 35px;margin-top: 5px;margin-bottom: 3px;">
+            <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
+
+            <div style="margin-top: -10px;display: flex;justify-content: space-between;">
+              <div [ngClass]="x.step == 1 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;"></div>
+              <div [ngClass]="x.step == 2 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+              </div>
+              <div [ngClass]="x.step == 3 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+              </div>
+              <div [ngClass]="x.step == 4 ? 'step' : 'xstep'"
+                style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+              </div>
+            </div>
+          </div>
+
+          <div style="height: 40px;display: flex;justify-content: space-between;padding: 0 30px;">
+            <ion-icon style="font-size: 24px;" name="pricetags-outline"></ion-icon>
+            <ion-icon style="font-size: 24px;" name="cog-outline"></ion-icon>
+            <ion-icon style="font-size: 24px;" name="cut-outline"></ion-icon>
+            <ion-icon style="font-size: 24px;" name="construct-outline"></ion-icon>
+          </div>
+
           <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
         </div>
 
@@ -427,4 +558,5 @@
     </div>
 
   </div>
+
 </ion-content>
