@@ -21,30 +21,35 @@ export class Tab1Page implements OnInit {
     address: 'No.123 Jalan 4 dddddddd dddddddddd dddddddd ddddddddd ddddddddddd',
     contact: '010-1234567',
     house_type: 'semi-d',
+    step: 1,
     img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
   }, {
     client: 'Lorem Ipsum2',
     address: 'No.123 Jalan 4 dddddddd dddddddddd',
     contact: '010-1234567',
     house_type: 'bangalow',
+    step: 2,
     img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
   }, {
     client: 'Lorem Ipsum3',
     address: 'No.123 Jalan 4 dddddddd dddddddddd dddddddd ddddddddd ddddddddddd',
     contact: '010-1234567',
-    house_type: 'semi-d',
+    house_type: 'condo',
+    step: 3,
     img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
   }, {
     client: 'Lorem Ipsum4',
     address: 'No.123 Jalan 4 dddddddd dddddddddd dddddddd ddddddddd ddddddddddd',
     contact: '010-1234567',
     house_type: 'bangalow',
+    step: 4,
     img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
   }, {
     client: 'Lorem Ipsum5',
     address: 'No.123 Jalan 4 dddddddd dddddddddd',
     contact: '010-1234567',
     house_type: 'semi-d',
+    step: 5,
     img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
   },]
 
@@ -52,6 +57,7 @@ export class Tab1Page implements OnInit {
     height: 100,
     width: 100,
     type: "Tailor-Made Curtains",
+    step: 3,
     header: "Ripple Fold",
   }]
 
@@ -62,6 +68,18 @@ export class Tab1Page implements OnInit {
 
   ngOnInit() {
     this.position = 'sales'
+  }
+
+  filterPendingList(type) {
+    if (type == 'sales') {
+      return this.pendingList.filter(x => x.step == 1)
+    } else if (type == 'tech') {
+      return this.pendingList.filter(x => x.step == 2)
+    } else if (type == 'tailor') {
+      return this.pendingListTailor.filter(x => x.step == 3)
+    } else if (type == 'installer') {
+      return this.pendingList.filter(x => x.step == 4)
+    }
   }
 
   changeStatus(x) {
