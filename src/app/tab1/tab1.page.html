@@ -1,4 +1,4 @@
-<ion-content [scrollY]="false">
+<!-- <ion-content  >
 
   <div *ngIf="position == 'sales'" style="height: 100vh;width: 100vw;">
 
@@ -559,4 +559,196 @@
 
   </div>
 
+</ion-content> -->
+
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar>
+    <div style="position: sticky; top: 0px; width: 100%;background-color: white; z-index: 100;">
+      <div
+        style="width: 100%;  display: flex; align-items: center; justify-content: space-between; padding-left: 10px; ">
+
+        <div style="width: 20%; height: 100%; display: flex; align-items: center; justify-content: flex-start;">
+          <div style="font-size: 32px; font-weight: 700;">{{today | date: 'dd'}}</div>
+
+          <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+            <div style="font-size: 13px; font-weight: 600; text-transform: uppercase;">{{today | date: 'MMM'}}</div>
+            <div style="font-size: 11px; ">{{today | date: 'yyyy'}}</div>
+
+          </div>
+        </div>
+
+        <ion-item class="ion-no-padding" (click)="profile()" lines='none'
+          style="width: calc(80% - 20px); height: 100%; background-color: white; margin-left: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+          <ion-avatar style="width: 50px; height: 50px;" slot="end">
+            <img src="{{user['photo']}}">
+          </ion-avatar>
+          <ion-label style="display: flex; flex-direction: column; align-items: flex-end;">
+            <h3
+              style="margin: 0; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; width: calc(100% - 20px); text-align: end;">
+              {{user['name']}}</h3>
+            <p style="font-size: 10px;">{{user['position'] || 'Salesman'}}</p>
+          </ion-label>
+        </ion-item>
+      </div>
+    </div>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background: #FAF7F2">
+
+  <div style="width: 100vw; margin: 10px 0; padding: 0 10px; display: flex;align-items: center;">
+
+    <!-- <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''"
+      style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
+    <div>|</div>
+    <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''"
+      style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
+    <div>|</div>
+    <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"
+      style="width: 33%;padding: 5px;text-align: center;;">Completed</div> -->
+
+    
+  </div>
+
+  <div style="width: 100%; padding: 10px 20px ; display: flex; flex-direction: column; ">
+
+    <div style="width: 100%;display: flex; align-items: center; justify-content: center; margin-bottom: 10px; ">
+      <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff; border-right: 1px solid #eeeeee;">
+        <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+          <div style="font-size: 20px; font-weight: 600;  margin-bottom: 5px;">12</div>
+          <div style="font-size: 12px; ">Leads</div>
+        </div>
+      </div>
+
+      <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff;">
+        <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+          <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">2</div>
+          <div style="font-size: 12px; ">Appointments</div>
+        </div>
+      </div>
+    </div>
+
+
+    <h6 style="font-weight: 600; color: #000000;">Appointments (2)</h6>
+
+  <div style="width: 100%; display: flex;align-items: center;">
+
+    <div (click)="selectTab('p')" style="width: 33%;text-align: center;">
+      <div [ngClass]="status == 'p' ? 'selected' : 'selectedx'">Pending</div>
+    </div>
+
+    <div (click)="selectTab('o')" style="width: 33%;text-align: center;;">
+      <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">On-Going</div>
+    </div>
+
+    <div (click)="selectTab('c')" style="width: 33%;text-align: center;;">
+      <div [ngClass]="status == 'c'? 'selected' : 'selectedx'">Completed</div>
+    </div>
+    </div>
+
+    <div *ngIf="status == 'p'"  style="width: 100%; margin: 15px 0;">
+    <div *ngFor="let x of filterPendingList('sales'); let i = index;" (click)="toDetail(x)"
+      style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+
+      <!-- <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px; width: 100%;">
+
+        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
+          <div style="font-weight: 700;">Client :</div>
+          <div style="font-weight: 400;padding-left: 10px;">{{x.client}}</div>
+        </div>
+
+        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
+          <div style="min-width: 56px;font-weight: 700;">Address :</div>
+          <div style="font-weight: 400;padding-left: 10px;">{{x.address}}</div>
+        </div>
+
+        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
+          <div style="font-weight: 700;">Contact :</div>
+          <div style="font-weight: 400;padding-left: 10px;">{{x.contact}}</div>
+        </div>
+
+        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
+          <div style="font-weight: 700;">House Type :</div>
+          <div style="font-weight: 400;padding-left: 10px;">{{x.house_type}}</div>
+        </div>
+
+        <div style="padding: 0 35px;margin-top: 5px;margin-bottom: 3px;">
+          <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
+
+          <div style="margin-top: -10px;display: flex;justify-content: space-between;">
+            <div [ngClass]="x.step == 1 ? 'step' : 'xstep'"
+              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;"></div>
+            <div [ngClass]="x.step == 2 ? 'step' : 'xstep'"
+              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+            </div>
+            <div [ngClass]="x.step == 3 ? 'step' : 'xstep'"
+              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+            </div>
+            <div [ngClass]="x.step == 4 ? 'step' : 'xstep'"
+              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+            </div>
+          </div>
+        </div>
+
+        <div style="height: 40px;display: flex;justify-content: space-between;padding: 0 30px;">
+          <ion-icon style="font-size: 24px;" name="pricetags-outline"></ion-icon>
+          <ion-icon style="font-size: 24px;" name="cog-outline"></ion-icon>
+          <ion-icon style="font-size: 24px;" name="cut-outline"></ion-icon>
+          <ion-icon style="font-size: 24px;" name="construct-outline"></ion-icon>
+        </div>
+
+        <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
+      </div> -->
+
+
+      <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+        <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.client}}</div>
+
+        <div style="width: 100%; display: flex; align-items: flex-start;">
+          <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">Contact:
+          </div>
+          <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.contact}}</div>
+        </div>
+
+        <div style="width: 100%; display: flex; align-items: flex-start;">
+          <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">Address:
+          </div>
+          <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.address}}</div>
+        </div>
+
+        <div
+          style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+          <div
+          style="display: flex; align-items: center; justify-content: center; width: 70%;border-right: 1px solid #eeeeee;">
+          <ion-icon style="margin-right: 5px; color: #888888;" name="receipt-outline"></ion-icon>
+          <div style="font-size: 12px; font-weight: 500; color: #888888;">Send quotation</div>
+        </div>
+        
+          <div
+            style="display: flex; align-items: center; justify-content: center; width: 30%; ">
+            <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+          </div>
+
+          
+        </div>
+        
+
+
+      </div>
+
+
+      <!-- <div style="display: flex;justify-content: flex-end;padding-right: 15px;margin-bottom: 10px;">
+
+        <div
+          style="padding: 5px;border-radius: 20px;color: white;font-weight: 350;
+    background: linear-gradient(135deg, rgba(198,152,80,1) 30%, rgba(161,118,53,1) 30%, rgba(204,150,68,1) 82%, rgba(193,137,52,1) 82%);">
+          View Details
+        </div>
+      </div> -->
+
+    </div>
+  </div>
+
+  </div>
 </ion-content>
