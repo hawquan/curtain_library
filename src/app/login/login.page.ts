@@ -17,7 +17,7 @@ export class LoginPage implements OnInit {
   ) { }
 
   user = [] as any
-
+show 
   ngOnInit() {
   }
 
@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
   }
 
   tohome() {
-    this.nav.navigateForward('tabs')
+    this.nav.navigateForward('tabs/tab1')
   }
 
 }

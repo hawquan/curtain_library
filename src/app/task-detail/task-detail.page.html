@@ -1,6 +1,30 @@
-<ion-content>
+<ion-header class="ion-no-border">
+  <ion-toolbar style="--background: #ffffff">
+    <div style="position: sticky; top: 0px; width: 100%;z-index: 100;">
+      <div
+        style="width: 100%;  display: flex; align-items: center; justify-content: space-between; padding-left: 10px; ">
 
-  <div style="height: 90px; width: 100%; display: flex; padding: 20px 15px 15px 15px;background: #323232;">
+        <div style="display: flex;justify-content: center;align-items: center;">
+          <ion-icon (click)="back()" style="font-size: 18px; color: #636161; --ionicon-stroke-width: 50px"
+            name="chevron-back-outline"></ion-icon>
+        </div>
+        <div style="font-weight: 600;color: #000;font-size: 18px;">Task Details
+        </div>
+
+        <div
+          style="height: 24px;width: 24px;background: #eeeeee00; opacity: 0; border-radius: 5px;display: flex;justify-content: center;align-items: center;">
+          <ion-icon style="font-size: 18px; color: white; opacity: 0;" name="chevron-back-outline"></ion-icon>
+        </div>
+
+      </div>
+    </div>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background: #ffffff">
+
+  <!-- <div style="height: 90px; width: 100%; display: flex; padding: 20px 15px 15px 15px;background: #323232;">
     <div
       style="height: 24px;width: 24px;background: #636161;border-radius: 5px;display: flex;justify-content: center;align-items: center;">
       <ion-icon (click)="back()" style="font-size: 18px; color: white;" name="chevron-back-outline"></ion-icon>
@@ -9,9 +33,9 @@
     <div style="font-weight: 700;color: white;font-size: 20px;margin-left: 15px;letter-spacing: 0.5px;">Task Details
     </div>
 
-  </div>
+  </div> -->
 
-  <div style="border-radius: 15px;background: white;padding: 15px; margin: -25px 15px 5px 15px;box-shadow: 0 3px 5px #c2c2c2">
+  <!-- <div style="border-radius: 15px;background: white;padding: 15px; margin: -25px 15px 5px 15px;box-shadow: 0 3px 5px #c2c2c2">
 
     <div style="margin-bottom: 5px;display: flex;">
       <div style="font-weight: 700;">Client :</div>
@@ -33,9 +57,9 @@
       <div style="font-weight: 400;padding-left: 10px;">{{info.house_type}}</div>
     </div>
 
-  </div>
+  </div> -->
 
-  <div style="height: calc(100vh - 235px) ;padding: 15px;">
+  <!-- <div style="height: calc(100vh - 235px) ;padding: 15px;">
 
     <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
 
@@ -107,6 +131,134 @@
 
     </div>
 
-  </div>
+  </div> -->
 
+
+  <div style="width: 100vw;">
+
+    <div (click)="addTask()" style="width: 100%; padding: 20px 15px; display: flex; flex-direction: column;">
+
+      <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-top: 5px;"></div>
+
+      <div style="margin-top: -10px;display: flex;justify-content: space-between;">
+        <div [ngClass]="info['step'] == 1 ? 'step' : 'xstep'"
+          style="height: 20px;width: 20px;border: 1px solid #a17635;border-radius: 100px;text-align: center; display: flex; justify-content: center; align-items: center;">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </div>
+        <div [ngClass]="info['step'] == 2 ? 'step' : 'xstep'"
+          style="height: 20px;width: 20px;border: 1px solid #a17635;border-radius: 100px;text-align: center; display: flex; justify-content: center; align-items: center;">
+          2</div>
+        <div [ngClass]="info['step'] == 3 ? 'step' : 'xstep'"
+          style="height: 20px;width: 20px;border: 1px solid #a17635;border-radius: 100px;text-align: center; display: flex; justify-content: center; align-items: center;">
+          3</div>
+        <div [ngClass]="info['step'] == 4 ? 'step' : 'xstep'"
+          style="height: 20px;width: 20px;border: 1px solid #a17635;border-radius: 100px; text-align: center; display: flex; justify-content: center; align-items: center;">
+          4 </div>
+      </div>
+
+    </div>
+
+    <div style="width: 100%; padding: 10px; background-color: #ebd1af; ">
+      <div style="color: #a17635; font-weight: 600; font-size: 12px;"> Client Details</div>
+    </div>
+
+    <div style="width: 100%; padding:10px">
+      <div style="margin-bottom: 5px;display: flex; align-items: center; width: 100%;">
+        <div style="font-weight: 700; width: 25%;">Name :</div>
+        <div style="font-weight: 400; width: 70%;">{{info.client}}</div>
+      </div>
+
+      <div style="margin-bottom: 5px;display: flex; align-items: center; width: 100%;">
+        <div style="font-weight: 700; width: 25%;">Email :</div>
+        <div style="font-weight: 400; width: 70%;">{{info.email || 'N/A'}}</div>
+      </div>
+
+      <div style="margin-bottom: 5px;display: flex; align-items: center; width: 100%;">
+        <div style="font-weight: 700; width: 25%;">Phone :</div>
+        <div style="font-weight: 400; width: 70%;">{{info.contact}}</div>
+      </div>
+
+      <div style="margin-bottom: 5px;display: flex; align-items: center; width: 100%;">
+        <div style="font-weight: 700; width: 25%;">Type :</div>
+        <div style="font-weight: 400; width: 70%; text-transform: uppercase;">{{info.house_type}}</div>
+      </div>
+
+      <div style="margin-bottom: 5px;display: flex; align-items: flex-start; width: 100%;">
+        <div style="font-weight: 700; width: 25%;">Address :</div>
+        <div style="font-weight: 400; width: 70%;">{{info.address}}</div>
+      </div>
+
+
+    </div>
+
+    <div style="width: 100%; padding: 10px; background-color: #ebd1af; ">
+      <div style="color: #a17635; font-weight: 600; font-size: 12px;"> Product Details</div>
+    </div>
+
+
+    <div style="width: 100%; padding: 10px;display: flex;flex-direction: column; align-items: center;">
+
+      <div
+        style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+        <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Width <span style="color: red;">*</span>
+        </div>
+        <div style="display: flex;align-items: center;margin-top: 5px;">
+          <ion-input type="number" placeholder="Enter Height" [(ngModel)]="items.width"
+            style="background-color: #eeeeee; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
+          </ion-input>
+          <div style="margin-left: 5px; font-size: 12px; color: #636161;">inch</div>
+        </div>
+      </div>
+
+      <div
+        style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+        <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Length <span
+            style="color: red;">*</span></div>
+        <div style="display: flex;align-items: center;margin-top: 5px;">
+          <ion-input type="number" placeholder="Enter Width" [(ngModel)]="items.height"
+            style="background-color: #eeeeee; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
+          </ion-input>
+          <div style="margin-left: 5px; font-size: 12px; color: #636161;">inch</div>
+        </div>
+      </div>
+
+
+      <div
+        style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+        <div style="font-size: 12px; color: #636161; font-weight: 500;">Product Type <span style="color: red;">*</span>
+        </div>
+        <div style="display: flex;align-items: center;margin-top: 5px;">
+          <ion-select class="ion-no-padding" [(ngModel)]="items['type']" placeholder="Select a product type"
+            interface="popover" md="ios" (ionChange)="typeChanged()"
+            [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="height: 30px; margin-right: 10px;font-size: 13px;
+          padding: 0 10px; border-radius: 2px;background: #eeeeee;">
+            <ion-select-option value="Tailor-Made Curtains">Tailor-Made Curtains</ion-select-option>
+            <ion-select-option value="Motorised Curtains">Motorised Curtains</ion-select-option>
+            <ion-select-option value="Blinds">Blinds</ion-select-option>
+            <ion-select-option value="Wallpaper">Wallpaper</ion-select-option>
+          </ion-select>
+        </div>
+      </div>
+
+      <div
+      style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+      <div style="font-size: 12px; color: #636161; font-weight: 500;">Heading Type <span style="color: red;">*</span>
+      </div>
+      <div style="display: flex;align-items: center;margin-top: 5px;">
+        <ion-select class="ion-no-padding" [(ngModel)]="items['type']" placeholder="Select a header type"
+          interface="popover" md="ios" (ionChange)="typeChanged()"
+          [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="height: 30px; margin-right: 10px;font-size: 13px;
+        padding: 0 10px; border-radius: 2px;background: #eeeeee;">
+          <ion-select-option value="Tailor-Made Curtains">Single Pleat</ion-select-option>
+          <ion-select-option value="Tailor-Made Curtains">Double Pleat</ion-select-option>
+          <ion-select-option value="Tailor-Made Curtains">French Pleat</ion-select-option>
+          <ion-select-option value="Motorised Curtains"> Ripple Fold</ion-select-option>
+          <ion-select-option value="Blinds">Eyelet</ion-select-option>
+        </ion-select>
+      </div>
+    </div>
+
+    </div>
+
+  </div>
 </ion-content>
