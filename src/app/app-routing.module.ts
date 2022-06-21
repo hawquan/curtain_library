@@ -33,7 +33,23 @@ const routes: Routes = [
   {
     path: 'installer-task-detail',
     loadChildren: () => import('./installer-task-detail/installer-task-detail.module').then( m => m.InstallerTaskDetailPageModule)
+  },  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'selector',
+    loadChildren: () => import('./selector/selector.module').then( m => m.SelectorPageModule)
+  },
+  {
+    path: 'quotation-single',
+    loadChildren: () => import('./quotation-single/quotation-single.module').then( m => m.QuotationSinglePageModule)
+  },
+  {
+    path: 'quotation-overall',
+    loadChildren: () => import('./quotation-overall/quotation-overall.module').then( m => m.QuotationOverallPageModule)
   }
+
 ];
 @NgModule({
   imports: [

@@ -20,13 +20,13 @@ export class TechTaskDetailPage implements OnInit {
   task = []
 
   item = [] as any
-  Header = []
-  HeaderChoice = ''
-  HeaderSingle = false
-  HeaderRipple = false
-  HeaderDouble = false
-  HeaderFrench = false
-  HeaderEyelet = false
+  Pleat = []
+  PleatChoice = ''
+  PleatSingle = false
+  PleatRipple = false
+  PleatDouble = false
+  PleatFrench = false
+  PleatEyelet = false
 
   RomanBlinds = false
   RollerBlinds = false
@@ -50,15 +50,15 @@ export class TechTaskDetailPage implements OnInit {
       this.img = this.info['img']
 
       if (this.item.type == 'Tailor-Made Curtains' || this.item.type == 'Motorised Curtains') {
-        this.HeaderSelection(this.item.header)
-        console.log('header');
+        this.PleatSelection(this.item.pleat)
+        console.log('pleat');
       }
       else if (this.item.type == 'Blinds') {
-        this.blindsSelection(this.item.header)
+        this.blindsSelection(this.item.pleat)
         console.log('blinds');
       }
       else {
-        this.wallpaperSelection(this.item.header)
+        this.wallpaperSelection(this.item.pleat)
         console.log('wallpaper');
       }
     })
@@ -67,12 +67,12 @@ export class TechTaskDetailPage implements OnInit {
   }
 
   typeChanged() {
-    this.HeaderSingle = false
-    this.HeaderRipple = false
-    this.HeaderDouble = false
-    this.HeaderFrench = false
-    this.HeaderEyelet = false
-    this.HeaderChoice = ''
+    this.PleatSingle = false
+    this.PleatRipple = false
+    this.PleatDouble = false
+    this.PleatFrench = false
+    this.PleatEyelet = false
+    this.PleatChoice = ''
 
     this.RomanBlinds = false
     this.RollerBlinds = false
@@ -88,28 +88,28 @@ export class TechTaskDetailPage implements OnInit {
     this.WallpaperChoice = ''
   }
 
-  HeaderSelection(x) {
-    this.HeaderSingle = false
-    this.HeaderRipple = false
-    this.HeaderDouble = false
-    this.HeaderFrench = false
-    this.HeaderEyelet = false
+  PleatSelection(x) {
+    this.PleatSingle = false
+    this.PleatRipple = false
+    this.PleatDouble = false
+    this.PleatFrench = false
+    this.PleatEyelet = false
 
     if (x == 'Single Pleat') {
-      this.HeaderSingle = true
-      this.HeaderChoice = 'Single Pleat'
+      this.PleatSingle = true
+      this.PleatChoice = 'Single Pleat'
     } else if (x == 'Ripple Fold') {
-      this.HeaderRipple = true
-      this.HeaderChoice = 'Ripple Fold'
+      this.PleatRipple = true
+      this.PleatChoice = 'Ripple Fold'
     } else if (x == 'Double Pleat') {
-      this.HeaderDouble = true
-      this.HeaderChoice = 'Double Pleat'
+      this.PleatDouble = true
+      this.PleatChoice = 'Double Pleat'
     } else if (x == 'French Pleat') {
-      this.HeaderFrench = true
-      this.HeaderChoice = 'French Pleat'
+      this.PleatFrench = true
+      this.PleatChoice = 'French Pleat'
     } else if (x == 'Eyelet') {
-      this.HeaderEyelet = true
-      this.HeaderChoice = 'Eyelet'
+      this.PleatEyelet = true
+      this.PleatChoice = 'Eyelet'
     }
 
   }

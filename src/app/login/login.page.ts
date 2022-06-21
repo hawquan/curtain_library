@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import Swal from 'sweetalert2';
 import { AuthService } from '../services/auth.service';
+import firebase from 'firebase';
+import { HttpClient } from '@angular/common/http';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,24 +16,73 @@ export class LoginPage implements OnInit {
   constructor(
     private authService: AuthService,
     private nav: NavController,
-
+    private http: HttpClient,
   ) { }
 
-  user = [] as any
-show 
+  user = {
+    email: "",
+    password: "",
+  }
+  show
+
   ngOnInit() {
+    firebase.auth().onAuthStateChanged(a => {
+      if (a) {
+        console.log(a);
+
+        Swal.fire({
+          title: 'Loading',
+          text: "Please Wait...",
+          icon: 'info',
+          showConfirmButton: false,
+          heightAuto: false,
+        })
+        this.http.post('http://192.168.1.117/onestaff', { id: a.uid }).subscribe((s) => {
+          console.log(s);
+
+          if (s['data'][0].status) {
+            Swal.fire({
+              text: 'Logged in successfully',
+              icon: 'success',
+              heightAuto: false,
+              showConfirmButton: false,
+              timer: 1250
+            })
+            this.nav.navigateRoot('tabs/tab1', { animationDirection: 'forward' })
+          } else {
+            firebase.auth().signOut();
+            Swal.fire({
+              title: 'Error',
+              text: "This user is deactivated, please contact admin for more information.",
+              icon: 'error',
+              heightAuto: false,
+              showConfirmButton: true,
+            })
+          }
+        }, e => {
+          Swal.fire({
+            title: 'Error',
+            text: "Please check your internet connection!",
+            icon: 'error',
+            heightAuto: false,
+            showConfirmButton: false,
+            timer: 2000
+          })
+        })
+      }
+    })
   }
 
   async loginUser(credentials): Promise<void> {
 
     console.log(credentials);
-    Swal.fire({
-      title: 'Loading...',
-      text: "Please Wait...",
-      icon: 'info',
-      showConfirmButton: false,
-      heightAuto: false,
-    })
+    // Swal.fire({
+    //   title: 'Loading...',
+    //   text: "Please Wait...",
+    //   icon: 'info',
+    //   showConfirmButton: false,
+    //   heightAuto: false,
+    // })
     this.authService.loginUser(credentials.email, credentials.password).then(
       (a) => {
         console.log(a);
