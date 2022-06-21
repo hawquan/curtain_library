@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { NavigationExtras } from '@angular/router';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import firebase from 'firebase';
 
 @Component({
   selector: 'app-tab1',
@@ -11,13 +13,11 @@ export class Tab1Page implements OnInit {
 
   constructor(
     private nav: NavController,
+    private http: HttpClient,
+    private actRoute: ActivatedRoute,
   ) { }
 
-  user = {
-    name : 'Maverick',
-    position: 'Salesman',
-    photo: 'https://www.giantfreakinrobot.com/wp-content/uploads/2022/04/top-gun-maverick-tom-cruise-936x527-1.jpeg'
-  }
+  user = [] as any
 
   position = ''
   today = new Date().toISOString()
@@ -30,7 +30,7 @@ export class Tab1Page implements OnInit {
     step: 1,
     img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
   },
-  
+
   {
     client: 'Val Kilmer',
     address: 'F-3A-16, IOI Boulevard, Jalan Kenari 5, Bandar Puchong Jaya, 47170 Puchong, Selangor',
@@ -38,7 +38,7 @@ export class Tab1Page implements OnInit {
     house_type: 'semi-d',
     step: 1,
     img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
-  },{
+  }, {
     client: 'Lorem Ipsum2',
     address: 'No.123 Jalan 4 dddddddd dddddddddd',
     contact: '010-1234567',
@@ -68,12 +68,21 @@ export class Tab1Page implements OnInit {
     img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
   },]
 
+  salesList = []
+
   pendingListTailor = [{
     height: 100,
     width: 100,
     type: "Tailor-Made Curtains",
     step: 3,
-    header: "Ripple Fold",
+    pleat: "Ripple Fold",
+  }]
+  pendingListInstaller = [{
+    height: 100,
+    width: 100,
+    type: "Tailor-Made Curtains",
+    step: 3,
+    pleat: "Ripple Fold",
   }]
 
   statusPending = true
@@ -82,20 +91,60 @@ export class Tab1Page implements OnInit {
   statusRejected = false
 
   status = 'p'
+  uid = ""
 
   ngOnInit() {
     this.position = 'sales'
+
+    firebase.auth().onAuthStateChanged(a => {
+      if (a) {
+        this.uid = a.uid
+        this.http.post('http://192.168.1.117/onestaff', { id: a.uid }).subscribe((s) => {
+          this.user = s['data'][0]
+          console.log(this.user);
+        })
+
+        this.http.post('http://192.168.1.117/getsaleslist', { id_sales: a.uid }).subscribe((s) => {
+          this.salesList = s['data']
+          console.log(this.salesList);
+        })
+      }
+    })
+
   }
 
   filterPendingList(type) {
     if (type == 'sales') {
-      return this.pendingList.filter(x => x.step == 1)
+      return this.salesList.filter(x => x.step == 1)
     } else if (type == 'tech') {
       return this.pendingList.filter(x => x.step == 2)
     } else if (type == 'tailor') {
       return this.pendingListTailor.filter(x => x.step == 3)
     } else if (type == 'installer') {
       return this.pendingList.filter(x => x.step == 4)
+    }
+  }
+
+  filterOnGoingList(type) {
+    if (type == 'sales') {
+      return this.salesList.filter(x => x.step >= 2 && x.step < 5)
+    } else if (type == 'tech') {
+      return this.pendingList.filter(x => x.step >= 3 && x.step < 5)
+    } else if (type == 'tailor') {
+      return this.pendingListTailor.filter(x => x.step >= 4 && x.step < 5)
+    } 
+    // else if (type == 'installer') {
+    //   return this.pendingListInstaller.filter(x => x.step >= 4 && x.step < 5)
+    // }
+  }
+
+  filterCompletedList(type) {
+    if (type == 'sales') {
+      return this.salesList.filter(x => x.step == 5)
+    } else if (type == 'tech') {
+      return this.pendingList.filter(x => x.step == 5)
+    } else if (type == 'tailor') {
+      return this.pendingListTailor.filter(x => x.step == 5)
     }
   }
 
@@ -120,15 +169,19 @@ export class Tab1Page implements OnInit {
   //   }
   // }
 
-  selectTab(x){
+  selectTab(x) {
     this.status = x
+  }
+
+  toProfile() {
+    this.nav.navigateForward('profile?id=' + this.uid)
   }
 
   toDetail(x) {
 
     let navExtra: NavigationExtras = {
       queryParams: {
-        info: JSON.stringify(x),
+        info: JSON.stringify(this.salesList),
       }
     }
     this.nav.navigateForward(['task-detail'], navExtra)
@@ -139,7 +192,7 @@ export class Tab1Page implements OnInit {
     let item = {
       colours: "c0192",
       fabric: "f9283",
-      header: "Ripple Fold",
+      pleat: "Ripple Fold",
       height: 100,
       patterns: "p7652",
       type: "Tailor-Made Curtains",
@@ -159,7 +212,7 @@ export class Tab1Page implements OnInit {
     let item = {
       colours: "c0192",
       fabric: "f9283",
-      header: "Ripple Fold",
+      pleat: "Ripple Fold",
       height: 100,
       patterns: "p7652",
       type: "Tailor-Made Curtains",
@@ -178,7 +231,7 @@ export class Tab1Page implements OnInit {
     let item = {
       colours: "c0192",
       fabric: "f9283",
-      header: "Ripple Fold",
+      pleat: "Ripple Fold",
       height: 100,
       patterns: "p7652",
       type: "Tailor-Made Curtains",

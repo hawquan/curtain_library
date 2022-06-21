@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
+import Swal from 'sweetalert2';
+import { QuotationSinglePage } from '../quotation-single/quotation-single.page';
 import { TaskCreatorPage } from '../task-creator/task-creator.page';
 import { TaskEditorPage } from '../task-editor/task-editor.page';
 
@@ -15,29 +18,81 @@ export class TaskDetailPage implements OnInit {
     private nav: NavController,
     private actroute: ActivatedRoute,
     public modal: ModalController,
+    private http: HttpClient,
   ) { }
 
   info = []
   img = []
   task = []
   items = [] as any
+  show = null
 
   ngOnInit() {
 
     this.actroute.queryParams.subscribe(a => {
-      this.info = JSON.parse(a["info"])
-      this.img = this.info['img']
+      this.info = JSON.parse(a["info"])[0]
     })
-    console.log(this.info, this.img);
+    console.log(this.info);
+    this.refreshList()
 
+    // let temp = {
+    //   belt: "Velco",
+    //   bracket: "Ceiling",
+    //   fabric: "a003",
+    //   fullness: "1.8",
+    //   height: 1,
+    //   hook: "104-L",
+    //   location: "Living Room",
+    //   others: "Panel",
+    //   pieces: "2",
+    //   pleat: "Ripple Fold",
+    //   price: 3200,
+    //   sidehook: "No",
+    //   touchfloor: "Yes",
+    //   track: "Curve",
+    //   type: "Motorised Curtains",
+    //   width: 32,
+    //   remark: 'the remark',
+    // }
+
+    // let temp2 = {
+    //   belt: "Velco",
+    //   bracket: "Ceiling",
+    //   fabric: "a003",
+    //   fullness: "1.8",
+    //   height: 1,
+    //   hook: "104-L",
+    //   location: "Master Room 1",
+    //   others: "Panel",
+    //   pieces: "2",
+    //   pleat: "Single Pleat",
+    //   price: 1100,
+    //   sidehook: "No",
+    //   touchfloor: "Yes",
+    //   track: "Curve",
+    //   type: "Tailor-Made Curtains",
+    //   width: 32,
+    //   remark: 'the remark',
+    // }
+
+    // this.items.push(temp)
+    // this.items.push(temp2)
   }
-  Header = []
-  HeaderChoice = ''
-  HeaderSingle = false
-  HeaderRipple = false
-  HeaderDouble = false
-  HeaderFrench = false
-  HeaderEyelet = false
+
+  refreshList() {
+    this.http.post('http://192.168.1.117/getorderlist', { sales_id: this.info['no'] }).subscribe(a => {
+      this.items = a['data']
+      console.log('Refresh List', this.items);
+    })
+  }
+
+  Pleat = []
+  PleatChoice = ''
+  PleatSingle = false
+  PleatRipple = false
+  PleatDouble = false
+  PleatFrench = false
+  PleatEyelet = false
 
   RomanBlinds = false
   RollerBlinds = false
@@ -53,12 +108,12 @@ export class TaskDetailPage implements OnInit {
   WallpaperChoice = ''
 
   typeChanged() {
-    this.HeaderSingle = false
-    this.HeaderRipple = false
-    this.HeaderDouble = false
-    this.HeaderFrench = false
-    this.HeaderEyelet = false
-    this.HeaderChoice = ''
+    this.PleatSingle = false
+    this.PleatRipple = false
+    this.PleatDouble = false
+    this.PleatFrench = false
+    this.PleatEyelet = false
+    this.PleatChoice = ''
 
     this.RomanBlinds = false
     this.RollerBlinds = false
@@ -74,28 +129,28 @@ export class TaskDetailPage implements OnInit {
     this.WallpaperChoice = ''
   }
 
-  HeaderSelection(x) {
-    this.HeaderSingle = false
-    this.HeaderRipple = false
-    this.HeaderDouble = false
-    this.HeaderFrench = false
-    this.HeaderEyelet = false
+  PleatSelection(x) {
+    this.PleatSingle = false
+    this.PleatRipple = false
+    this.PleatDouble = false
+    this.PleatFrench = false
+    this.PleatEyelet = false
 
     if (x == 'Single Pleat') {
-      this.HeaderSingle = true
-      this.HeaderChoice = 'Single Pleat'
+      this.PleatSingle = true
+      this.PleatChoice = 'Single Pleat'
     } else if (x == 'Ripple Fold') {
-      this.HeaderRipple = true
-      this.HeaderChoice = 'Ripple Fold'
+      this.PleatRipple = true
+      this.PleatChoice = 'Ripple Fold'
     } else if (x == 'Double Pleat') {
-      this.HeaderDouble = true
-      this.HeaderChoice = 'Double Pleat'
+      this.PleatDouble = true
+      this.PleatChoice = 'Double Pleat'
     } else if (x == 'French Pleat') {
-      this.HeaderFrench = true
-      this.HeaderChoice = 'French Pleat'
+      this.PleatFrench = true
+      this.PleatChoice = 'French Pleat'
     } else if (x == 'Eyelet') {
-      this.HeaderEyelet = true
-      this.HeaderChoice = 'Eyelet'
+      this.PleatEyelet = true
+      this.PleatChoice = 'Eyelet'
     }
 
   }
@@ -152,6 +207,9 @@ export class TaskDetailPage implements OnInit {
     const modal = await this.modal.create({
       cssClass: 'task',
       component: TaskCreatorPage,
+      componentProps: {
+        sales_no: this.info['no'],
+      }
     });
 
     await modal.present();
@@ -159,14 +217,37 @@ export class TaskDetailPage implements OnInit {
     console.log(data)
 
     if (data != null) {
-      this.items.push(data)
+      // this.items.push(data)
+      this.refreshList()
     }
   }
 
   async editTask(x) {
+
     const modal = await this.modal.create({
       cssClass: 'task',
       component: TaskEditorPage,
+      componentProps: {
+        item: x,
+        sales_no: this.info['no'],
+      }
+    });
+
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    console.log(data)
+
+    if (data != null) {
+      // x = data
+      this.refreshList()
+    }
+  }
+
+  async quotationSingle(x) {
+
+    const modal = await this.modal.create({
+      cssClass: 'task',
+      component: QuotationSinglePage,
       componentProps: {
         item: x
       }
@@ -177,8 +258,49 @@ export class TaskDetailPage implements OnInit {
     console.log(data)
 
     if (data != null) {
-      // this.items.push(data)
+      x = data
     }
+  }
+
+  deleteTask(x) {
+    console.log(x.no);
+
+    Swal.fire({
+      title: 'Delete Item',
+      text: 'Delete "' + x.location + '" from the list. Are you sure?',
+      heightAuto: false,
+      icon: 'warning',
+      showConfirmButton: true,
+      showCancelButton: true,
+      cancelButtonText: 'Cancel',
+      confirmButtonText: 'Delete',
+    }).then((y) => {
+      if (y.isConfirmed) {
+        this.http.post('http://192.168.1.117/deleteorder', { no: x.no }).subscribe(a => {
+          this.refreshList()
+        })
+        // this.items.splice(x, 1)
+      }
+    })
+
+
+  }
+
+  totalPrice() {
+    let total = 0
+    for (let i = 0; i < this.items.length; i++) {
+      total += this.items[i].price
+    }
+    return total || 0
+  }
+
+  proceed() {
+    let navExtra: NavigationExtras = {
+      queryParams: {
+        items: JSON.stringify(this.items),
+      }
+    }
+    this.nav.navigateForward(['quotation-overall'], navExtra)
   }
 
   back() {

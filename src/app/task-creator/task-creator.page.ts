@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ModalController, NavController, NavParams } from '@ionic/angular';
 import Swal from 'sweetalert2';
+import { SelectorPage } from '../selector/selector.page';
 
 @Component({
   selector: 'app-task-creator',
@@ -14,17 +16,22 @@ export class TaskCreatorPage implements OnInit {
     private nav: NavController,
     private actroute: ActivatedRoute,
     private model: ModalController,
+    private modalcontroller: ModalController,
+    private http: HttpClient,
+    private navparam: NavParams,
   ) { }
 
   item = [] as any
   info = []
-  Header = []
-  HeaderChoice = ''
-  HeaderSingle = false
-  HeaderRipple = false
-  HeaderDouble = false
-  HeaderFrench = false
-  HeaderEyelet = false
+  sales_no = 0
+
+  Pleat = []
+  PleatChoice = ''
+  PleatSingle = false
+  PleatRipple = false
+  PleatDouble = false
+  PleatFrench = false
+  PleatEyelet = false
 
   RomanBlinds = false
   RollerBlinds = false
@@ -38,22 +45,31 @@ export class TaskCreatorPage implements OnInit {
   PatternWall = false
   VinylWall = false
   WallpaperChoice = ''
+  price = 0
+
+  tracks = [
+    "Bendable", "Curve", "Rod", "Cubicle", "Motorised (Battery)", "Motorised (Power Point)"
+  ]
 
   ngOnInit() {
-    this.actroute.queryParams.subscribe(a => {
-      this.info = JSON.parse(a["info"])
-      this.Header = this.info['img']
-    })
-    console.log(this.info, this.Header);
+    // this.actroute.queryParams.subscribe(a => {
+    //   this.info = JSON.parse(a["info"])
+    //   this.Pleat = this.info['img']
+    // })
+    // console.log(this.info, this.Pleat);
+    this.sales_no = this.navparam.get('sales_no')
+    console.log(this.sales_no);
+    
   }
 
+
   typeChanged() {
-    this.HeaderSingle = false
-    this.HeaderRipple = false
-    this.HeaderDouble = false
-    this.HeaderFrench = false
-    this.HeaderEyelet = false
-    this.HeaderChoice = ''
+    this.PleatSingle = false
+    this.PleatRipple = false
+    this.PleatDouble = false
+    this.PleatFrench = false
+    this.PleatEyelet = false
+    this.PleatChoice = ''
 
     this.RomanBlinds = false
     this.RollerBlinds = false
@@ -69,28 +85,28 @@ export class TaskCreatorPage implements OnInit {
     this.WallpaperChoice = ''
   }
 
-  HeaderSelection(x) {
-    this.HeaderSingle = false
-    this.HeaderRipple = false
-    this.HeaderDouble = false
-    this.HeaderFrench = false
-    this.HeaderEyelet = false
+  PleatSelection(x) {
+    this.PleatSingle = false
+    this.PleatRipple = false
+    this.PleatDouble = false
+    this.PleatFrench = false
+    this.PleatEyelet = false
 
     if (x == 'Single Pleat') {
-      this.HeaderSingle = true
-      this.HeaderChoice = 'Single Pleat'
+      this.PleatSingle = true
+      this.PleatChoice = 'Single Pleat'
     } else if (x == 'Ripple Fold') {
-      this.HeaderRipple = true
-      this.HeaderChoice = 'Ripple Fold'
+      this.PleatRipple = true
+      this.PleatChoice = 'Ripple Fold'
     } else if (x == 'Double Pleat') {
-      this.HeaderDouble = true
-      this.HeaderChoice = 'Double Pleat'
+      this.PleatDouble = true
+      this.PleatChoice = 'Double Pleat'
     } else if (x == 'French Pleat') {
-      this.HeaderFrench = true
-      this.HeaderChoice = 'French Pleat'
+      this.PleatFrench = true
+      this.PleatChoice = 'French Pleat'
     } else if (x == 'Eyelet') {
-      this.HeaderEyelet = true
-      this.HeaderChoice = 'Eyelet'
+      this.PleatEyelet = true
+      this.PleatChoice = 'Eyelet'
     }
 
   }
@@ -143,17 +159,66 @@ export class TaskCreatorPage implements OnInit {
 
   }
 
+  async selector(x) {
+    const modal = await this.modalcontroller.create({
+      component: SelectorPage,
+      componentProps: { array: [{ name: "ok1", id: "a001" }, { name: "ok2", id: "a002" }, { name: "ok3", id: "a003" }, { name: "ok4", id: "a004" },] }
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      eval(x + '="' + data.value.id + '"')
+    }
+  }
+
   addItem() {
-    this.item.header = this.HeaderChoice
+    this.calcPrice()
+
+    this.item.pleat = this.PleatChoice
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
       console.log('in 1st');
       console.log(this.item);
 
-      if (['width', 'height', 'type', 'header', 'fabric'].every(a => this.item[a])) {
+      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
 
-        console.log('pass1');
+        console.log('add curtain');
+        this.item.price = this.price
 
-        this.model.dismiss(this.item)
+        let temp = {
+          sales_id: this.sales_no,
+          location: this.item.location,
+          height: this.item.height,
+          width: this.item.width,
+          track: this.item.track,
+          type: this.item.type,
+          pleat: this.item.pleat,
+          fullness: this.item.fullness,
+          pieces: this.item.pieces,
+          bracket: this.item.bracket,
+          hook: this.item.hook,
+          sidehook: this.item.sidehook,
+          belt: this.item.belt,
+          fabric: this.item.fabric,
+          others: this.item.others,
+          touchfloor: this.item.touchfloor,
+          price: this.item.price,
+          status: true,
+          photos: JSON.stringify([]),
+          remark_sale: this.item.remark_sale,
+          step: 2,
+        }
+
+        console.log(temp);
+
+        // Swal.fire({
+        //   title: '',
+        // })
+
+        this.http.post('http://192.168.1.117/insertorders', temp).subscribe(a => {
+          console.log('insert orders success');
+          this.model.dismiss(this.item)
+
+        })
 
       } else {
         console.log('error empty')
@@ -172,14 +237,51 @@ export class TaskCreatorPage implements OnInit {
 
       }
 
-    } else if(this.item['type'] == 'Blinds') {
-    this.item.header = this.blindsChoice
-    
+    } else if (this.item['type'] == 'Blinds') {
+      this.item.pleat = this.blindsChoice
+
       console.log(this.item);
 
-      if (['width', 'height', 'type', 'header', 'styles', 'patterns', 'textures'].every(a => this.item[a])) {
-        console.log('pass2');
-        this.model.dismiss(this.item)
+      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
+
+        console.log('add blinds');
+        this.item.price = this.price
+
+        let temp = {
+          sales_id: this.sales_no,
+          location: this.item.location,
+          height: this.item.height,
+          width: this.item.width,
+          track: this.item.track,
+          type: this.item.type,
+          pleat: this.item.pleat,
+          fullness: this.item.fullness,
+          pieces: this.item.pieces,
+          bracket: this.item.bracket,
+          hook: this.item.hook,
+          sidehook: this.item.sidehook,
+          belt: this.item.belt,
+          fabric: this.item.fabric,
+          others: this.item.others,
+          touchfloor: this.item.touchfloor,
+          price: this.item.price,
+          status: true,
+          photos: JSON.stringify([]),
+          remark_sale: this.item.remark_sale,
+          step: 2,
+        }
+
+        console.log(temp);
+
+        // Swal.fire({
+        //   title: '',
+        // })
+
+        this.http.post('http://192.168.1.117/insertorders', temp).subscribe(a => {
+          console.log('insert orders success');
+          this.model.dismiss(this.item)
+
+        })
 
       } else {
         console.log('error empty')
@@ -196,13 +298,15 @@ export class TaskCreatorPage implements OnInit {
           title: 'Please Fill in all fields.'
         })
       }
-    } else{
-      this.item.header = this.WallpaperChoice
+    } else {
+      this.item.pleat = this.WallpaperChoice
 
       console.log(this.item);
 
-      if (['width', 'height', 'type', 'header', 'colours', 'prints', 'textures'].every(a => this.item[a])) {
-        console.log('pass2');
+      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
+
+        console.log('add wallpaper');
+        this.item.price = this.price
         this.model.dismiss(this.item)
 
       } else {
@@ -222,6 +326,10 @@ export class TaskCreatorPage implements OnInit {
       }
     }
 
+  }
+
+  calcPrice() {
+    return this.price = this.item.width + this.item.height || 0
   }
 
   back() {
