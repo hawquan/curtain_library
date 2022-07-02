@@ -599,224 +599,171 @@
 
 <ion-content style="--background: #FAF7F2">
 
-  <div style="width: 100vw; margin: 10px 0; padding: 0 10px; display: flex;align-items: center;">
+  <!-- Sales -->
+  <div *ngIf="user.position == 'Sales'" style="width: 100vw;">
 
-    <!-- <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''"
-      style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
-    <div>|</div>
-    <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''"
-      style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
-    <div>|</div>
-    <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"
-      style="width: 33%;padding: 5px;text-align: center;;">Completed</div> -->
+    <div style="width: 100%; padding: 10px 20px ; display: flex; flex-direction: column; ">
 
-  </div>
-
-  <div style="width: 100%; padding: 10px 20px ; display: flex; flex-direction: column; ">
-
-    <div style="width: 100%;display: flex; align-items: center; justify-content: center; margin-bottom: 10px; ">
-      <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff; border-right: 1px solid #eeeeee;">
-        <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
-          <div style="font-size: 20px; font-weight: 600;  margin-bottom: 5px;">12</div>
-          <div style="font-size: 12px; ">Leads</div>
-        </div>
-      </div>
-
-      <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff;">
-        <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
-          <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">{{filterPendingList('sales').length}}
-          </div>
-          <div style="font-size: 12px; ">Appointments</div>
-        </div>
-      </div>
-    </div>
-
-    <h6 style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('sales').length}})</h6>
-
-    <div style="width: 100%; display: flex;align-items: center;">
-
-      <div (click)="selectTab('p')" style="width: 33%;text-align: center;">
-        <div [ngClass]="status == 'p' ? 'selected' : 'selectedx'">Pending</div>
-      </div>
-
-      <div (click)="selectTab('o')" style="width: 33%;text-align: center;;">
-        <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">On-Going</div>
-      </div>
-
-      <div (click)="selectTab('c')" style="width: 33%;text-align: center;;">
-        <div [ngClass]="status == 'c'? 'selected' : 'selectedx'">Completed</div>
-      </div>
-
-    </div>
-
-    <div *ngIf="status == 'p'" style="width: 100%; margin: 15px 0;">
-
-      <div *ngIf="filterPendingList('sales').length == 0" style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
-        <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-        <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
-        <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-      </div>
-
-      <div *ngFor="let x of filterPendingList('sales'); let i = index;" (click)="toDetail(x)"
-        style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
-
-        <!-- <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px; width: 100%;">
-
-        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-          <div style="font-weight: 700;">Client :</div>
-          <div style="font-weight: 400;padding-left: 10px;">{{x.client}}</div>
-        </div>
-
-        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-          <div style="min-width: 56px;font-weight: 700;">Address :</div>
-          <div style="font-weight: 400;padding-left: 10px;">{{x.address}}</div>
-        </div>
-
-        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-          <div style="font-weight: 700;">Contact :</div>
-          <div style="font-weight: 400;padding-left: 10px;">{{x.contact}}</div>
-        </div>
-
-        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-          <div style="font-weight: 700;">House Type :</div>
-          <div style="font-weight: 400;padding-left: 10px;">{{x.house_type}}</div>
-        </div>
-
-        <div style="padding: 0 35px;margin-top: 5px;margin-bottom: 3px;">
-          <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
-
-          <div style="margin-top: -10px;display: flex;justify-content: space-between;">
-            <div [ngClass]="x.step == 1 ? 'step' : 'xstep'"
-              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;"></div>
-            <div [ngClass]="x.step == 2 ? 'step' : 'xstep'"
-              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
-            </div>
-            <div [ngClass]="x.step == 3 ? 'step' : 'xstep'"
-              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
-            </div>
-            <div [ngClass]="x.step == 4 ? 'step' : 'xstep'"
-              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
-            </div>
+      <div style="width: 100%;display: flex; align-items: center; justify-content: center; margin-bottom: 10px; ">
+        <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff; border-right: 1px solid #eeeeee;">
+          <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+            <div style="font-size: 20px; font-weight: 600;  margin-bottom: 5px;">12</div>
+            <div style="font-size: 12px; ">Leads</div>
           </div>
         </div>
 
-        <div style="height: 40px;display: flex;justify-content: space-between;padding: 0 30px;">
-          <ion-icon style="font-size: 24px;" name="pricetags-outline"></ion-icon>
-          <ion-icon style="font-size: 24px;" name="cog-outline"></ion-icon>
-          <ion-icon style="font-size: 24px;" name="cut-outline"></ion-icon>
-          <ion-icon style="font-size: 24px;" name="construct-outline"></ion-icon>
+        <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff;">
+          <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+            <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">{{filterPendingList('sales').length}}
+            </div>
+            <div style="font-size: 12px; ">Appointments</div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="salesListRejected.length > 0;" style="width: 100%; margin: 0 0;">
+
+        <div style="font-weight: 600;color: red;">
+          Revisit Needed
         </div>
 
-        <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
-      </div> -->
+        <div *ngFor="let x of salesListRejected; let i = index;" (click)="toDetailRejected(x,i)"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px;margin-top: 10px; margin-bottom: 15px; background-color: #ffffff;">
 
-        <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
-          <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
 
-          <div style="width: 100%; display: flex; align-items: flex-start;">
-            <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-              Contact:
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Contact:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
             </div>
-            <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
-          </div>
 
-          <div style="width: 100%; display: flex; align-items: flex-start;">
-            <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-              Address:
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Address:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
             </div>
-            <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
-          </div>
 
-          <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
-            <!-- <div
-              style="display: flex; align-items: center; justify-content: center; width: 70%;border-right: 1px solid #eeeeee;">
-              <ion-icon style="margin-right: 5px; color: #888888;" name="receipt-outline"></ion-icon>
-              <div style="font-size: 12px; font-weight: 500; color: #888888;">Send quotation</div>
-            </div> -->
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
 
-            <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
-              <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              </div>
+
             </div>
 
           </div>
 
         </div>
-
-        <!-- <div style="display: flex;justify-content: flex-end;padding-right: 15px;margin-bottom: 10px;">
-
-        <div
-          style="padding: 5px;border-radius: 20px;color: white;font-weight: 350;
-           background: linear-gradient(135deg, rgba(198,152,80,1) 30%, rgba(161,118,53,1) 30%, rgba(204,150,68,1) 82%, rgba(193,137,52,1) 82%);">
-          View Details
-        </div>
-      </div> -->
-
-      </div>
-    </div>
-
-    <div *ngIf="status == 'o'" style="width: 100%; margin: 15px 0;">
-
-      <div *ngIf="filterOnGoingList('sales').length == 0" style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
-        <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-        <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
-        <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
       </div>
 
-      <div *ngFor="let x of filterOnGoingList('sales'); let i = index;" (click)="toDetail(x)"
-        style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+      <h6 style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('sales').length}})</h6>
 
-        <!-- <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px; width: 100%;">
+      <div style="width: 100%; display: flex;align-items: center;">
 
-        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-          <div style="font-weight: 700;">Client :</div>
-          <div style="font-weight: 400;padding-left: 10px;">{{x.client}}</div>
+        <div (click)="selectTab('p')" style="width: 33%;text-align: center;">
+          <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Pending</div>
         </div>
 
-        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-          <div style="min-width: 56px;font-weight: 700;">Address :</div>
-          <div style="font-weight: 400;padding-left: 10px;">{{x.address}}</div>
+        <div (click)="selectTab('o')" style="width: 33%;text-align: center;;">
+          <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">On-Going</div>
         </div>
 
-        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-          <div style="font-weight: 700;">Contact :</div>
-          <div style="font-weight: 400;padding-left: 10px;">{{x.contact}}</div>
+        <div (click)="selectTab('c')" style="width: 33%;text-align: center;;">
+          <div [ngClass]="status == 'c'? 'selected' : 'selectedx'">Completed</div>
         </div>
 
-        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-          <div style="font-weight: 700;">House Type :</div>
-          <div style="font-weight: 400;padding-left: 10px;">{{x.house_type}}</div>
+      </div>
+
+      <div *ngIf="status == 'p'" style="width: 100%; margin: 15px 0;">
+
+        <div *ngIf="filterPendingList('sales').length == 0"
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div style="padding: 0 35px;margin-top: 5px;margin-bottom: 3px;">
-          <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
+        <div *ngFor="let x of filterPendingList('sales'); let i = index;" (click)="toDetail(x,i)"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
 
-          <div style="margin-top: -10px;display: flex;justify-content: space-between;">
-            <div [ngClass]="x.step == 1 ? 'step' : 'xstep'"
-              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;"></div>
-            <div [ngClass]="x.step == 2 ? 'step' : 'xstep'"
-              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Contact:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
             </div>
-            <div [ngClass]="x.step == 3 ? 'step' : 'xstep'"
-              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Address:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
             </div>
-            <div [ngClass]="x.step == 4 ? 'step' : 'xstep'"
-              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
+
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              </div>
+
             </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div *ngIf="status == 'o'" style="width: 100%; margin: 15px 0;">
+
+        <div *ngIf="filterOnGoingList('sales').length == 0"
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+        </div>
+
+        <div *ngFor="let x of filterOnGoingList('sales'); let i = index;" (click)="toOngoing(x,i)"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+
+          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Contact:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Address:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+            </div>
+
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              </div>
+
+            </div>
+
           </div>
         </div>
 
-        <div style="height: 40px;display: flex;justify-content: space-between;padding: 0 30px;">
-          <ion-icon style="font-size: 24px;" name="pricetags-outline"></ion-icon>
-          <ion-icon style="font-size: 24px;" name="cog-outline"></ion-icon>
-          <ion-icon style="font-size: 24px;" name="cut-outline"></ion-icon>
-          <ion-icon style="font-size: 24px;" name="construct-outline"></ion-icon>
-        </div>
-
-        <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
-      </div> -->
-
-        <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+        <!-- <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
           <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.client}}</div>
 
           <div style="width: 100%; display: flex; align-items: flex-start;">
@@ -835,11 +782,6 @@
 
           <div
             style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
-            <!-- <div
-              style="display: flex; align-items: center; justify-content: center; width: 70%;border-right: 1px solid #eeeeee;">
-              <ion-icon style="margin-right: 5px; color: #888888;" name="receipt-outline"></ion-icon>
-              <div style="font-size: 12px; font-weight: 500; color: #888888;">Send quotation</div>
-            </div> -->
 
             <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
               <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
@@ -847,82 +789,182 @@
 
           </div>
 
+        </div> -->
+
+      </div>
+
+      <div *ngIf="status == 'c'" style="width: 100%; margin: 15px 0;">
+
+        <div *ngIf="filterCompletedList('sales').length == 0"
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <!-- <div style="display: flex;justify-content: flex-end;padding-right: 15px;margin-bottom: 10px;">
+        <div *ngFor="let x of filterCompletedList('sales'); let i = index;" (click)="toCompletedDetail(x,i)"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
 
-        <div
-          style="padding: 5px;border-radius: 20px;color: white;font-weight: 350;
-           background: linear-gradient(135deg, rgba(198,152,80,1) 30%, rgba(161,118,53,1) 30%, rgba(204,150,68,1) 82%, rgba(193,137,52,1) 82%);">
-          View Details
+          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Contact:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Address:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+            </div>
+
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
-      </div> -->
-
       </div>
     </div>
 
-    <div *ngIf="status == 'c'" style="width: 100%; margin: 15px 0;">
 
-      <div *ngIf="filterCompletedList('sales').length == 0" style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
-        <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-        <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
-        <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-      </div>
+  </div>
 
-      <div *ngFor="let x of filterCompletedList('sales'); let i = index;" (click)="toDetail(x)"
-        style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+  <!-- Technician -->
+  <div *ngIf="user.position == 'Technician'" style="width: 100vw;">
 
-        <!-- <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px; width: 100%;">
+    <div style="width: 100%; padding: 10px 20px ; display: flex; flex-direction: column; ">
 
-        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-          <div style="font-weight: 700;">Client :</div>
-          <div style="font-weight: 400;padding-left: 10px;">{{x.client}}</div>
-        </div>
-
-        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-          <div style="min-width: 56px;font-weight: 700;">Address :</div>
-          <div style="font-weight: 400;padding-left: 10px;">{{x.address}}</div>
-        </div>
-
-        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-          <div style="font-weight: 700;">Contact :</div>
-          <div style="font-weight: 400;padding-left: 10px;">{{x.contact}}</div>
-        </div>
-
-        <div style="margin-left: 15px;margin-bottom: 5px;display: flex;">
-          <div style="font-weight: 700;">House Type :</div>
-          <div style="font-weight: 400;padding-left: 10px;">{{x.house_type}}</div>
-        </div>
-
-        <div style="padding: 0 35px;margin-top: 5px;margin-bottom: 3px;">
-          <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
-
-          <div style="margin-top: -10px;display: flex;justify-content: space-between;">
-            <div [ngClass]="x.step == 1 ? 'step' : 'xstep'"
-              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;"></div>
-            <div [ngClass]="x.step == 2 ? 'step' : 'xstep'"
-              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
-            </div>
-            <div [ngClass]="x.step == 3 ? 'step' : 'xstep'"
-              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
-            </div>
-            <div [ngClass]="x.step == 4 ? 'step' : 'xstep'"
-              style="height: 8px;width: 8px;border: 1px solid #a17635;border-radius: 100px;">
-            </div>
+      <div style="width: 100%;display: flex; align-items: center; justify-content: center; margin-bottom: 10px; ">
+        <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff; border-right: 1px solid #eeeeee;">
+          <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+            <div style="font-size: 20px; font-weight: 600;  margin-bottom: 5px;">12</div>
+            <div style="font-size: 12px; ">Leads</div>
           </div>
         </div>
 
-        <div style="height: 40px;display: flex;justify-content: space-between;padding: 0 30px;">
-          <ion-icon style="font-size: 24px;" name="pricetags-outline"></ion-icon>
-          <ion-icon style="font-size: 24px;" name="cog-outline"></ion-icon>
-          <ion-icon style="font-size: 24px;" name="cut-outline"></ion-icon>
-          <ion-icon style="font-size: 24px;" name="construct-outline"></ion-icon>
+        <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff;">
+          <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+            <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">{{filterPendingList('tech').length}}
+            </div>
+            <div style="font-size: 12px; ">Appointments</div>
+          </div>
+        </div>
+      </div>
+
+      <h6 style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('tech').length}})</h6>
+
+      <div style="width: 100%; display: flex;align-items: center;">
+
+        <div (click)="selectTab('p')" style="width: 33%;text-align: center;">
+          <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Pending</div>
         </div>
 
-        <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
-      </div> -->
+        <div (click)="selectTab('o')" style="width: 33%;text-align: center;;">
+          <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">On-Going</div>
+        </div>
 
-        <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+        <div (click)="selectTab('c')" style="width: 33%;text-align: center;;">
+          <div [ngClass]="status == 'c'? 'selected' : 'selectedx'">Completed</div>
+        </div>
+
+      </div>
+
+      <div *ngIf="status == 'p'" style="width: 100%; margin: 15px 0;">
+
+        <div *ngIf="filterPendingList('tech').length == 0"
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+        </div>
+
+        <div *ngFor="let x of filterPendingList('tech'); let i = index;" (click)="toDetail(x,i)"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+
+          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Contact:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Address:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+            </div>
+
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div *ngIf="status == 'o'" style="width: 100%; margin: 15px 0;">
+
+        <div *ngIf="filterOnGoingList('tech').length == 0"
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+        </div>
+
+        <div *ngFor="let x of filterOnGoingList('tech'); let i = index;" (click)="toOngoing(x,i)"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+
+          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Contact:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Address:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+            </div>
+
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
           <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.client}}</div>
 
           <div style="width: 100%; display: flex; align-items: flex-start;">
@@ -941,11 +983,6 @@
 
           <div
             style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
-            <!-- <div
-              style="display: flex; align-items: center; justify-content: center; width: 70%;border-right: 1px solid #eeeeee;">
-              <ion-icon style="margin-right: 5px; color: #888888;" name="receipt-outline"></ion-icon>
-              <div style="font-size: 12px; font-weight: 500; color: #888888;">Send quotation</div>
-            </div> -->
 
             <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
               <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
@@ -953,19 +990,474 @@
 
           </div>
 
+        </div> -->
+
+      </div>
+
+      <div *ngIf="status == 'c'" style="width: 100%; margin: 15px 0;">
+
+        <div *ngIf="filterCompletedList('tech').length == 0"
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <!-- <div style="display: flex;justify-content: flex-end;padding-right: 15px;margin-bottom: 10px;">
+        <div *ngFor="let x of filterCompletedList('tech'); let i = index;" (click)="toCompletedDetail(x,i)"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
 
-        <div
-          style="padding: 5px;border-radius: 20px;color: white;font-weight: 350;
-           background: linear-gradient(135deg, rgba(198,152,80,1) 30%, rgba(161,118,53,1) 30%, rgba(204,150,68,1) 82%, rgba(193,137,52,1) 82%);">
-          View Details
+          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Contact:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Address:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+            </div>
+
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
-      </div> -->
+      </div>
+    </div>
 
+
+  </div>
+
+  <!-- Tailor -->
+  <div *ngIf="user.position == 'Tailor'" style="width: 100vw;">
+
+    <div style="width: 100%; padding: 10px 20px ; display: flex; flex-direction: column; ">
+
+      <div style="width: 100%;display: flex; align-items: center; justify-content: center; margin-bottom: 10px; ">
+        <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff; border-right: 1px solid #eeeeee;">
+          <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+            <div style="font-size: 20px; font-weight: 600;  margin-bottom: 5px;">12</div>
+            <div style="font-size: 12px; ">Leads</div>
+          </div>
+        </div>
+
+        <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff;">
+          <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+            <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">{{filterPendingList('tailor').length}}
+            </div>
+            <div style="font-size: 12px; ">Appointments</div>
+          </div>
+        </div>
+      </div>
+
+      <h6 style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('tailor').length}})</h6>
+
+      <div style="width: 100%; display: flex;align-items: center;">
+
+        <div (click)="selectTab('p')" style="width: 33%;text-align: center;">
+          <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Pending</div>
+        </div>
+
+        <div (click)="selectTab('o')" style="width: 33%;text-align: center;;">
+          <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">On-Going</div>
+        </div>
+
+        <div (click)="selectTab('c')" style="width: 33%;text-align: center;;">
+          <div [ngClass]="status == 'c'? 'selected' : 'selectedx'">Completed</div>
+        </div>
+
+      </div>
+
+      <div *ngIf="status == 'p'" style="width: 100%; margin: 15px 0;">
+
+        <div *ngIf="filterPendingList('tailor').length == 0"
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+        </div>
+
+        <div *ngFor="let x of filterPendingList('tailor'); let i = index;" (click)="toTailorDetail(x,i)"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+
+          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}} <span
+                style="color: #5a5a5a;font-size: 13px;">({{x.location}})</span></div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Width:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.width_tech || x.width}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Height:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.height_tech || x.height}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Type:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.type}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Pleet:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.pleat}}</div>
+            </div>
+
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 10px;">
+
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div *ngIf="status == 'o'" style="width: 100%; margin: 15px 0;">
+
+        <div *ngIf="filterOnGoingList('tailor').length == 0"
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+        </div>
+
+        <div *ngFor="let x of filterOnGoingList('tailor'); let i = index;" (click)="toTailorDetailOngoing(x,i)"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+
+          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}} <span
+                style="color: #5a5a5a;font-size: 13px;">({{x.location}})</span></div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Width:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.width_tech || x.width}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Height:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.height_tech || x.height}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Type:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.type}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Pleet:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.pleat}}</div>
+            </div>
+
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 10px;">
+
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+        <!-- <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+          <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.client}}</div>
+
+          <div style="width: 100%; display: flex; align-items: flex-start;">
+            <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+              Contact:
+            </div>
+            <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.contact}}</div>
+          </div>
+
+          <div style="width: 100%; display: flex; align-items: flex-start;">
+            <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+              Address:
+            </div>
+            <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.address}}</div>
+          </div>
+
+          <div
+            style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+            <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+              <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+            </div>
+
+          </div>
+
+        </div> -->
+
+      </div>
+
+      <div *ngIf="status == 'c'" style="width: 100%; margin: 15px 0;">
+
+        <div *ngIf="filterCompletedList('tailor').length == 0"
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+        </div>
+
+        <div *ngFor="let x of filterCompletedList('tailor'); let i = index;" (click)="reviewTaskCompleted(x,i)"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+
+          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}} <span
+                style="color: #5a5a5a;font-size: 13px;">({{x.location}})</span></div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Width:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.width_tech || x.width}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Height:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.height_tech || x.height}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Type:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.type}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Pleet:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.pleat}}</div>
+            </div>
+
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 10px;">
+
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
       </div>
     </div>
 
   </div>
+
+  <!-- Installer -->
+  <div *ngIf="user.position == 'Installer'" style="width: 100vw;">
+
+    <div style="width: 100%; padding: 10px 20px ; display: flex; flex-direction: column; ">
+
+      <div style="width: 100%;display: flex; align-items: center; justify-content: center; margin-bottom: 10px; ">
+        <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff; border-right: 1px solid #eeeeee;">
+          <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+            <div style="font-size: 20px; font-weight: 600;  margin-bottom: 5px;">12</div>
+            <div style="font-size: 12px; ">Leads</div>
+          </div>
+        </div>
+
+        <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff;">
+          <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+            <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">
+              {{filterPendingList('installer').length}}
+            </div>
+            <div style="font-size: 12px; ">Appointments</div>
+          </div>
+        </div>
+      </div>
+
+      <h6 style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('installer').length}})</h6>
+
+      <div style="width: 100%; display: flex;align-items: center;">
+
+        <div (click)="selectTab('p')" style="width: 50%;text-align: center;">
+          <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Pending</div>
+        </div>
+
+        <!-- <div (click)="selectTab('o')" style="width: 33%;text-align: center;;">
+          <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">On-Going</div>
+        </div> -->
+
+        <div (click)="selectTab('c')" style="width: 50%;text-align: center;;">
+          <div [ngClass]="status == 'c'? 'selected' : 'selectedx'">Completed</div>
+        </div>
+
+      </div>
+
+      <div *ngIf="status == 'p'" style="width: 100%; margin: 15px 0;">
+
+        <div *ngIf="filterPendingList('installer').length == 0"
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+        </div>
+
+        <div *ngFor="let x of filterPendingList('installer'); let i = index;" (click)="toDetail(x,i)"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+
+          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Contact:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Address:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+            </div>
+
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- <div *ngIf="status == 'o'" style="width: 100%; margin: 15px 0;">
+
+        <div *ngIf="filterOnGoingList('installer').length == 0"
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+        </div>
+
+        <div *ngFor="let x of filterOnGoingList('installer'); let i = index;" (click)="toOngoing(x,i)"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+
+          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Contact:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Address:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+            </div>
+
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div> -->
+
+      <div *ngIf="status == 'c'" style="width: 100%; margin: 15px 0;">
+
+        <div *ngIf="filterCompletedList('installer').length == 0"
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+        </div>
+
+        <div *ngFor="let x of filterCompletedList('installer'); let i = index;" (click)="toCompletedDetail(x,i)"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+
+          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Contact:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                Address:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+            </div>
+
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
 </ion-content>

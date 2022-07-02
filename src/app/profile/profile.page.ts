@@ -23,7 +23,7 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
 
     this.actRoute.queryParams.subscribe(a => {
-      this.http.post('http://192.168.1.117/onestaff', { id: a.id }).subscribe((s) => {
+      this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/onestaff', { id: a.id }).subscribe((s) => {
         this.user = s['data'][0]
         console.log(this.user);
       })

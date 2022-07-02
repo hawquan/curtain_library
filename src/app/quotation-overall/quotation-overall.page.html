@@ -84,3 +84,37 @@
   </div>
 
 </ion-content>
+
+<ion-footer>
+
+  <div
+    style="background: #ebd1af; display: flex;padding: 10px 15px;align-items: center;justify-content: space-between;">
+
+    <div style="padding-left: 5px;">
+      <div style="width: 92px;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
+      <div style="color: #a17635;font-size: 14px;font-weight: 500;">RM {{totalPrice() | number : '1.2-2'}}</div>
+    </div>
+
+    <!-- <div
+      style="width: 100%;display: flex;align-items: center;justify-content: flex-end;padding: 0 0 0 15px;background: #ebd1af">
+
+      <ion-button (click)="calcPrice()"
+        style="height: 35px;width: 50%;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 350px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;">
+        Calculate
+      </ion-button>
+
+      <ion-button (click)="addItem()"
+        style="height: 35px;width: 40%;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 350px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;">
+        Add Item
+      </ion-button>
+
+    </div> -->
+
+    <ion-button (click)="checkout()"
+      style="height: 35px;width: 40%;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 450px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;">
+      Checkout
+    </ion-button>
+
+  </div>
+
+</ion-footer>

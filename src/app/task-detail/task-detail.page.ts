@@ -5,6 +5,9 @@ import { ModalController, NavController } from '@ionic/angular';
 import Swal from 'sweetalert2';
 import { QuotationSinglePage } from '../quotation-single/quotation-single.page';
 import { TaskCreatorPage } from '../task-creator/task-creator.page';
+import { TaskDetailCompletedReviewPage } from '../task-detail-completed-review/task-detail-completed-review.page';
+import { TaskDetailCompletedPage } from '../task-detail-completed/task-detail-completed.page';
+import { TaskDetailReviewPage } from '../task-detail-review/task-detail-review.page';
 import { TaskEditorPage } from '../task-editor/task-editor.page';
 
 @Component({
@@ -20,71 +23,6 @@ export class TaskDetailPage implements OnInit {
     public modal: ModalController,
     private http: HttpClient,
   ) { }
-
-  info = []
-  img = []
-  task = []
-  items = [] as any
-  show = null
-
-  ngOnInit() {
-
-    this.actroute.queryParams.subscribe(a => {
-      this.info = JSON.parse(a["info"])[0]
-    })
-    console.log(this.info);
-    this.refreshList()
-
-    // let temp = {
-    //   belt: "Velco",
-    //   bracket: "Ceiling",
-    //   fabric: "a003",
-    //   fullness: "1.8",
-    //   height: 1,
-    //   hook: "104-L",
-    //   location: "Living Room",
-    //   others: "Panel",
-    //   pieces: "2",
-    //   pleat: "Ripple Fold",
-    //   price: 3200,
-    //   sidehook: "No",
-    //   touchfloor: "Yes",
-    //   track: "Curve",
-    //   type: "Motorised Curtains",
-    //   width: 32,
-    //   remark: 'the remark',
-    // }
-
-    // let temp2 = {
-    //   belt: "Velco",
-    //   bracket: "Ceiling",
-    //   fabric: "a003",
-    //   fullness: "1.8",
-    //   height: 1,
-    //   hook: "104-L",
-    //   location: "Master Room 1",
-    //   others: "Panel",
-    //   pieces: "2",
-    //   pleat: "Single Pleat",
-    //   price: 1100,
-    //   sidehook: "No",
-    //   touchfloor: "Yes",
-    //   track: "Curve",
-    //   type: "Tailor-Made Curtains",
-    //   width: 32,
-    //   remark: 'the remark',
-    // }
-
-    // this.items.push(temp)
-    // this.items.push(temp2)
-  }
-
-  refreshList() {
-    this.http.post('http://192.168.1.117/getorderlist', { sales_id: this.info['no'] }).subscribe(a => {
-      this.items = a['data']
-      console.log('Refresh List', this.items);
-    })
-  }
 
   Pleat = []
   PleatChoice = ''
@@ -106,6 +44,52 @@ export class TaskDetailPage implements OnInit {
   PatternWall = false
   VinylWall = false
   WallpaperChoice = ''
+
+  info = []
+  img = []
+  items = [] as any
+  show = null
+  sales_id = 0
+  user = []
+
+  tracklist = []
+  pleatlist = []
+  blindlist = []
+
+  ngOnInit() {
+
+    this.actroute.queryParams.subscribe(a => {
+      console.log(a);
+
+      this.info = JSON.parse(a["info"])
+      this.sales_id = this.info['no']
+      this.user = JSON.parse(a["user"])
+    })
+    console.log(this.info, this.sales_id, this.user);
+    this.refreshList()
+
+    this.http.get('https://bde6-124-13-53-82.ap.ngrok.io/tracklist').subscribe((s) => {
+      this.tracklist = s['data']
+      console.log(this.tracklist)
+    })
+
+    this.http.get('https://bde6-124-13-53-82.ap.ngrok.io/pleatlist').subscribe((s) => {
+      this.pleatlist = s['data']
+      console.log(this.pleatlist)
+    })
+
+    this.http.get('https://bde6-124-13-53-82.ap.ngrok.io/blindlist').subscribe((s) => {
+      this.blindlist = s['data']
+      console.log(this.blindlist)
+    })
+  }
+
+  refreshList() {
+    this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/getorderlist', { sales_id: this.sales_id }).subscribe(a => {
+      this.items = a['data']
+      console.log('Refresh List', this.items);
+    })
+  }
 
   typeChanged() {
     this.PleatSingle = false
@@ -208,7 +192,10 @@ export class TaskDetailPage implements OnInit {
       cssClass: 'task',
       component: TaskCreatorPage,
       componentProps: {
-        sales_no: this.info['no'],
+        sales_no: this.sales_id,
+        pleatlist: this.pleatlist,
+        blindlist: this.blindlist,
+        position: this.user['position'],
       }
     });
 
@@ -216,7 +203,7 @@ export class TaskDetailPage implements OnInit {
     const { data } = await modal.onWillDismiss();
     console.log(data)
 
-    if (data != null) {
+    if (data == 1) {
       // this.items.push(data)
       this.refreshList()
     }
@@ -229,7 +216,28 @@ export class TaskDetailPage implements OnInit {
       component: TaskEditorPage,
       componentProps: {
         item: x,
-        sales_no: this.info['no'],
+        pleatlist: this.pleatlist,
+        blindlist: this.blindlist,
+      }
+    });
+
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    console.log(data)
+      // x = data
+      this.refreshList()
+  }
+  
+  async reviewTask(x) {
+
+    const modal = await this.modal.create({
+      cssClass: 'task',
+      component: TaskDetailReviewPage,
+      componentProps: {
+        item: x,
+        pleatlist: this.pleatlist,
+        blindlist: this.blindlist,
+        position: this.user['position'],
       }
     });
 
@@ -237,7 +245,28 @@ export class TaskDetailPage implements OnInit {
     const { data } = await modal.onWillDismiss();
     console.log(data)
 
-    if (data != null) {
+      // x = data
+      this.refreshList()
+  }
+
+  async reviewTaskCompleted(x) {
+
+    const modal = await this.modal.create({
+      cssClass: 'task',
+      component: TaskDetailCompletedReviewPage,
+      componentProps: {
+        item: x,
+        pleatlist: this.pleatlist,
+        blindlist: this.blindlist,
+        position: this.user['position'],
+      }
+    });
+
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    console.log(data)
+
+    if (data == 1) {
       // x = data
       this.refreshList()
     }
@@ -269,20 +298,21 @@ export class TaskDetailPage implements OnInit {
       title: 'Delete Item',
       text: 'Delete "' + x.location + '" from the list. Are you sure?',
       heightAuto: false,
-      icon: 'warning',
+      icon: 'error',
       showConfirmButton: true,
       showCancelButton: true,
       cancelButtonText: 'Cancel',
+      cancelButtonColor: '#d33',
       confirmButtonText: 'Delete',
+      reverseButtons: true,
     }).then((y) => {
       if (y.isConfirmed) {
-        this.http.post('http://192.168.1.117/deleteorder', { no: x.no }).subscribe(a => {
+        this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/deleteorder', { no: x.no }).subscribe(a => {
           this.refreshList()
         })
         // this.items.splice(x, 1)
       }
     })
-
 
   }
 
@@ -298,9 +328,193 @@ export class TaskDetailPage implements OnInit {
     let navExtra: NavigationExtras = {
       queryParams: {
         items: JSON.stringify(this.items),
+        info: JSON.stringify(this.info),
+        position: 'sales'
       }
     }
     this.nav.navigateForward(['quotation-overall'], navExtra)
+  }
+
+  complete() {
+    let pass = false
+    console.log(this.items.length);
+
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].status_tech == 'Pending') {
+        pass = false
+        break
+      } else {
+        pass = true
+      }
+    }
+
+    if (pass) {
+
+      Swal.fire({
+        title: 'Complete Task?',
+        text: 'Submit your confirmation of this sales order?',
+        heightAuto: false,
+        icon: 'success',
+        showConfirmButton: true,
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Submit',
+        reverseButtons: true,
+      }).then((y) => {
+        if (y.isConfirmed) {
+          let pass2 = false
+          for (let i = 0; i < this.items.length; i++) {
+            if (this.items[i].status_tech == 'Rejected') {
+              pass2 = true
+              break
+            }
+          }
+          if (pass2) {
+
+            Swal.fire({
+              title: 'Rejected Order Detected!',
+              text: 'This sales order will be submit back to sales person. Continue submitting?',
+              heightAuto: false,
+              icon: 'warning',
+              showConfirmButton: true,
+              showCancelButton: true,
+              cancelButtonText: 'Cancel',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, Submit',
+              reverseButtons: true,
+            }).then((y) => {
+              if (y.isConfirmed) {
+                let temp = {
+                  no: this.sales_id,
+                  step: 1,
+                  rejected: true,
+                }
+                // let navExtra: NavigationExtras = {
+                //   queryParams: {
+                //     items: JSON.stringify(this.items),
+                //     sales_no: this.sales_id,
+                //   }
+                // }
+                // this.nav.navigateForward(['quotation-overall'], navExtra)
+                this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updatesales', temp).subscribe(a => {
+                  Swal.fire({
+                    title: 'Task Completed Successfully',
+                    icon: 'success',
+                    heightAuto: false,
+                    showConfirmButton: false,
+                    showCancelButton: false,
+                    timer: 1500,
+                  })
+                  this.nav.navigateRoot('/tabs/tab1')
+                })
+              }
+
+            })
+
+          } else {
+            let temp = {
+              no: this.sales_id,
+              step: 4,
+            }
+            this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updatesales', temp).subscribe(a => {
+              Swal.fire({
+                title: 'Task Completed Successfully',
+                icon: 'success',
+                heightAuto: false,
+                showConfirmButton: false,
+                showCancelButton: false,
+                timer: 1500,
+              })
+              this.nav.navigateRoot('/tabs/tab1')
+            })
+          }
+        }
+
+      })
+
+    } else {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      })
+
+      Toast.fire({
+        icon: 'error',
+        title: 'All orders must be reviewed before proceeding.'
+      })
+    }
+
+  }
+
+  completeInstaller() {
+    let pass = false
+    console.log(this.items.length);
+
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].status_inst != 'Completed') {
+        pass = false
+        break
+      } else {
+        pass = true
+      }
+    }
+
+    if (pass) {
+
+      Swal.fire({
+        title: 'Complete Task?',
+        text: 'Submit completion of installtion process?',
+        heightAuto: false,
+        icon: 'success',
+        showConfirmButton: true,
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Submit',
+        reverseButtons: true,
+      }).then((y) => {
+        if (y.isConfirmed) {
+
+          let temp = {
+            no: this.sales_id,
+            date_complete: new Date().getTime(),
+            step: 5,
+          }
+          this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updatesales', temp).subscribe(a => {
+            Swal.fire({
+              title: 'Task Completed Successfully',
+              icon: 'success',
+              heightAuto: false,
+              showConfirmButton: false,
+              showCancelButton: false,
+              timer: 1500,
+            })
+            this.nav.navigateRoot('/tabs/tab1')
+          })
+
+        }
+
+      })
+
+    } else {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      })
+
+      Toast.fire({
+        icon: 'error',
+        title: 'All orders must be reviewed before proceeding.'
+      })
+    }
+
   }
 
   back() {

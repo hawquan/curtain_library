@@ -48,6 +48,42 @@ const routes: Routes = [
   {
     path: 'quotation-overall',
     loadChildren: () => import('./quotation-overall/quotation-overall.module').then( m => m.QuotationOverallPageModule)
+  },
+  {
+    path: 'task-ongoing',
+    loadChildren: () => import('./task-ongoing/task-ongoing.module').then( m => m.TaskOngoingPageModule)
+  },
+  {
+    path: 'task-ongoing-view-details',
+    loadChildren: () => import('./task-ongoing-view-details/task-ongoing-view-details.module').then( m => m.TaskOngoingViewDetailsPageModule)
+  },
+  {
+    path: 'task-ongoing-view-quotation',
+    loadChildren: () => import('./task-ongoing-view-quotation/task-ongoing-view-quotation.module').then( m => m.TaskOngoingViewQuotationPageModule)
+  },
+  {
+    path: 'task-detail-review',
+    loadChildren: () => import('./task-detail-review/task-detail-review.module').then( m => m.TaskDetailReviewPageModule)
+  },
+  {
+    path: 'task-detail-rejected',
+    loadChildren: () => import('./task-detail-rejected/task-detail-rejected.module').then( m => m.TaskDetailRejectedPageModule)
+  },
+  {
+    path: 'task-detail-rejected-review',
+    loadChildren: () => import('./task-detail-rejected-review/task-detail-rejected-review.module').then( m => m.TaskDetailRejectedReviewPageModule)
+  },
+  {
+    path: 'tailor-task-detail-ongoing',
+    loadChildren: () => import('./tailor-task-detail-ongoing/tailor-task-detail-ongoing.module').then( m => m.TailorTaskDetailOngoingPageModule)
+  },
+  {
+    path: 'task-detail-completed',
+    loadChildren: () => import('./task-detail-completed/task-detail-completed.module').then( m => m.TaskDetailCompletedPageModule)
+  },
+  {
+    path: 'task-detail-completed-review',
+    loadChildren: () => import('./task-detail-completed-review/task-detail-completed-review.module').then( m => m.TaskDetailCompletedReviewPageModule)
   }
 
 ];
