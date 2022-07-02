@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import firebase from 'firebase';
+import { TailorTaskDetailPage } from '../tailor-task-detail/tailor-task-detail.page';
+import { TaskDetailCompletedReviewPage } from '../task-detail-completed-review/task-detail-completed-review.page';
 
 @Component({
   selector: 'app-tab1',
@@ -14,12 +16,14 @@ export class Tab1Page implements OnInit {
   constructor(
     private nav: NavController,
     private http: HttpClient,
+    private modal: ModalController,
     private actRoute: ActivatedRoute,
   ) { }
 
   user = [] as any
+  pleatlist = []
+  blindlist = []
 
-  position = ''
   today = new Date().toISOString()
   salesSelection = ['Pending', 'On-Going', 'Completed']
   pendingList = [{
@@ -69,6 +73,8 @@ export class Tab1Page implements OnInit {
   },]
 
   salesList = []
+  salesListRejected = []
+  tailorList = []
 
   pendingListTailor = [{
     height: 100,
@@ -94,34 +100,65 @@ export class Tab1Page implements OnInit {
   uid = ""
 
   ngOnInit() {
-    this.position = 'sales'
 
     firebase.auth().onAuthStateChanged(a => {
       if (a) {
         this.uid = a.uid
-        this.http.post('http://192.168.1.117/onestaff', { id: a.uid }).subscribe((s) => {
+        this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/onestaff', { id: a.uid }).subscribe((s) => {
           this.user = s['data'][0]
           console.log(this.user);
+
+          this.http.get('https://bde6-124-13-53-82.ap.ngrok.io/pleatlist').subscribe((s) => {
+            this.pleatlist = s['data']
+            console.log(this.pleatlist)
+          })
+
+          this.http.get('https://bde6-124-13-53-82.ap.ngrok.io/blindlist').subscribe((s) => {
+            this.blindlist = s['data']
+            console.log(this.blindlist)
+          })
+
+          this.actRoute.queryParams.subscribe((c) => {
+            this.refresher(a.uid)
+
+          })
+
         })
 
-        this.http.post('http://192.168.1.117/getsaleslist', { id_sales: a.uid }).subscribe((s) => {
-          this.salesList = s['data']
-          console.log(this.salesList);
-        })
       }
     })
+  }
 
+  refresher(x) {
+    if (this.user.position == "Sales" || this.user.position == "Technician" || this.user.position == "Installer") {
+      this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/getsaleslist', { id_sales: x, id_tech: x, id_inst: x }).subscribe((s) => {
+        this.salesList = s['data']
+        console.log(this.salesList);
+      })
+
+      this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/getrejected', { id_sales: x }).subscribe((s) => {
+        this.salesListRejected = s['data']
+        console.log(this.salesListRejected.length, this.salesListRejected);
+
+      })
+
+    } else if (this.user.position == "Tailor") {
+      this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/getorderlist2', { id_tail: x }).subscribe((s) => {
+        this.tailorList = s['data']
+        console.log(this.tailorList);
+      })
+    }
   }
 
   filterPendingList(type) {
     if (type == 'sales') {
       return this.salesList.filter(x => x.step == 1)
     } else if (type == 'tech') {
-      return this.pendingList.filter(x => x.step == 2)
+      return this.salesList.filter(x => x.step == 2)
     } else if (type == 'tailor') {
-      return this.pendingListTailor.filter(x => x.step == 3)
+      return this.tailorList.filter(x => x.step == 3)
     } else if (type == 'installer') {
-      return this.pendingList.filter(x => x.step == 4)
+      return this.salesList.filter(x => x.step == 4)
     }
   }
 
@@ -129,10 +166,10 @@ export class Tab1Page implements OnInit {
     if (type == 'sales') {
       return this.salesList.filter(x => x.step >= 2 && x.step < 5)
     } else if (type == 'tech') {
-      return this.pendingList.filter(x => x.step >= 3 && x.step < 5)
+      return this.salesList.filter(x => x.step >= 3 && x.step < 5)
     } else if (type == 'tailor') {
-      return this.pendingListTailor.filter(x => x.step >= 4 && x.step < 5)
-    } 
+      return this.tailorList.filter(x => x.step >= 4 && x.step < 5)
+    }
     // else if (type == 'installer') {
     //   return this.pendingListInstaller.filter(x => x.step >= 4 && x.step < 5)
     // }
@@ -142,32 +179,13 @@ export class Tab1Page implements OnInit {
     if (type == 'sales') {
       return this.salesList.filter(x => x.step == 5)
     } else if (type == 'tech') {
-      return this.pendingList.filter(x => x.step == 5)
+      return this.salesList.filter(x => x.step == 5)
     } else if (type == 'tailor') {
-      return this.pendingListTailor.filter(x => x.step == 5)
+      return this.tailorList.filter(x => x.step == 5)
+    } else if (type == 'installer') {
+      return this.salesList.filter(x => x.step == 5)
     }
   }
-
-  changeStatus(x) {
-    this.position = x
-  }
-
-  // status(x) {
-  //   this.statusPending = false
-  //   this.statusOnGoing = false
-  //   this.statusCompleted = false
-  //   this.statusRejected = false
-
-  //   if (x == 'p') {
-  //     this.statusPending = true
-  //   } else if (x == 'o') {
-  //     this.statusOnGoing = true
-  //   } else if (x == 'c') {
-  //     this.statusCompleted = true
-  //   } else if (x == 'r') {
-  //     this.statusRejected = true
-  //   }
-  // }
 
   selectTab(x) {
     this.status = x
@@ -181,10 +199,111 @@ export class Tab1Page implements OnInit {
 
     let navExtra: NavigationExtras = {
       queryParams: {
-        info: JSON.stringify(this.salesList),
+        info: JSON.stringify(x),
+        user: JSON.stringify(this.user),
       }
     }
     this.nav.navigateForward(['task-detail'], navExtra)
+  }
+
+  toTailorDetail(x, i) {
+
+    let navExtra: NavigationExtras = {
+      queryParams: {
+        info: JSON.stringify(x),
+        pleatlist: JSON.stringify(this.pleatlist),
+        blindlist: JSON.stringify(this.blindlist),
+      }
+    }
+    this.nav.navigateForward(['tailor-task-detail'], navExtra)
+
+  }
+
+  toTailorDetailOngoing(x, i) {
+
+    let navExtra: NavigationExtras = {
+      queryParams: {
+        info: JSON.stringify(x),
+        pleatlist: JSON.stringify(this.pleatlist),
+      }
+    }
+    this.nav.navigateForward(['tailor-task-detail-ongoing'], navExtra)
+
+  }
+
+  // async toTailorDetail(x,i) {
+
+  //   const modal = await this.modal.create({
+  //     cssClass: 'task',
+  //     component: TailorTaskDetailPage,
+  //     componentProps: {
+  //       item: x,
+  //       pleatlist: this.pleatlist,
+  //     }
+  //   });
+
+  //   await modal.present();
+  //   const { data } = await modal.onWillDismiss();
+  //   console.log(data)
+
+  //   if (data == 1) {
+  //     this.refresher(data)
+  //   }
+  // }
+
+  toDetailRejected(x) {
+
+    let navExtra: NavigationExtras = {
+      queryParams: {
+        info: JSON.stringify(x),
+        user: JSON.stringify(this.user),
+      }
+    }
+    this.nav.navigateForward(['task-detail-rejected'], navExtra)
+  }
+
+  toOngoing(x) {
+
+    let navExtra: NavigationExtras = {
+      queryParams: {
+        info: JSON.stringify(x),
+        user: JSON.stringify(this.user),
+      }
+    }
+
+    this.nav.navigateForward(['task-ongoing'], navExtra)
+  }
+
+  toCompletedDetail(x) {
+
+    let navExtra: NavigationExtras = {
+      queryParams: {
+        info: JSON.stringify(x),
+        user: JSON.stringify(this.user),
+      }
+    }
+    this.nav.navigateForward(['task-detail-completed'], navExtra)
+  }
+
+  async reviewTaskCompleted(x) {
+
+    const modal = await this.modal.create({
+      cssClass: 'task',
+      component: TaskDetailCompletedReviewPage,
+      componentProps: {
+        item: x,
+        pleatlist: this.pleatlist,
+        position: this.user['position'],
+      }
+    });
+
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    console.log(data)
+
+    if (data == 1) {
+      // x = data
+    }
   }
 
   toTechDetail(x) {
@@ -205,25 +324,6 @@ export class Tab1Page implements OnInit {
       }
     }
     this.nav.navigateForward(['tech-task-detail'], navExtra)
-  }
-
-  toTailorDetail(x) {
-
-    let item = {
-      colours: "c0192",
-      fabric: "f9283",
-      pleat: "Ripple Fold",
-      height: 100,
-      patterns: "p7652",
-      type: "Tailor-Made Curtains",
-      width: 100,
-    }
-    let navExtra: NavigationExtras = {
-      queryParams: {
-        item: JSON.stringify(item)
-      }
-    }
-    this.nav.navigateForward(['tailor-task-detail'], navExtra)
   }
 
   toInstallerDetail(x) {

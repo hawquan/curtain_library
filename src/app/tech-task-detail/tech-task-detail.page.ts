@@ -54,7 +54,7 @@ export class TechTaskDetailPage implements OnInit {
         console.log('pleat');
       }
       else if (this.item.type == 'Blinds') {
-        this.blindsSelection(this.item.pleat)
+        this.blindsSelection(this.item)
         console.log('blinds');
       }
       else {

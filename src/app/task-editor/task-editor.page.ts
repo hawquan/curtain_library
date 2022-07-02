@@ -264,19 +264,16 @@ export class TaskEditorPage implements OnInit {
   item = [] as any
   info = []
 
-  Pleat = []
-  PleatChoice = ''
-  PleatSingle = false
-  PleatRipple = false
-  PleatDouble = false
-  PleatFrench = false
-  PleatEyelet = false
+  pleatlist = []
+  blindlist = []
+  misclist = []
+  bracketlist = []
+  hooklist = []
+  beltlist = []
+  otherslist = []
 
-  RomanBlinds = false
-  RollerBlinds = false
-  ZebraBlinds = false
-  WoodenBlinds = false
-  blindsChoice = ''
+  PleatChoice = ''
+  BlindsChoice = ''
 
   PlainWall = false
   FabricWall = false
@@ -293,35 +290,50 @@ export class TaskEditorPage implements OnInit {
 
   ngOnInit() {
     this.item = this.navparam.get('item')
-    
-    console.log(this.item);
+    this.pleatlist = this.navparam.get('pleatlist')
+    this.blindlist = this.navparam.get('blindlist')
+
+    console.log(this.item, this.pleatlist, this.blindlist);
 
     this.price = this.item.price
 
     if (this.item.type == 'Tailor-Made Curtains' || this.item.type == 'Motorised Curtains') {
-      this.PleatSelection(this.item.pleat)
+      this.pleatSelection2(this.item)
     }
     else if (this.item.type == 'Blinds') {
-      this.blindsSelection(this.item.pleat)
+      this.blindsSelection2(this.item)
     }
     else {
       this.wallpaperSelection(this.item.pleat)
     }
+
+    this.http.get('https://bde6-124-13-53-82.ap.ngrok.io/miscList').subscribe((s) => {
+      this.misclist = s['data']
+      console.log(this.misclist)
+
+      for (let i = 0; i < this.misclist.length; i++) {
+        // if (this.misclist['type'] == "Pieces") {
+        // } 
+        if (this.misclist[i]['type'] == "Bracket") {
+          this.bracketlist.push(this.misclist[i])
+        } else if (this.misclist[i]['type'] == "Hook") {
+          this.hooklist.push(this.misclist[i])
+        } else if (this.misclist[i]['type'] == "Belt") {
+          this.beltlist.push(this.misclist[i])
+        } else if (this.misclist[i]['type'] == "Others") {
+          this.otherslist.push(this.misclist[i])
+        }
+      }
+
+      // console.log(this.bracketlist, this.hooklist, this.beltlist, this.otherslist);
+
+    })
   }
 
   typeChanged() {
-    this.PleatSingle = false
-    this.PleatRipple = false
-    this.PleatDouble = false
-    this.PleatFrench = false
-    this.PleatEyelet = false
     this.PleatChoice = ''
 
-    this.RomanBlinds = false
-    this.RollerBlinds = false
-    this.ZebraBlinds = false
-    this.WoodenBlinds = false
-    this.blindsChoice = ''
+    this.BlindsChoice = ''
 
     this.PlainWall = false
     this.FabricWall = false
@@ -331,52 +343,33 @@ export class TaskEditorPage implements OnInit {
     this.WallpaperChoice = ''
   }
 
-  PleatSelection(x) {
-    this.PleatSingle = false
-    this.PleatRipple = false
-    this.PleatDouble = false
-    this.PleatFrench = false
-    this.PleatEyelet = false
+  pleatSelection(x) {
+    console.log(x);
+    this.PleatChoice = x.name
+    this.item.fullness = x.fullness
+  }
 
-    if (x == 'Single Pleat') {
-      this.PleatSingle = true
-      this.PleatChoice = 'Single Pleat'
-    } else if (x == 'Ripple Fold') {
-      this.PleatRipple = true
-      this.PleatChoice = 'Ripple Fold'
-    } else if (x == 'Double Pleat') {
-      this.PleatDouble = true
-      this.PleatChoice = 'Double Pleat'
-    } else if (x == 'French Pleat') {
-      this.PleatFrench = true
-      this.PleatChoice = 'French Pleat'
-    } else if (x == 'Eyelet') {
-      this.PleatEyelet = true
-      this.PleatChoice = 'Eyelet'
-    }
+  pleatSelection2(x) {
+    console.log(x);
+    this.PleatChoice = x.pleat
+    this.item.fullness = x.fullness
+  }
 
+  pleatChoice() {
+    return this.PleatChoice
   }
 
   blindsSelection(x) {
-    this.RomanBlinds = false
-    this.RollerBlinds = false
-    this.ZebraBlinds = false
-    this.WoodenBlinds = false
+    this.BlindsChoice = x.name
+  }
 
-    if (x == 'Roman Blinds') {
-      this.RomanBlinds = true
-      this.blindsChoice = 'Roman Blinds'
-    } else if (x == 'Roller Blinds') {
-      this.RollerBlinds = true
-      this.blindsChoice = 'Roller Blinds'
-    } else if (x == 'Zebra Blinds') {
-      this.ZebraBlinds = true
-      this.blindsChoice = 'Zebra Blinds'
-    } else if (x == 'Wooden Blinds') {
-      this.WoodenBlinds = true
-      this.blindsChoice = 'Wooden Blinds'
-    }
+  blindsSelection2(x) {
+    console.log(x);
+    this.BlindsChoice = x.pleat
+  }
 
+  blindChoice() {
+    return this.BlindsChoice
   }
 
   wallpaperSelection(x) {
@@ -436,37 +429,38 @@ export class TaskEditorPage implements OnInit {
 
       if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
 
-          console.log('pass1');
-          this.item.price = this.price
+        console.log('pass1');
+        this.item.price = this.price
 
-          let temp = {
-            no: this.item.no,
-            location: this.item.location,
-            height: this.item.height,
-            width: this.item.width,
-            track: this.item.track,
-            type: this.item.type,
-            pleat: this.item.pleat,
-            fullness: this.item.fullness,
-            pieces: this.item.pieces,
-            bracket: this.item.bracket,
-            hook: this.item.hook,
-            sidehook: this.item.sidehook,
-            belt: this.item.belt,
-            fabric: this.item.fabric,
-            others: this.item.others,
-            touchfloor: this.item.touchfloor,
-            price: this.item.price,
-            status: true,
-            photos: JSON.stringify([]),
-            remark_sale: this.item.remark_sale,
-            step: 2,
-          }
+        let temp = {
+          no: this.item.no,
+          location: this.item.location,
+          height: this.item.height,
+          width: this.item.width,
+          track: this.item.track,
+          type: this.item.type,
+          pleat: this.item.pleat,
+          fullness: this.item.fullness,
+          pieces: this.item.pieces,
+          bracket: this.item.bracket,
+          hook: this.item.hook,
+          sidehook: this.item.sidehook,
+          belt: this.item.belt,
+          fabric: this.item.fabric,
+          fabric_sheer: this.item.fabric_sheer,
+          others: this.item.others,
+          touchfloor: this.item.touchfloor,
+          price: this.item.price,
+          status: true,
+          status_tech: 'Pending',
+          photos: JSON.stringify(this.item.photos),
+          remark_sale: this.item.remark_sale,
+          step: 2,
+        }
 
-          this.http.post('http://192.168.1.117/updateorders', temp).subscribe(a => {
-            this.model.dismiss(this.item)
-          })
-
+        this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+          this.model.dismiss(1)
+        })
 
       } else {
         console.log('error empty')
@@ -486,43 +480,45 @@ export class TaskEditorPage implements OnInit {
       }
 
     } else if (this.item['type'] == 'Blinds') {
-      this.item.pleat = this.blindsChoice
+      this.item.pleat = this.BlindsChoice
 
       console.log(this.item);
 
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
+      if (['location', 'width', 'height', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'belt', 'others'].every(a => this.item[a])) {
 
-          console.log('pass2');
-          this.item.price = this.price
+        console.log('pass2');
+        this.item.price = this.price
 
-          let temp = {
-            no: this.item.no,
-            location: this.item.location,
-            height: this.item.height,
-            width: this.item.width,
-            track: this.item.track,
-            type: this.item.type,
-            pleat: this.item.pleat,
-            fullness: this.item.fullness,
-            pieces: this.item.pieces,
-            bracket: this.item.bracket,
-            hook: this.item.hook,
-            sidehook: this.item.sidehook,
-            belt: this.item.belt,
-            fabric: this.item.fabric,
-            others: this.item.others,
-            touchfloor: this.item.touchfloor,
-            price: this.item.price,
-            status: true,
-            photos: JSON.stringify([]),
-            remark_sale: this.item.remark_sale,
-            step: 2,
-          }
+        let temp = {
+          no: this.item.no,
+          location: this.item.location,
+          height: this.item.height,
+          width: this.item.width,
+          track: this.item.track,
+          type: this.item.type,
+          pleat: this.item.pleat,
+          fullness: this.item.fullness,
+          pieces: this.item.pieces,
+          bracket: this.item.bracket,
+          hook: this.item.hook,
+          sidehook: this.item.sidehook,
+          belt: this.item.belt,
+          fabric: this.item.fabric,
+          fabric_sheer: this.item.fabric_sheer,
+          others: this.item.others,
+          touchfloor: this.item.touchfloor,
+          price: this.item.price,
+          status: true,
+          status_tech: 'Pending',
+          photos: JSON.stringify(this.item.photos),
+          remark_sale: this.item.remark_sale,
+          step: 2,
+        }
 
-          this.http.post('http://192.168.1.117/updateorders', temp).subscribe(a => {
-            this.model.dismiss(this.item)
+        this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+          this.model.dismiss(1)
 
-          })
+        })
 
       } else {
         console.log('error empty')
@@ -546,9 +542,9 @@ export class TaskEditorPage implements OnInit {
 
       if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
 
-          console.log('pass2');
-          this.item.price = this.price
-          this.model.dismiss(this.item)
+        console.log('pass2');
+        this.item.price = this.price
+        this.model.dismiss(this.item)
 
       } else {
         console.log('error empty')
@@ -577,5 +573,79 @@ export class TaskEditorPage implements OnInit {
     this.model.dismiss()
   }
 
+  lengthof(x) {
+    return x ? x.length : 0
+  }
+
+  pic = ""
+
+  openPic(x) {
+    this.pic = x
+  }
+
+  closePic(x) {
+    this.pic = ''
+  }
+
+  deletePic(x) {
+    this.item.photos.splice(x, 1)
+    console.log(this.item.photos);
+
+  }
+
+
+  imagectype;
+  imagec;
+  base64img;
+
+  fileChange(event, name, maxsize) {
+    if (event.target.files && event.target.files[0] && event.target.files[0].size < (10485768)) {
+      // this.imagectype = event.target.files[0].type;
+      // EXIF.getData(event.target.files[0], () => {
+      // console.log(event.target.files[0]);
+      //  console.log(event.target.files[0].exifdata.Orientation);
+      //  const orientation = EXIF.getTag(this, 'Orientation');
+      const can = document.createElement('canvas');
+      const ctx = can.getContext('2d');
+      const thisImage = new Image;
+
+      const maxW = maxsize;
+      const maxH = maxsize;
+      thisImage.onload = (a) => {
+        // console.log(a);
+        const iw = thisImage.width;
+        const ih = thisImage.height;
+        const scale = Math.min((maxW / iw), (maxH / ih));
+        const iwScaled = iw * scale;
+        const ihScaled = ih * scale;
+        can.width = iwScaled;
+        can.height = ihScaled;
+        ctx.save();
+        // const width = can.width; const styleWidth = can.style.width;
+        // const height = can.height; const styleHeight = can.style.height;
+        // console.log(event.target.files[0]);
+        ctx.drawImage(thisImage, 0, 0, iwScaled, ihScaled);
+        ctx.restore();
+        this.imagec = can.toDataURL();
+        // const imgggg = this.imagec.replace(';base64,', 'thisisathingtoreplace;');
+        // const imgarr = imgggg.split('thisisathingtoreplace;');
+        // this.base64img = imgarr[1];
+        // event.target.value = '';
+        this.item['photos'].push('https://i.pinimg.com/originals/a2/dc/96/a2dc9668f2cf170fe3efeb263128b0e7.gif');
+
+        this.http.post('https://forcar.vsnap.my/upload', { image: this.imagec, folder: 'goalgame', userid: Date.now() }).subscribe((link) => {
+          console.log(link['imageURL']);
+          this.item['photos'][this.lengthof(this.item['photos']) - 1] = link['imageURL']
+          console.log(this.item['photos']);
+
+        });
+      };
+      thisImage.src = URL.createObjectURL(event.target.files[0]);
+
+    } else {
+      // S.close();
+      alert('Your Current Image Too Large, ' + event.target.files[0].size / (10241024) + 'MB! (Please choose file lesser than 8MB)');
+    }
+  }
 }
 

@@ -37,16 +37,16 @@ export class LoginPage implements OnInit {
           showConfirmButton: false,
           heightAuto: false,
         })
-        this.http.post('http://192.168.1.117/onestaff', { id: a.uid }).subscribe((s) => {
+        this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/onestaff', { id: a.uid }).subscribe((s) => {
           console.log(s);
 
           if (s['data'][0].status) {
             Swal.fire({
-              text: 'Logged in successfully',
+              title: 'Logged in successfully.',
               icon: 'success',
               heightAuto: false,
               showConfirmButton: false,
-              timer: 1250
+              timer: 1000
             })
             this.nav.navigateRoot('tabs/tab1', { animationDirection: 'forward' })
           } else {

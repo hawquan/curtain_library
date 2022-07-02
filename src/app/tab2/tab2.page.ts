@@ -24,7 +24,7 @@ export class Tab2Page implements OnInit {
     firebase.auth().onAuthStateChanged(a => {
       if (a) {
         this.uid = a.uid
-        this.http.post('http://192.168.1.117/onestaff', { id: a.uid }).subscribe((s) => {
+        this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/onestaff', { id: a.uid }).subscribe((s) => {
           this.user = s['data'][0]
           console.log(this.user);
         })
@@ -46,18 +46,25 @@ export class Tab2Page implements OnInit {
       showCancelButton: true,
       showConfirmButton: true,
       cancelButtonText: 'Cancel',
+      cancelButtonColor: '#d33',
       confirmButtonText: 'Logout',
+      reverseButtons: true,
     }).then((y) => {
       if (y.isConfirmed) {
         firebase.auth().signOut();
         this.nav.navigateBack('')
 
-        Swal.fire({
-          title: 'Logged out.',
-          icon: 'success',
-          heightAuto: false,
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top',
           showConfirmButton: false,
-          timer: 1000
+          timer: 2000,
+          timerProgressBar: true,
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Logged out.'
         })
       }
     })
