@@ -84,6 +84,10 @@ const routes: Routes = [
   {
     path: 'task-detail-completed-review',
     loadChildren: () => import('./task-detail-completed-review/task-detail-completed-review.module').then( m => m.TaskDetailCompletedReviewPageModule)
+  },
+  {
+    path: 'task-detail-completed-quotation',
+    loadChildren: () => import('./task-detail-completed-quotation/task-detail-completed-quotation.module').then( m => m.TaskDetailCompletedQuotationPageModule)
   }
 
 ];

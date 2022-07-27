@@ -22,13 +22,19 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
   item = [] as any
   info = []
+  calc = [] as any
 
   pleatlist = []
+  blindlist = []
+  tracklist = []
+  fabriclist = []
   misclist = []
   bracketlist = []
   hooklist = []
   beltlist = []
   otherslist = []
+  fabricCurtain = []
+  fabricSheer = []
 
   PleatChoice = ''
   BlindsChoice = ''
@@ -48,8 +54,13 @@ export class TaskDetailRejectedReviewPage implements OnInit {
   ngOnInit() {
     this.item = this.navparam.get('item')
     this.pleatlist = this.navparam.get('pleatlist')
+    this.blindlist = this.navparam.get('blindlist')
+    this.tracklist = this.navparam.get('tracklist')
+    this.fabriclist = this.navparam.get('fabriclist')
     console.log(this.item, this.pleatlist);
 
+    this.fabricCurtain = this.fabriclist.filter(x => x.type == 'Curtain')
+    this.fabricSheer = this.fabriclist.filter(x => x.type == 'Sheer')
     this.price = this.item.price
 
     if (this.item.type == 'Tailor-Made Curtains' || this.item.type == 'Motorised Curtains') {
@@ -62,7 +73,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
       this.wallpaperSelection(this.item.pleat)
     }
 
-    this.http.get('https://bde6-124-13-53-82.ap.ngrok.io/miscList').subscribe((s) => {
+    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/miscList').subscribe((s) => {
       this.misclist = s['data']
       console.log(this.misclist)
 
@@ -80,9 +91,10 @@ export class TaskDetailRejectedReviewPage implements OnInit {
         }
       }
 
-    // console.log(this.bracketlist, this.hooklist, this.beltlist, this.otherslist);
+      // console.log(this.bracketlist, this.hooklist, this.beltlist, this.otherslist);
 
     })
+
   }
 
   typeChanged() {
@@ -165,7 +177,6 @@ export class TaskDetailRejectedReviewPage implements OnInit {
   }
 
   updateItem() {
-    this.calcPrice()
     this.item.pleat = this.PleatChoice
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
       console.log('in 1st');
@@ -215,7 +226,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
           cancelButtonColor: '#d33',
         }).then((y) => {
           if (y.isConfirmed) {
-            this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+            this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
               this.model.dismiss(1)
             })
           }
@@ -285,7 +296,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
           cancelButtonColor: '#d33',
         }).then((y) => {
           if (y.isConfirmed) {
-            this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+            this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
               this.model.dismiss(1)
             })
           }
@@ -337,7 +348,6 @@ export class TaskDetailRejectedReviewPage implements OnInit {
   }
 
   rejectItem() {
-    this.calcPrice()
     this.item.pleat = this.PleatChoice
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
       console.log('in 1st');
@@ -404,7 +414,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
             cancelButtonColor: '#d33',
           }).then((y) => {
             if (y.isConfirmed) {
-              this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+              this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
                 this.model.dismiss(1)
               })
             }
@@ -460,7 +470,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
           price: this.item.price,
           status_tech: 'Rejected',
           photos: JSON.stringify(this.item.photos),
-          step:1,
+          step: 1,
           remark_tech: this.item.remark_tech
         }
 
@@ -477,7 +487,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
           cancelButtonColor: '#d33',
         }).then((y) => {
           if (y.isConfirmed) {
-            this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+            this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
               this.model.dismiss(1)
             })
           }
@@ -529,14 +539,83 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
   }
 
-  calcPrice() {
-    if(this.item.width_tech == null && this.item.height_tech == null){
-      return this.price = this.item.width + this.item.height || 0
-    } else {
-      return this.price = this.item.width_tech + this.item.height_tech || 0
-    }
-  }
+  calcPrice(pass) {
 
+    let width = 0
+    let height = 0
+    if (this.item.height_tech != null || this.item.height_tech != '' || this.item.width_tech != null || this.item.width_tech != '') {
+      width = this.item.width_tech
+      height = this.item.height_tech
+    } else {
+      width = this.item.width
+      height = this.item.height
+    }
+
+    // this.item.curtain
+
+    let curtain = false as any
+    let curtain_id
+    let sheer = false
+    let sheer_id
+    let track = false
+    let track_id
+
+    let pleat_id
+
+    if (this.item.curtain != 'Blinds') {
+
+      if (this.item.fabric != null && this.item.fabric != 'NA') {
+        curtain = true
+        curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+      } else {
+        curtain = false
+      }
+
+      if (this.item.fabric_sheer != null && this.item.fabric_sheer != 'NA') {
+        sheer = true
+        sheer_id = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['id']
+      } else {
+        sheer = false
+      }
+
+      if (this.item.track != null && this.item.track != 'NA') {
+        track = true
+        track_id = this.tracklist.filter(x => x.name == this.item.track)[0]['id']
+      } else {
+        track = false
+      }
+
+      pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
+
+      console.log(curtain_id, sheer_id, track_id, pleat_id);
+
+    } else {
+      curtain = false
+      sheer = false
+      track = false
+
+      pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
+    }
+    let temp = {
+      width: width, height: height, curtain: curtain,lining: false, lining_id: 41,
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id
+    }
+
+    console.log(temp);
+
+    this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/calcPrice', temp).subscribe(a => {
+
+      console.log(a);
+
+      this.price = <any>Object.values(a['data'] || []).reduce((x:number,y:number)=>(x + (y['total'] || 0)) , 0) + 25
+
+      if (pass) {
+        this.updateItem()
+      }
+    })
+
+
+  }
   back() {
     this.model.dismiss()
   }
@@ -555,10 +634,10 @@ export class TaskDetailRejectedReviewPage implements OnInit {
     this.pic = ''
   }
 
-  deletePic(x){
-    this.item.photos.splice(x,1)
+  deletePic(x) {
+    this.item.photos.splice(x, 1)
     console.log(this.item.photos);
-    
+
   }
 
 

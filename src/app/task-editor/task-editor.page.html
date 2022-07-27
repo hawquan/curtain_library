@@ -387,27 +387,26 @@
     <div style="width: 100%;display: flex;align-items: center;background: #FAF7F2">
 
       <div style="width: 100%;margin: 15px 5px 0 15px;">
-        <div style="width: 100%;min-width: 60px;font-weight: 500;">Height :</div>
-        <div style="display: flex;align-items: center;margin-top: 5px;">
-          <ion-input type="number" placeholder="Enter Height" [(ngModel)]="item.height"
-            style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
-          </ion-input>
-          <div style="margin-left: 5px;">m</div>
-        </div>
-      </div>
-
-      <div style="width: 100%;margin: 15px 10px 0 10px;">
         <div style="width: 100%;min-width: 60px;font-weight: 500;">Width :</div>
         <div style="display: flex;align-items: center;margin-top: 5px;">
           <ion-input type="number" placeholder="Enter Width" [(ngModel)]="item.width"
             style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
           </ion-input>
-          <div style="margin-left: 5px;">m</div>
+          <div style="margin-left: 5px;">inch</div>
+        </div>
+      </div>
+
+      <div style="width: 100%;margin: 15px 10px 0 10px;">
+        <div style="width: 100%;min-width: 60px;font-weight: 500;">Height :</div>
+        <div style="display: flex;align-items: center;margin-top: 5px;">
+          <ion-input type="number" placeholder="Enter Height" [(ngModel)]="item.height"
+            style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
+          </ion-input>
+          <div style="margin-left: 5px;">inch</div>
         </div>
       </div>
 
     </div>
-
 
     <div style="margin: 15px 15px 5px 15px;">
       <div style="min-width: 56px;font-weight: 500;">Product Type :</div>
@@ -425,12 +424,12 @@
     <div *ngIf="item['type'] == 'Tailor-Made Curtains' || item['type'] == 'Motorised Curtains'">
 
       <!-- Track -->
-      <div style="width: 100%;padding: 15px 15px 0 15px;">
+      <div style="width: 100%;padding: 10px 15px 0 15px;">
         <div style="width: 100%;min-width: 60px;font-weight: 500;">Track :</div>
         <ion-select class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a product type"
           interface="popover" md="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="width: 100%;height: 30px; margin-right: 10px;
           padding: 0 10px;margin-top: 5px; border-radius: 5px;border: 1px solid #a17635;">
-          <ion-select-option *ngFor="let x of tracks; let i = index" [value]="x">{{x}}</ion-select-option>
+          <ion-select-option *ngFor="let x of tracklist; let i = index" [value]="x.name">{{x.name}}</ion-select-option>
         </ion-select>
       </div>
 
@@ -654,7 +653,7 @@
           <ion-input type="text" [(ngModel)]="item.fabric" placeholder="Enter Curtain Code" style="max-width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
             border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;">
           </ion-input>
-          <div (click)="selector('this.item.fabric')" style="width: 90px;display: flex;align-items: center;justify-content: center;padding-right: 5px;box-shadow: rgba(0, 0, 0, 0.50) 0px 1px 2px 0px;
+          <div (click)="selector('this.fabricCurtain', 'this.item.fabric')" style="width: 90px;display: flex;align-items: center;justify-content: center;padding-right: 5px;box-shadow: rgba(0, 0, 0, 0.50) 0px 1px 2px 0px;
             background: #ebd1af;color: #a17635;padding: 5px 0;margin: 5px 0 0 2px;border-radius: 5px;">
             Select Curtain
           </div>
@@ -665,7 +664,7 @@
           <ion-input type="text" [(ngModel)]="item.fabric_sheer" placeholder="Enter Sheer Code" style="max-width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
             border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;">
           </ion-input>
-          <div (click)="selector('this.item.fabric_sheer')" style="width: 90px;display: flex;align-items: center;justify-content: center;padding-right: 5px;box-shadow: rgba(0, 0, 0, 0.50) 0px 1px 2px 0px;
+          <div (click)="selector('this.fabricSheer', 'this.item.fabric_sheer')" style="width: 90px;display: flex;align-items: center;justify-content: center;padding-right: 5px;box-shadow: rgba(0, 0, 0, 0.50) 0px 1px 2px 0px;
             background: #ebd1af;color: #a17635;padding: 5px 0;margin: 5px 0 0 2px;border-radius: 5px;">
             Select Sheer
           </div>
@@ -732,13 +731,14 @@
       <!-- Remark -->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Remark :</div>
-        <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" [(ngModel)]="item.remark_sale"
+        <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" row="4"  [(ngModel)]="item.remark_sale"
           style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Picture -->
-      <div style="margin: 15px 15px 0 15px;min-width: 56px;font-weight: 500;">Images : <span style="font-size: 12px;color: #8080808d;">(Click image to view)</span></div>
+      <div style="margin: 15px 15px 0 15px;min-width: 56px;font-weight: 500;">Images : <span
+          style="font-size: 12px;color: #8080808d;">(Click image to view)</span></div>
       <div
         style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));height: 100%; margin: 10px 10px 50px 10px;  ">
         <div style="display: flex;justify-content: center;padding: 5px 5px 5px 10px;">
@@ -1024,13 +1024,14 @@
       <!-- Remark -->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Remark :</div>
-        <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" [(ngModel)]="item.remark_sale"
+        <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" row="4"  [(ngModel)]="item.remark_sale"
           style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Picture -->
-      <div style="margin: 15px 15px 0 15px;min-width: 56px;font-weight: 500;">Images : <span style="font-size: 12px;color: #8080808d;">(Click image to view)</span></div>
+      <div style="margin: 15px 15px 0 15px;min-width: 56px;font-weight: 500;">Images : <span
+          style="font-size: 12px;color: #8080808d;">(Click image to view)</span></div>
       <div
         style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));height: 100%; margin: 10px 10px 50px 10px;  ">
         <div style="display: flex;justify-content: center;padding: 5px 5px 5px 10px;">
@@ -1202,12 +1203,12 @@
     <div
       style="width: 100%;display: flex;align-items: center;justify-content: flex-end;padding: 0 0 0 15px;background: #ebd1af">
 
-      <ion-button (click)="calcPrice()"
+      <ion-button (click)="calcPrice(false)"
         style="height: 35px;width: 50%;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 350px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;">
         Calculate
       </ion-button>
 
-      <ion-button (click)="updateItem()"
+      <ion-button (click)="calcPrice(true)"
         style="height: 35px;width: 40%;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 350px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;">
         Update
       </ion-button>

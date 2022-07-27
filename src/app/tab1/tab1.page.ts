@@ -104,16 +104,16 @@ export class Tab1Page implements OnInit {
     firebase.auth().onAuthStateChanged(a => {
       if (a) {
         this.uid = a.uid
-        this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/onestaff', { id: a.uid }).subscribe((s) => {
+        this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/onestaff', { id: a.uid }).subscribe((s) => {
           this.user = s['data'][0]
           console.log(this.user);
 
-          this.http.get('https://bde6-124-13-53-82.ap.ngrok.io/pleatlist').subscribe((s) => {
+          this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/pleatlist').subscribe((s) => {
             this.pleatlist = s['data']
             console.log(this.pleatlist)
           })
 
-          this.http.get('https://bde6-124-13-53-82.ap.ngrok.io/blindlist').subscribe((s) => {
+          this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/blindlist').subscribe((s) => {
             this.blindlist = s['data']
             console.log(this.blindlist)
           })
@@ -131,19 +131,19 @@ export class Tab1Page implements OnInit {
 
   refresher(x) {
     if (this.user.position == "Sales" || this.user.position == "Technician" || this.user.position == "Installer") {
-      this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/getsaleslist', { id_sales: x, id_tech: x, id_inst: x }).subscribe((s) => {
+      this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/getsaleslist', { id_sales: x, id_tech: x, id_inst: x }).subscribe((s) => {
         this.salesList = s['data']
         console.log(this.salesList);
       })
 
-      this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/getrejected', { id_sales: x }).subscribe((s) => {
+      this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/getrejected', { id_sales: x }).subscribe((s) => {
         this.salesListRejected = s['data']
         console.log(this.salesListRejected.length, this.salesListRejected);
 
       })
 
     } else if (this.user.position == "Tailor") {
-      this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/getorderlist2', { id_tail: x }).subscribe((s) => {
+      this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/getorderlist2', { id_tail: x }).subscribe((s) => {
         this.tailorList = s['data']
         console.log(this.tailorList);
       })

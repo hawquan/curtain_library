@@ -62,7 +62,7 @@ export class TaskOngoingViewDetailsPage implements OnInit {
       this.wallpaperSelection(this.item.pleat)
     }
 
-    this.http.get('https://bde6-124-13-53-82.ap.ngrok.io/miscList').subscribe((s) => {
+    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/miscList').subscribe((s) => {
       this.misclist = s['data']
       console.log(this.misclist)
 
@@ -200,7 +200,7 @@ export class TaskOngoingViewDetailsPage implements OnInit {
             step: 2,
           }
 
-          this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+          this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
             this.model.dismiss(this.item)
           })
 
@@ -256,7 +256,7 @@ export class TaskOngoingViewDetailsPage implements OnInit {
             step: 2,
           }
 
-          this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+          this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
             this.model.dismiss(this.item)
 
           })
