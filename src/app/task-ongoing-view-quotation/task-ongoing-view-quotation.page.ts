@@ -13,19 +13,22 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
   constructor(
     private actroute: ActivatedRoute,
-    private nav : NavController,
+    private nav: NavController,
     private http: HttpClient,
   ) { }
 
   item = []
   sales_no = 0
+  calc = [] as any
 
   ngOnInit() {
 
     this.actroute.queryParams.subscribe(a => {
       this.item = JSON.parse(a["items"])
       this.sales_no = a["sales_no"]
-      console.log(this.item);
+      this.calc = JSON.parse(a["calc"])
+
+      console.log(this.item, this.calc);
     })
   }
 
@@ -37,43 +40,12 @@ export class TaskOngoingViewQuotationPage implements OnInit {
     return total || 0
   }
 
-  checkout(){
 
-    let temp = {
-      no : this.sales_no,
-      step: 2,
-    }
-
-    Swal.fire({
-      title: 'Checkout?',
-      text: 'Checkout the sales?',
-      heightAuto: false,
-      icon: 'warning',
-      showConfirmButton: true,
-      showCancelButton: true,
-      cancelButtonText: 'Cancel',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Checkout',
-      reverseButtons: true,
-    }).then((y) => {
-      if (y.isConfirmed) {
-        this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updatesales', temp).subscribe(a => {
-          Swal.fire({
-            title: 'Checked Out Successfully',
-            icon: 'success',
-            heightAuto: false,
-            showConfirmButton: false,
-            showCancelButton: false,
-            timer: 1500,
-          })
-          this.nav.navigateRoot('/tabs/tab1')
-        })
-
-      }
-    })
+  lengthof(x) {
+    return Object.keys(x || {}).length
   }
 
-  back(){
+  back() {
     this.nav.pop()
   }
 

@@ -32,6 +32,8 @@ export class TaskDetailCompletedReviewPage implements OnInit {
   hooklist = []
   beltlist = []
   otherslist = []
+  fabricCurtain = []
+  fabricSheer = []
 
   PleatChoice = ''
   BlindsChoice = ''
@@ -67,7 +69,7 @@ export class TaskDetailCompletedReviewPage implements OnInit {
       this.wallpaperSelection(this.item.pleat)
     }
 
-    this.http.get('https://bde6-124-13-53-82.ap.ngrok.io/miscList').subscribe((s) => {
+    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/miscList').subscribe((s) => {
       this.misclist = s['data']
       console.log(this.misclist)
 
@@ -87,6 +89,15 @@ export class TaskDetailCompletedReviewPage implements OnInit {
 
       // console.log(this.bracketlist, this.hooklist, this.beltlist, this.otherslist);
 
+    })
+
+    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/fabricList').subscribe((s) => {
+      let temp = s['data']
+
+      this.fabricCurtain = temp.filter(x => x.type == 'Curtain')
+      this.fabricSheer = temp.filter(x => x.type == 'Sheer')
+
+      console.log(this.fabricCurtain, this.fabricSheer)
     })
   }
 
@@ -157,15 +168,44 @@ export class TaskDetailCompletedReviewPage implements OnInit {
     // this.item.touchfloor = x
   }
 
-  async selector(x) {
+  // async selector(x) {
+  //   const modal = await this.modalcontroller.create({
+  //     component: SelectorPage,
+  //     componentProps: { array: [{ name: "ok1", id: "a001" }, { name: "ok2", id: "a002" }, { name: "ok3", id: "a003" }, { name: "ok4", id: "a004" },] }
+  //   });
+  //   await modal.present();
+  //   const { data } = await modal.onWillDismiss();
+  //   if (data) {
+  //     eval(x + '="' + data.value.id + '"')
+  //   }
+  // }
+
+  CurtainName =''
+  SheerName =''
+
+  async selectorCurtain() {
     const modal = await this.modalcontroller.create({
       component: SelectorPage,
-      componentProps: { array: [{ name: "ok1", id: "a001" }, { name: "ok2", id: "a002" }, { name: "ok3", id: "a003" }, { name: "ok4", id: "a004" },] }
+      componentProps: { array: this.fabricCurtain }
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
     if (data) {
-      eval(x + '="' + data.value.id + '"')
+      this.item.fabric = data.value.id
+      this.CurtainName = data.value.name
+    }
+  }
+
+  async selectorSheer() {
+    const modal = await this.modalcontroller.create({
+      component: SelectorPage,
+      componentProps: { array: this.fabricSheer }
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    if (data) {
+      this.item.fabric_sheer = data.value.id
+      this.SheerName = data.value.name
     }
   }
 

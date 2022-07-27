@@ -84,26 +84,24 @@
 
           <div
             style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;padding-top: 10px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Width
+            <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Width (inch)
             </div>
             <div style="display: flex;align-items: center;margin-top: 5px;">
               <div
                 style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;padding: 7px 10px;border-radius: 2px;">
                 {{x.width_tech || x.width}}
               </div>
-              <div style="margin-left: 5px; font-size: 12px; color: #636161;">m</div>
             </div>
           </div>
 
           <div
             style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Height</div>
+            <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Height (inch)</div>
             <div style="display: flex;align-items: center;margin-top: 5px;">
               <div
                 style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;padding: 7px 10px;border-radius: 2px;">
                 {{x.height_tech || x.height}}
               </div>
-              <div style="margin-left: 5px; font-size: 12px; color: #636161;">m</div>
             </div>
           </div>
 
@@ -114,7 +112,7 @@
             </div>
             <div style="display: flex;align-items: center;margin-top: 5px;">
               <ion-input [(ngModel)]="x.type" readonly
-                style="background-color: #eeeeee;margin-right: 15px;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
+                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
               </ion-input>
             </div>
           </div>
@@ -125,7 +123,7 @@
             </div>
             <div style="display: flex;align-items: center;margin-top: 5px;">
               <ion-input [(ngModel)]="x.pleat" readonly
-                style="background-color: #eeeeee;margin-right: 15px;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
+                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
               </ion-input>
             </div>
           </div>
@@ -151,16 +149,15 @@
 
           <div
             style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Item Price</div>
-            <div style="display: flex;align-items: center;margin-top: 5px;padding-right: 10px;">
-              <div style="display: flex;align-items: center;max-width: 168px;">
-                <div style="margin-right: 10px;">RM </div>
-                <ion-input [(ngModel)]="x.price" readonly
-                  style="background-color: #eeeeee; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
-                </ion-input>
-              </div>
 
+            <div style="font-size: 12px; color: #636161; font-weight: 500;">Item Price</div>
+
+            <div style="display: flex;align-items: center;margin-top: 5px;">
+              <ion-input [(ngModel)]="'RM ' + x.price" readonly
+                style="background-color: #eeeeee;width: 140px;  height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
+              </ion-input>
             </div>
+
           </div>
 
           <div style="width: 100%;display: flex;justify-content: space-between;align-items: center;margin: 5px 0;">
@@ -177,7 +174,7 @@
               </div>
             </div>
 
-            <div (click)="quotationSingle(x)"
+            <div (click)="quotationSingle(x,i)"
               style="color: #a17635;font-weight: 600; font-size: 12px;letter-spacing: 0.7px;padding-right: 10px;">
               View Quotation
             </div>

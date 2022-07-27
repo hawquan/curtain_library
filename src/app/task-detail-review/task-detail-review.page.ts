@@ -26,6 +26,8 @@ export class TaskDetailReviewPage implements OnInit {
 
   pleatlist = []
   blindlist = []
+  tracklist = []
+  fabriclist = []
   misclist = []
   bracketlist = []
   hooklist = []
@@ -33,6 +35,8 @@ export class TaskDetailReviewPage implements OnInit {
   otherslist = []
   PleatChoice = ''
   BlindsChoice = ''
+  fabricCurtain = []
+  fabricSheer = []
 
   PlainWall = false
   FabricWall = false
@@ -51,8 +55,11 @@ export class TaskDetailReviewPage implements OnInit {
     this.pleatlist = this.navparam.get('pleatlist')
     this.blindlist = this.navparam.get('blindlist')
     this.position = this.navparam.get('position')
+    this.tracklist = this.navparam.get('tracklist')
+    this.fabriclist = this.navparam.get('fabriclist')
     console.log(this.item, this.pleatlist, this.blindlist, this.position);
-
+    this.fabricCurtain = this.fabriclist.filter(x => x.type == 'Curtain')
+    this.fabricSheer = this.fabriclist.filter(x => x.type == 'Sheer')
     this.price = this.item.price
 
     if (this.item.type == 'Tailor-Made Curtains' || this.item.type == 'Motorised Curtains') {
@@ -65,7 +72,7 @@ export class TaskDetailReviewPage implements OnInit {
       this.wallpaperSelection(this.item.pleat)
     }
 
-    this.http.get('https://bde6-124-13-53-82.ap.ngrok.io/miscList').subscribe((s) => {
+    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/miscList').subscribe((s) => {
       this.misclist = s['data']
       console.log(this.misclist)
 
@@ -167,13 +174,12 @@ export class TaskDetailReviewPage implements OnInit {
   }
 
   updateTech() {
-    this.calcPrice()
     this.item.pleat = this.PleatChoice
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
       console.log('in 1st');
       console.log(this.item);
 
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
+      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'others', 'touchfloor'].every(a => this.item[a])) {
 
         console.log('pass1');
         this.item.price = this.price
@@ -181,8 +187,8 @@ export class TaskDetailReviewPage implements OnInit {
         let temp = {
           no: this.item.no,
           // location: this.item.location,
-          height: this.item.height,
-          width: this.item.width,
+          // height: this.item.height,
+          // width: this.item.width,
           height_tech: this.item.height_tech,
           width_tech: this.item.width_tech,
           // track: this.item.track,
@@ -217,7 +223,7 @@ export class TaskDetailReviewPage implements OnInit {
           cancelButtonColor: '#d33',
         }).then((y) => {
           if (y.isConfirmed) {
-            this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+            this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
               this.model.dismiss(1)
             })
           }
@@ -287,7 +293,7 @@ export class TaskDetailReviewPage implements OnInit {
           cancelButtonColor: '#d33',
         }).then((y) => {
           if (y.isConfirmed) {
-            this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+            this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
               this.model.dismiss(1)
             })
           }
@@ -313,7 +319,7 @@ export class TaskDetailReviewPage implements OnInit {
 
       console.log(this.item);
 
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
+      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'others', 'touchfloor'].every(a => this.item[a])) {
 
         console.log('pass2');
         this.item.price = this.price
@@ -339,7 +345,6 @@ export class TaskDetailReviewPage implements OnInit {
   }
 
   updateInstaller() {
-    this.calcPrice()
     this.item.pleat = this.PleatChoice
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
       console.log(this.item);
@@ -375,7 +380,7 @@ export class TaskDetailReviewPage implements OnInit {
 
           console.log(temp);
 
-          this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+          this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
             this.model.dismiss(1)
           })
         }
@@ -389,7 +394,6 @@ export class TaskDetailReviewPage implements OnInit {
       console.log('pass2');
       this.item.price = this.price
 
-
       Swal.fire({
         title: 'Update Task',
         text: 'Mark this task as Completed?',
@@ -417,7 +421,7 @@ export class TaskDetailReviewPage implements OnInit {
           }
 
           console.log(temp);
-          this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+          this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
             this.model.dismiss(1)
           })
         }
@@ -428,7 +432,6 @@ export class TaskDetailReviewPage implements OnInit {
 
       console.log(this.item);
 
-
       console.log('pass2');
       this.item.price = this.price
       this.model.dismiss(this.item)
@@ -438,13 +441,12 @@ export class TaskDetailReviewPage implements OnInit {
   }
 
   rejectItem() {
-    this.calcPrice()
     this.item.pleat = this.PleatChoice
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
       console.log('in 1st');
       console.log(this.item);
 
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
+      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'others', 'touchfloor'].every(a => this.item[a])) {
 
         console.log('pass1');
         this.item.price = this.price
@@ -452,8 +454,8 @@ export class TaskDetailReviewPage implements OnInit {
         let temp = {
           no: this.item.no,
           // location: this.item.location,
-          height: this.item.height,
-          width: this.item.width,
+          // height: this.item.height,
+          // width: this.item.width,
           height_tech: this.item.height_tech,
           width_tech: this.item.width_tech,
           // track: this.item.track,
@@ -505,7 +507,7 @@ export class TaskDetailReviewPage implements OnInit {
             cancelButtonColor: '#d33',
           }).then((y) => {
             if (y.isConfirmed) {
-              this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+              this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
                 this.model.dismiss(1)
               })
             }
@@ -542,8 +544,8 @@ export class TaskDetailReviewPage implements OnInit {
         let temp = {
           no: this.item.no,
           // location: this.item.location,
-          height: this.item.height,
-          width: this.item.width,
+          // height: this.item.height,
+          // width: this.item.width,
           height_tech: this.item.height_tech,
           width_tech: this.item.width_tech,
           // track: this.item.track,
@@ -578,7 +580,7 @@ export class TaskDetailReviewPage implements OnInit {
           cancelButtonColor: '#d33',
         }).then((y) => {
           if (y.isConfirmed) {
-            this.http.post('https://bde6-124-13-53-82.ap.ngrok.io/updateorders', temp).subscribe(a => {
+            this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
               this.model.dismiss(1)
             })
           }
@@ -604,7 +606,7 @@ export class TaskDetailReviewPage implements OnInit {
 
       console.log(this.item);
 
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
+      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'others', 'touchfloor'].every(a => this.item[a])) {
 
         console.log('pass2');
         this.item.price = this.price
@@ -627,11 +629,6 @@ export class TaskDetailReviewPage implements OnInit {
       }
     }
 
-
-  }
-
-  calcPrice() {
-    return this.price = this.item.width + this.item.height || 0
   }
 
   back() {
@@ -673,10 +670,88 @@ export class TaskDetailReviewPage implements OnInit {
 
   }
 
+  calcPrice(x) {
+    let width = 0
+    let height = 0
+    if (this.item.height_tech != null || this.item.width_tech != null) {
+      width = this.item.width_tech
+      height = this.item.height_tech
+    } else {
+      width = this.item.width
+      height = this.item.height
+    }
+
+    let curtain = false as any
+    let curtain_id
+    let sheer = false
+    let sheer_id
+    let track = false
+    let track_id
+
+    let pleat_id
+
+    if (this.item.curtain != 'Blinds') {
+
+      if (this.item.fabric != null && this.item.fabric != 'NA') {
+        curtain = true
+        curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+      } else {
+        curtain = false
+      }
+
+      if (this.item.fabric_sheer != null && this.item.fabric_sheer != 'NA') {
+        sheer = true
+        sheer_id = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['id']
+      } else {
+        sheer = false
+      }
+
+      if (this.item.track != null && this.item.track != 'NA') {
+        track = true
+        track_id = this.tracklist.filter(x => x.name == this.item.track)[0]['id']
+      } else {
+        track = false
+      }
+
+      pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
+
+      console.log(curtain_id, sheer_id, track_id, pleat_id);
+
+    } else {
+      curtain = false
+      sheer = false
+      track = false
+
+      pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
+    }
+    let temp = {
+      width: width, height: height, curtain: curtain, lining: false, lining_id: 41,
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id
+    }
+
+    console.log(temp);
+
+    this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/calcPrice', temp).subscribe((a) => {
+
+      console.log(a);
+
+      this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25
+
+      if (x == 'reject') {
+        this.rejectItem()
+      } else {
+        this.updateTech()
+      }
+    })
+
+  }
+
+
   imagectype;
   imagec;
   base64img;
   instPhoto = { photos: [] as any } as any;
+
   fileChange(event, name, maxsize) {
     if (event.target.files && event.target.files[0] && event.target.files[0].size < (10485768)) {
       // this.imagectype = event.target.files[0].type;

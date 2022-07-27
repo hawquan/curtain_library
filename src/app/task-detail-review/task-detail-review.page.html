@@ -388,22 +388,22 @@
     <div style="width: 100%;display: flex;align-items: center;background: #FAF7F2">
 
       <div style="width: 100%;margin: 15px 5px 0 15px;">
-        <div style="width: 100%;min-width: 60px;font-weight: 500;">Height :</div>
-        <div style="display: flex;align-items: center;margin-top: 5px;">
-          <ion-input readonly type="number" placeholder="Enter Height" [(ngModel)]="item.height"
-            style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
-          </ion-input>
-          <div style="margin-left: 5px;">m</div>
-        </div>
-      </div>
-
-      <div style="width: 100%;margin: 15px 10px 0 10px;">
         <div style="width: 100%;min-width: 60px;font-weight: 500;">Width :</div>
         <div style="display: flex;align-items: center;margin-top: 5px;">
           <ion-input readonly type="number" placeholder="Enter Width" [(ngModel)]="item.width"
             style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
           </ion-input>
-          <div style="margin-left: 5px;">m</div>
+          <div style="margin-left: 5px;">inch</div>
+        </div>
+      </div>
+
+      <div style="width: 100%;margin: 15px 10px 0 10px;">
+        <div style="width: 100%;min-width: 60px;font-weight: 500;">Height :</div>
+        <div style="display: flex;align-items: center;margin-top: 5px;">
+          <ion-input readonly type="number" placeholder="Enter Height" [(ngModel)]="item.height"
+            style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
+          </ion-input>
+          <div style="margin-left: 5px;">inch</div>
         </div>
       </div>
 
@@ -417,7 +417,7 @@
           <ion-input type="number" placeholder="(Add if incorrect)" [(ngModel)]="item.height_tech"
             style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
           </ion-input>
-          <div style="margin-left: 5px;">m</div>
+          <div style="margin-left: 5px;">inch</div>
         </div>
       </div>
 
@@ -427,23 +427,26 @@
           <ion-input type="number" placeholder="(Add if incorrect)" [(ngModel)]="item.width_tech"
             style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
           </ion-input>
-          <div style="margin-left: 5px;">m</div>
+          <div style="margin-left: 5px;">inch</div>
         </div>
       </div>
 
     </div>
-    
+
     <div style="margin: 15px 15px 5px 15px;">
       <div style="min-width: 56px;font-weight: 500;">Product Type :</div>
-      <ion-select disabled class="ion-no-padding" [(ngModel)]="item['type']" placeholder="Select a product type"
+      <!-- <ion-select disabled class="ion-no-padding" [(ngModel)]="item['type']" placeholder="Select a product type"
         interface="popover" md="ios" (ionChange)="typeChanged()"
         [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="width: 100%;height: 30px; margin-right: 10px;
         padding: 0 10px;margin-top: 5px; border-radius: 5px;border: 1px solid #a17635;">
         <ion-select-option value="Tailor-Made Curtains">Tailor-Made Curtains</ion-select-option>
         <ion-select-option value="Motorised Curtains">Motorised Curtains</ion-select-option>
         <ion-select-option value="Blinds">Blinds</ion-select-option>
-        <!-- <ion-select-option value="Wallpaper">Wallpaper</ion-select-option> -->
-      </ion-select>
+        <ion-select-option value="Wallpaper">Wallpaper</ion-select-option>
+      </ion-select> -->
+      <ion-input readonly placeholder="Enter Location" [(ngModel)]="item.type"
+        style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;">
+      </ion-input>
     </div>
 
     <div *ngIf="item['type'] == 'Tailor-Made Curtains' || item['type'] == 'Motorised Curtains'">
@@ -451,11 +454,14 @@
       <!-- Track -->
       <div style="width: 100%;padding: 15px 15px 0 15px;">
         <div style="width: 100%;min-width: 60px;font-weight: 500;">Track :</div>
-        <ion-select disabled class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a product type"
+        <!-- <ion-select disabled class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a product type"
           interface="popover" md="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="width: 100%;height: 30px; margin-right: 10px;
           padding: 0 10px;margin-top: 5px; border-radius: 5px;border: 1px solid #a17635;">
           <ion-select-option *ngFor="let x of tracks; let i = index" [value]="x">{{x}}</ion-select-option>
-        </ion-select>
+        </ion-select> -->
+        <ion-input readonly placeholder="Enter type" [(ngModel)]="item.track"
+          style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;">
+        </ion-input>
       </div>
 
       <div style="display: flex;margin: 15px 15px 5px 15px;">
@@ -749,15 +755,14 @@
       <!-- Remark Sales-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Sales Remark :</div>
-        <ion-textarea readonly placeholder="Enter additional remark... (If Any)" auto-grow="true"
-          [(ngModel)]="item.remark_sale" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly placeholder="-" auto-grow="true" row="4"  [(ngModel)]="item.remark_sale" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Tech-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Your Remark:</div>
-        <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" [(ngModel)]="item.remark_tech"
+        <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" row="4"  [(ngModel)]="item.remark_tech"
           style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
@@ -825,8 +830,8 @@
       </div>
 
       <div style="margin: 10px 0px;padding: 0 15px 10px 15px;display: flex;overflow-x: auto;">
-        <div *ngFor="let x of blindlist"
-          [ngClass]="blindChoice() == x.name ? 'selected' :'' " style="margin-right: 15px;">
+        <div *ngFor="let x of blindlist" [ngClass]="blindChoice() == x.name ? 'selected' :'' "
+          style="margin-right: 15px;">
           <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
             src="assets/icon/blinds/roman-blinds.png" alt="">
           <div
@@ -1042,15 +1047,14 @@
       <!-- Remark Sales-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Sales Remark :</div>
-        <ion-textarea readonly placeholder="Enter additional remark... (If Any)" auto-grow="true"
-          [(ngModel)]="item.remark_sale" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly placeholder="-" auto-grow="true" row="4"  [(ngModel)]="item.remark_sale" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Tech-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Your Remark:</div>
-        <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" [(ngModel)]="item.remark_tech"
+        <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" row="4"  [(ngModel)]="item.remark_tech"
           style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
@@ -1227,22 +1231,22 @@
     <div style="width: 100%;display: flex;align-items: center;background: #FAF7F2">
 
       <div style="width: 100%;margin: 15px 5px 0 15px;">
-        <div style="width: 100%;min-width: 60px;font-weight: 500;">Height :</div>
-        <div style="display: flex;align-items: center;margin-top: 5px;">
-          <ion-input readonly type="number" placeholder="Enter Height" [(ngModel)]="item.height"
-            style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
-          </ion-input>
-          <div style="margin-left: 5px;">m</div>
-        </div>
-      </div>
-
-      <div style="width: 100%;margin: 15px 10px 0 10px;">
         <div style="width: 100%;min-width: 60px;font-weight: 500;">Width :</div>
         <div style="display: flex;align-items: center;margin-top: 5px;">
           <ion-input readonly type="number" placeholder="Enter Width" [(ngModel)]="item.width"
             style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
           </ion-input>
-          <div style="margin-left: 5px;">m</div>
+          <div style="margin-left: 5px;">inch</div>
+        </div>
+      </div>
+
+      <div style="width: 100%;margin: 15px 10px 0 10px;">
+        <div style="width: 100%;min-width: 60px;font-weight: 500;">Height :</div>
+        <div style="display: flex;align-items: center;margin-top: 5px;">
+          <ion-input readonly type="number" placeholder="Enter Height" [(ngModel)]="item.height"
+            style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
+          </ion-input>
+          <div style="margin-left: 5px;">inch</div>
         </div>
       </div>
 
@@ -1257,7 +1261,7 @@
           <ion-input readonly type="number" placeholder="(Add if incorrect)" [(ngModel)]="item.height_tech"
             style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
           </ion-input>
-          <div style="margin-left: 5px;">m</div>
+          <div style="margin-left: 5px;">inch</div>
         </div>
       </div>
 
@@ -1267,7 +1271,7 @@
           <ion-input readonly type="number" placeholder="(Add if incorrect)" [(ngModel)]="item.width_tech"
             style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
           </ion-input>
-          <div style="margin-left: 5px;">m</div>
+          <div style="margin-left: 5px;">inch</div>
         </div>
       </div>
 
@@ -1275,15 +1279,18 @@
 
     <div style="margin: 15px 15px 5px 15px;">
       <div style="min-width: 56px;font-weight: 500;">Product Type :</div>
-      <ion-select disabled class="ion-no-padding" [(ngModel)]="item['type']" placeholder="Select a product type"
+      <!-- <ion-select disabled class="ion-no-padding" [(ngModel)]="item['type']" placeholder="Select a product type"
         interface="popover" md="ios" (ionChange)="typeChanged()"
         [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="width: 100%;height: 30px; margin-right: 10px;
         padding: 0 10px;margin-top: 5px; border-radius: 5px;border: 1px solid #a17635;">
         <ion-select-option value="Tailor-Made Curtains">Tailor-Made Curtains</ion-select-option>
         <ion-select-option value="Motorised Curtains">Motorised Curtains</ion-select-option>
         <ion-select-option value="Blinds">Blinds</ion-select-option>
-        <!-- <ion-select-option value="Wallpaper">Wallpaper</ion-select-option> -->
-      </ion-select>
+        <ion-select-option value="Wallpaper">Wallpaper</ion-select-option>
+      </ion-select> -->
+      <ion-input readonly placeholder="Enter Location" [(ngModel)]="item.type"
+        style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;">
+      </ion-input>
     </div>
 
     <div *ngIf="item['type'] == 'Tailor-Made Curtains' || item['type'] == 'Motorised Curtains'">
@@ -1291,13 +1298,16 @@
       <!-- Track -->
       <div style="width: 100%;padding: 15px 15px 0 15px;">
         <div style="width: 100%;min-width: 60px;font-weight: 500;">Track :</div>
-        <ion-select disabled class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a product type"
+        <!-- <ion-select disabled class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a product type"
           interface="popover" md="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="width: 100%;height: 30px; margin-right: 10px;
           padding: 0 10px;margin-top: 5px; border-radius: 5px;border: 1px solid #a17635;">
           <ion-select-option *ngFor="let x of tracks; let i = index" [value]="x">{{x}}</ion-select-option>
-        </ion-select>
+        </ion-select> -->
+        <ion-input readonly placeholder="Enter type" [(ngModel)]="item.track"
+          style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;">
+        </ion-input>
       </div>
-  
+
       <div style="display: flex;margin: 15px 15px 5px 15px;">
         <div style="font-weight: 500;">Pleat Type :</div>
         <div style="font-weight: 450; margin-left: 15px;">{{pleatChoice()}}</div>
@@ -1588,28 +1598,28 @@
       <!-- Remark Sales-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Sales Remark :</div>
-        <ion-textarea readonly placeholder="-" auto-grow="true" [(ngModel)]="item.remark_sale" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly placeholder="-" auto-grow="true" row="4"  [(ngModel)]="item.remark_sale" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Tech-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Tech Remark:</div>
-        <ion-textarea readonly placeholder="-" auto-grow="true" [(ngModel)]="item.remark_tech" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly placeholder="-" auto-grow="true" row="4"  [(ngModel)]="item.remark_tech" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Tailor-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Tailor Remark:</div>
-        <ion-textarea readonly placeholder="-" auto-grow="true" [(ngModel)]="item.remark_tail" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly placeholder="-" auto-grow="true" row="4"  [(ngModel)]="item.remark_tail" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Installer-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Your Remark:</div>
-        <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" [(ngModel)]="item.remark_inst"
+        <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" row="4"  [(ngModel)]="item.remark_inst"
           style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
@@ -1715,8 +1725,8 @@
       </div>
 
       <div style="margin: 10px 0px;padding: 0 15px 10px 15px;display: flex;overflow-x: auto;">
-        <div *ngFor="let x of blindlist"
-          [ngClass]="blindChoice() == x.name ? 'selected' :'' " style="margin-right: 15px;">
+        <div *ngFor="let x of blindlist" [ngClass]="blindChoice() == x.name ? 'selected' :'' "
+          style="margin-right: 15px;">
           <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
             src="assets/icon/blinds/roman-blinds.png" alt="">
           <div
@@ -1932,28 +1942,28 @@
       <!-- Remark Sales-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Sales Remark :</div>
-        <ion-textarea readonly placeholder="-" auto-grow="true" [(ngModel)]="item.remark_sale" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly placeholder="-" auto-grow="true" row="4"  [(ngModel)]="item.remark_sale" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Tech-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Tech Remark:</div>
-        <ion-textarea readonly placeholder="-" auto-grow="true" [(ngModel)]="item.remark_tech" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly placeholder="-" auto-grow="true" row="4"  [(ngModel)]="item.remark_tech" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Tailor-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Tailor Remark:</div>
-        <ion-textarea readonly placeholder="-" auto-grow="true" [(ngModel)]="item.remark_tail" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly placeholder="-" auto-grow="true" row="4"  [(ngModel)]="item.remark_tail" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Installer-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Your Remark:</div>
-        <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" [(ngModel)]="item.remark_inst"
+        <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" row="4"  [(ngModel)]="item.remark_inst"
           style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
@@ -2126,18 +2136,18 @@
 
     <div style="width: 40%;padding-left: 5px;">
       <div style="width: 92px;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
-      <div style="color: #a17635;font-size: 14px;font-weight: 500;">RM {{price | number : '1.2-2'}}</div>
+      <div style="color: #a17635;font-size: 14px;font-weight: 500;">RM {{item.price | number : '1.2-2'}}</div>
     </div>
 
     <div
       style="width: 60%;display: flex;align-items: center;justify-content: flex-end;padding: 0 0 0 15px;background: #ebd1af">
 
-      <ion-button (click)="rejectItem()"
+      <ion-button (click)="calcPrice('reject')"
         style="height: 35px;width: 50%;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 350px;font-size: 14px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;">
         Reject
       </ion-button>
 
-      <ion-button (click)="updateTech()"
+      <ion-button (click)="calcPrice('tech')"
         style="height: 35px;width: 50%;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 350px;font-size: 14px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;">
         Approve
       </ion-button>
@@ -2151,7 +2161,7 @@
 
     <div style="width: 40%;padding-left: 5px;">
       <div style="width: 92px;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
-      <div style="color: #a17635;font-size: 14px;font-weight: 500;">RM {{price | number : '1.2-2'}}</div>
+      <div style="color: #a17635;font-size: 14px;font-weight: 500;">RM {{item.price | number : '1.2-2'}}</div>
     </div>
 
     <div
