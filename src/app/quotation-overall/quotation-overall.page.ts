@@ -18,108 +18,54 @@ export class QuotationOverallPage implements OnInit {
   ) { }
 
   item = [] as any
-  sales_no = 0
+  sales_id = 0
   info = []
-  position = ''
   pleatlist = []
   blindlist = []
   tracklist = []
   fabriclist = []
   fabricCurtain = []
   fabricSheer = []
+  fabricLining = []
 
   calc = [] as any
+  loading = false
+  count = 0
 
   ngOnInit() {
 
     this.actroute.queryParams.subscribe(a => {
-      this.item = JSON.parse(a["items"])
-      this.info = JSON.parse(a["info"])
-      this.position = a["position"]
-      this.sales_no = this.info['no']
-      this.calc = JSON.parse(a["calc"])
+      this.sales_id = a['sales_id']
+      if (a["info"] != null) {
+        this.info = JSON.parse(a["info"])
+      }
+      this.pleatlist = JSON.parse(a["pleatlist"])
+      this.blindlist = JSON.parse(a["blindlist"])
+      this.tracklist = JSON.parse(a["tracklist"])
 
-      console.log(this.item, this.info, this.sales_no, this.pleatlist, this.blindlist, this.tracklist, this.fabriclist);
-      console.log(this.calc);
+      this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
+        this.fabriclist = s['data']
+        this.fabricCurtain = this.fabriclist.filter(x => x.type == 'Curtain')
+        this.fabricSheer = this.fabriclist.filter(x => x.type == 'Sheer')
+        this.fabricLining = this.fabriclist.filter(x => x.type == 'Lining')
+
+        this.http.post('https://curtain.vsnap.my/getorderlist', { sales_id: this.sales_id }).subscribe(a => {
+          this.item = a['data'].sort((a, b) => a.no - b.no)
+
+          console.log(this.info,this.item, this.sales_id, this.pleatlist, this.blindlist, this.tracklist, this.fabriclist);
+
+          this.loop()
+
+        })
+      })
 
     })
   }
 
-  // calcPrice(i) {
-  //   console.log('calc');
-
-  //   // this.item.curtain
-
-  //   let curtain = false as any
-  //   let curtain_id
-  //   let sheer = false
-  //   let sheer_id
-  //   let track = false
-  //   let track_id
-
-  //   let pleat_id
-
-  //   this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/fabricList').subscribe((s) => {
-  //     let temp = s['data']
-
-  //     this.fabricCurtain = temp.filter(x => x.type == 'Curtain')
-  //     this.fabricSheer = temp.filter(x => x.type == 'Sheer')
-
-  //     console.log(this.fabricCurtain, this.fabricSheer)
-  //   })
-
-  //   console.log(this.item[i]);
-
-
-  //   if (this.item[i].curtain != 'Blinds') {
-
-  //     if (this.item[i].fabric != null && this.item[i].fabric != 'NA') {
-  //       curtain = true
-  //       curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
-  //     } else {
-  //       curtain = false
-  //     }
-
-  //     if (this.item[i].fabric_sheer != null && this.item[i].fabric_sheer != 'NA') {
-  //       sheer = true
-  //       sheer_id = this.fabricSheer.filter(x => x.name == this.item[i].fabric_sheer)[0]['id']
-  //     } else {
-  //       sheer = false
-  //     }
-
-  //     if (this.item[i].track != null && this.item[i].track != 'NA') {
-  //       track = true
-  //       track_id = this.tracklist.filter(x => x.name == this.item[i].track)[0]['id']
-  //     } else {
-  //       track = false
-  //     }
-
-  //     pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
-
-  //     console.log(curtain_id, sheer_id, track_id, pleat_id);
-
-  //   } else {
-  //     curtain = false
-  //     sheer = false
-  //     track = false
-
-  //     pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
-  //   }
-
-  //   let temp = {
-  //     width: this.item[i].width, height: this.item[i].height, curtain: curtain,
-  //     curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id
-  //   }
-
-  //   console.log(temp);
-
-  //   this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/calcPrice', temp).subscribe(a => {
-
-  //     this.calc.push(a)
-  //     console.log(this.calc);
-  //   })
-
-  // }
+  loop() {
+    console.log(this.count);
+    this.calcPrice(this.count)
+  }
 
   totalPrice() {
     let total = 0
@@ -133,10 +79,12 @@ export class QuotationOverallPage implements OnInit {
 
     if (this.info['rejected'] == true) {
       let temp = {
-        no: this.sales_no,
+        no: this.sales_id,
+        step: 3,
         rejected: false,
-        step: 4,
       }
+
+      console.log('rejected');
 
       Swal.fire({
         title: 'Checkout?',
@@ -151,7 +99,7 @@ export class QuotationOverallPage implements OnInit {
         reverseButtons: true,
       }).then((y) => {
         if (y.isConfirmed) {
-          this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updatesales', temp).subscribe(a => {
+          this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
             Swal.fire({
               title: 'Checked Out Successfully',
               icon: 'success',
@@ -167,9 +115,10 @@ export class QuotationOverallPage implements OnInit {
       })
     } else {
       let temp = {
-        no: this.sales_no,
+        no: this.sales_id,
         step: 2,
       }
+      console.log('xrejected');
 
       Swal.fire({
         title: 'Checkout?',
@@ -184,7 +133,7 @@ export class QuotationOverallPage implements OnInit {
         reverseButtons: true,
       }).then((y) => {
         if (y.isConfirmed) {
-          this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updatesales', temp).subscribe(a => {
+          this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
             Swal.fire({
               title: 'Checked Out Successfully',
               icon: 'success',
@@ -199,6 +148,105 @@ export class QuotationOverallPage implements OnInit {
         }
       })
     }
+
+  }
+
+  calcPrice(i) {
+
+    let width = 0
+    let height = 0
+    if (this.item[i].height_tech != null || this.item[i].width_tech != null) {
+      width = this.item[i].width_tech
+      height = this.item[i].height_tech
+    } else {
+      width = this.item[i].width
+      height = this.item[i].height
+    }
+
+    let curtain = false
+    let curtain_id
+    let lining = false
+    let lining_id
+    let sheer = false
+    let sheer_id
+    let track = false
+    let track_id
+
+    let pleat_id
+
+    console.log(this.item[i]);
+
+
+    if (this.item[i].curtain != 'Blinds') {
+
+      if (this.item[i].fabric != null && this.item[i].fabric != 'NA') {
+        curtain = true
+        curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+      } else {
+        curtain = false
+      }
+
+      if (this.item[i].fabric_lining != null && this.item[i].fabric_lining != 'NA') {
+        lining = true
+        lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
+      } else {
+        lining = false
+      }
+
+      if (this.item[i].fabric_sheer != null && this.item[i].fabric_sheer != 'NA') {
+        sheer = true
+        sheer_id = this.fabricSheer.filter(x => x.name == this.item[i].fabric_sheer)[0]['id']
+      } else {
+        sheer = false
+      }
+
+      if (this.item[i].track != null && this.item[i].track != 'NA') {
+        track = true
+        track_id = this.tracklist.filter(x => x.name == this.item[i].track)[0]['id']
+      } else {
+        track = false
+      }
+
+      if (this.item[i].pleat != null && this.item[i].pleat != '') {
+        pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
+      }
+
+    } else {
+      curtain = false
+      sheer = false
+      track = false
+      lining = false
+
+      if (this.item[i].pleat != null && this.item[i].pleat != '') {
+        pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
+      }
+
+    }
+
+    let temp = {
+      width: width, height: height, curtain: curtain, lining: lining, lining_id: lining_id,
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id
+    }
+
+    console.log(temp);
+
+    this.http.post('https://curtain.vsnap.my/calcPrice', temp).subscribe(a => {
+
+      this.calc.push(a['data'])
+      this.count++
+      if (this.calc.length != this.item.length) {
+        this.loop()
+      }
+      console.log(this.calc);
+
+      if (this.calc.length == this.item.length) {
+        console.log('finish');
+
+        Swal.close()
+        this.loading = true
+      }
+
+    })
 
   }
 

@@ -22,13 +22,16 @@ export class TaskOngoingViewDetailsPage implements OnInit {
 
   item = [] as any
   info = []
+  position = ''
 
   pleatlist = []
   misclist = []
   bracketlist = []
   hooklist = []
+  hooklistadjust = []
   beltlist = []
   otherslist = []
+  pieceslist = []
 
   PleatChoice = ''
   BlindsChoice = ''
@@ -40,6 +43,7 @@ export class TaskOngoingViewDetailsPage implements OnInit {
   VinylWall = false
   WallpaperChoice = ''
   price = 0
+  hookview = true
 
   tracks = [
     "Bendable", "Curve", "Rod", "Cubicle", "Motorised (Battery)", "Motorised (Power Point)"
@@ -48,7 +52,8 @@ export class TaskOngoingViewDetailsPage implements OnInit {
   ngOnInit() {
     this.item = this.navparam.get('item')
     this.pleatlist = this.navparam.get('pleatlist')
-    console.log(this.item, this.pleatlist);
+    this.position = this.navparam.get('position')
+    console.log(this.item, this.pleatlist, this.position);
 
     this.price = this.item.price
 
@@ -62,7 +67,7 @@ export class TaskOngoingViewDetailsPage implements OnInit {
       this.wallpaperSelection(this.item.pleat)
     }
 
-    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/miscList').subscribe((s) => {
+    this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
       this.misclist = s['data']
       console.log(this.misclist)
 
@@ -73,10 +78,15 @@ export class TaskOngoingViewDetailsPage implements OnInit {
           this.bracketlist.push(this.misclist[i])
         } else if (this.misclist[i]['type'] == "Hook") {
           this.hooklist.push(this.misclist[i])
+          if (this.misclist[i].name != 'Adjust') {
+            this.hooklistadjust.push(this.misclist[i])
+          }
         } else if (this.misclist[i]['type'] == "Belt") {
           this.beltlist.push(this.misclist[i])
         } else if (this.misclist[i]['type'] == "Others") {
           this.otherslist.push(this.misclist[i])
+        }else if (this.misclist[i]['type'] == "Pieces") {
+          this.pieceslist.push(this.misclist[i])
         }
       }
 
@@ -102,6 +112,14 @@ export class TaskOngoingViewDetailsPage implements OnInit {
     console.log(x)
     this.PleatChoice = x.pleat
     this.item.fullness = x.fullness
+
+    if (this.PleatChoice == 'Eyelet Design' || this.PleatChoice == 'Ripplefold') {
+      this.hookview = false
+      this.item.hook = ''
+
+    } else {
+      this.hookview = true
+    }
   }
 
   pleatChoice() {
@@ -138,170 +156,6 @@ export class TaskOngoingViewDetailsPage implements OnInit {
     } else if (x == 'Vinyl') {
       this.VinylWall = true
       this.WallpaperChoice = 'Vinyl'
-    }
-
-  }
-
-  updateData() {
-    // this.item.pieces = this.info.pieces
-    // this.item.bracket = x
-    // this.item.hook = x
-    // this.item.sidehook = x
-    // this.item.belt = x
-    // this.item.others = x
-    // this.item.touchfloor = x
-  }
-
-  async selector(x) {
-    const modal = await this.modalcontroller.create({
-      component: SelectorPage,
-      componentProps: { array: [{ name: "ok1", id: "a001" }, { name: "ok2", id: "a002" }, { name: "ok3", id: "a003" }, { name: "ok4", id: "a004" },] }
-    });
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    if (data) {
-      eval(x + '="' + data.value.id + '"')
-    }
-  }
-
-  updateItem() {
-    this.calcPrice()
-    this.item.pleat = this.PleatChoice
-    if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
-      console.log('in 1st');
-      console.log(this.item);
-
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
-
-          console.log('pass1');
-          this.item.price = this.price
-
-          let temp = {
-            no: this.item.no,
-            location: this.item.location,
-            height: this.item.height,
-            width: this.item.width,
-            track: this.item.track,
-            type: this.item.type,
-            pleat: this.item.pleat,
-            fullness: this.item.fullness,
-            pieces: this.item.pieces,
-            bracket: this.item.bracket,
-            hook: this.item.hook,
-            sidehook: this.item.sidehook,
-            belt: this.item.belt,
-            fabric: this.item.fabric,
-            others: this.item.others,
-            touchfloor: this.item.touchfloor,
-            price: this.item.price,
-            status: true,
-            photos: JSON.stringify(this.item.photos),
-            remark_sale: this.item.remark_sale,
-            step: 2,
-          }
-
-          this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
-            this.model.dismiss(this.item)
-          })
-
-
-      } else {
-        console.log('error empty')
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
-
-        Toast.fire({
-          icon: 'error',
-          title: 'Please Fill in all fields.'
-        })
-
-      }
-
-    } else if (this.item['type'] == 'Blinds') {
-      this.item.pleat = this.BlindsChoice
-
-      console.log(this.item);
-
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
-
-          console.log('pass2');
-          this.item.price = this.price
-
-          let temp = {
-            no: this.item.no,
-            location: this.item.location,
-            height: this.item.height,
-            width: this.item.width,
-            track: this.item.track,
-            type: this.item.type,
-            pleat: this.item.pleat,
-            fullness: this.item.fullness,
-            pieces: this.item.pieces,
-            bracket: this.item.bracket,
-            hook: this.item.hook,
-            sidehook: this.item.sidehook,
-            belt: this.item.belt,
-            fabric: this.item.fabric,
-            others: this.item.others,
-            touchfloor: this.item.touchfloor,
-            price: this.item.price,
-            status: true,
-            photos: JSON.stringify(this.item.photos),
-            remark_sale: this.item.remark_sale,
-            step: 2,
-          }
-
-          this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
-            this.model.dismiss(this.item)
-
-          })
-
-      } else {
-        console.log('error empty')
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
-
-        Toast.fire({
-          icon: 'error',
-          title: 'Please Fill in all fields.'
-        })
-      }
-    } else {
-      this.item.pleat = this.WallpaperChoice
-
-      console.log(this.item);
-
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
-
-          console.log('pass2');
-          this.item.price = this.price
-          this.model.dismiss(this.item)
-
-      } else {
-        console.log('error empty')
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
-
-        Toast.fire({
-          icon: 'error',
-          title: 'Please Fill in all fields.'
-        })
-      }
     }
 
   }

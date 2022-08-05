@@ -12,246 +12,6 @@ import { SelectorPage } from '../selector/selector.page';
 })
 export class TaskEditorPage implements OnInit {
 
-  //   constructor(
-  //     private nav: NavController,
-  //     private actroute: ActivatedRoute,
-  //     private model: ModalController,
-  //     private navparam: NavParams,
-  //   ) { }
-
-  //   item = [] as any
-  //   info = []
-  //   Header = []
-  //   HeaderChoice = ''
-  //   HeaderSingle = false
-  //   HeaderRipple = false
-  //   HeaderDouble = false
-  //   HeaderFrench = false
-  //   HeaderEyelet = false
-
-  //   RomanBlinds = false
-  //   RollerBlinds = false
-  //   ZebraBlinds = false
-  //   WoodenBlinds = false
-  //   blindsChoice = ''
-
-  //   PlainWall = false
-  //   FabricWall = false
-  //   NonWovenWall = false
-  //   PatternWall = false
-  //   VinylWall = false
-  //   WallpaperChoice = ''
-  //   price = 0
-
-  //   ngOnInit() {
-  //     this.item = this.navparam.get('item')
-  //     console.log(this.item);
-
-  //     if (this.item.type == 'Tailor-Made Curtains' || this.item.type == 'Motorised Curtains') {
-  //       this.HeaderSelection(this.item.header)
-  //     }
-  //     else if (this.item.type == 'Blinds') {
-  //       this.blindsSelection(this.item.header)
-  //     }
-  //     else {
-  //       this.wallpaperSelection(this.item.header)
-  //     }
-  //     // console.log(this.info, this.Header);
-  //   }
-
-  //   typeChanged() {
-  //     this.HeaderSingle = false
-  //     this.HeaderRipple = false
-  //     this.HeaderDouble = false
-  //     this.HeaderFrench = false
-  //     this.HeaderEyelet = false
-  //     this.HeaderChoice = ''
-
-  //     this.RomanBlinds = false
-  //     this.RollerBlinds = false
-  //     this.ZebraBlinds = false
-  //     this.WoodenBlinds = false
-  //     this.blindsChoice = ''
-
-  //     this.PlainWall = false
-  //     this.FabricWall = false
-  //     this.NonWovenWall = false
-  //     this.PatternWall = false
-  //     this.VinylWall = false
-  //     this.WallpaperChoice = ''
-  //   }
-
-  //   HeaderSelection(x) {
-  //     this.HeaderSingle = false
-  //     this.HeaderRipple = false
-  //     this.HeaderDouble = false
-  //     this.HeaderFrench = false
-  //     this.HeaderEyelet = false
-
-  //     if (x == 'Single Pleat') {
-  //       this.HeaderSingle = true
-  //       this.HeaderChoice = 'Single Pleat'
-  //     } else if (x == 'Ripple Fold') {
-  //       this.HeaderRipple = true
-  //       this.HeaderChoice = 'Ripple Fold'
-  //     } else if (x == 'Double Pleat') {
-  //       this.HeaderDouble = true
-  //       this.HeaderChoice = 'Double Pleat'
-  //     } else if (x == 'French Pleat') {
-  //       this.HeaderFrench = true
-  //       this.HeaderChoice = 'French Pleat'
-  //     } else if (x == 'Eyelet') {
-  //       this.HeaderEyelet = true
-  //       this.HeaderChoice = 'Eyelet'
-  //     }
-
-  //   }
-
-  //   blindsSelection(x) {
-  //     this.RomanBlinds = false
-  //     this.RollerBlinds = false
-  //     this.ZebraBlinds = false
-  //     this.WoodenBlinds = false
-
-  //     if (x == 'Roman Blinds') {
-  //       this.RomanBlinds = true
-  //       this.blindsChoice = 'Roman Blinds'
-  //     } else if (x == 'Roller Blinds') {
-  //       this.RollerBlinds = true
-  //       this.blindsChoice = 'Roller Blinds'
-  //     } else if (x == 'Zebra Blinds') {
-  //       this.ZebraBlinds = true
-  //       this.blindsChoice = 'Zebra Blinds'
-  //     } else if (x == 'Wooden Blinds') {
-  //       this.WoodenBlinds = true
-  //       this.blindsChoice = 'Wooden Blinds'
-  //     }
-
-  //   }
-
-  //   wallpaperSelection(x) {
-  //     this.PlainWall = false
-  //     this.FabricWall = false
-  //     this.NonWovenWall = false
-  //     this.PatternWall = false
-  //     this.VinylWall = false
-
-  //     if (x == 'Plain') {
-  //       this.PlainWall = true
-  //       this.WallpaperChoice = 'Plain'
-  //     } else if (x == 'Fabric') {
-  //       this.FabricWall = true
-  //       this.WallpaperChoice = 'Fabric'
-  //     } else if (x == 'Non-Woven') {
-  //       this.NonWovenWall = true
-  //       this.WallpaperChoice = 'Non-Woven'
-  //     } else if (x == 'Patterned') {
-  //       this.PatternWall = true
-  //       this.WallpaperChoice = 'Patterned'
-  //     } else if (x == 'Vinyl') {
-  //       this.VinylWall = true
-  //       this.WallpaperChoice = 'Vinyl'
-  //     }
-
-  //   }
-
-  //   updateItem() {
-  //     this.item.header = this.HeaderChoice
-  //     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
-  //       console.log('in 1st');
-  //       console.log(this.item);
-
-  //       if (['width', 'height', 'type', 'header', 'fabric', 'colours', 'patterns'].every(a => this.item[a])) {
-
-  //         console.log('pass1');
-
-  //         this.model.dismiss(this.item)
-
-  //       } else {
-  //         console.log('error empty')
-  //         const Toast = Swal.mixin({
-  //           toast: true,
-  //           position: 'top',
-  //           showConfirmButton: false,
-  //           timer: 1500,
-  //           timerProgressBar: true,
-  //         })
-
-  //         Toast.fire({
-  //           icon: 'error',
-  //           title: 'Please Fill in all fields.'
-  //         })
-
-  //       }
-
-  //     } else if (this.item['type'] == 'Blinds') {
-  //       this.item.header = this.blindsChoice
-
-  //       console.log('in 2nd');
-  //       console.log(this.item);
-
-  //       if (['width', 'height', 'type', 'header', 'styles', 'patterns', 'textures'].every(a => this.item[a])) {
-  //         console.log('pass2');
-  //         this.model.dismiss(this.item)
-
-  //       } else {
-  //         console.log('error empty')
-  //         const Toast = Swal.mixin({
-  //           toast: true,
-  //           position: 'top',
-  //           showConfirmButton: false,
-  //           timer: 1500,
-  //           timerProgressBar: true,
-  //         })
-
-  //         Toast.fire({
-  //           icon: 'error',
-  //           title: 'Please Fill in all fields.'
-  //         })
-  //       }
-  //     } else {
-  //       this.item.header = this.WallpaperChoice
-
-  //       console.log('in 2nd');
-  //       console.log(this.item);
-
-  //       if (['width', 'height', 'type', 'header', 'colours', 'prints', 'textures'].every(a => this.item[a])) {
-  //         console.log('pass2');
-  //         this.model.dismiss(this.item)
-
-  //       } else {
-  //         console.log('error empty')
-  //         const Toast = Swal.mixin({
-  //           toast: true,
-  //           position: 'top',
-  //           showConfirmButton: false,
-  //           timer: 1500,
-  //           timerProgressBar: true,
-  //         })
-
-  //         Toast.fire({
-  //           icon: 'error',
-  //           title: 'Please Fill in all fields.'
-  //         })
-  //       }
-  //     }
-
-  //   }
-
-  //   calcPrice() {
-  //     if (this.item.width + this.item.heigh != 'NaN') {
-  //       this.price = this.item.width + this.item.height
-  //     } else {
-  //       this.price = 0
-  //     }
-  //   }
-
-  //   back() {
-  //     this.model.dismiss()
-  //   }
-
-  // }
-
   constructor(
     private nav: NavController,
     private actroute: ActivatedRoute,
@@ -262,7 +22,10 @@ export class TaskEditorPage implements OnInit {
 
   item = [] as any
   info = []
-
+  checkcurtain = false
+  checklining = false
+  checksheer = false
+  
   pleatlist = []
   blindlist = []
   tracklist = []
@@ -270,10 +33,13 @@ export class TaskEditorPage implements OnInit {
   misclist = []
   bracketlist = []
   hooklist = []
+  hooklistadjust = []
   beltlist = []
   otherslist = []
+  pieceslist = []
   fabricCurtain = []
   fabricSheer = []
+  fabricLining = []
 
   PleatChoice = ''
   BlindsChoice = ''
@@ -284,7 +50,9 @@ export class TaskEditorPage implements OnInit {
   PatternWall = false
   VinylWall = false
   WallpaperChoice = ''
-  price :any = 0
+  price: any = 0
+
+  hookview = true
 
   ngOnInit() {
     this.item = this.navparam.get('item')
@@ -295,6 +63,7 @@ export class TaskEditorPage implements OnInit {
 
     this.fabricCurtain = this.fabriclist.filter(x => x.type == 'Curtain')
     this.fabricSheer = this.fabriclist.filter(x => x.type == 'Sheer')
+    this.fabricLining = this.fabriclist.filter(x => x.type == 'Lining')
 
     console.log(this.item, this.pleatlist, this.blindlist, this.tracklist, this.fabriclist);
 
@@ -302,6 +71,7 @@ export class TaskEditorPage implements OnInit {
 
     if (this.item.type == 'Tailor-Made Curtains' || this.item.type == 'Motorised Curtains') {
       this.pleatSelection2(this.item)
+      this.fabricCheck(this.item)
     }
     else if (this.item.type == 'Blinds') {
       this.blindsSelection2(this.item)
@@ -310,21 +80,25 @@ export class TaskEditorPage implements OnInit {
       this.wallpaperSelection(this.item.pleat)
     }
 
-    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/miscList').subscribe((s) => {
+    this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
       this.misclist = s['data']
       console.log(this.misclist)
 
       for (let i = 0; i < this.misclist.length; i++) {
-        // if (this.misclist['type'] == "Pieces") {
-        // } 
+
         if (this.misclist[i]['type'] == "Bracket") {
           this.bracketlist.push(this.misclist[i])
         } else if (this.misclist[i]['type'] == "Hook") {
           this.hooklist.push(this.misclist[i])
+          if (this.misclist[i].name != 'Adjust') {
+            this.hooklistadjust.push(this.misclist[i])
+          }
         } else if (this.misclist[i]['type'] == "Belt") {
           this.beltlist.push(this.misclist[i])
         } else if (this.misclist[i]['type'] == "Others") {
           this.otherslist.push(this.misclist[i])
+        } else if (this.misclist[i]['type'] == "Pieces") {
+          this.pieceslist.push(this.misclist[i])
         }
       }
 
@@ -351,17 +125,87 @@ export class TaskEditorPage implements OnInit {
     console.log(x);
     this.PleatChoice = x.name
     this.item.fullness = x.fullness
+    if (this.PleatChoice == 'Eyelet Design' || this.PleatChoice == 'Ripplefold') {
+      this.hookview = false
+      this.item.hook = ''
+
+    } else {
+      this.hookview = true
+    }
+
+    if(this.PleatChoice == 'French Pleat'){
+      this.item.hook = ''
+    }
   }
 
   pleatSelection2(x) {
     console.log(x);
     this.PleatChoice = x.pleat
     this.item.fullness = x.fullness
+    if (this.PleatChoice == 'Eyelet Design' || this.PleatChoice == 'Ripplefold') {
+      this.hookview = false
+      this.item.hook = ''
+
+    } else {
+      this.hookview = true
+    }
   }
 
   pleatChoice() {
     return this.PleatChoice
   }
+
+  fabricCheck(x){
+    if(x.fabric != null){
+      this.checkcurtain = true
+    }
+
+    if(x.fabric_lining != null){
+      this.checklining = true
+    }
+
+    if(x.fabric_sheer != null) {
+      this.checksheer = true
+    }
+  }
+
+  clearFabric(x) {
+    if (x == 'curtain') {
+      this.item.fabric = null
+    } else if (x == 'sheer') {
+      this.item.fabric_sheer = null
+    } else if (x == 'lining') {
+      this.item.fabric_lining = null
+
+    }
+  }
+
+  checkFabric(x) {
+    if (x == 'curtain') {
+      this.checkcurtain = !this.checkcurtain
+
+      if (this.checkcurtain == false) {
+        this.item.fabric = null
+        this.item.fabric_lining = null
+        this.checklining = false
+      }
+    } else if (x == 'lining') {
+      this.checklining = !this.checklining
+
+      if (this.checklining == false) {
+        this.item.fabric_lining = null
+
+      }
+    } else if (x == 'sheer') {
+      this.checksheer = !this.checksheer
+
+      if (this.checksheer == false) {
+        this.item.fabric_sheer = null
+
+      }
+    }
+  }
+
 
   blindsSelection(x) {
     this.BlindsChoice = x.name
@@ -456,74 +300,113 @@ export class TaskEditorPage implements OnInit {
   updateItem() {
     this.item.pleat = this.PleatChoice
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
-      console.log('in 1st');
-      console.log(this.item);
 
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'others', 'touchfloor'].every(a => this.item[a])) {
+      let temp = {
+        no: this.item.no,
+        location: this.item.location,
+        height: this.item.height,
+        width: this.item.width,
+        track: this.item.track,
+        type: this.item.type,
+        pleat: this.item.pleat,
+        fullness: this.item.fullness,
+        pieces: this.item.pieces,
+        bracket: this.item.bracket,
+        hook: this.item.hook,
+        sidehook: this.item.sidehook,
+        belt: this.item.belt,
+        fabric: this.item.fabric,
+        fabric_sheer: this.item.fabric_sheer,
+        others: this.item.others,
+        touchfloor: this.item.touchfloor,
+        price: this.price,
+        status: true,
+        status_sale: 'Completed',
+        status_tech: 'Pending',
+        photos: JSON.stringify(this.item.photos),
+        remark_sale: this.item.remark_sale,
+        step: 2,
+      }
 
-        console.log('pass1');
+      console.log(temp);
+      if (this.PleatChoice == 'Eyelet Design' || this.PleatChoice == 'Ripplefold') {
 
-        let temp = {
-          no: this.item.no,
-          location: this.item.location,
-          height: this.item.height,
-          width: this.item.width,
-          track: this.item.track,
-          type: this.item.type,
-          pleat: this.item.pleat,
-          fullness: this.item.fullness,
-          pieces: this.item.pieces,
-          bracket: this.item.bracket,
-          hook: this.item.hook,
-          sidehook: this.item.sidehook,
-          belt: this.item.belt,
-          fabric: this.item.fabric,
-          fabric_sheer: this.item.fabric_sheer,
-          others: this.item.others,
-          touchfloor: this.item.touchfloor,
-          price: this.price,
-          status: true,
-          status_tech: 'Pending',
-          photos: JSON.stringify(this.item.photos),
-          remark_sale: this.item.remark_sale,
-          step: 2,
+        if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'sidehook', 'belt', 'others', 'touchfloor'].every(a => this.item[a])) {
+
+          Swal.fire({
+            title: 'Update Order',
+            text: 'Update this order?',
+            heightAuto: false,
+            icon: 'success',
+            showConfirmButton: true,
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Update',
+            reverseButtons: true,
+          }).then((y) => {
+            if (y.isConfirmed) {
+              this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
+                this.model.dismiss(1)
+              })
+            }
+          })
+
+        } else {
+          console.log('error empty')
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          })
+
+          Toast.fire({
+            icon: 'error',
+            title: 'Please Fill in all fields.'
+          })
+
         }
-
-        Swal.fire({
-          title: 'Update Order',
-          text: 'Update this order?',
-          heightAuto: false,
-          icon: 'success',
-          showConfirmButton: true,
-          showCancelButton: true,
-          cancelButtonText: 'Cancel',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, Create',
-          reverseButtons: true,
-        }).then((y) => {
-          if (y.isConfirmed) {
-            this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
-              this.model.dismiss(1)
-            })
-          }
-        })
-
-
       } else {
-        console.log('error empty')
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
+        if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'others', 'touchfloor'].every(a => this.item[a])) {
 
-        Toast.fire({
-          icon: 'error',
-          title: 'Please Fill in all fields.'
-        })
+          Swal.fire({
+            title: 'Update Order',
+            text: 'Update this order?',
+            heightAuto: false,
+            icon: 'success',
+            showConfirmButton: true,
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Update',
+            reverseButtons: true,
+          }).then((y) => {
+            if (y.isConfirmed) {
+              this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
+                this.model.dismiss(1)
+              })
+            }
+          })
 
+
+        } else {
+          console.log('error empty')
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          })
+
+          Toast.fire({
+            icon: 'error',
+            title: 'Please Fill in all fields.'
+          })
+
+        }
       }
 
     } else if (this.item['type'] == 'Blinds') {
@@ -555,6 +438,7 @@ export class TaskEditorPage implements OnInit {
           touchfloor: this.item.touchfloor,
           price: this.price,
           status: true,
+          status_sale: 'Completed',
           status_tech: 'Pending',
           photos: JSON.stringify(this.item.photos),
           remark_sale: this.item.remark_sale,
@@ -574,7 +458,7 @@ export class TaskEditorPage implements OnInit {
           reverseButtons: true,
         }).then((y) => {
           if (y.isConfirmed) {
-            this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
+            this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
               this.model.dismiss(1)
             })
           }
@@ -631,6 +515,8 @@ export class TaskEditorPage implements OnInit {
 
     let curtain = false as any
     let curtain_id
+    let lining = false
+    let lining_id
     let sheer = false
     let sheer_id
     let track = false
@@ -647,6 +533,13 @@ export class TaskEditorPage implements OnInit {
         curtain = false
       }
 
+      if (this.item.fabric_lining != null && this.item.fabric_lining != 'NA') {
+        lining = true
+        lining_id = this.fabricLining.filter(x => x.name == this.item.fabric_lining)[0]['id']
+      } else {
+        lining = false
+      }
+      
       if (this.item.fabric_sheer != null && this.item.fabric_sheer != 'NA') {
         sheer = true
         sheer_id = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['id']
@@ -660,8 +553,10 @@ export class TaskEditorPage implements OnInit {
       } else {
         track = false
       }
-
-      pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
+      
+      if(this.PleatChoice != null && this.PleatChoice != ''){
+        pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
+      }
 
       console.log(curtain_id, sheer_id, track_id, pleat_id);
 
@@ -669,23 +564,24 @@ export class TaskEditorPage implements OnInit {
       curtain = false
       sheer = false
       track = false
+      lining = false
 
       pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
     }
     let temp = {
-      width: this.item.width, height: this.item.height, curtain: curtain,
+      width: this.item.width, height: this.item.height, curtain: curtain, lining: lining, lining_id: lining_id,
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id
     }
 
     console.log(temp);
 
-    this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/calcPrice', temp).subscribe((a) => {
+    this.http.post('https://curtain.vsnap.my/calcPrice', temp).subscribe((a) => {
 
       console.log(a);
 
-      this.price = <any>Object.values(a['data'] || []).reduce((x:number,y:number)=>(x + (y['total'] || 0)) , 0) + 25
+      this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25
 
-      if(pass){
+      if (pass) {
         this.updateItem()
       }
     })
@@ -693,7 +589,7 @@ export class TaskEditorPage implements OnInit {
   }
 
   back() {
-    this.model.dismiss()
+    this.model.dismiss(1)
   }
 
   lengthof(x) {

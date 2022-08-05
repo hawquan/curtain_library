@@ -31,10 +31,14 @@ export class TaskDetailRejectedReviewPage implements OnInit {
   misclist = []
   bracketlist = []
   hooklist = []
+  hooklistadjust = []
   beltlist = []
   otherslist = []
+  pieceslist = []
+
   fabricCurtain = []
   fabricSheer = []
+  fabricLining = []
 
   PleatChoice = ''
   BlindsChoice = ''
@@ -46,6 +50,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
   VinylWall = false
   WallpaperChoice = ''
   price = 0
+  hookview = true
 
   tracks = [
     "Bendable", "Curve", "Rod", "Cubicle", "Motorised (Battery)", "Motorised (Power Point)"
@@ -56,11 +61,15 @@ export class TaskDetailRejectedReviewPage implements OnInit {
     this.pleatlist = this.navparam.get('pleatlist')
     this.blindlist = this.navparam.get('blindlist')
     this.tracklist = this.navparam.get('tracklist')
-    this.fabriclist = this.navparam.get('fabriclist')
-    console.log(this.item, this.pleatlist);
+    this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
+      this.fabriclist = s['data']
+      this.fabricCurtain = this.fabriclist.filter(x => x.type == 'Curtain')
+      this.fabricSheer = this.fabriclist.filter(x => x.type == 'Sheer')
+      this.fabricLining = this.fabriclist.filter(x => x.type == 'Lining')
+      console.log(this.item, this.pleatlist, this.blindlist, this.tracklist, this.fabriclist);
 
-    this.fabricCurtain = this.fabriclist.filter(x => x.type == 'Curtain')
-    this.fabricSheer = this.fabriclist.filter(x => x.type == 'Sheer')
+    })
+
     this.price = this.item.price
 
     if (this.item.type == 'Tailor-Made Curtains' || this.item.type == 'Motorised Curtains') {
@@ -73,21 +82,24 @@ export class TaskDetailRejectedReviewPage implements OnInit {
       this.wallpaperSelection(this.item.pleat)
     }
 
-    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/miscList').subscribe((s) => {
+    this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
       this.misclist = s['data']
       console.log(this.misclist)
 
       for (let i = 0; i < this.misclist.length; i++) {
-        // if (this.misclist['type'] == "Pieces") {
-        // } 
         if (this.misclist[i]['type'] == "Bracket") {
           this.bracketlist.push(this.misclist[i])
         } else if (this.misclist[i]['type'] == "Hook") {
           this.hooklist.push(this.misclist[i])
+          if (this.misclist[i].name != 'Adjust') {
+            this.hooklistadjust.push(this.misclist[i])
+          }
         } else if (this.misclist[i]['type'] == "Belt") {
           this.beltlist.push(this.misclist[i])
         } else if (this.misclist[i]['type'] == "Others") {
           this.otherslist.push(this.misclist[i])
+        } else if (this.misclist[i]['type'] == "Pieces") {
+          this.pieceslist.push(this.misclist[i])
         }
       }
 
@@ -114,6 +126,15 @@ export class TaskDetailRejectedReviewPage implements OnInit {
     console.log(x);
     this.PleatChoice = x.pleat
     this.item.fullness = x.fullness
+
+    if (this.PleatChoice == 'Eyelet Design' || this.PleatChoice == 'Ripplefold') {
+      this.hookview = false
+      this.item.hook = ''
+
+    } else {
+      this.hookview = true
+    }
+
   }
 
   pleatChoice() {
@@ -177,365 +198,91 @@ export class TaskDetailRejectedReviewPage implements OnInit {
   }
 
   updateItem() {
+
     this.item.pleat = this.PleatChoice
+    this.item.price = this.price
+
+    let temp = {
+      no: this.item.no,
+      // location: this.item.location,
+      // height: this.item.height,
+      // width: this.item.width,
+      height_tech: this.item.height_tech,
+      width_tech: this.item.width_tech,
+      // track: this.item.track,
+      // type: this.item.type,
+      // pleat: this.item.pleat,
+      // fullness: this.item.fullness,
+      // pieces: this.item.pieces,
+      // bracket: this.item.bracket,
+      // hook: this.item.hook,
+      // sidehook: this.item.sidehook,
+      // belt: this.item.belt,
+      // fabric: this.item.fabric,
+      // others: this.item.others,
+      // touchfloor: this.item.touchfloor,
+      price: this.item.price,
+      photos: JSON.stringify(this.item.photos),
+      status_sale: 'Revisited',
+      status_tech: 'Approved',
+      step: 3,
+      remark_sale: this.item.remark_sales
+      // remark_tech: this.item.remark_tech
+    }
+    console.log(temp);
+
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
-      console.log('in 1st');
-      console.log(this.item);
 
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
-
-        console.log('pass1');
-        this.item.price = this.price
-
-        let temp = {
-          no: this.item.no,
-          // location: this.item.location,
-          height: this.item.height,
-          width: this.item.width,
-          height_tech: this.item.height_tech,
-          width_tech: this.item.width_tech,
-          // track: this.item.track,
-          // type: this.item.type,
-          // pleat: this.item.pleat,
-          // fullness: this.item.fullness,
-          // pieces: this.item.pieces,
-          // bracket: this.item.bracket,
-          // hook: this.item.hook,
-          // sidehook: this.item.sidehook,
-          // belt: this.item.belt,
-          // fabric: this.item.fabric,
-          // others: this.item.others,
-          // touchfloor: this.item.touchfloor,
-          price: this.item.price,
-          photos: JSON.stringify(this.item.photos),
-          status_tech: 'Revisited',
-          step: 3,
-          remark_tech: this.item.remark_tech
+      Swal.fire({
+        title: 'Update Task?',
+        text: 'Update task of "' + this.item.location + '" to REVISITED. Are you sure?',
+        icon: 'success',
+        heightAuto: false,
+        showConfirmButton: true,
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonText: 'Update',
+        cancelButtonText: 'Cancel',
+        cancelButtonColor: '#d33',
+      }).then((y) => {
+        if (y.isConfirmed) {
+          this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
+            this.model.dismiss(1)
+          })
         }
-
-        Swal.fire({
-          title: 'Update Item Status?',
-          text: 'Update order of "' + this.item.location + '" to Revisited. Are you sure?',
-          icon: 'success',
-          heightAuto: false,
-          showConfirmButton: true,
-          showCancelButton: true,
-          reverseButtons: true,
-          confirmButtonText: 'Update',
-          cancelButtonText: 'Cancel',
-          cancelButtonColor: '#d33',
-        }).then((y) => {
-          if (y.isConfirmed) {
-            this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
-              this.model.dismiss(1)
-            })
-          }
-        })
-
-      } else {
-        console.log('error empty')
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
-
-        Toast.fire({
-          icon: 'error',
-          title: 'Please Fill in all fields.'
-        })
-
-      }
+      })
 
     } else if (this.item['type'] == 'Blinds') {
-      this.item.pleat = this.BlindsChoice
 
-      console.log(this.item);
-
-      if (['location', 'width', 'height', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'belt', 'others'].every(a => this.item[a])) {
-
-        console.log('pass2');
-        this.item.price = this.price
-
-        let temp = {
-          no: this.item.no,
-          height: this.item.height,
-          width: this.item.width,
-          height_tech: this.item.height_tech,
-          width_tech: this.item.width_tech,
-          // track: this.item.track,
-          // type: this.item.type,
-          // pleat: this.item.pleat,
-          // fullness: this.item.fullness,
-          // pieces: this.item.pieces,
-          // bracket: this.item.bracket,
-          // hook: this.item.hook,
-          // sidehook: this.item.sidehook,
-          // belt: this.item.belt,
-          // fabric: this.item.fabric,
-          // others: this.item.others,
-          // touchfloor: this.item.touchfloor,
-          price: this.item.price,
-          status_tech: 'Revisited',
-          photos: JSON.stringify(this.item.photos),
-          step: 3,
-          remark_tech: this.item.remark_tech
+      Swal.fire({
+        title: 'Update Item?',
+        text: 'Update task of "' + this.item.location + '" to REVISITED. Are you sure?',
+        icon: 'success',
+        heightAuto: false,
+        showConfirmButton: true,
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonText: 'Update',
+        cancelButtonText: 'Cancel',
+        cancelButtonColor: '#d33',
+      }).then((y) => {
+        if (y.isConfirmed) {
+          this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
+            this.model.dismiss(1)
+          })
         }
-        Swal.fire({
-          title: 'Update Item Status?',
-          text: 'Update order of "' + this.item.location + '" to Revisited. Are you sure?',
-          icon: 'success',
-          heightAuto: false,
-          showConfirmButton: true,
-          showCancelButton: true,
-          reverseButtons: true,
-          confirmButtonText: 'Update',
-          cancelButtonText: 'Cancel',
-          cancelButtonColor: '#d33',
-        }).then((y) => {
-          if (y.isConfirmed) {
-            this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
-              this.model.dismiss(1)
-            })
-          }
-        })
+      })
 
-      } else {
-        console.log('error empty')
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
-
-        Toast.fire({
-          icon: 'error',
-          title: 'Please Fill in all fields.'
-        })
-      }
     } else {
       this.item.pleat = this.WallpaperChoice
 
       console.log(this.item);
 
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
+      console.log('pass2');
+      this.item.price = this.price
+      this.model.dismiss(this.item)
 
-        console.log('pass2');
-        this.item.price = this.price
-        this.model.dismiss(this.item)
-
-      } else {
-        console.log('error empty')
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
-
-        Toast.fire({
-          icon: 'error',
-          title: 'Please Fill in all fields.'
-        })
-      }
     }
-
-  }
-
-  rejectItem() {
-    this.item.pleat = this.PleatChoice
-    if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
-      console.log('in 1st');
-      console.log(this.item);
-
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
-
-        console.log('pass1');
-        this.item.price = this.price
-
-        let temp = {
-          no: this.item.no,
-          // location: this.item.location,
-          height: this.item.height,
-          width: this.item.width,
-          height_tech: this.item.height_tech,
-          width_tech: this.item.width_tech,
-          // track: this.item.track,
-          // type: this.item.type,
-          // pleat: this.item.pleat,
-          // fullness: this.item.fullness,
-          // pieces: this.item.pieces,
-          // bracket: this.item.bracket,
-          // hook: this.item.hook,
-          // sidehook: this.item.sidehook,
-          // belt: this.item.belt,
-          // fabric: this.item.fabric,
-          // others: this.item.others,
-          // touchfloor: this.item.touchfloor,
-          price: this.item.price,
-          status_tech: 'Rejected',
-          photos: JSON.stringify(this.item.photos),
-          step: 1,
-          remark_tech: this.item.remark_tech
-        }
-
-        if (this.item.height_tech == null || this.item.width_tech == null) {
-
-          const Toast = Swal.mixin({
-            toast: true,
-            position: 'top',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-          })
-
-          Toast.fire({
-            icon: 'error',
-            title: 'Tech Height & Width cannot be empty when rejecting.'
-          })
-
-        } else {
-
-          Swal.fire({
-            title: 'Reject Item',
-            text: 'Reject order of "' + this.item.location + '". Are you sure?',
-            icon: 'error',
-            heightAuto: false,
-            showConfirmButton: true,
-            showCancelButton: true,
-            reverseButtons: true,
-            confirmButtonText: 'Reject',
-            cancelButtonText: 'Cancel',
-            cancelButtonColor: '#d33',
-          }).then((y) => {
-            if (y.isConfirmed) {
-              this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
-                this.model.dismiss(1)
-              })
-            }
-          })
-        }
-
-      } else {
-        console.log('error empty')
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
-
-        Toast.fire({
-          icon: 'error',
-          title: 'Please Fill in all fields.'
-        })
-
-      }
-
-    } else if (this.item['type'] == 'Blinds') {
-      this.item.pleat = this.BlindsChoice
-
-      console.log(this.item);
-
-      if (['location', 'width', 'height', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'belt', 'others'].every(a => this.item[a])) {
-
-        console.log('pass2');
-        this.item.price = this.price
-
-        let temp = {
-          no: this.item.no,
-          // location: this.item.location,
-          height: this.item.height,
-          width: this.item.width,
-          height_tech: this.item.height_tech,
-          width_tech: this.item.width_tech,
-          // track: this.item.track,
-          // type: this.item.type,
-          // pleat: this.item.pleat,
-          // fullness: this.item.fullness,
-          // pieces: this.item.pieces,
-          // bracket: this.item.bracket,
-          // hook: this.item.hook,
-          // sidehook: this.item.sidehook,
-          // belt: this.item.belt,
-          // fabric: this.item.fabric,
-          // others: this.item.others,
-          // touchfloor: this.item.touchfloor,
-          price: this.item.price,
-          status_tech: 'Rejected',
-          photos: JSON.stringify(this.item.photos),
-          step: 1,
-          remark_tech: this.item.remark_tech
-        }
-
-        Swal.fire({
-          title: 'Reject Item',
-          text: 'Reject order of "' + this.item.location + '". Are you sure?',
-          icon: 'error',
-          heightAuto: false,
-          showConfirmButton: true,
-          showCancelButton: true,
-          reverseButtons: true,
-          confirmButtonText: 'Reject',
-          cancelButtonText: 'Cancel',
-          cancelButtonColor: '#d33',
-        }).then((y) => {
-          if (y.isConfirmed) {
-            this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
-              this.model.dismiss(1)
-            })
-          }
-        })
-
-      } else {
-        console.log('error empty')
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
-
-        Toast.fire({
-          icon: 'error',
-          title: 'Please Fill in all fields.'
-        })
-      }
-    } else {
-      this.item.pleat = this.WallpaperChoice
-
-      console.log(this.item);
-
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'fabric', 'others', 'touchfloor'].every(a => this.item[a])) {
-
-        console.log('pass2');
-        this.item.price = this.price
-        this.model.dismiss(this.item)
-
-      } else {
-        console.log('error empty')
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
-
-        Toast.fire({
-          icon: 'error',
-          title: 'Please Fill in all fields.'
-        })
-      }
-    }
-
 
   }
 
@@ -597,17 +344,17 @@ export class TaskDetailRejectedReviewPage implements OnInit {
       pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
     }
     let temp = {
-      width: width, height: height, curtain: curtain,lining: false, lining_id: 41,
+      width: width, height: height, curtain: curtain, lining: false, lining_id: 41,
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id
     }
 
     console.log(temp);
 
-    this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/calcPrice', temp).subscribe(a => {
+    this.http.post('https://curtain.vsnap.my/calcPrice', temp).subscribe(a => {
 
       console.log(a);
 
-      this.price = <any>Object.values(a['data'] || []).reduce((x:number,y:number)=>(x + (y['total'] || 0)) , 0) + 25
+      this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25
 
       if (pass) {
         this.updateItem()
@@ -617,7 +364,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
   }
   back() {
-    this.model.dismiss()
+    this.model.dismiss(1)
   }
 
   lengthof(x) {

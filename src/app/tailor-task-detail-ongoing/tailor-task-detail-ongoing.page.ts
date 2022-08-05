@@ -27,6 +27,7 @@ export class TailorTaskDetailOngoingPage implements OnInit {
   misclist = []
   bracketlist = []
   hooklist = []
+  hooklistadjust = []
   beltlist = []
   otherslist = []
 
@@ -71,7 +72,7 @@ export class TailorTaskDetailOngoingPage implements OnInit {
       this.wallpaperSelection(this.item.pleat)
     }
 
-    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/miscList').subscribe((s) => {
+    this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
       this.misclist = s['data']
       console.log(this.misclist)
 
@@ -82,6 +83,9 @@ export class TailorTaskDetailOngoingPage implements OnInit {
           this.bracketlist.push(this.misclist[i])
         } else if (this.misclist[i]['type'] == "Hook") {
           this.hooklist.push(this.misclist[i])
+          if (this.misclist[i].name != 'Adjust') {
+            this.hooklistadjust.push(this.misclist[i])
+          }
         } else if (this.misclist[i]['type'] == "Belt") {
           this.beltlist.push(this.misclist[i])
         } else if (this.misclist[i]['type'] == "Others") {
@@ -181,7 +185,7 @@ export class TailorTaskDetailOngoingPage implements OnInit {
         reverseButtons: true,
       }).then((y) => {
         if (y.isConfirmed) {
-          this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
+          this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
             Swal.fire({
               title: 'Task Submitted Successfully',
               icon: 'success',
@@ -224,7 +228,7 @@ export class TailorTaskDetailOngoingPage implements OnInit {
         reverseButtons: true,
       }).then((y) => {
         if (y.isConfirmed) {
-          this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updateorders', temp).subscribe(a => {
+          this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
             Swal.fire({
               title: 'Task Submitted Successfully',
               icon: 'success',

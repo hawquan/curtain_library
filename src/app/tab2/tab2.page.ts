@@ -24,7 +24,7 @@ export class Tab2Page implements OnInit {
     firebase.auth().onAuthStateChanged(a => {
       if (a) {
         this.uid = a.uid
-        this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/onestaff', { id: a.uid }).subscribe((s) => {
+        this.http.post('https://curtain.vsnap.my/onestaff', { id: a.uid }).subscribe((s) => {
           this.user = s['data'][0]
           console.log(this.user);
         })
