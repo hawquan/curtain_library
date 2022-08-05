@@ -53,13 +53,13 @@
     <div style="margin-top: 15px;margin-bottom: 2px;display: flex;align-items: center;">
 
       <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''"
-        style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
+        style="width: 33.3%;padding: 5px;text-align: center;;">Pending</div>
       <div>|</div>
       <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''"
-        style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
+        style="width: 33.3%;padding: 5px;text-align: center;;">On-Going</div>
       <div>|</div>
       <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"
-        style="width: 33%;padding: 5px;text-align: center;;">Completed</div>
+        style="width: 33.3%;padding: 5px;text-align: center;;">Completed</div>
 
     </div>
 
@@ -192,13 +192,13 @@
     <div style="margin-top: 15px;margin-bottom: 2px;display: flex;align-items: center;">
 
       <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''"
-        style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
+        style="width: 33.3%;padding: 5px;text-align: center;;">Pending</div>
       <div>|</div>
       <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''"
-        style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
+        style="width: 33.3%;padding: 5px;text-align: center;;">On-Going</div>
       <div>|</div>
       <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"
-        style="width: 33%;padding: 5px;text-align: center;;">Completed</div>
+        style="width: 33.3%;padding: 5px;text-align: center;;">Completed</div>
 
     </div>
 
@@ -332,13 +332,13 @@
     <div style="margin-top: 15px;margin-bottom: 2px;display: flex;align-items: center;">
 
       <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''"
-        style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
+        style="width: 33.3%;padding: 5px;text-align: center;;">Pending</div>
       <div>|</div>
       <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''"
-        style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
+        style="width: 33.3%;padding: 5px;text-align: center;;">On-Going</div>
       <div>|</div>
       <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"
-        style="width: 33%;padding: 5px;text-align: center;;">Completed</div>
+        style="width: 33.3%;padding: 5px;text-align: center;;">Completed</div>
 
     </div>
 
@@ -472,13 +472,13 @@
     <div style="margin-top: 15px;margin-bottom: 2px;display: flex;align-items: center;">
 
       <div (click)="status('p')" [ngClass]="statusPending? 'selected' : ''"
-        style="width: 33%;padding: 5px;text-align: center;;">Pending</div>
+        style="width: 33.3%;padding: 5px;text-align: center;;">Pending</div>
       <div>|</div>
       <div (click)="status('o')" [ngClass]="statusOnGoing? 'selected' : ''"
-        style="width: 33%;padding: 5px;text-align: center;;">On-Going</div>
+        style="width: 33.3%;padding: 5px;text-align: center;;">On-Going</div>
       <div>|</div>
       <div (click)="status('c')" [ngClass]="statusCompleted? 'selected' : ''"
-        style="width: 33%;padding: 5px;text-align: center;;">Completed</div>
+        style="width: 33.3%;padding: 5px;text-align: center;;">Completed</div>
 
     </div>
 
@@ -661,19 +661,26 @@
         </div>
       </div>
 
-      <h6 style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('sales').length}})</h6>
+      <div
+        style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 10px;">
+        <div style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('sales').length}})</div>
+        <div (click)="refresher(uid)" style="display: flex;align-items: center;">
+          <ion-icon style="color: #a17635;margin-right: 5px;" name="refresh-outline"></ion-icon>
+          <div style="color: #a17635;font-size: 12px;display: flex;align-items: center;">Refresh List</div>
+        </div>
+      </div>
 
       <div style="width: 100%; display: flex;align-items: center;">
 
-        <div (click)="selectTab('p')" style="width: 33%;text-align: center;">
+        <div (click)="selectTab('p')" style="width: 33.3%;text-align: center;">
           <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Pending</div>
         </div>
 
-        <div (click)="selectTab('o')" style="width: 33%;text-align: center;;">
+        <div (click)="selectTab('o')" style="width: 33.3%;text-align: center;;">
           <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">On-Going</div>
         </div>
 
-        <div (click)="selectTab('c')" style="width: 33%;text-align: center;;">
+        <div (click)="selectTab('c')" style="width: 33.3%;text-align: center;;">
           <div [ngClass]="status == 'c'? 'selected' : 'selectedx'">Completed</div>
         </div>
 
@@ -861,19 +868,26 @@
         </div>
       </div>
 
-      <h6 style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('tech').length}})</h6>
+      <div
+        style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 10px;">
+        <div style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('tech').length}})</div>
+        <div (click)="refresher(uid)" style="display: flex;align-items: center;">
+          <ion-icon style="color: #a17635;margin-right: 5px;" name="refresh-outline"></ion-icon>
+          <div style="color: #a17635;font-size: 12px;display: flex;align-items: center;">Refresh List</div>
+        </div>
+      </div>
 
       <div style="width: 100%; display: flex;align-items: center;">
 
-        <div (click)="selectTab('p')" style="width: 33%;text-align: center;">
+        <div (click)="selectTab('p')" style="width: 33.3%;text-align: center;">
           <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Pending</div>
         </div>
 
-        <div (click)="selectTab('o')" style="width: 33%;text-align: center;;">
+        <div (click)="selectTab('o')" style="width: 33.3%;text-align: center;;">
           <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">On-Going</div>
         </div>
 
-        <div (click)="selectTab('c')" style="width: 33%;text-align: center;;">
+        <div (click)="selectTab('c')" style="width: 33.3%;text-align: center;;">
           <div [ngClass]="status == 'c'? 'selected' : 'selectedx'">Completed</div>
         </div>
 
@@ -1062,19 +1076,26 @@
         </div>
       </div>
 
-      <h6 style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('tailor').length}})</h6>
+      <div
+        style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 10px;">
+        <div style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('tailor').length}})</div>
+        <div (click)="refresher(uid)" style="display: flex;align-items: center;">
+          <ion-icon style="color: #a17635;margin-right: 5px;" name="refresh-outline"></ion-icon>
+          <div style="color: #a17635;font-size: 12px;display: flex;align-items: center;">Refresh List</div>
+        </div>
+      </div>
 
       <div style="width: 100%; display: flex;align-items: center;">
 
-        <div (click)="selectTab('p')" style="width: 33%;text-align: center;">
+        <div (click)="selectTab('p')" style="width: 33.3%;text-align: center;">
           <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Pending</div>
         </div>
 
-        <div (click)="selectTab('o')" style="width: 33%;text-align: center;;">
+        <div (click)="selectTab('o')" style="width: 33.3%;text-align: center;;">
           <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">On-Going</div>
         </div>
 
-        <div (click)="selectTab('c')" style="width: 33%;text-align: center;;">
+        <div (click)="selectTab('c')" style="width: 33.3%;text-align: center;;">
           <div [ngClass]="status == 'c'? 'selected' : 'selectedx'">Completed</div>
         </div>
 
@@ -1089,43 +1110,28 @@
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div *ngFor="let x of filterPendingList('tailor'); let i = index;" (click)="toTailorDetail(x,i)"
+        <div *ngFor="let x of filterPendingList('tailor'); let i = index;" (click)="toDetail(x,i)"
           style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
 
           <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
-            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}} <span
-                style="color: #5a5a5a;font-size: 13px;">({{x.location}})</span></div>
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
               <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Width:
+                Contact:
               </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.width_tech || x.width}}</div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
             </div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
               <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Height:
+                Address:
               </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.height_tech || x.height}}</div>
-            </div>
-
-            <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Type:
-              </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.type}}</div>
-            </div>
-
-            <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Pleet:
-              </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.pleat}}</div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
             </div>
 
             <div
-              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 10px;">
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
 
               <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
                 <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
@@ -1147,43 +1153,28 @@
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div *ngFor="let x of filterOnGoingList('tailor'); let i = index;" (click)="toTailorDetailOngoing(x,i)"
+        <div *ngFor="let x of filterOnGoingList('tailor'); let i = index;" (click)="toOngoing(x,i)"
           style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
 
           <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
-            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}} <span
-                style="color: #5a5a5a;font-size: 13px;">({{x.location}})</span></div>
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
               <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Width:
+                Contact:
               </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.width_tech || x.width}}</div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
             </div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
               <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Height:
+                Address:
               </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.height_tech || x.height}}</div>
-            </div>
-
-            <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Type:
-              </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.type}}</div>
-            </div>
-
-            <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Pleet:
-              </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.pleat}}</div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
             </div>
 
             <div
-              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 10px;">
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
 
               <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
                 <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
@@ -1233,43 +1224,28 @@
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div *ngFor="let x of filterCompletedList('tailor'); let i = index;" (click)="reviewTaskCompleted(x,i)"
+        <div *ngFor="let x of filterCompletedList('tailor'); let i = index;" (click)="toCompletedDetail(x,i)"
           style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
 
           <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
-            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}} <span
-                style="color: #5a5a5a;font-size: 13px;">({{x.location}})</span></div>
+            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
               <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Width:
+                Contact:
               </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.width_tech || x.width}}</div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">+6{{x.customer_phone}}</div>
             </div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
               <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Height:
+                Address:
               </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.height_tech || x.height}}</div>
-            </div>
-
-            <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Type:
-              </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.type}}</div>
-            </div>
-
-            <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Pleet:
-              </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.pleat}}</div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
             </div>
 
             <div
-              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 10px;">
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
 
               <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
                 <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
@@ -1282,6 +1258,7 @@
         </div>
       </div>
     </div>
+
 
   </div>
 
@@ -1308,7 +1285,14 @@
         </div>
       </div>
 
-      <h6 style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('installer').length}})</h6>
+      <div
+        style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 10px;">
+        <div style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('installer').length}})</div>
+        <div (click)="refresher(uid)" style="display: flex;align-items: center;">
+          <ion-icon style="color: #a17635;margin-right: 5px;" name="refresh-outline"></ion-icon>
+          <div style="color: #a17635;font-size: 12px;display: flex;align-items: center;">Refresh List</div>
+        </div>
+      </div>
 
       <div style="width: 100%; display: flex;align-items: center;">
 

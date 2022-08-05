@@ -61,7 +61,7 @@
       </div>
 
       <!-- Curtain -->
-      <div *ngIf="item.fabric != null && item.fabric != 'NA'"
+      <div *ngIf="item.fabric != null && item.fabric != 'NA' && lengthof(calc.curtain) > 0 "
         style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
         <div>
           Curtain - {{item.fabric}} (m)
@@ -72,13 +72,14 @@
             {{calc.curtain.qty}}
           </div>
           <div style="width: 70%;text-align: end;">
-            {{calc.curtain.total | number : '1.2-2'}}
+            {{calc.curtain.total | currency: ' '}}
           </div>
         </div>
       </div>
 
       <!-- Sheer -->
-      <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+      <div *ngIf="lengthof(item.fabric_sheer) > 0 && lengthof(calc.sheer) > 0"
+        style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
         <div>
           Sheer - {{item.fabric_sheer}} (m)
         </div>
@@ -88,7 +89,7 @@
             {{calc.sheer.qty}}
           </div>
           <div style="width: 70%;text-align: end;">
-            {{calc.sheer.total | number : '1.2-2'}}
+            {{calc.sheer.total | currency: ' '}}
           </div>
         </div>
       </div>
@@ -107,13 +108,14 @@
             {{calc.sewing_curtain.qty}}
           </div>
           <div style="width: 70%;text-align: end;">
-            {{calc.sewing_curtain.total | number : '1.2-2'}}
+            {{calc.sewing_curtain.total | currency: ' '}}
           </div>
         </div>
       </div>
 
       <!-- Sewing Sheer -->
-      <div *ngIf="lengthof(calc.sewing_sheer) > 0" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+      <div *ngIf="lengthof(calc.sewing_sheer) > 0"
+        style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
         <div>
           Sewing D/P sheer (ft)
         </div>
@@ -123,13 +125,13 @@
             {{calc.sewing_sheer.qty}}
           </div>
           <div style="width: 70%;text-align: end;">
-            {{calc.sewing_sheer.total | number : '1.2-2'}}
+            {{calc.sewing_sheer.total | currency: ' '}}
           </div>
         </div>
       </div>
 
       <!-- Track -->
-      <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+      <div *ngIf="lengthof(calc.track) > 0" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
         <div>
           {{item.track}} Track (ft)
         </div>
@@ -139,13 +141,13 @@
             {{calc.track.qty}}
           </div>
           <div style="width: 70%;text-align: end;">
-            {{calc.track.total | number : '1.2-2'}}
+            {{calc.track.total | currency: ' '}}
           </div>
         </div>
       </div>
 
       <!-- Installation & Hang -->
-      <div style="display: flex;justify-content: space-between;margin-bottom: 10px;">
+      <div *ngIf="lengthof(calc.install) > 0" style="display: flex;justify-content: space-between;margin-bottom: 10px;">
         <div>
           Installation & Hang (set)
         </div>
@@ -155,7 +157,7 @@
             {{calc.install.qty}}
           </div>
           <div style="width: 70%;text-align: end;">
-            {{calc.install.total | number : '1.2-2'}}
+            {{calc.install.total | currency: ' '}}
           </div>
         </div>
       </div>
@@ -180,7 +182,7 @@
 
     <div style="display: flex;justify-content: flex-end;">
       <div style="font-size: 18px; font-weight: 700; color: #000;">
-        RM {{item.price | number : '1.2-2'}}
+        {{item.price | currency: 'RM '}}
       </div>
 
     </div>

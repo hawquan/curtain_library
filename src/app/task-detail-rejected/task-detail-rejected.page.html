@@ -163,10 +163,10 @@
           <div style="width: 100%;display: flex;justify-content: space-between;align-items: center;margin: 5px 0;">
 
             <div style="display: flex;align-items: center;justify-content: center;">
-              <div (click)="deleteTask(x)"
+              <!-- <div (click)="deleteTask(x)"
                 style="text-align: center; font-weight: 600; font-size: 12px;letter-spacing: 0.7px;margin-right: 20px;color: #ff0000;">
                 Delete
-              </div>
+              </div> -->
 
               <div (click)="reviewTask(x)"
                 style="text-align: center; font-weight: 600; font-size: 12px;letter-spacing: 0.7px;color: green;">
@@ -210,7 +210,7 @@
 
     <div style="padding-left: 5px;">
       <div style="width: 92px;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
-      <div style="color: #a17635;font-size: 14px;font-weight: 500;">RM {{totalPrice() | number : '1.2-2'}}</div>
+      <div style="color: #a17635;font-size: 14px;font-weight: 500;">{{totalPrice() | currency: 'RM '}}</div>
     </div>
 
     <ion-button *ngIf="items.length > 0" (click)="proceed()"
@@ -226,7 +226,7 @@
 
     <div  style="padding-left: 5px;">
       <div style="width: 92px;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
-      <div style="color: #a17635;font-size: 14px;font-weight: 500;">RM {{totalPrice() | number : '1.2-2'}}</div>
+      <div style="color: #a17635;font-size: 14px;font-weight: 500;">{{totalPrice() | currency: 'RM '}}</div>
     </div>
 
     <ion-button *ngIf="items.length > 0" (click)="complete()"

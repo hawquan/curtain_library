@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
           showConfirmButton: false,
           heightAuto: false,
         })
-        this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/onestaff', { id: a.uid }).subscribe((s) => {
+        this.http.post('https://curtain.vsnap.my/onestaff', { id: a.uid }).subscribe((s) => {
           console.log(s);
 
           if (s['data'][0].status) {

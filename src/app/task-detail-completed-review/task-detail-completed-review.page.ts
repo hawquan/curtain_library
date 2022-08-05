@@ -30,8 +30,10 @@ export class TaskDetailCompletedReviewPage implements OnInit {
   misclist = []
   bracketlist = []
   hooklist = []
+  hooklistadjust = []
   beltlist = []
   otherslist = []
+  pieceslist = []
   fabricCurtain = []
   fabricSheer = []
 
@@ -45,6 +47,7 @@ export class TaskDetailCompletedReviewPage implements OnInit {
   VinylWall = false
   WallpaperChoice = ''
   price = 0
+  hookview = true
 
   tracks = [
     "Bendable", "Curve", "Rod", "Cubicle", "Motorised (Battery)", "Motorised (Power Point)"
@@ -69,7 +72,7 @@ export class TaskDetailCompletedReviewPage implements OnInit {
       this.wallpaperSelection(this.item.pleat)
     }
 
-    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/miscList').subscribe((s) => {
+    this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
       this.misclist = s['data']
       console.log(this.misclist)
 
@@ -80,10 +83,15 @@ export class TaskDetailCompletedReviewPage implements OnInit {
           this.bracketlist.push(this.misclist[i])
         } else if (this.misclist[i]['type'] == "Hook") {
           this.hooklist.push(this.misclist[i])
+          if (this.misclist[i].name != 'Adjust') {
+            this.hooklistadjust.push(this.misclist[i])
+          }
         } else if (this.misclist[i]['type'] == "Belt") {
           this.beltlist.push(this.misclist[i])
         } else if (this.misclist[i]['type'] == "Others") {
           this.otherslist.push(this.misclist[i])
+        } else if (this.misclist[i]['type'] == "Pieces") {
+          this.pieceslist.push(this.misclist[i])
         }
       }
 
@@ -91,7 +99,7 @@ export class TaskDetailCompletedReviewPage implements OnInit {
 
     })
 
-    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/fabricList').subscribe((s) => {
+    this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
       let temp = s['data']
 
       this.fabricCurtain = temp.filter(x => x.type == 'Curtain')
@@ -118,6 +126,14 @@ export class TaskDetailCompletedReviewPage implements OnInit {
     console.log(x);
     this.PleatChoice = x.pleat
     this.item.fullness = x.fullness
+
+    if (this.PleatChoice == 'Eyelet Design' || this.PleatChoice == 'Ripplefold') {
+      this.hookview = false
+      this.item.hook = ''
+
+    } else {
+      this.hookview = true
+    }
   }
 
   pleatChoice() {
@@ -180,8 +196,8 @@ export class TaskDetailCompletedReviewPage implements OnInit {
   //   }
   // }
 
-  CurtainName =''
-  SheerName =''
+  CurtainName = ''
+  SheerName = ''
 
   async selectorCurtain() {
     const modal = await this.modalcontroller.create({

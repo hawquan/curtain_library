@@ -427,7 +427,17 @@
         <div (click)="show != i ? show = i : show = null"
           style="width: 100%;display: flex;justify-content: space-between;">
           <div>{{x.location}}</div>
-          <ion-icon [ngStyle]="{'transform': show == i ? 'rotate(180deg)' : ''}" name="chevron-down-outline"></ion-icon>
+
+          <div style="display: flex;">
+            <div style="margin-right: 8px;"></div>
+            <div
+              [ngClass]="x.status_tail == 'Completed' ? 'approve' : ''"
+              style="margin-right: 15px;">
+              Tailoring Completed
+            </div>
+            <ion-icon [ngStyle]="{'transform': show == i ? 'rotate(180deg)' : ''}" name="chevron-down-outline">
+            </ion-icon>
+          </div>
         </div>
 
         <div [ngClass]="show == i ? 'show' : 'hide'"
@@ -510,18 +520,13 @@
             </div>
 
           </div> -->
-
           <div style="width: 100%;display: flex;justify-content: space-between;align-items: center;margin: 5px 0;">
 
             <div style="display: flex;align-items: center;justify-content: center;">
-              <div (click)="deleteTask(x)"
-                style="text-align: center; font-weight: 600; font-size: 12px;letter-spacing: 0.7px;margin-right: 20px;color: red;">
-                Delete
-              </div>
 
               <div (click)="ongoingViewDetails(x)"
                 style="text-align: center; font-weight: 600; font-size: 12px;letter-spacing: 0.7px;color: green;">
-                Edit
+                View Details
               </div>
             </div>
 
@@ -541,7 +546,7 @@
         <div style="width: 100px;font-size: 12px;color: #999;text-align: center;">Total {{items.length}} items</div>
         <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
       </div>
-      
+
     </div>
 
     <!-- <div
@@ -562,7 +567,7 @@
 
     <div style="padding-left: 5px;">
       <div style="width: 92px;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
-      <div style="color: #a17635;font-size: 14px;font-weight: 500;">RM {{totalPrice() | number : '1.2-2'}}</div>
+      <div style="color: #a17635;font-size: 14px;font-weight: 500;">{{totalPrice() | currency: 'RM '}}</div>
     </div>
 
     <!-- <div

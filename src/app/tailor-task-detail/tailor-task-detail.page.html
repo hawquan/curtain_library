@@ -337,7 +337,7 @@
 
     <div style="padding-left: 20px;">
       <div style="color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
-      <div style="color: #a17635;font-size: 14px;font-weight: 500;">RM {{price}}</div>
+      <div style="color: #a17635;font-size: 14px;font-weight: 500;">{{price | currency: 'RM '}}</div>
     </div>
 
     <ion-button (click)="calcPrice()"
@@ -378,8 +378,8 @@
   <div style="border-radius: 15px 15px 0 0;">
 
     <div style="width: 100%;padding: 20px 15px 0 15px;">
-      <div style="width: 100%;min-width: 60px;font-weight: 500;">Location :</div>
-      <ion-input readonly placeholder="Enter Location" [(ngModel)]="item.location"
+      <div style="width: 100%;min-width: 60px;font-weight: 500;">Area :</div>
+      <ion-input readonly placeholder="Enter Area" [(ngModel)]="item.location"
         style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;">
       </ion-input>
 
@@ -754,14 +754,14 @@
       <!-- Remark Sales-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Sales Remark :</div>
-        <ion-textarea readonly placeholder=" - " auto-grow="true" row="4"  [(ngModel)]="item.remark_sale" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly placeholder=" - " auto-grow="true" row="4"  [(ngModel)]="item.remark_sale" style="min-height: 50px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Tech-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Tech Remark:</div>
-        <ion-textarea readonly placeholder=" - " auto-grow="true" row="4"  [(ngModel)]="item.remark_tech" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly placeholder=" - " auto-grow="true" row="4"  [(ngModel)]="item.remark_tech" style="min-height: 50px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
@@ -769,7 +769,7 @@
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Your Remark:</div>
         <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" row="4"  [(ngModel)]="item.remark_tail"
-          style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+          style="min-height: 50px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
@@ -1054,14 +1054,14 @@
       <!-- Remark Sales-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Sales Remark :</div>
-        <ion-textarea readonly placeholder=" - " auto-grow="true" row="4"  [(ngModel)]="item.remark_sale" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly placeholder=" - " auto-grow="true" row="4"  [(ngModel)]="item.remark_sale" style="min-height: 50px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Tech-->
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Tech Remark:</div>
-        <ion-textarea readonly placeholder=" - " auto-grow="true" row="4"  [(ngModel)]="item.remark_tech" style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly placeholder=" - " auto-grow="true" row="4"  [(ngModel)]="item.remark_tech" style="min-height: 50px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
@@ -1069,7 +1069,7 @@
       <div style="margin: 15px 15px 0 15px;">
         <div style="min-width: 56px;font-weight: 500;">Your Remark:</div>
         <ion-textarea placeholder="Enter additional remark... (If Any)" auto-grow="true" row="4"  [(ngModel)]="item.remark_tail"
-          style="font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+          style="min-height: 50px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
        border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
       </div>
 
@@ -1240,7 +1240,7 @@
 
     <div style="width: 40%;padding-left: 5px;">
       <div style="width: 92px;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
-      <div style="color: #a17635;font-size: 14px;font-weight: 500;">RM {{item.price | number : '1.2-2'}}</div>
+      <div style="color: #a17635;font-size: 14px;font-weight: 500;">{{item.price | currency: 'RM '}}</div>
     </div>
 
     <div

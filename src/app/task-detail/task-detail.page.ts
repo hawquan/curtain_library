@@ -58,12 +58,13 @@ export class TaskDetailPage implements OnInit {
   blindlist = []
   fabriclist = []
   fabricCurtain = []
+  fabricLining = []
   fabricSheer = []
 
   ngOnInit() {
 
     this.actroute.queryParams.subscribe(a => {
-      console.log(a);
+      // console.log(a);
 
       this.info = JSON.parse(a["info"])
       this.sales_id = this.info['no']
@@ -71,27 +72,28 @@ export class TaskDetailPage implements OnInit {
     })
     console.log(this.info, this.sales_id, this.user);
 
-    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/tracklist').subscribe((s) => {
+    this.http.get('https://curtain.vsnap.my/tracklist').subscribe((s) => {
       this.tracklist = s['data']
-      console.log(this.tracklist)
+      // console.log(this.tracklist)
     })
 
-    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/pleatlist').subscribe((s) => {
+    this.http.get('https://curtain.vsnap.my/pleatlist').subscribe((s) => {
       this.pleatlist = s['data']
-      console.log(this.pleatlist)
+      // console.log(this.pleatlist)
     })
 
-    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/blindlist').subscribe((s) => {
+    this.http.get('https://curtain.vsnap.my/blindlist').subscribe((s) => {
       this.blindlist = s['data']
-      console.log(this.blindlist)
+      // console.log(this.blindlist)
     })
 
-    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/fabricList').subscribe((s) => {
+    this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
       this.fabriclist = s['data']
-      console.log(this.fabriclist)
+      // console.log(this.fabriclist)
 
       this.fabricCurtain = this.fabriclist.filter(x => x.type == 'Curtain')
       this.fabricSheer = this.fabriclist.filter(x => x.type == 'Sheer')
+      this.fabricLining = this.fabriclist.filter(x => x.type == 'Lining')
 
       this.refreshList()
 
@@ -100,12 +102,12 @@ export class TaskDetailPage implements OnInit {
 
   refreshList() {
     this.calc = []
-    this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/getorderlist', { sales_id: this.sales_id }).subscribe(a => {
+    this.http.post('https://curtain.vsnap.my/getorderlist', { sales_id: this.sales_id }).subscribe(a => {
       this.items = a['data']
-      for (let i = 0; i < this.items.length; i++) {
-        this.calcPrice(i)
-        console.log(i);
-      }
+      // for (let i = 0; i < this.items.length; i++) {
+      //   this.calcPrice(i)
+      //   console.log(i);
+      // }
       console.log('Refresh List', this.items);
     })
   }
@@ -215,7 +217,6 @@ export class TaskDetailPage implements OnInit {
         pleatlist: this.pleatlist,
         blindlist: this.blindlist,
         position: this.user['position'],
-        tracklist: this.tracklist,
         fabriclist: this.fabriclist,
       }
     });
@@ -225,7 +226,6 @@ export class TaskDetailPage implements OnInit {
     console.log(data)
 
     if (data == 1) {
-      // this.items.push(data)
       this.refreshList()
     }
   }
@@ -246,9 +246,10 @@ export class TaskDetailPage implements OnInit {
 
     await modal.present();
     const { data } = await modal.onWillDismiss();
-    console.log(data)
-    // x = data
-    this.refreshList()
+    if (data == 1) {
+      // x = data
+      this.refreshList()
+    }
   }
 
   async reviewTask(x) {
@@ -262,16 +263,15 @@ export class TaskDetailPage implements OnInit {
         blindlist: this.blindlist,
         position: this.user['position'],
         tracklist: this.tracklist,
-        fabriclist: this.fabriclist,
       }
     });
 
     await modal.present();
     const { data } = await modal.onWillDismiss();
-    console.log(data)
-
-    // x = data
-    this.refreshList()
+    if (data == 1) {
+      // x = data
+      this.refreshList()
+    }
   }
 
   async reviewTaskCompleted(x) {
@@ -298,14 +298,17 @@ export class TaskDetailPage implements OnInit {
     }
   }
 
-  async quotationSingle(x, i) {
+  async quotationSingle(x) {
 
     const modal = await this.modal.create({
       cssClass: 'task',
       component: QuotationSinglePage,
       componentProps: {
         item: x,
-        calc: this.calc[i],
+        sales_id: this.sales_id,
+        tracklist: this.tracklist,
+        pleatlist: this.pleatlist,
+        blindlist: this.blindlist,
       }
     });
 
@@ -334,7 +337,7 @@ export class TaskDetailPage implements OnInit {
       reverseButtons: true,
     }).then((y) => {
       if (y.isConfirmed) {
-        this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/deleteorder', { no: x.no }).subscribe(a => {
+        this.http.post('https://curtain.vsnap.my/deleteorder', { no: x.no }).subscribe(a => {
           this.refreshList()
         })
         // this.items.splice(x, 1)
@@ -354,12 +357,21 @@ export class TaskDetailPage implements OnInit {
   proceed() {
     let navExtra: NavigationExtras = {
       queryParams: {
-        items: JSON.stringify(this.items),
-        info: JSON.stringify(this.info),
-        position: 'sales',
-        calc: JSON.stringify(this.calc),
+        sales_id: this.sales_id,
+        tracklist: JSON.stringify(this.tracklist),
+        pleatlist: JSON.stringify(this.pleatlist),
+        blindlist: JSON.stringify(this.blindlist),
       }
     }
+
+    Swal.fire({
+      title: 'Calculating Quotation...',
+      heightAuto: false,
+      icon: 'info',
+      showConfirmButton: false,
+      showCancelButton: false,
+    })
+
     this.nav.navigateForward(['quotation-overall'], navExtra)
   }
 
@@ -425,7 +437,7 @@ export class TaskDetailPage implements OnInit {
                 //   }
                 // }
                 // this.nav.navigateForward(['quotation-overall'], navExtra)
-                this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updatesales', temp).subscribe(a => {
+                this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
                   Swal.fire({
                     title: 'Task Completed Successfully',
                     icon: 'success',
@@ -443,9 +455,9 @@ export class TaskDetailPage implements OnInit {
           } else {
             let temp = {
               no: this.sales_id,
-              step: 4,
+              step: 3,
             }
-            this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updatesales', temp).subscribe(a => {
+            this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
               Swal.fire({
                 title: 'Task Completed Successfully',
                 icon: 'success',
@@ -457,6 +469,73 @@ export class TaskDetailPage implements OnInit {
               this.nav.navigateRoot('/tabs/tab1')
             })
           }
+        }
+
+      })
+
+    } else {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      })
+
+      Toast.fire({
+        icon: 'error',
+        title: 'All orders must be reviewed before proceeding.'
+      })
+    }
+
+  }
+
+  completeTailor() {
+    let pass = false
+    console.log(this.items.length);
+
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].status_tail != 'Completed') {
+        pass = false
+        break
+      } else {
+        pass = true
+      }
+    }
+
+    if (pass) {
+
+      Swal.fire({
+        title: 'Complete Task?',
+        text: 'Submit completion of tailoring process?',
+        heightAuto: false,
+        icon: 'success',
+        showConfirmButton: true,
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Submit',
+        reverseButtons: true,
+      }).then((y) => {
+        if (y.isConfirmed) {
+
+          let temp = {
+            no: this.sales_id,
+            date_complete: new Date().getTime(),
+            step: 4,
+          }
+          this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
+            Swal.fire({
+              title: 'Task Completed!',
+              icon: 'success',
+              heightAuto: false,
+              showConfirmButton: false,
+              showCancelButton: false,
+              timer: 1500,
+            })
+            this.nav.navigateRoot('/tabs/tab1')
+          })
+
         }
 
       })
@@ -512,7 +591,7 @@ export class TaskDetailPage implements OnInit {
             date_complete: new Date().getTime(),
             step: 5,
           }
-          this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/updatesales', temp).subscribe(a => {
+          this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
             Swal.fire({
               title: 'Task Completed Successfully',
               icon: 'success',
@@ -545,88 +624,101 @@ export class TaskDetailPage implements OnInit {
 
   }
 
-  calcPrice(i) {
-    
-    let width = 0
-    let height = 0
-    if (this.items[i].height_tech != null || this.items[i].width_tech != null) {
-      width = this.items[i].width_tech
-      height = this.items[i].height_tech
-    } else {
-      width = this.items[i].width
-      height = this.items[i].height
-    }
+  // calcPrice(i) {
 
-    let curtain = false as any
-    let curtain_id
-    let sheer = false
-    let sheer_id
-    let track = false
-    let track_id
+  //   let width = 0
+  //   let height = 0
+  //   if (this.items[i].height_tech != null || this.items[i].width_tech != null) {
+  //     width = this.items[i].width_tech
+  //     height = this.items[i].height_tech
+  //   } else {
+  //     width = this.items[i].width
+  //     height = this.items[i].height
+  //   }
 
-    let pleat_id
+  //   let curtain = false
+  //   let curtain_id
+  //   let lining = false
+  //   let lining_id
+  //   let sheer = false
+  //   let sheer_id
+  //   let track = false
+  //   let track_id
 
-    this.http.get('https://6dbe-175-140-151-140.ap.ngrok.io/fabricList').subscribe((s) => {
-      let temp = s['data']
+  //   let pleat_id
 
-      this.fabricCurtain = temp.filter(x => x.type == 'Curtain')
-      this.fabricSheer = temp.filter(x => x.type == 'Sheer')
+  //   this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
+  //     let temp = s['data']
 
-      console.log(this.fabricCurtain, this.fabricSheer)
-    })
+  //     this.fabricCurtain = temp.filter(x => x.type == 'Curtain')
+  //     this.fabricSheer = temp.filter(x => x.type == 'Sheer')
+  //     this.fabricLining = temp.filter(x => x.type == 'Lining')
 
-    console.log(this.items[i]);
+  //     console.log(this.fabricCurtain, this.fabricSheer, this.fabricLining)
+  //   })
+
+  //   console.log(this.items[i]);
 
 
-    if (this.items[i].curtain != 'Blinds') {
+  //   if (this.items[i].curtain != 'Blinds') {
 
-      if (this.items[i].fabric != null && this.items[i].fabric != 'NA') {
-        curtain = true
-        curtain_id = this.fabricCurtain.filter(x => x.name == this.items[i].fabric)[0]['id']
-      } else {
-        curtain = false
-      }
+  //     if (this.items[i].fabric != null && this.items[i].fabric != 'NA') {
+  //       curtain = true
+  //       curtain_id = this.fabricCurtain.filter(x => x.name == this.items[i].fabric)[0]['id']
+  //     } else {
+  //       curtain = false
+  //     }
 
-      if (this.items[i].fabric_sheer != null && this.items[i].fabric_sheer != 'NA') {
-        sheer = true
-        sheer_id = this.fabricSheer.filter(x => x.name == this.items[i].fabric_sheer)[0]['id']
-      } else {
-        sheer = false
-      }
+  //     if (this.items[i].fabric_lining != null && this.items[i].fabric_lining != 'NA') {
+  //       lining = true
+  //       lining_id = this.fabricLining.filter(x => x.name == this.items[i].fabric_lining)[0]['id']
+  //     } else {
+  //       lining = false
+  //     }
 
-      if (this.items[i].track != null && this.items[i].track != 'NA') {
-        track = true
-        track_id = this.tracklist.filter(x => x.name == this.items[i].track)[0]['id']
-      } else {
-        track = false
-      }
+  //     if (this.items[i].fabric_sheer != null && this.items[i].fabric_sheer != 'NA') {
+  //       sheer = true
+  //       sheer_id = this.fabricSheer.filter(x => x.name == this.items[i].fabric_sheer)[0]['id']
+  //     } else {
+  //       sheer = false
+  //     }
 
-      pleat_id = this.pleatlist.filter(x => x.name == this.items[i].pleat)[0]['id']
+  //     if (this.items[i].track != null && this.items[i].track != 'NA') {
+  //       track = true
+  //       track_id = this.tracklist.filter(x => x.name == this.items[i].track)[0]['id']
+  //     } else {
+  //       track = false
+  //     }
 
-      console.log(curtain_id, sheer_id, track_id, pleat_id);
+  //     if (this.items[i].pleat != null && this.items[i].pleat != '') {
+  //       pleat_id = this.pleatlist.filter(x => x.name == this.items[i].pleat)[0]['id']
+  //     }
 
-    } else {
-      curtain = false
-      sheer = false
-      track = false
+  //     console.log(curtain_id, sheer_id, track_id, pleat_id);
 
-      pleat_id = this.pleatlist.filter(x => x.name == this.items[i].pleat)[0]['id']
-    }
+  //   } else {
+  //     curtain = false
+  //     sheer = false
+  //     track = false
+  //     lining = false
 
-    let temp = {
-      width: width, height: height, curtain: curtain, lining: false, lining_id: 41,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id
-    }
+  //     pleat_id = this.pleatlist.filter(x => x.name == this.items[i].pleat)[0]['id']
+  //   }
 
-    console.log(temp);
+  //   let temp = {
+  //     width: width, height: height, curtain: curtain, lining: lining, lining_id: lining_id,
+  //     curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id
+  //   }
 
-    this.http.post('https://6dbe-175-140-151-140.ap.ngrok.io/calcPrice', temp).subscribe(a => {
+  //   console.log(temp);
 
-      this.calc.push(a['data'])
-      console.log(this.calc);
-    })
+  //   this.http.post('https://curtain.vsnap.my/calcPrice', temp).subscribe(a => {
 
-  }
+  //     this.calc.push(a['data'])
+  //     console.log(this.calc);
+  //   })
+
+  // }
 
   back() {
     this.nav.pop()
