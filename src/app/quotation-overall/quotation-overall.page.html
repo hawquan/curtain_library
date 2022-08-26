@@ -1,13 +1,24 @@
 <ion-header *ngIf="loading" style="--background: #FAF7F2">
-  <div style="height: 50px; width: 100%; display: flex;align-items: center; padding: 0 15px;background-color: #ebd1af;">
+  <div style="height: 50px; width: 100%; display: flex;align-items: center; justify-content: space-between; padding: 0 15px;background-color: #ebd1af;">
 
-    <div
-      style="height: 24px;width: 24px;background-color: white;border-radius: 5px;display: flex;justify-content: center;align-items: center;">
-      <ion-icon (click)="back()" style="font-size: 22px; color: #a17635;" name="close-outline"></ion-icon>
+    <div style="display: flex; align-items: center;">
+
+      <div
+        style="height: 24px;width: 24px;background-color: white;border-radius: 5px;display: flex;justify-content: center;align-items: center;">
+        <ion-icon (click)="back()" style="font-size: 22px; color: #a17635;" name="close-outline"></ion-icon>
+      </div>
+
+      <div style="font-weight: 500;color: #a17635;font-size: 18px;padding-left: 15px;letter-spacing: 0.5px;">
+        Quotations
+      </div>
     </div>
 
-    <div style="font-weight: 500;color: #a17635;font-size: 18px;padding-left: 15px;letter-spacing: 0.5px;">
-      Quotations
+    <div *ngIf="user.position == 'Sales'">
+      <ion-button style="height: fit-content;--background: #a17635;--background-activated: #b2894c"
+        (click)="pdfmaker()">
+        <div style="margin-left: 10px;font-size: 14px;padding: 10px 0;">Quotation</div>
+        <ion-icon slot="icon-only" name="print" style="width: 20px;height: 20px;"></ion-icon>
+      </ion-button>
     </div>
 
   </div>
@@ -19,10 +30,341 @@
     <div *ngFor="let x of item; let i = index"
       style="margin: 10px;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;background: white;border-radius: 5px; padding: 10px; margin-bottom: 15px;">
 
+      <div *ngIf="x.type != 'Blinds'">
+
+        <div style="display: flex;justify-content: space-between; margin-bottom: 15px;">
+          <div style="width: fit-content;font-weight: 500;padding-top: 10px;">
+            <div style="font-size: 15px; font-weight: 600; color: #000;border-bottom: 0.5px solid #a17635;">
+              {{x.location}}
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex;justify-content: space-between;font-weight: 450;font-size: 13px;">
+
+          <div style="width: 60%;font-size: 14px;">
+            Description
+          </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              Qty
+            </div>
+            <div style="width: 70%;text-align: center;">
+              Total (RM)
+            </div>
+          </div>
+
+        </div>
+
+        <div style="width: 100%; font-size: 13px; font-weight: 400; color: #222222; padding: 10px 0px; margin: 10px 0px;
+       border-top: 2px dashed #a17635; border-bottom: 2px dashed #a17635;">
+
+          <!-- Width & Height -->
+          <div style="display: flex;justify-content: space-between; margin-bottom: 10px;">
+            <div *ngIf="x.height_tech != null || x.width_tech != null"
+              style="font-size: 13px; font-weight: 400; color: #999;">
+              {{x.width_tech}}" x {{x.height_tech}}"
+            </div>
+            <div *ngIf="x.height_tech == null && x.width_tech == null"
+              style="font-size: 13px; font-weight: 400; color: #999;">
+              {{x.width}}" x {{x.height}}"
+            </div>
+          </div>
+
+          <!-- Curtain -->
+          <div *ngIf="x.fabric != null" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Curtain - {{x.fabric}} (m)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].curtain.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].curtain.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Curtain -->
+          <div *ngIf="x.fabric_lining != null"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Lining - {{x.fabric_lining}} (m)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].lining.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].lining.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Sheer -->
+          <div *ngIf="lengthof(x.fabric_sheer) > 0 "
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Sheer - {{x.fabric_sheer}} (m)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].sheer.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].sheer.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Sewing Curtain + Lining -->
+          <div *ngIf="lengthof(calc[i].curtain) > 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Sewing D/P <span *ngIf="lengthof(calc[i].curtain) > 0">curtain</span> <span
+                *ngIf="lengthof(calc[i].curtain) > 0 && lengthof(calc[i].lining) > 0 "> + </span>
+              <span *ngIf="lengthof(calc[i].lining) > 0">lining</span> (ft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].sewing_curtain.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].sewing_curtain.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Sewing Sheer -->
+          <div *ngIf="lengthof(calc[i].sewing_sheer) > 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Sewing D/P sheer (ft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].sewing_sheer.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].sewing_sheer.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Track -->
+          <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              {{x.track}} Track (ft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].track.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].track.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Installation & Hang -->
+          <div style="display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation & Hang (set)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Belt & Hook -->
+          <div style="display: flex;justify-content: space-between;margin-bottom: 5px;">
+            <div>
+              Belt & Hook (set)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                1
+              </div>
+              <div style="width: 70%;text-align: end;">
+                25.00
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Price -->
+        <div style="display: flex;justify-content: flex-end;">
+          <div *ngIf="x.price_old == null" style="font-size: 18px; font-weight: 700; color: #000;">
+            RM {{x.price | currency: ' '}}</div>
+          <div *ngIf="x.price_old != null" style="font-size: 18px; font-weight: 700; color: #000;">
+            RM {{x.price | currency: ' '}} <span style="text-decoration: line-through;">{{x.price_old | currency: '
+              '}}</span></div>
+        </div>
+      </div>
+
+      <div *ngIf="x.type == 'Blinds'">
+
+        <div style="display: flex;justify-content: space-between; margin-bottom: 15px;">
+          <div style="width: fit-content;font-weight: 500;padding-top: 10px;">
+            <div style="font-size: 15px; font-weight: 600; color: #000;border-bottom: 0.5px solid #a17635;">
+              {{x.location}}
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex;justify-content: space-between;font-weight: 450;font-size: 13px;">
+
+          <div style="width: 60%;font-size: 14px;">
+            Description
+          </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              Qty
+            </div>
+            <div style="width: 70%;text-align: center;">
+              Total (RM)
+            </div>
+          </div>
+
+        </div>
+
+        <div style="width: 100%; font-size: 13px; font-weight: 400; color: #222222; padding: 10px 0px; margin: 10px 0px;
+       border-top: 2px dashed #a17635; border-bottom: 2px dashed #a17635;">
+
+          <!-- Width & Height -->
+          <div style="display: flex;justify-content: space-between; margin-bottom: 10px;">
+            <div *ngIf="x.height_tech != null || x.width_tech != null"
+              style="font-size: 13px; font-weight: 400; color: #999;">
+              {{x.width_tech}}" x {{x.height_tech}}"
+            </div>
+            <div *ngIf="x.height_tech == null && x.width_tech == null"
+              style="font-size: 13px; font-weight: 400; color: #999;">
+              {{x.width}}" x {{x.height}}"
+            </div>
+          </div>
+
+          <!-- Blind -->
+          <div *ngIf="x.fabric_blind != null"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Blind - {{x.fabric_blind}} (sqft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                <!-- {{calc[i].blind.qty}} -->
+                1
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].blind.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Curtain -->
+          <div *ngIf="x.fabric != null && x.pleat == 'Roman Blind'"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Curtain - {{x.fabric}} (sqft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].curtain.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].curtain.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Sewing Curtain -->
+          <div *ngIf="lengthof(calc[i].curtain) > 0 && x.pleat == 'Roman Blind'"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Sewing D/P curtain (ft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].sewing_curtain.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].sewing_curtain.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Installation & Hang -->
+          <div style="display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation & Hang (set)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Belt & Hook -->
+          <!-- <div style="display: flex;justify-content: space-between;margin-bottom: 5px;">
+            <div>
+              Belt & Hook (set)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                1
+              </div>
+              <div style="width: 70%;text-align: end;">
+                25.00
+              </div>
+            </div>
+          </div> -->
+
+        </div>
+
+        <!-- Price -->
+        <div style="display: flex;justify-content: flex-end;">
+          <div *ngIf="x.price_old == null" style="font-size: 18px; font-weight: 700; color: #000;">
+            RM {{x.price | currency: ' '}}</div>
+          <div *ngIf="x.price_old != null" style="font-size: 18px; font-weight: 700; color: #000;">
+            RM {{x.price | currency: ' '}} <span style="text-decoration: line-through;">{{x.price_old | currency: '
+              '}}</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      style="margin: 10px;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;background: white;border-radius: 5px; padding: 10px; margin-bottom: 15px;">
+
       <div style="display: flex;justify-content: space-between; margin-bottom: 15px;">
         <div style="width: fit-content;font-weight: 500;padding-top: 10px;">
           <div style="font-size: 15px; font-weight: 600; color: #000;border-bottom: 0.5px solid #a17635;">
-            {{x.location}}
+            Additional Charges
           </div>
         </div>
       </div>
@@ -30,7 +372,7 @@
       <div style="display: flex;justify-content: space-between;font-weight: 450;font-size: 13px;">
 
         <div style="width: 60%;font-size: 14px;">
-          Descripion
+          Description
         </div>
 
         <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -44,128 +386,20 @@
 
       </div>
 
-      <div style="width: 100%; font-size: 13px; font-weight: 400; color: #222222; padding: 10px 0px; margin: 10px 0px;
+      <div *ngIf="!info.rejected" style="width: 100%; font-size: 13px; font-weight: 400; color: #222222; padding: 10px 0px; margin: 10px 0px;
        border-top: 2px dashed #a17635; border-bottom: 2px dashed #a17635;">
 
-        <!-- Width & Height -->
-        <div style="display: flex;justify-content: space-between; margin-bottom: 10px;">
-          <div *ngIf="x.height_tech != null || x.width_tech != null"
-            style="font-size: 13px; font-weight: 400; color: #999;">
-            {{x.width_tech}}" x {{x.height_tech}}"
-          </div>
-          <div *ngIf="x.height_tech == null && x.width_tech == null"
-            style="font-size: 13px; font-weight: 400; color: #999;">
-            {{x.width}}" x {{x.height}}"
-          </div>
-        </div>
-
-        <!-- Curtain -->
-        <div *ngIf="x.fabric != null && x.fabric != 'NA'"
-          style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-          <div>
-            Curtain - {{x.fabric}} (m)
-          </div>
-
-          <div style="width: 40%;display: flex;justify-content: flex-end;">
-            <div style="width: 30%;text-align: center;">
-              {{calc[i].curtain.qty}}
-            </div>
-            <div style="width: 70%;text-align: end;">
-              {{calc[i].curtain.total | currency: ' '}}
-            </div>
-          </div>
-        </div>
-
-        <!-- Sheer -->
-        <div *ngIf="lengthof(x.fabric_sheer) > 0 "
-          style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-          <div>
-            Sheer - {{x.fabric_sheer}} (m)
-          </div>
-
-          <div style="width: 40%;display: flex;justify-content: flex-end;">
-            <div style="width: 30%;text-align: center;">
-              {{calc[i].sheer.qty}}
-            </div>
-            <div style="width: 70%;text-align: end;">
-              {{calc[i].sheer.total | currency: ' '}}
-            </div>
-          </div>
-        </div>
-
-        <!-- Sewing Curtain + Lining -->
-        <div *ngIf="lengthof(calc[i].curtain) > 0"
-          style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-          <div>
-            Sewing D/P <span *ngIf="lengthof(calc[i].curtain) > 0">curtain</span> <span
-              *ngIf="lengthof(calc[i].curtain) > 0 && lengthof(calc[i].lining) > 0 "> + </span>
-            <span *ngIf="lengthof(calc[i].lining) > 0">lining</span> (ft)
-          </div>
-
-          <div style="width: 40%;display: flex;justify-content: flex-end;">
-            <div style="width: 30%;text-align: center;">
-              {{calc[i].sewing_curtain.qty}}
-            </div>
-            <div style="width: 70%;text-align: end;">
-              {{calc[i].sewing_curtain.total | currency: ' '}}
-            </div>
-          </div>
-        </div>
-
-        <!-- Sewing Sheer -->
-        <div *ngIf="lengthof(calc[i].sewing_sheer) > 0"
-          style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-          <div>
-            Sewing D/P sheer (ft)
-          </div>
-
-          <div style="width: 40%;display: flex;justify-content: flex-end;">
-            <div style="width: 30%;text-align: center;">
-              {{calc[i].sewing_sheer.qty}}
-            </div>
-            <div style="width: 70%;text-align: end;">
-              {{calc[i].sewing_sheer.total | currency: ' '}}
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Track -->
+        <!-- Ladder -->
         <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-          <div>
-            {{x.track}} Track (ft)
-          </div>
 
-          <div style="width: 40%;display: flex;justify-content: flex-end;">
-            <div style="width: 30%;text-align: center;">
-              {{calc[i].track.qty}}
-            </div>
-            <div style="width: 70%;text-align: end;">
-              {{calc[i].track.total | currency: ' '}}
-            </div>
-          </div>
-        </div>
+          <div style="display: flex;">
+            <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="ladder"
+              style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-right: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
+            </ion-checkbox>
 
-        <!-- Installation & Hang -->
-        <div style="display: flex;justify-content: space-between;margin-bottom: 10px;">
-          <div>
-            Installation & Hang (set)
-          </div>
-
-          <div style="width: 40%;display: flex;justify-content: flex-end;">
-            <div style="width: 30%;text-align: center;">
-              {{calc[i].install.qty}}
+            <div>
+              Ladder
             </div>
-            <div style="width: 70%;text-align: end;">
-              {{calc[i].install.total | currency: ' '}}
-            </div>
-          </div>
-        </div>
-
-        <!-- Belt & Hook -->
-        <div style="display: flex;justify-content: space-between;margin-bottom: 5px;">
-          <div>
-            Belt & Hook (set)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -173,7 +407,70 @@
               1
             </div>
             <div style="width: 70%;text-align: end;">
-              25.00
+              100
+            </div>
+          </div>
+        </div>
+
+        <!-- Scaftfolding -->
+        <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+
+          <div style="display: flex;">
+            <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="scaftfolding"
+              style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-right: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
+            </ion-checkbox>
+
+            <div>
+              Scaftfolding
+            </div>
+          </div>
+
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              1
+            </div>
+            <div style="width: 70%;text-align: end;">
+              200
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div *ngIf="(info.rejected) && (ladder || scaftfolding)" style="width: 100%; font-size: 13px; font-weight: 400; color: #222222; padding: 10px 0px; margin: 10px 0px;
+       border-top: 2px dashed #a17635; border-bottom: 2px dashed #a17635;">
+
+        <!-- Ladder -->
+        <div *ngIf="ladder" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+
+          <div>
+            Ladder
+          </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              1
+            </div>
+            <div style="width: 70%;text-align: end;">
+              100
+            </div>
+          </div>
+        </div>
+
+        <!-- Scaftfolding -->
+        <div *ngIf="scaftfolding" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+
+          <div>
+            Scaftfolding
+          </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              1
+            </div>
+            <div style="width: 70%;text-align: end;">
+              200
             </div>
           </div>
         </div>
@@ -182,9 +479,14 @@
 
       <!-- Price -->
       <div style="display: flex;justify-content: flex-end;">
-        <div style="font-size: 18px; font-weight: 700; color: #000;">
-          {{x.price | currency: 'RM '}}
-        </div>
+        <div *ngIf="!ladder && !scaftfolding" style="font-size: 18px; font-weight: 700; color: #000;">
+          RM 0.00</div>
+        <div *ngIf="ladder && !scaftfolding" style="font-size: 18px; font-weight: 700; color: #000;">
+          RM 100.00</div>
+        <div *ngIf="scaftfolding && !ladder" style="font-size: 18px; font-weight: 700; color: #000;">
+          RM 200.00</div>
+        <div *ngIf="scaftfolding && ladder" style="font-size: 18px; font-weight: 700; color: #000;">
+          RM 300.00</div>
       </div>
 
     </div>
@@ -197,6 +499,10 @@
     style="background: #ebd1af; display: flex;padding: 10px 15px;align-items: center;justify-content: space-between;">
 
     <div style="padding-left: 5px;">
+      <div *ngIf="due != 0 && due > 0 && rejected == true" style="color: red;font-size: 14px;font-weight: 500;margin-bottom: 5px;">Due :
+        {{due | currency: 'RM '}}</div>
+      <div *ngIf="due != 0 && due < 0 && rejected == true" style="color:green;font-size: 14px;font-weight: 500;margin-bottom: 5px;">
+        Refund : {{due | currency: 'RM '}}</div>
       <div style="width: 92px;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
       <div style="color: #a17635;font-size: 14px;font-weight: 500;">{{totalPrice() | currency: 'RM '}}</div>
     </div>

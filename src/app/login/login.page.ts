@@ -26,7 +26,10 @@ export class LoginPage implements OnInit {
   show
 
   ngOnInit() {
+
+
     firebase.auth().onAuthStateChanged(a => {
+
       if (a) {
         console.log(a);
 
@@ -37,6 +40,7 @@ export class LoginPage implements OnInit {
           showConfirmButton: false,
           heightAuto: false,
         })
+
         this.http.post('https://curtain.vsnap.my/onestaff', { id: a.uid }).subscribe((s) => {
           console.log(s);
 

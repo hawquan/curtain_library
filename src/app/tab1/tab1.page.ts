@@ -164,11 +164,11 @@ export class Tab1Page implements OnInit {
 
   filterOnGoingList(type) {
     if (type == 'sales') {
-      return this.salesList.filter(x => x.step >= 2 && x.step < 5)
+      return this.salesList.filter(x => x.step >= 2 && x.step < 5).sort((a,b) => b.no - a.no)
     } else if (type == 'tech') {
-      return this.salesList.filter(x => x.step >= 3 && x.step < 5)
+      return this.salesList.filter(x => x.step >= 3 && x.step < 5).sort((a,b) => b.no - a.no)
     } else if (type == 'tailor') {
-      return this.salesList.filter(x => x.step >= 4 && x.step < 5)
+      return this.salesList.filter(x => x.step >= 4 && x.step < 5).sort((a,b) => b.no - a.no)
     }
     // else if (type == 'installer') {
     //   return this.pendingListInstaller.filter(x => x.step >= 4 && x.step < 5)
@@ -185,7 +185,7 @@ export class Tab1Page implements OnInit {
     // } else if (type == 'installer') {
     //   return this.salesList.filter(x => x.step == 5)
     // }
-    return this.salesList.filter(x => x.step == 5)
+    return this.salesList.filter(x => x.step == 5).sort((a,b) => b.no - a.no)
 
   }
 
