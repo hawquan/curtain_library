@@ -10,11 +10,16 @@ export class SelectorPage implements OnInit {
 
   constructor(private modalController: ModalController, private navparam: NavParams) { }
   array = [] as any;
+  type
   keyword = ''
 
   ngOnInit() {
     this.array = this.navparam.get('array')
-    // console.log(this.navparam.get('array'));
+    this.type = this.navparam.get('type')
+
+    console.log(this.navparam.get('array'));
+    console.log(this.type);
+
 
   }
 

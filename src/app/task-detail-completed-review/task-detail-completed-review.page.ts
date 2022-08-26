@@ -23,7 +23,8 @@ export class TaskDetailCompletedReviewPage implements OnInit {
 
   item = [] as any
   info = []
-  position = ''
+  sales_no = 0
+  position = ""
 
   pleatlist = []
   blindlist = []
@@ -34,10 +35,7 @@ export class TaskDetailCompletedReviewPage implements OnInit {
   beltlist = []
   otherslist = []
   pieceslist = []
-  fabricCurtain = []
-  fabricSheer = []
 
-  PleatChoice = ''
   BlindsChoice = ''
 
   PlainWall = false
@@ -46,8 +44,17 @@ export class TaskDetailCompletedReviewPage implements OnInit {
   PatternWall = false
   VinylWall = false
   WallpaperChoice = ''
-  price = 0
+
+  price: any = 0
   hookview = true
+  show = false
+  showCurtain = false
+  showSheer = false
+  curtainswitch = 'Expand'
+  xcurtainswitch = 'Collapse'
+  sheerswitch = 'Expand'
+  xsheerswitch = 'Collapse'
+  fabricType = ''
 
   tracks = [
     "Bendable", "Curve", "Rod", "Cubicle", "Motorised (Battery)", "Motorised (Power Point)"
@@ -55,22 +62,11 @@ export class TaskDetailCompletedReviewPage implements OnInit {
 
   ngOnInit() {
     this.item = this.navparam.get('item')
-    this.pleatlist = this.navparam.get('pleatlist')
-    this.blindlist = this.navparam.get('blindlist')
     this.position = this.navparam.get('position')
-    console.log(this.item, this.pleatlist, this.blindlist, this.position);
+    console.log(this.item, this.position);
 
     this.price = this.item.price
-
-    if (this.item.type == 'Tailor-Made Curtains' || this.item.type == 'Motorised Curtains') {
-      this.pleatSelection(this.item)
-    }
-    else if (this.item.type == 'Blinds') {
-      this.blindsSelection(this.item)
-    }
-    else {
-      this.wallpaperSelection(this.item.pleat)
-    }
+    this.pleatSelection()
 
     this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
       this.misclist = s['data']
@@ -94,25 +90,15 @@ export class TaskDetailCompletedReviewPage implements OnInit {
           this.pieceslist.push(this.misclist[i])
         }
       }
+      this.checkFabric()
 
       // console.log(this.bracketlist, this.hooklist, this.beltlist, this.otherslist);
 
     })
-
-    this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
-      let temp = s['data']
-
-      this.fabricCurtain = temp.filter(x => x.type == 'Curtain')
-      this.fabricSheer = temp.filter(x => x.type == 'Sheer')
-
-      console.log(this.fabricCurtain, this.fabricSheer)
-    })
   }
 
   typeChanged() {
-    this.PleatChoice = ''
-
-    this.BlindsChoice = ''
+    this.item.pleat = ''
 
     this.PlainWall = false
     this.FabricWall = false
@@ -122,22 +108,35 @@ export class TaskDetailCompletedReviewPage implements OnInit {
     this.WallpaperChoice = ''
   }
 
-  pleatSelection(x) {
-    console.log(x);
-    this.PleatChoice = x.pleat
-    this.item.fullness = x.fullness
-
-    if (this.PleatChoice == 'Eyelet Design' || this.PleatChoice == 'Ripplefold') {
+  pleatSelection() {
+    if (this.item.pleat == 'Eyelet Design' || this.item.pleat == 'Ripplefold') {
       this.hookview = false
       this.item.hook = ''
-
     } else {
       this.hookview = true
     }
+
+    if (this.item.pleat == 'French Pleat') {
+      if (this.item.hook == 'Adjust') {
+        this.item.hook = ''
+      }
+    }
   }
 
-  pleatChoice() {
-    return this.PleatChoice
+  checkFabric() {
+
+    if (this.item.fabric_type == 'C') {
+      this.fabricType = 'Curtain'
+      this.showCurtain = true
+    } else if (this.item.fabric_type == 'S') {
+      this.fabricType = 'Sheer'
+      this.showSheer = true
+    } else if (this.item.fabric_type == 'CS') {
+      this.fabricType = 'Curtain + Sheer'
+      this.showCurtain = true
+      this.showSheer = true
+    }
+
   }
 
   blindsSelection(x) {
@@ -174,57 +173,6 @@ export class TaskDetailCompletedReviewPage implements OnInit {
 
   }
 
-  updateData() {
-    // this.item.pieces = this.info.pieces
-    // this.item.bracket = x
-    // this.item.hook = x
-    // this.item.sidehook = x
-    // this.item.belt = x
-    // this.item.others = x
-    // this.item.touchfloor = x
-  }
-
-  // async selector(x) {
-  //   const modal = await this.modalcontroller.create({
-  //     component: SelectorPage,
-  //     componentProps: { array: [{ name: "ok1", id: "a001" }, { name: "ok2", id: "a002" }, { name: "ok3", id: "a003" }, { name: "ok4", id: "a004" },] }
-  //   });
-  //   await modal.present();
-  //   const { data } = await modal.onWillDismiss();
-  //   if (data) {
-  //     eval(x + '="' + data.value.id + '"')
-  //   }
-  // }
-
-  CurtainName = ''
-  SheerName = ''
-
-  async selectorCurtain() {
-    const modal = await this.modalcontroller.create({
-      component: SelectorPage,
-      componentProps: { array: this.fabricCurtain }
-    });
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    if (data) {
-      this.item.fabric = data.value.id
-      this.CurtainName = data.value.name
-    }
-  }
-
-  async selectorSheer() {
-    const modal = await this.modalcontroller.create({
-      component: SelectorPage,
-      componentProps: { array: this.fabricSheer }
-    });
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    if (data) {
-      this.item.fabric_sheer = data.value.id
-      this.SheerName = data.value.name
-    }
-  }
-
   calcPrice() {
     return this.price = this.item.width + this.item.height || 0
   }
@@ -252,7 +200,6 @@ export class TaskDetailCompletedReviewPage implements OnInit {
     console.log(this.item.photos);
 
   }
-
 
   imagectype;
   imagec;

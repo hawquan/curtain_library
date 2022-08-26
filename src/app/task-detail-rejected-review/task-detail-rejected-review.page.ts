@@ -22,7 +22,8 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
   item = [] as any
   info = []
-  calc = [] as any
+  sales_no = 0
+  position = ""
 
   pleatlist = []
   blindlist = []
@@ -39,8 +40,8 @@ export class TaskDetailRejectedReviewPage implements OnInit {
   fabricCurtain = []
   fabricSheer = []
   fabricLining = []
+  fabricBlind = []
 
-  PleatChoice = ''
   BlindsChoice = ''
 
   PlainWall = false
@@ -49,38 +50,26 @@ export class TaskDetailRejectedReviewPage implements OnInit {
   PatternWall = false
   VinylWall = false
   WallpaperChoice = ''
-  price = 0
-  hookview = true
 
-  tracks = [
-    "Bendable", "Curve", "Rod", "Cubicle", "Motorised (Battery)", "Motorised (Power Point)"
-  ]
+  price: any = 0
+  hookview = true
+  show = false
+  showCurtain = false
+  showSheer = false
+  curtainswitch = 'Expand'
+  xcurtainswitch = 'Collapse'
+  sheerswitch = 'Expand'
+  xsheerswitch = 'Collapse'
+  fabricType = ''
 
   ngOnInit() {
     this.item = this.navparam.get('item')
-    this.pleatlist = this.navparam.get('pleatlist')
-    this.blindlist = this.navparam.get('blindlist')
-    this.tracklist = this.navparam.get('tracklist')
-    this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
-      this.fabriclist = s['data']
-      this.fabricCurtain = this.fabriclist.filter(x => x.type == 'Curtain')
-      this.fabricSheer = this.fabriclist.filter(x => x.type == 'Sheer')
-      this.fabricLining = this.fabriclist.filter(x => x.type == 'Lining')
-      console.log(this.item, this.pleatlist, this.blindlist, this.tracklist, this.fabriclist);
 
-    })
+    console.log(this.item, this.pleatlist, this.blindlist, this.tracklist, this.fabriclist);
 
     this.price = this.item.price
+    this.pleatSelection()
 
-    if (this.item.type == 'Tailor-Made Curtains' || this.item.type == 'Motorised Curtains') {
-      this.pleatSelection(this.item)
-    }
-    else if (this.item.type == 'Blinds') {
-      this.blindsSelection(this.item)
-    }
-    else {
-      this.wallpaperSelection(this.item.pleat)
-    }
 
     this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
       this.misclist = s['data']
@@ -107,12 +96,22 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
     })
 
+    this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
+      this.fabriclist = s['data']
+
+      this.fabricCurtain = this.fabriclist.filter(x => x.type == 'Curtain')
+      this.fabricSheer = this.fabriclist.filter(x => x.type == 'Sheer')
+      this.fabricLining = this.fabriclist.filter(x => x.type == 'Lining')
+      this.fabricBlind = this.fabriclist.filter(x => x.type == 'Blind')
+
+      console.log(this.sales_no, this.pleatlist, this.blindlist, this.position, this.tracklist, this.fabriclist);
+      this.checkFabric()
+    })
+
   }
 
   typeChanged() {
-    this.PleatChoice = ''
-
-    this.BlindsChoice = ''
+    this.item.pleat = ''
 
     this.PlainWall = false
     this.FabricWall = false
@@ -122,23 +121,36 @@ export class TaskDetailRejectedReviewPage implements OnInit {
     this.WallpaperChoice = ''
   }
 
-  pleatSelection(x) {
-    console.log(x);
-    this.PleatChoice = x.pleat
-    this.item.fullness = x.fullness
-
-    if (this.PleatChoice == 'Eyelet Design' || this.PleatChoice == 'Ripplefold') {
+  pleatSelection() {
+    if (this.item.pleat == 'Eyelet Design' || this.item.pleat == 'Ripplefold') {
       this.hookview = false
       this.item.hook = ''
-
     } else {
       this.hookview = true
     }
 
+    if (this.item.pleat == 'French Pleat') {
+      if (this.item.hook == 'Adjust') {
+        this.item.hook = ''
+      }
+    }
+
   }
 
-  pleatChoice() {
-    return this.PleatChoice
+  checkFabric() {
+
+    if (this.item.fabric_type == 'C') {
+      this.fabricType = 'Curtain'
+      this.showCurtain = true
+    } else if (this.item.fabric_type == 'S') {
+      this.fabricType = 'Sheer'
+      this.showSheer = true
+    } else if (this.item.fabric_type == 'CS') {
+      this.fabricType = 'Curtain + Sheer'
+      this.showCurtain = true
+      this.showSheer = true
+    }
+
   }
 
   blindsSelection(x) {
@@ -175,16 +187,6 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
   }
 
-  updateData() {
-    // this.item.pieces = this.info.pieces
-    // this.item.bracket = x
-    // this.item.hook = x
-    // this.item.sidehook = x
-    // this.item.belt = x
-    // this.item.others = x
-    // this.item.touchfloor = x
-  }
-
   async selector(x) {
     const modal = await this.modalcontroller.create({
       component: SelectorPage,
@@ -199,35 +201,19 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
   updateItem() {
 
-    this.item.pleat = this.PleatChoice
-    this.item.price = this.price
+    for (let i = 0; i < this.instPhoto.photos.length; i++) {
+      this.item.photos.push(this.instPhoto.photos[i])
+    }
 
     let temp = {
       no: this.item.no,
-      // location: this.item.location,
-      // height: this.item.height,
-      // width: this.item.width,
-      height_tech: this.item.height_tech,
-      width_tech: this.item.width_tech,
-      // track: this.item.track,
-      // type: this.item.type,
-      // pleat: this.item.pleat,
-      // fullness: this.item.fullness,
-      // pieces: this.item.pieces,
-      // bracket: this.item.bracket,
-      // hook: this.item.hook,
-      // sidehook: this.item.sidehook,
-      // belt: this.item.belt,
-      // fabric: this.item.fabric,
-      // others: this.item.others,
-      // touchfloor: this.item.touchfloor,
-      price: this.item.price,
-      photos: JSON.stringify(this.item.photos),
+      price_old: this.item.price_old,
+      price: this.price,
       status_sale: 'Revisited',
       status_tech: 'Approved',
       step: 3,
+      photos: JSON.stringify(this.item.photos),
       remark_sale: this.item.remark_sales
-      // remark_tech: this.item.remark_tech
     }
     console.log(temp);
 
@@ -288,8 +274,9 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
   calcPrice(pass) {
 
-    let width = 0
-    let height = 0
+    let width = 0 as any
+    let height = 0 as any
+
     if (this.item.height_tech != null || this.item.height_tech != '' || this.item.width_tech != null || this.item.width_tech != '') {
       width = this.item.width_tech
       height = this.item.height_tech
@@ -298,54 +285,106 @@ export class TaskDetailRejectedReviewPage implements OnInit {
       height = this.item.height
     }
 
-    // this.item.curtain
-
-    let curtain = false as any
+    let curtain = false
     let curtain_id
+    let lining = false
+    let lining_id
     let sheer = false
     let sheer_id
     let track = false
     let track_id
-
+    let blind = false
+    let blind_id
     let pleat_id
 
-    if (this.item.curtain != 'Blinds') {
+    if (this.item.type != 'Blinds') {
 
-      if (this.item.fabric != null && this.item.fabric != 'NA') {
-        curtain = true
-        curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+      if (this.item.fabric != null) {
+        if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
+          curtain = true
+          curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+        } else {
+          curtain = false
+        }
       } else {
         curtain = false
       }
 
-      if (this.item.fabric_sheer != null && this.item.fabric_sheer != 'NA') {
-        sheer = true
-        sheer_id = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['id']
+      if (this.item.fabric_lining != null) {
+        if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
+          lining = true
+          lining_id = this.fabricLining.filter(x => x.name == this.item.fabric_lining)[0]['id']
+        } else {
+          lining = false
+        }
+      } else {
+        lining = false
+      }
+
+      if (this.item.fabric_sheer != null) {
+        if (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') {
+          sheer = true
+          sheer_id = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['id']
+        } else {
+          sheer = false
+        }
       } else {
         sheer = false
       }
 
-      if (this.item.track != null && this.item.track != 'NA') {
+      if (this.item.track != null) {
         track = true
         track_id = this.tracklist.filter(x => x.name == this.item.track)[0]['id']
       } else {
         track = false
       }
 
-      pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
-
+      if (this.item.pleat != null && this.item.pleat != '') {
+        pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
+      }
       console.log(curtain_id, sheer_id, track_id, pleat_id);
 
     } else {
-      curtain = false
-      sheer = false
-      track = false
+      if (this.item.pleat == 'Roman Blind') {
+        curtain = true
+        sheer = false
+        track = false
+        lining = false
+        blind = true
+        console.log('blindcurtain');
 
-      pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
+        if ((this.item.fabric_blind != null && this.item.fabric_blind != '') && (this.item.fabric != null && this.item.fabric != '')) {
+          curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+          blind_id = this.fabricBlind.filter(x => x.name == this.item.fabric_blind)[0]['id']
+        }
+
+      } else {
+        curtain = false
+        sheer = false
+        track = false
+        lining = false
+        blind = true
+        console.log('blind');
+
+        if (this.item.fabric_blind != null && this.item.fabric_blind != '') {
+          blind_id = (this.fabricBlind.filter(x => x.name == this.item.fabric_blind))[0]['id']
+        }
+      }
+
     }
+
+    if (this.item.height > 180) {
+      this.item.need_scaftfolding = true
+    } else if (this.item.height >= 156 && this.item.height <= 180) {
+      this.item.need_ladder = true
+    } else {
+      this.item.need_scaftfolding = false
+      this.item.need_ladder = false
+    }
+
     let temp = {
-      width: width, height: height, curtain: curtain, lining: false, lining_id: 41,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id
+      width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id
     }
 
     console.log(temp);
@@ -353,9 +392,12 @@ export class TaskDetailRejectedReviewPage implements OnInit {
     this.http.post('https://curtain.vsnap.my/calcPrice', temp).subscribe(a => {
 
       console.log(a);
-
-      this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25
-
+      this.item.price_old = this.item.price
+      if (this.item.type == 'Blinds') {
+        this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0)
+      } else {
+        this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25
+      }
       if (pass) {
         this.updateItem()
       }
@@ -382,8 +424,8 @@ export class TaskDetailRejectedReviewPage implements OnInit {
   }
 
   deletePic(x) {
-    this.item.photos.splice(x, 1)
-    console.log(this.item.photos);
+    this.instPhoto.photos.splice(x, 1)
+    console.log(this.instPhoto.photos);
 
   }
 
@@ -391,6 +433,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
   imagectype;
   imagec;
   base64img;
+  instPhoto = { photos: [] as any } as any;
 
   fileChange(event, name, maxsize) {
     if (event.target.files && event.target.files[0] && event.target.files[0].size < (10485768)) {
@@ -425,12 +468,12 @@ export class TaskDetailRejectedReviewPage implements OnInit {
         // const imgarr = imgggg.split('thisisathingtoreplace;');
         // this.base64img = imgarr[1];
         // event.target.value = '';
-        this.item['photos'].push('https://i.pinimg.com/originals/a2/dc/96/a2dc9668f2cf170fe3efeb263128b0e7.gif');
+        this.instPhoto['photos'].push('https://i.pinimg.com/originals/a2/dc/96/a2dc9668f2cf170fe3efeb263128b0e7.gif');
 
         this.http.post('https://forcar.vsnap.my/upload', { image: this.imagec, folder: 'goalgame', userid: Date.now() }).subscribe((link) => {
           console.log(link['imageURL']);
-          this.item['photos'][this.lengthof(this.item['photos']) - 1] = link['imageURL']
-          console.log(this.item['photos']);
+          this.instPhoto['photos'][this.lengthof(this.instPhoto['photos']) - 1] = link['imageURL']
+          console.log(this.instPhoto['photos']);
 
         });
       };

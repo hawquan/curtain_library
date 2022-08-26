@@ -154,9 +154,13 @@
             <div style="font-size: 12px; color: #636161; font-weight: 500;">Item Price</div>
 
             <div style="display: flex;align-items: center;margin-top: 5px;">
-              <ion-input [(ngModel)]="'RM ' + x.price" readonly
-                style="background-color: #eeeeee;width: 140px;  height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
-              </ion-input>
+              <div *ngIf="x.price_old == null"
+                style="background-color: #eeeeee;width: 140px;  height: fit-content;font-weight: 400;padding: 5px 10px;border-radius: 2px;">
+                RM {{x.price | currency: ' '}}</div>
+              <div *ngIf="x.price_old != null"
+                style="background-color: #eeeeee;width: 140px;  height: fit-content;font-weight: 400;padding: 5px 10px;border-radius: 2px;">
+                RM <span style="text-decoration: line-through;">{{x.price_old | currency: ' '}}</span> <br>RM {{x.price
+                | currency: ' '}}</div>
             </div>
 
           </div>
@@ -187,7 +191,7 @@
       </div>
 
 
-      <div style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;">
+      <div style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 50px;">
         <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         <div style="width: 100px;font-size: 12px;color: #999;text-align: center;">Total {{items.length}} items</div>
         <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
@@ -365,7 +369,7 @@
 
       </div>
 
-      <div style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;">
+      <div style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 50px;">
         <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         <div style="width: 100px;font-size: 12px;color: #999;text-align: center;">Total {{items.length}} items</div>
         <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
@@ -430,9 +434,7 @@
 
           <div style="display: flex;">
             <div style="margin-right: 8px;"></div>
-            <div
-              [ngClass]="x.status_tail == 'Completed' ? 'approve' : ''"
-              style="margin-right: 15px;">
+            <div [ngClass]="x.status_tail == 'Completed' ? 'approve' : ''" style="margin-right: 15px;">
               Tailoring Completed
             </div>
             <ion-icon [ngStyle]="{'transform': show == i ? 'rotate(180deg)' : ''}" name="chevron-down-outline">
@@ -541,7 +543,7 @@
 
       </div>
 
-      <div style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;">
+      <div style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 50px;">
         <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         <div style="width: 100px;font-size: 12px;color: #999;text-align: center;">Total {{items.length}} items</div>
         <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>

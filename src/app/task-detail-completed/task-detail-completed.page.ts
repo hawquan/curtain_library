@@ -266,6 +266,7 @@ export class TaskDetailCompletedPage implements OnInit {
     let navExtra: NavigationExtras = {
       queryParams: {
         sales_id: this.sales_id,
+        info: JSON.stringify(this.info),
         tracklist: JSON.stringify(this.tracklist),
         pleatlist: JSON.stringify(this.pleatlist),
         blindlist: JSON.stringify(this.blindlist),
@@ -284,7 +285,7 @@ export class TaskDetailCompletedPage implements OnInit {
 
   // calcPrice(i) {
 
-    
+
   //   let width = 0
   //   let height = 0
   //   if (this.items[i].height_tech != null || this.items[i].width_tech != null) {

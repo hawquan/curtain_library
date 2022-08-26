@@ -217,7 +217,7 @@ export class TaskDetailPage implements OnInit {
         pleatlist: this.pleatlist,
         blindlist: this.blindlist,
         position: this.user['position'],
-        fabriclist: this.fabriclist,
+        tracklist: this.tracklist,
       }
     });
 
@@ -237,10 +237,10 @@ export class TaskDetailPage implements OnInit {
       component: TaskEditorPage,
       componentProps: {
         item: x,
+        sales_no: this.sales_id,
         pleatlist: this.pleatlist,
         blindlist: this.blindlist,
         tracklist: this.tracklist,
-        fabriclist: this.fabriclist,
       }
     });
 
@@ -259,10 +259,7 @@ export class TaskDetailPage implements OnInit {
       component: TaskDetailReviewPage,
       componentProps: {
         item: x,
-        pleatlist: this.pleatlist,
-        blindlist: this.blindlist,
         position: this.user['position'],
-        tracklist: this.tracklist,
       }
     });
 
@@ -281,10 +278,7 @@ export class TaskDetailPage implements OnInit {
       component: TaskDetailCompletedReviewPage,
       componentProps: {
         item: x,
-        pleatlist: this.pleatlist,
-        blindlist: this.blindlist,
         position: this.user['position'],
-        fabriclist: this.fabriclist,
       }
     });
 
@@ -358,6 +352,7 @@ export class TaskDetailPage implements OnInit {
     let navExtra: NavigationExtras = {
       queryParams: {
         sales_id: this.sales_id,
+        info: JSON.stringify(this.info),
         tracklist: JSON.stringify(this.tracklist),
         pleatlist: JSON.stringify(this.pleatlist),
         blindlist: JSON.stringify(this.blindlist),
@@ -394,7 +389,7 @@ export class TaskDetailPage implements OnInit {
         title: 'Complete Task?',
         text: 'Submit your confirmation of this sales order?',
         heightAuto: false,
-        icon: 'success',
+        icon: 'question',
         showConfirmButton: true,
         showCancelButton: true,
         cancelButtonText: 'Cancel',
@@ -509,7 +504,7 @@ export class TaskDetailPage implements OnInit {
         title: 'Complete Task?',
         text: 'Submit completion of tailoring process?',
         heightAuto: false,
-        icon: 'success',
+        icon: 'question',
         showConfirmButton: true,
         showCancelButton: true,
         cancelButtonText: 'Cancel',
@@ -576,7 +571,7 @@ export class TaskDetailPage implements OnInit {
         title: 'Complete Task?',
         text: 'Submit completion of installtion process?',
         heightAuto: false,
-        icon: 'success',
+        icon: 'question',
         showConfirmButton: true,
         showCancelButton: true,
         cancelButtonText: 'Cancel',

@@ -22,9 +22,9 @@ export class TaskOngoingViewDetailsPage implements OnInit {
 
   item = [] as any
   info = []
-  position = ''
+  sales_no = 0
+  position = ""
 
-  pleatlist = []
   misclist = []
   bracketlist = []
   hooklist = []
@@ -32,8 +32,10 @@ export class TaskOngoingViewDetailsPage implements OnInit {
   beltlist = []
   otherslist = []
   pieceslist = []
+  fabricCurtain = []
+  fabricSheer = []
+  fabricLining = []
 
-  PleatChoice = ''
   BlindsChoice = ''
 
   PlainWall = false
@@ -42,30 +44,25 @@ export class TaskOngoingViewDetailsPage implements OnInit {
   PatternWall = false
   VinylWall = false
   WallpaperChoice = ''
-  price = 0
-  hookview = true
 
-  tracks = [
-    "Bendable", "Curve", "Rod", "Cubicle", "Motorised (Battery)", "Motorised (Power Point)"
-  ]
+  price: any = 0
+  hookview = true
+  show = false
+  showCurtain = false
+  showSheer = false
+  curtainswitch = 'Expand'
+  xcurtainswitch = 'Collapse'
+  sheerswitch = 'Expand'
+  xsheerswitch = 'Collapse'
+  fabricType = ''
 
   ngOnInit() {
     this.item = this.navparam.get('item')
-    this.pleatlist = this.navparam.get('pleatlist')
     this.position = this.navparam.get('position')
-    console.log(this.item, this.pleatlist, this.position);
+    console.log(this.item, this.position);
 
     this.price = this.item.price
-
-    if (this.item.type == 'Tailor-Made Curtains' || this.item.type == 'Motorised Curtains') {
-      this.pleatSelection(this.item)
-    }
-    else if (this.item.type == 'Blinds') {
-      this.blindsSelection(this.item)
-    }
-    else {
-      this.wallpaperSelection(this.item.pleat)
-    }
+    this.pleatSelection()
 
     this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
       this.misclist = s['data']
@@ -85,20 +82,19 @@ export class TaskOngoingViewDetailsPage implements OnInit {
           this.beltlist.push(this.misclist[i])
         } else if (this.misclist[i]['type'] == "Others") {
           this.otherslist.push(this.misclist[i])
-        }else if (this.misclist[i]['type'] == "Pieces") {
+        } else if (this.misclist[i]['type'] == "Pieces") {
           this.pieceslist.push(this.misclist[i])
         }
       }
+      this.checkFabric()
 
-    // console.log(this.bracketlist, this.hooklist, this.beltlist, this.otherslist);
+      // console.log(this.bracketlist, this.hooklist, this.beltlist, this.otherslist);
 
     })
   }
 
   typeChanged() {
-    this.PleatChoice = ''
-
-    this.BlindsChoice = ''
+    this.item.pleat = ''
 
     this.PlainWall = false
     this.FabricWall = false
@@ -108,22 +104,35 @@ export class TaskOngoingViewDetailsPage implements OnInit {
     this.WallpaperChoice = ''
   }
 
-  pleatSelection(x) {
-    console.log(x)
-    this.PleatChoice = x.pleat
-    this.item.fullness = x.fullness
-
-    if (this.PleatChoice == 'Eyelet Design' || this.PleatChoice == 'Ripplefold') {
+  pleatSelection() {
+    if (this.item.pleat == 'Eyelet Design' || this.item.pleat == 'Ripplefold') {
       this.hookview = false
       this.item.hook = ''
-
     } else {
       this.hookview = true
     }
+
+    if (this.item.pleat == 'French Pleat') {
+      if (this.item.hook == 'Adjust') {
+        this.item.hook = ''
+      }
+    }
   }
 
-  pleatChoice() {
-    return this.PleatChoice
+  checkFabric() {
+
+    if (this.item.fabric_type == 'C') {
+      this.fabricType = 'Curtain'
+      this.showCurtain = true
+    } else if (this.item.fabric_type == 'S') {
+      this.fabricType = 'Sheer'
+      this.showSheer = true
+    } else if (this.item.fabric_type == 'CS') {
+      this.fabricType = 'Curtain + Sheer'
+      this.showCurtain = true
+      this.showSheer = true
+    }
+
   }
 
   blindsSelection(x) {
@@ -182,12 +191,11 @@ export class TaskOngoingViewDetailsPage implements OnInit {
     this.pic = ''
   }
 
-  deletePic(x){
-    this.item.photos.splice(x,1)
+  deletePic(x) {
+    this.item.photos.splice(x, 1)
     console.log(this.item.photos);
-    
-  }
 
+  }
 
   imagectype;
   imagec;

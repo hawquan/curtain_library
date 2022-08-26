@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
-import { ModalController, NavController, NavParams } from '@ionic/angular';
+import { AlertController, ModalController, NavController, NavParams } from '@ionic/angular';
 import Swal from 'sweetalert2';
 import { SelectorPage } from '../selector/selector.page';
 
@@ -18,11 +18,13 @@ export class TaskDetailReviewPage implements OnInit {
     private model: ModalController, private modalcontroller: ModalController,
     private navparam: NavParams,
     private http: HttpClient,
+    private alertController: AlertController,
   ) { }
 
   item = [] as any
   info = []
-  position = ''
+  sales_no = 0
+  position = ""
 
   pleatlist = []
   blindlist = []
@@ -35,12 +37,11 @@ export class TaskDetailReviewPage implements OnInit {
   beltlist = []
   otherslist = []
   pieceslist = []
-
-  PleatChoice = ''
-  BlindsChoice = ''
   fabricCurtain = []
   fabricSheer = []
   fabricLining = []
+
+  BlindsChoice = ''
 
   PlainWall = false
   FabricWall = false
@@ -48,39 +49,28 @@ export class TaskDetailReviewPage implements OnInit {
   PatternWall = false
   VinylWall = false
   WallpaperChoice = ''
-  price = 0
-  hookview = true
 
-  tracks = [
-    "Bendable", "Curve", "Rod", "Cubicle", "Motorised (Battery)", "Motorised (Power Point)"
-  ]
+  price: any = 0
+  hookview = true
+  show = false
+  showCurtain = false
+  showSheer = false
+  curtainswitch = 'Expand'
+  xcurtainswitch = 'Collapse'
+  sheerswitch = 'Expand'
+  xsheerswitch = 'Collapse'
+  fabricType = ''
+
+  checker = [] as any
 
   ngOnInit() {
     this.item = this.navparam.get('item')
-    this.pleatlist = this.navparam.get('pleatlist')
-    this.blindlist = this.navparam.get('blindlist')
     this.position = this.navparam.get('position')
-    this.tracklist = this.navparam.get('tracklist')
-    this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
-      this.fabriclist = s['data']
-      this.fabricCurtain = this.fabriclist.filter(x => x.type == 'Curtain')
-      this.fabricSheer = this.fabriclist.filter(x => x.type == 'Sheer')
-      this.fabricLining = this.fabriclist.filter(x => x.type == 'Lining')
-      console.log(this.item, this.pleatlist, this.blindlist, this.position, this.tracklist, this.fabriclist);
 
-    })
+    console.log(this.item, this.position);
 
     this.price = this.item.price
-
-    if (this.item.type == 'Tailor-Made Curtains' || this.item.type == 'Motorised Curtains') {
-      this.pleatSelection(this.item)
-    }
-    else if (this.item.type == 'Blinds') {
-      this.blindsSelection(this.item)
-    }
-    else {
-      this.wallpaperSelection(this.item.pleat)
-    }
+    this.pleatSelection()
 
     this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
       this.misclist = s['data']
@@ -104,14 +94,64 @@ export class TaskDetailReviewPage implements OnInit {
         }
       }
 
+      this.checkFabric()
       // console.log(this.bracketlist, this.hooklist, this.beltlist, this.otherslist);
 
     })
   }
 
+  addCustom() {
+    this.bracketlist.push('Custom')
+    this.hooklist.push('Custom')
+    this.beltlist.push('Custom')
+  }
+
+  selectChanged(selectedColor, x) {
+    if (selectedColor === 'Custom') {
+      this.inputCustom(x)
+    } else {
+      eval(x = selectedColor)
+    };
+  };
+
+  async inputCustom(x) {
+    const inputAlert = await this.alertController.create({
+      header: 'Enter your custom item:',
+      inputs: [{ name: 'item', type: 'text', placeholder: 'type in' }],
+      buttons: [{ text: 'Cancel' }, {
+        text: 'Ok', handler: (data) => {
+
+          console.log(data)
+
+          if (data['item'] == null) {
+
+            Swal.fire({
+              title: 'Oops',
+              text: 'Input cannot be empty!',
+              icon: 'error',
+              heightAuto: false,
+              timer: 5000,
+            });
+
+          } else {
+            let buttoners = {
+              Cancel: { name: 'Cancel', value: 'Cancel' },
+              Confirm: { name: 'Confirm', value: 'Confirm' }
+            }
+
+            eval(x = data['item'])
+          }
+
+        }
+      }]
+    });
+
+    await inputAlert.present();
+
+  };
+
   typeChanged() {
-    this.PleatChoice = ''
-    this.BlindsChoice = ''
+    this.item.pleat = ''
 
     this.PlainWall = false
     this.FabricWall = false
@@ -121,21 +161,36 @@ export class TaskDetailReviewPage implements OnInit {
     this.WallpaperChoice = ''
   }
 
-  pleatSelection(x) {
-    console.log(x);
-    this.PleatChoice = x.pleat
-    this.item.fullness = x.fullness
-    if (this.PleatChoice == 'Eyelet Design' || this.PleatChoice == 'Ripplefold') {
+  pleatSelection() {
+
+    if (this.item.pleat == 'Eyelet Design' || this.item.pleat == 'Ripplefold') {
       this.hookview = false
       this.item.hook = ''
-
     } else {
       this.hookview = true
     }
+
+    if (this.item.pleat == 'French Pleat') {
+      if (this.item.hook == 'Adjust') {
+        this.item.hook = ''
+      }
+    }
   }
 
-  pleatChoice() {
-    return this.PleatChoice
+  checkFabric() {
+
+    if (this.item.fabric_type == 'C') {
+      this.fabricType = 'Curtain'
+      this.showCurtain = true
+    } else if (this.item.fabric_type == 'S') {
+      this.fabricType = 'Sheer'
+      this.showSheer = true
+    } else if (this.item.fabric_type == 'CS') {
+      this.fabricType = 'Curtain + Sheer'
+      this.showCurtain = true
+      this.showSheer = true
+    }
+
   }
 
   blindsSelection(x) {
@@ -172,14 +227,21 @@ export class TaskDetailReviewPage implements OnInit {
 
   }
 
-  updateData() {
-    // this.item.pieces = this.info.pieces
-    // this.item.bracket = x
-    // this.item.hook = x
-    // this.item.sidehook = x
-    // this.item.belt = x
-    // this.item.others = x
-    // this.item.touchfloor = x
+  selectCustom(x) {
+    if (x == 'bracket') {
+      this.item.bracket = null
+    } else if (x == 'hook') {
+      this.item.hook = null
+    } else if (x == 'belt') {
+      this.item.belt = null
+    } else if (x == 'sheer_bracket') {
+      this.item.sheer_bracket = null
+    } else if (x == 'sheer_hook') {
+      this.item.sheer_hook = null
+    } else if (x == 'sheer_belt') {
+      this.item.sheer_belt = null
+    }
+
   }
 
   async selector(x) {
@@ -195,338 +257,477 @@ export class TaskDetailReviewPage implements OnInit {
   }
 
   updateTech() {
-    this.item.pleat = this.PleatChoice
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
 
-      this.item.price = this.price
+      if (this.hookview) {
+        if (this.item.fabric_lining != null) {
+          if (this.item.fabric_type == 'C') {
+            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'fabric', 'curtain', 'bracket',
+              'hook', 'belt', 'touchfloor', 'sidehook', 'lining'].every(a => this.checker[a])) {
 
-      for (let i = 0; i < this.instPhoto.photos.length; i++) {
-        this.item.photos.push(this.instPhoto.photos[i])
-      }
-
-      let temp = {
-        no: this.item.no,
-        // location: this.item.location,
-        // height: this.item.height,
-        // width: this.item.width,
-        height_tech: this.item.height_tech,
-        width_tech: this.item.width_tech,
-        // track: this.item.track,
-        // type: this.item.type,
-        // pleat: this.item.pleat,
-        // fullness: this.item.fullness,
-        // pieces: this.item.pieces,
-        // bracket: this.item.bracket,
-        // hook: this.item.hook,
-        // sidehook: this.item.sidehook,
-        // belt: this.item.belt,
-        // fabric: this.item.fabric,
-        // others: this.item.others,
-        // touchfloor: this.item.touchfloor,
-        price: this.item.price,
-        photos: JSON.stringify(this.item.photos),
-        status_tech: 'Approved',
-        step: 3,
-        remark_tech: this.item.remark_tech
-      }
-
-      console.log(temp);
-
-      Swal.fire({
-        title: 'Complete Task',
-        text: 'Complete task of "' + this.item.location + '". Are you sure?',
-        icon: 'success',
-        heightAuto: false,
-        showConfirmButton: true,
-        showCancelButton: true,
-        reverseButtons: true,
-        confirmButtonText: 'Yes, Complete',
-        cancelButtonText: 'Cancel',
-        cancelButtonColor: '#d33',
-      }).then((y) => {
-        if (y.isConfirmed) {
-          let calcWidthUp = Math.round((this.item.width + (this.item.width * 10 / 100)) * 100) / 100
-          let calcHeightUp = Math.round((this.item.height + (this.item.height * 10 / 100)) * 100) / 100
-          let calcWidthDown = Math.round((this.item.width - (this.item.width * 10 / 100)) * 100) / 100
-          let calcHeightDown = Math.round((this.item.height - (this.item.height * 10 / 100)) * 100) / 100
-
-          console.log(calcWidthUp, calcHeightUp, calcWidthDown, calcHeightDown);
-
-          if (this.item.width_tech != null || this.item.height_tech != null) {
-            if (this.item.width_tech == null) {
-              const Toast = Swal.mixin({
-                toast: true,
-                position: 'top',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-              })
-
-              Toast.fire({
-                icon: 'error',
-                title: 'Tech Width is empty.'
-              })
-
-            } else if (this.item.height_tech == null) {
-              const Toast = Swal.mixin({
-                toast: true,
-                position: 'top',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-              })
-
-              Toast.fire({
-                icon: 'error',
-                title: 'Tech Height is empty.'
-              })
+              this.pass()
 
             } else {
-
-              if (this.item.width_tech > calcWidthUp || this.item.width_tech < calcWidthDown || this.item.height_tech > calcHeightUp || this.item.height_tech < calcHeightDown) {
-                this.rejectItem()
-              } else {
-                this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
-                  this.model.dismiss(1)
-                })
-              }
+              this.emptychecker()
             }
+          } else if (this.item.fabric_type == 'S') {
+            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_sheer', 'fabric',
+              'sheer', 'sheer_bracket', 'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
 
-          } else {
-            this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
-              this.model.dismiss(1)
-            })
-          }
-        }
-      })
-
-    } else if (this.item['type'] == 'Blinds') {
-      this.item.pleat = this.BlindsChoice
-
-      this.item.price = this.price
-
-      for (let i = 0; i < this.instPhoto.photos.length; i++) {
-        this.item.photos.push(this.instPhoto.photos[i])
-      }
-
-      let temp = {
-        no: this.item.no,
-        height: this.item.height,
-        width: this.item.width,
-        height_tech: this.item.height_tech,
-        width_tech: this.item.width_tech,
-        // track: this.item.track,
-        // type: this.item.type,
-        // pleat: this.item.pleat,
-        // fullness: this.item.fullness,
-        // pieces: this.item.pieces,
-        // bracket: this.item.bracket,
-        // hook: this.item.hook,
-        // sidehook: this.item.sidehook,
-        // belt: this.item.belt,
-        // fabric: this.item.fabric,
-        // others: this.item.others,
-        // touchfloor: this.item.touchfloor,
-        price: this.item.price,
-        status_tech: 'Approved',
-        photos: JSON.stringify(this.item.photos),
-        step: 3,
-        remark_tech: this.item.remark_tech
-      }
-      Swal.fire({
-        title: 'Complete Task',
-        text: 'Complete task of "' + this.item.location + '". Are you sure?',
-        icon: 'success',
-        heightAuto: false,
-        showConfirmButton: true,
-        showCancelButton: true,
-        reverseButtons: true,
-        confirmButtonText: 'Yes, Complete',
-        cancelButtonText: 'Cancel',
-        cancelButtonColor: '#d33',
-      }).then((y) => {
-        if (y.isConfirmed) {
-          let calcWidthUp = Math.round((this.item.width + (this.item.width * 10 / 100)) * 100) / 100
-          let calcHeightUp = Math.round((this.item.height + (this.item.height * 10 / 100)) * 100) / 100
-          let calcWidthDown = Math.round((this.item.width - (this.item.width * 10 / 100)) * 100) / 100
-          let calcHeightDown = Math.round((this.item.height - (this.item.height * 10 / 100)) * 100) / 100
-
-          console.log(calcWidthUp, calcHeightUp, calcWidthDown, calcHeightDown);
-
-          if (this.item.width_tech != null || this.item.height_tech != null) {
-            if (this.item.width_tech == null) {
-              const Toast = Swal.mixin({
-                toast: true,
-                position: 'top',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-              })
-
-              Toast.fire({
-                icon: 'error',
-                title: 'Tech Width is empty.'
-              })
-
-            } else if (this.item.height_tech == null) {
-              const Toast = Swal.mixin({
-                toast: true,
-                position: 'top',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-              })
-
-              Toast.fire({
-                icon: 'error',
-                title: 'Tech Height is empty.'
-              })
+              this.pass()
 
             } else {
-
-              if (this.item.width_tech > calcWidthUp || this.item.width_tech < calcWidthDown || this.item.height_tech > calcHeightUp || this.item.height_tech < calcHeightDown) {
-                this.rejectItem()
-              } else {
-                this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
-                  this.model.dismiss(1)
-                })
-              }
+              this.emptychecker()
             }
+          } else if (this.item.fabric_type == 'CS') {
+            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'pieces_sheer', 'fabric', 'curtain', 'bracket',
+              'hook', 'belt', 'touchfloor', 'sidehook', 'lining', 'sheer', 'sheer_bracket', 'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
 
-          } else {
-            this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
-              this.model.dismiss(1)
-            })
+              this.pass()
+
+            } else {
+              this.emptychecker()
+            }
+          }
+        } else {
+          if (this.item.fabric_type == 'C') {
+            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'fabric', 'curtain', 'bracket',
+              'hook', 'belt', 'touchfloor', 'sidehook'].every(a => this.checker[a])) {
+
+              this.pass()
+
+            } else {
+              this.emptychecker()
+            }
+          } else if (this.item.fabric_type == 'S') {
+            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_sheer', 'fabric',
+              'sheer', 'sheer_bracket', 'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
+
+              this.pass()
+
+            } else {
+              this.emptychecker()
+            }
+          } else if (this.item.fabric_type == 'CS') {
+            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'pieces_sheer', 'fabric', 'curtain', 'bracket',
+              'hook', 'belt', 'touchfloor', 'sidehook', 'sheer', 'sheer_bracket', 'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
+
+              this.pass()
+
+            } else {
+              this.emptychecker()
+            }
           }
         }
-      })
-    } else {
-      this.item.pleat = this.WallpaperChoice
-
-      console.log(this.item);
-
-      if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'others', 'touchfloor'].every(a => this.item[a])) {
-
-        console.log('pass2');
-        this.item.price = this.price
-        this.model.dismiss(this.item)
 
       } else {
-        console.log('error empty')
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-        })
+        if (this.item.fabric_lining != null) {
+          if (this.item.fabric_type == 'C') {
+            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'fullness', 'pieces', 'fabric', 'curtain', 'bracket',
+              'belt', 'touchfloor', 'sidehook', 'lining'].every(a => this.checker[a])) {
 
-        Toast.fire({
-          icon: 'error',
-          title: 'Please Fill in all fields.'
-        })
+              this.pass()
+
+            } else {
+              this.emptychecker()
+            }
+          } else if (this.item.fabric_type == 'S') {
+            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_sheer', 'fabric',
+              'sheer', 'sheer_bracket', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
+
+              this.pass()
+
+            } else {
+              this.emptychecker()
+            }
+          } else if (this.item.fabric_type == 'CS') {
+            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'pieces_sheer', 'fabric', 'curtain', 'bracket',
+              'belt', 'touchfloor', 'sidehook', 'lining', 'sheer', 'sheer_bracket', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
+
+              this.pass()
+
+            } else {
+              this.emptychecker()
+            }
+          }
+        } else {
+          if (this.item.fabric_type == 'C') {
+            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'fabric', 'curtain', 'bracket',
+              'belt', 'touchfloor', 'sidehook'].every(a => this.checker[a])) {
+
+              this.pass()
+
+            } else {
+              this.emptychecker()
+            }
+          } else if (this.item.fabric_type == 'S') {
+            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_sheer', 'fabric',
+              'sheer', 'sheer_bracket', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
+
+              this.pass()
+
+            } else {
+              this.emptychecker()
+            }
+          } else if (this.item.fabric_type == 'CS') {
+            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'pieces_sheer', 'fabric', 'curtain', 'bracket',
+              'belt', 'touchfloor', 'sidehook', 'sheer', 'sheer_bracket', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
+
+              this.pass()
+
+            } else {
+              this.emptychecker()
+            }
+          }
+        }
+      }
+
+    } else if (this.item['type'] == 'Blinds') {
+      if (this.item.pleat == 'Roman Blind') {
+        if (['area', 'tech_width', 'tech_height', 'pleat', 'product', 'pieces_blind', 'fabric', 'fabric_curtain', 'bracket'].every(a => this.checker[a])) {
+
+          this.pass()
+
+        } else {
+          this.emptychecker()
+        }
+      } else if (this.item.pleat == 'Zebra Blind' || this.item.pleat == 'Roller Blind' || this.item.pleat == 'Wooden Blind') {
+        if (['area', 'tech_width', 'tech_height', 'pleat', 'product', 'pieces_blind', 'fabric', 'bracket', 'decoration'].every(a => this.checker[a])) {
+
+          this.pass()
+
+        } else {
+          this.emptychecker()
+        }
+      } else {
+        if (['area', 'tech_width', 'tech_height', 'pleat', 'product', 'pieces_blind', 'fabric', 'bracket'].every(a => this.checker[a])) {
+
+          this.pass()
+
+        } else {
+          this.emptychecker()
+        }
+      }
+
+
+    } else {
+      if (['area', 'tech_width', 'tech_height', 'product', 'bracket',
+        'belt', 'hook'].every(a => this.checker[a])) {
+
+        this.pass()
+
+      } else {
+        this.emptychecker()
       }
     }
+  }
 
+  emptychecker() {
+    console.log('Error Empty')
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+    })
+
+    Toast.fire({
+      icon: 'error',
+      title: 'All checker must be checked before completion.'
+    })
+  }
+
+  pass() {
+    if (['width_tech', 'height_tech'].every(a => this.item[a])) {
+
+      if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
+
+        this.item.price = this.price
+
+        for (let i = 0; i < this.instPhoto.photos.length; i++) {
+          this.item.photos.push(this.instPhoto.photos[i])
+        }
+
+        let temp = {
+          no: this.item.no,
+          height_tech: this.item.height_tech,
+          width_tech: this.item.width_tech,
+          bracket: this.item.bracket,
+          belt: this.item.belt,
+          hook: this.item.hook,
+          sidehook: this.item.sidehook,
+          touchfloor: this.item.touchfloor,
+          sheer_bracket: this.item.sheer_bracket,
+          sheer_belt: this.item.sheer_belt,
+          sheer_hook: this.item.sheer_hook,
+          sheer_sidehook: this.item.sheer_sidehook,
+          sheer_touchfloor: this.item.sheer_touchfloor,
+          custom_belt: this.item.custom_belt,
+          custom_bracket: this.item.custom_bracket,
+          custom_hook: this.item.custom_hook,
+          custom_sheer_belt: this.item.custom_sheer_belt,
+          custom_sheer_bracket: this.item.custom_sheer_bracket,
+          custom_sheer_hook: this.item.custom_sheer_hook,
+          price: this.item.price,
+          photos: JSON.stringify(this.item.photos),
+          status_tech: 'Approved',
+          step: 3,
+          remark_tech: this.item.remark_tech
+        }
+
+        console.log(temp);
+
+        Swal.fire({
+          title: 'Complete Task',
+          text: 'Complete task of "' + this.item.location + '". Are you sure?',
+          icon: 'question',
+          heightAuto: false,
+          showConfirmButton: true,
+          showCancelButton: true,
+          reverseButtons: true,
+          confirmButtonText: 'Yes, Complete',
+          cancelButtonText: 'Cancel',
+          cancelButtonColor: '#d33',
+        }).then((y) => {
+          if (y.isConfirmed) {
+            let calcWidthUp = Math.round((this.item.width + (this.item.width * 10 / 100)) * 100) / 100
+            let calcHeightUp = Math.round((this.item.height + (this.item.height * 10 / 100)) * 100) / 100
+            let calcWidthDown = Math.round((this.item.width - (this.item.width * 10 / 100)) * 100) / 100
+            let calcHeightDown = Math.round((this.item.height - (this.item.height * 10 / 100)) * 100) / 100
+
+            console.log(calcWidthUp, calcHeightUp, calcWidthDown, calcHeightDown);
+
+            if (this.item.width_tech != null || this.item.height_tech != null) {
+              if (this.item.width_tech == null) {
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top',
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+                })
+
+                Toast.fire({
+                  icon: 'error',
+                  title: 'Tech Width is empty.'
+                })
+
+              } else if (this.item.height_tech == null) {
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top',
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+                })
+
+                Toast.fire({
+                  icon: 'error',
+                  title: 'Tech Height is empty.'
+                })
+
+              } else {
+
+                if (this.item.width_tech > calcWidthUp || this.item.width_tech < calcWidthDown || this.item.height_tech > calcHeightUp || this.item.height_tech < calcHeightDown) {
+                  this.rejectItem()
+                } else {
+                  this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
+                    this.model.dismiss(1)
+                  })
+                }
+              }
+
+            } else {
+              this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
+                this.model.dismiss(1)
+              })
+            }
+          }
+        })
+
+      } else if (this.item['type'] == 'Blinds') {
+        this.item.pleat = this.BlindsChoice
+
+        this.item.price = this.price
+
+        for (let i = 0; i < this.instPhoto.photos.length; i++) {
+          this.item.photos.push(this.instPhoto.photos[i])
+        }
+
+        let temp = {
+          no: this.item.no,
+          height_tech: this.item.height_tech,
+          width_tech: this.item.width_tech,
+          bracket: this.item.bracket,
+          // belt: this.item.belt,
+          // hook: this.item.hook,
+          // sidehook: this.item.sidehook,
+          custom_bracket: this.item.custom_bracket,
+          // custom_belt: this.item.custom_belt,
+          // custom_hook: this.item.custom_hook,
+          // touchfloor: this.item.touchfloor,
+          price: this.item.price,
+          photos: JSON.stringify(this.item.photos),
+          status_tech: 'Approved',
+          step: 3,
+          remark_tech: this.item.remark_tech
+        }
+
+        Swal.fire({
+          title: 'Complete Task',
+          text: 'Complete task of "' + this.item.location + '". Are you sure?',
+          icon: 'success',
+          heightAuto: false,
+          showConfirmButton: true,
+          showCancelButton: true,
+          reverseButtons: true,
+          confirmButtonText: 'Yes, Complete',
+          cancelButtonText: 'Cancel',
+          cancelButtonColor: '#d33',
+        }).then((y) => {
+          if (y.isConfirmed) {
+            let calcWidthUp = Math.round((this.item.width + (this.item.width * 10 / 100)) * 100) / 100
+            let calcHeightUp = Math.round((this.item.height + (this.item.height * 10 / 100)) * 100) / 100
+            let calcWidthDown = Math.round((this.item.width - (this.item.width * 10 / 100)) * 100) / 100
+            let calcHeightDown = Math.round((this.item.height - (this.item.height * 10 / 100)) * 100) / 100
+
+            console.log(calcWidthUp, calcHeightUp, calcWidthDown, calcHeightDown);
+
+            if (this.item.width_tech != null || this.item.height_tech != null) {
+              if (this.item.width_tech == null) {
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top',
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+                })
+
+                Toast.fire({
+                  icon: 'error',
+                  title: 'Tech Width is empty.'
+                })
+
+              } else if (this.item.height_tech == null) {
+                const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top',
+                  showConfirmButton: false,
+                  timer: 1500,
+                  timerProgressBar: true,
+                })
+
+                Toast.fire({
+                  icon: 'error',
+                  title: 'Tech Height is empty.'
+                })
+
+              } else {
+
+                if (this.item.width_tech > calcWidthUp || this.item.width_tech < calcWidthDown || this.item.height_tech > calcHeightUp || this.item.height_tech < calcHeightDown) {
+                  this.rejectItem()
+                } else {
+                  this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
+                    this.model.dismiss(1)
+                  })
+                }
+              }
+
+            } else {
+              this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
+                this.model.dismiss(1)
+              })
+            }
+          }
+        })
+      } else {
+        this.item.pleat = this.WallpaperChoice
+
+        console.log(this.item);
+
+        if (['location', 'width', 'height', 'track', 'type', 'pleat', 'pieces', 'bracket', 'hook', 'sidehook', 'belt', 'others', 'touchfloor'].every(a => this.item[a])) {
+
+          console.log('pass2');
+          this.item.price = this.price
+          this.model.dismiss(this.item)
+
+        } else {
+          console.log('error empty')
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          })
+
+          Toast.fire({
+            icon: 'error',
+            title: 'Please Fill in all fields.'
+          })
+        }
+      }
+
+    } else {
+      console.log('Error Empty')
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+      })
+
+      Toast.fire({
+        icon: 'error',
+        title: 'Tech Width/Height is required.'
+      })
+    }
   }
 
   updateTailor() {
-    this.item.pleat = this.PleatChoice
-    if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
-      console.log(this.item);
+    console.log(this.item);
 
-      this.item.price = this.price
+    this.item.price = this.price
 
-      Swal.fire({
-        title: 'Update Task',
-        text: 'Mark this task as Completed?',
-        icon: 'success',
-        heightAuto: false,
-        showConfirmButton: true,
-        showCancelButton: true,
-        reverseButtons: true,
-        confirmButtonText: 'Completed',
-        cancelButtonText: 'Cancel',
-        cancelButtonColor: '#d33',
-      }).then((y) => {
-        if (y.isConfirmed) {
+    Swal.fire({
+      title: 'Update Task',
+      text: 'Mark this task as Completed?',
+      icon: 'question',
+      heightAuto: false,
+      showConfirmButton: true,
+      showCancelButton: true,
+      reverseButtons: true,
+      confirmButtonText: 'Completed',
+      cancelButtonText: 'Cancel',
+      cancelButtonColor: '#d33',
+    }).then((y) => {
+      if (y.isConfirmed) {
 
-          for (let i = 0; i < this.instPhoto.photos.length; i++) {
-            this.item.photos.push(this.instPhoto.photos[i])
-          }
-
-          let temp = {
-            no: this.item.no,
-            photos: JSON.stringify(this.item.photos),
-            status_tail: 'Completed',
-            step: 4,
-            remark_tail: this.item.remark_tail
-          }
-
-          console.log(temp);
-
-          this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
-            this.model.dismiss(1)
-          })
+        for (let i = 0; i < this.instPhoto.photos.length; i++) {
+          this.item.photos.push(this.instPhoto.photos[i])
         }
-      })
 
-    } else if (this.item['type'] == 'Blinds') {
-      this.item.pleat = this.BlindsChoice
-
-      console.log(this.item);
-
-      console.log('pass2');
-      this.item.price = this.price
-
-      Swal.fire({
-        title: 'Update Task',
-        text: 'Mark this task as Completed?',
-        icon: 'success',
-        heightAuto: false,
-        showConfirmButton: true,
-        showCancelButton: true,
-        reverseButtons: true,
-        confirmButtonText: 'Completed',
-        cancelButtonText: 'Cancel',
-        cancelButtonColor: '#d33',
-      }).then((y) => {
-        if (y.isConfirmed) {
-
-          for (let i = 0; i < this.instPhoto.photos.length; i++) {
-            this.item.photos.push(this.instPhoto.photos[i])
-          }
-
-          let temp = {
-            no: this.item.no,
-            photos: JSON.stringify(this.item.photos),
-            status_tail: 'Completed',
-            step: 4,
-            remark_tail: this.item.remark_tail
-          }
-
-          console.log(temp);
-          this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
-            this.model.dismiss(1)
-          })
+        let temp = {
+          no: this.item.no,
+          photos: JSON.stringify(this.item.photos),
+          status_tail: 'Completed',
+          step: 4,
+          remark_tail: this.item.remark_tail
         }
-      })
 
-    } else {
-      this.item.pleat = this.WallpaperChoice
+        console.log(temp);
 
-      console.log(this.item);
-
-      console.log('pass2');
-      this.item.price = this.price
-      this.model.dismiss(this.item)
-
-    }
+        this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
+          this.model.dismiss(1)
+        })
+      }
+    })
 
   }
 
   updateInstaller() {
-    this.item.pleat = this.PleatChoice
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
       console.log(this.item);
 
@@ -535,7 +736,7 @@ export class TaskDetailReviewPage implements OnInit {
       Swal.fire({
         title: 'Update Task',
         text: 'Mark this task as Completed?',
-        icon: 'success',
+        icon: 'question',
         heightAuto: false,
         showConfirmButton: true,
         showCancelButton: true,
@@ -621,33 +822,37 @@ export class TaskDetailReviewPage implements OnInit {
   }
 
   rejectItem() {
-    this.item.pleat = this.PleatChoice
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
 
       this.item.price = this.price
 
+      for (let i = 0; i < this.instPhoto.photos.length; i++) {
+        this.item.photos.push(this.instPhoto.photos[i])
+      }
+
       let temp = {
         no: this.item.no,
-        // location: this.item.location,
-        // height: this.item.height,
-        // width: this.item.width,
         height_tech: this.item.height_tech,
         width_tech: this.item.width_tech,
-        // track: this.item.track,
-        // type: this.item.type,
-        // pleat: this.item.pleat,
-        // fullness: this.item.fullness,
-        // pieces: this.item.pieces,
-        // bracket: this.item.bracket,
-        // hook: this.item.hook,
-        // sidehook: this.item.sidehook,
-        // belt: this.item.belt,
-        // fabric: this.item.fabric,
-        // others: this.item.others,
-        // touchfloor: this.item.touchfloor,
+        bracket: this.item.bracket,
+        belt: this.item.belt,
+        hook: this.item.hook,
+        sidehook: this.item.sidehook,
+        touchfloor: this.item.touchfloor,
+        sheer_bracket: this.item.sheer_bracket,
+        sheer_belt: this.item.sheer_belt,
+        sheer_hook: this.item.sheer_hook,
+        sheer_sidehook: this.item.sheer_sidehook,
+        sheer_touchfloor: this.item.sheer_touchfloor,
+        custom_belt: this.item.custom_belt,
+        custom_bracket: this.item.custom_bracket,
+        custom_hook: this.item.custom_hook,
+        custom_sheer_belt: this.item.custom_sheer_belt,
+        custom_sheer_bracket: this.item.custom_sheer_bracket,
+        custom_sheer_hook: this.item.custom_sheer_hook,
         price: this.item.price,
-        status_tech: 'Rejected',
         photos: JSON.stringify(this.item.photos),
+        status_tech: 'Rejected',
         step: 1,
         remark_tech: this.item.remark_tech
       }
@@ -694,31 +899,30 @@ export class TaskDetailReviewPage implements OnInit {
 
       this.item.price = this.price
 
+      for (let i = 0; i < this.instPhoto.photos.length; i++) {
+        this.item.photos.push(this.instPhoto.photos[i])
+      }
+
       let temp = {
         no: this.item.no,
-        // location: this.item.location,
-        // height: this.item.height,
-        // width: this.item.width,
         height_tech: this.item.height_tech,
         width_tech: this.item.width_tech,
-        // track: this.item.track,
-        // type: this.item.type,
-        // pleat: this.item.pleat,
-        // fullness: this.item.fullness,
-        // pieces: this.item.pieces,
-        // bracket: this.item.bracket,
+        bracket: this.item.bracket,
+        // belt: this.item.belt,
         // hook: this.item.hook,
         // sidehook: this.item.sidehook,
-        // belt: this.item.belt,
-        // fabric: this.item.fabric,
-        // others: this.item.others,
-        // touchfloor: this.item.touchfloor,
+        touchfloor: this.item.touchfloor,
+        custom_bracket: this.item.custom_bracket,
+        // custom_belt: this.item.custom_belt,
+        // custom_hook: this.item.custom_hook,
         price: this.item.price,
-        status_tech: 'Rejected',
         photos: JSON.stringify(this.item.photos),
+        status_tech: 'Rejected',
         step: 1,
         remark_tech: this.item.remark_tech
       }
+
+      console.log(temp);
 
       Swal.fire({
         title: 'Width/Height Measurement Exceeded!',
@@ -806,83 +1010,6 @@ export class TaskDetailReviewPage implements OnInit {
     // })
 
   }
-
-  calcPrice(x) {
-    let width = 0
-    let height = 0
-    if (this.item.height_tech != null || this.item.width_tech != null) {
-      width = this.item.width_tech
-      height = this.item.height_tech
-    } else {
-      width = this.item.width
-      height = this.item.height
-    }
-
-    let curtain = false as any
-    let curtain_id
-    let sheer = false
-    let sheer_id
-    let track = false
-    let track_id
-
-    let pleat_id
-
-    if (this.item.curtain != 'Blinds') {
-
-      if (this.item.fabric != null && this.item.fabric != 'NA') {
-        curtain = true
-        curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
-      } else {
-        curtain = false
-      }
-
-      if (this.item.fabric_sheer != null && this.item.fabric_sheer != 'NA') {
-        sheer = true
-        sheer_id = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['id']
-      } else {
-        sheer = false
-      }
-
-      if (this.item.track != null && this.item.track != 'NA') {
-        track = true
-        track_id = this.tracklist.filter(x => x.name == this.item.track)[0]['id']
-      } else {
-        track = false
-      }
-
-      pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
-
-      console.log(curtain_id, sheer_id, track_id, pleat_id);
-
-    } else {
-      curtain = false
-      sheer = false
-      track = false
-
-      pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
-    }
-    let temp = {
-      width: width, height: height, curtain: curtain, lining: false, lining_id: 41,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id
-    }
-
-    console.log(temp);
-
-    this.http.post('https://curtain.vsnap.my/calcPrice', temp).subscribe((a) => {
-
-      console.log(a);
-
-      this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25
-
-      if (x == 'reject') {
-        this.rejectItem()
-      } else {
-        this.updateTech()
-      }
-    })
-
-  }
-
 
   imagectype;
   imagec;
