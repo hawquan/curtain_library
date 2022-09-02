@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, Platform } from '@ionic/angular';
+import { AlertController, NavController, Platform } from '@ionic/angular';
 import Swal from 'sweetalert2';
 import firebase from 'firebase';
 
@@ -27,6 +27,7 @@ export class QuotationOverallPage implements OnInit {
     private file: File,
     private fileOpener: FileOpener,
     private plt: Platform,
+    private alertController: AlertController,
   ) { }
 
   item = [] as any
@@ -53,7 +54,11 @@ export class QuotationOverallPage implements OnInit {
   scaftfolding = false
 
   pdfObj = null;
-
+  quoRef
+  quoDate
+  quoValidity
+  quoSales
+  quoPhone
 
   ngOnInit() {
 
@@ -77,6 +82,11 @@ export class QuotationOverallPage implements OnInit {
           this.salesmaninfo = a['data'][0]
           console.log(this.salesmaninfo);
         })
+
+        // this.http.post('https://curtain.vsnap.my/getonesales', { id: this.sales_id }).subscribe(a => {
+        //   this.sales = a['data'][0]
+        //   console.log(this.salesmaninfo);
+        // })
 
       }
       this.pleatlist = JSON.parse(a["pleatlist"])
@@ -124,6 +134,132 @@ export class QuotationOverallPage implements OnInit {
     return total || 0
   }
 
+  async quotationinfo(x) {
+    const alert = await this.alertController.create({
+      // cssClass: 'my-custom-class',
+      header: 'Quotation Info',
+      // subHeader: 'Default Password: forcar123',
+      inputs: [
+        {
+          name: 'ref',
+          type: 'text',
+          placeholder: 'Ref (eg. WI-AA)'
+        },
+        {
+          name: 'validity',
+          type: 'text',
+          placeholder: 'Enter Validity (eg. COD)'
+        },
+        {
+          name: 'sales',
+          type: 'text',
+          placeholder: 'Enter Sales Short Form (eg. AA)'
+        },
+        {
+          name: 'phone',
+          type: 'number',
+          placeholder: 'Enter Phone Number'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+
+          }
+        }, {
+          text: 'Confirm',
+          handler: (data) => {
+            console.log(data)
+            if (data['ref'] == null || data['ref'] == '') {
+
+              Swal.fire({
+                title: 'Ref. is Empty',
+                text: 'Please enter Reference and try again!',
+                icon: 'error',
+                timer: 5000,
+                heightAuto: false,
+              });
+
+            } else if (data['validity'] == null || data['validity'] == '') {
+
+              Swal.fire({
+                title: 'Validity is Empty',
+                text: 'Please enter Validity and try again!',
+                icon: 'error',
+                timer: 5000,
+                heightAuto: false,
+              });
+
+            } else if (data['sales'] == null || data['sales'] == '') {
+
+              Swal.fire({
+                title: 'Short Form Name is Empty',
+                text: 'Please enter Sales Short Form Name and try again!',
+                icon: 'error',
+                timer: 5000,
+                heightAuto: false,
+              });
+
+            } else if (data['phone'] == null || data['phone'] == '') {
+
+              Swal.fire({
+                title: 'Sales Phone is Empty',
+                text: 'Please enter Sales Phone Number and try again!',
+                icon: 'error',
+                timer: 5000,
+                heightAuto: false,
+              });
+
+            } else {
+              // let buttoners = {
+              //   Cancel: { name: 'Cancel', value: 'Cancel' },
+              //   Confirm: { name: 'Confirm', value: 'Confirm' }
+              // }
+
+              console.log(data['ref']);
+
+
+              this.quoRef = 'QT' + this.datepipe.transform(new Date(), 'yyyyMMdd') + data['ref']
+              this.quoDate = this.datepipe.transform(new Date(), 'd/M/yyyy')
+              this.quoValidity = data['validity']
+              this.quoSales = data['sales']
+              this.quoPhone = data['phone']
+
+              if (x == 'client') {
+
+                this.pdfmaker(false)
+
+              } else if (x == 'detailed') {
+
+                this.pdfmakerClient(false)
+
+              } else {
+
+                Swal.fire({
+                  title: 'Submitting...',
+                  icon: 'warning',
+                  heightAuto: false,
+                  showConfirmButton: false,
+                  showCancelButton: false,
+                })
+
+                this.pdfmaker(true)
+
+              }
+
+            }
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   checkout() {
 
     if (this.info['rejected'] == true) {
@@ -131,75 +267,78 @@ export class QuotationOverallPage implements OnInit {
         no: this.sales_id,
         step: 3,
         rejected: false,
+        latest_quo_id: this.quoRef,
         need_scaftfolding: this.scaftfolding,
         need_ladder: this.ladder,
       }
 
       console.log('rejected');
 
-      Swal.fire({
-        title: 'Checkout?',
-        text: 'Checkout the sales?',
-        heightAuto: false,
-        icon: 'warning',
-        showConfirmButton: true,
-        showCancelButton: true,
-        cancelButtonText: 'Cancel',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Checkout',
-        reverseButtons: true,
-      }).then((y) => {
-        if (y.isConfirmed) {
-          this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
-            Swal.fire({
-              title: 'Checked Out Successfully',
-              icon: 'success',
-              heightAuto: false,
-              showConfirmButton: false,
-              showCancelButton: false,
-              timer: 1500,
-            })
-            this.nav.navigateRoot('/tabs/tab1')
-          })
-
-        }
+      // Swal.fire({
+      //   title: 'Checkout?',
+      //   text: 'Checkout the sales?',
+      //   heightAuto: false,
+      //   icon: 'warning',
+      //   showConfirmButton: true,
+      //   showCancelButton: true,
+      //   cancelButtonText: 'Cancel',
+      //   cancelButtonColor: '#d33',
+      //   confirmButtonText: 'Checkout',
+      //   reverseButtons: true,
+      // }).then((y) => {
+      //   if (y.isConfirmed) {
+      this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
+        Swal.fire({
+          title: 'Checked Out Successfully',
+          icon: 'success',
+          heightAuto: false,
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1500,
+        })
+        this.nav.navigateRoot('/tabs/tab1')
       })
+
+      //   }
+      // })
+
     } else {
       let temp = {
         no: this.sales_id,
+        latest_quo_id: this.quoRef,
         step: 2,
         need_scaftfolding: this.scaftfolding,
         need_ladder: this.ladder,
       }
       console.log('xrejected');
 
-      Swal.fire({
-        title: 'Checkout?',
-        text: 'Checkout the sales?',
-        heightAuto: false,
-        icon: 'warning',
-        showConfirmButton: true,
-        showCancelButton: true,
-        cancelButtonText: 'Cancel',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Checkout',
-        reverseButtons: true,
-      }).then((y) => {
-        if (y.isConfirmed) {
-          this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
-            Swal.fire({
-              title: 'Checked Out Successfully',
-              icon: 'success',
-              heightAuto: false,
-              showConfirmButton: false,
-              showCancelButton: false,
-              timer: 1500,
-            })
-            this.nav.navigateRoot('/tabs/tab1')
-          })
-
-        }
+      // Swal.fire({
+      //   title: 'Checkout?',
+      //   text: 'Checkout the sales?',
+      //   heightAuto: false,
+      //   icon: 'warning',
+      //   showConfirmButton: true,
+      //   showCancelButton: true,
+      //   cancelButtonText: 'Cancel',
+      //   cancelButtonColor: '#d33',
+      //   confirmButtonText: 'Checkout',
+      //   reverseButtons: true,
+      // }).then((y) => {
+      //   if (y.isConfirmed) {
+      this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
+        Swal.fire({
+          title: 'Checked Out Successfully',
+          icon: 'success',
+          heightAuto: false,
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1500,
+        })
+        this.nav.navigateRoot('/tabs/tab1')
       })
+
+      //   }
+      // })
     }
 
   }
@@ -235,7 +374,6 @@ export class QuotationOverallPage implements OnInit {
     let pleat_id
 
     console.log(this.item[i]);
-
 
     if (this.item[i].type != 'Blinds') {
 
@@ -323,7 +461,6 @@ export class QuotationOverallPage implements OnInit {
 
       this.dueamount(i)
 
-
       if (this.info.rejected) {
         if (this.info.need_scaftfolding) {
           this.scaftfolding = true
@@ -382,7 +519,7 @@ export class QuotationOverallPage implements OnInit {
     this.nav.pop()
   }
 
-  pdfmaker() {
+  pdfmaker(pass) {
     console.log(this.info);
 
     let customer_info = []
@@ -396,19 +533,25 @@ export class QuotationOverallPage implements OnInit {
 
     customer_info.push(ci)
 
-    //Ref & Date & Validity & Sales
-    let ref = 'QT' + this.datepipe.transform(today, 'yyyyMMdd') + 'WI-TM'
-    let date = this.datepipe.transform(new Date(today), 'd/M/yyyy')
-    let validity = 'COD'
-    let salesphone = 'TM\n' + this.salesmaninfo.phone
+    //Quotation info
+    let quoinfo = [
+      [{ text: 'Ref:', alignment: 'center' }, { text: 'Date:', alignment: 'center' }],
+      [{ text: this.quoRef, alignment: 'center' }, { text: this.quoDate, alignment: 'center' }],
+      [{ text: '' }, { text: 'Validity:', alignment: 'center' }],
+      [{ text: '' }, { text: this.quoValidity, alignment: 'center' }],
+      [{ text: 'Sales:', alignment: 'center', border: [true, true, false, true] }, { text: 'Prepared by:', alignment: 'center', border: [false, true, true, true] }],
+      [{ text: this.quoSales + '\n' + this.quoPhone, alignment: 'center', border: [true, true, false, true] }, { text: '', border: [false, true, true, true] }],
+    ]
 
     //Items
     let items = [
-      [{ text: 'Description', bold: true },
-      { text: 'Unit', alignment: 'center', bold: true },
-      { text: 'Qty', alignment: 'center', bold: true },
-      { text: 'Rate (RM)', alignment: 'center', bold: true },
-      { text: 'Total (RM)', alignment: 'center', bold: true }]
+      [
+        { text: 'Description', bold: true },
+        { text: 'Unit', alignment: 'center', bold: true },
+        { text: 'Qty', alignment: 'center', bold: true },
+        { text: 'Rate (RM)', alignment: 'center', bold: true },
+        { text: 'Total (RM)', alignment: 'center', bold: true }
+      ]
     ] as any
 
     for (let i = 0; i < this.item.length; i++) {
@@ -427,168 +570,163 @@ export class QuotationOverallPage implements OnInit {
         height = this.item[i].height
       }
 
-      for (let j = 0; j < 13; j++) {
-        if (j == 0) {
-          items.push(
-            [
-              { text: this.item[i].location, border: [true, false, true, false], bold: true, decoration: 'underline' },
-              { text: '', alignment: 'center', border: [true, false, true, false] },
-              { text: '', alignment: 'center', border: [true, false, true, false] },
-              { text: '', alignment: 'right', border: [true, false, true, false] },
-              { text: '', alignment: 'right', border: [true, false, true, false] }
-            ]
-          )
-        } else if (j == 1) {
-          items.push(
-            [
-              { text: width + '"' + ' x ' + height + '"', border: [true, false, true, false] },
-              { text: '', alignment: 'center', border: [true, false, true, false] },
-              { text: '', alignment: 'center', border: [true, false, true, false] },
-              { text: '', alignment: 'right', border: [true, false, true, false] },
-              { text: '', alignment: 'right', border: [true, false, true, false] }
-            ]
-          )
-        } else if (j == 2) {
-          if (this.item[i].fabric_blind != null) {
-            items.push(
-              [
-                'Blind - ' + this.item[i].fabric_blind,
-                { text: this.calc[i].blind.unit, alignment: 'center' },
-                { text: this.calc[i].blind.qty, alignment: 'center' },
-                { text: ((this.calc[i].blind.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' },
-                { text: ((this.calc[i].blind.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' }
-              ]
-            )
-          }
-        } else if (j == 3) {
-          if (this.item[i].fabric != null) {
-            items.push(
-              [
-                'Curtain - ' + this.item[i].fabric,
-                { text: this.calc[i].curtain.unit, alignment: 'center' },
-                { text: this.calc[i].curtain.qty, alignment: 'center' },
-                { text: (this.calc[i].curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-                { text: (this.calc[i].curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-              ]
-            )
-          }
-        } else if (j == 4) {
-          if (this.item[i].fabric_lining != null) {
-            items.push(
-              [
-                'Lining - ' + this.item[i].fabric_lining,
-                { text: this.calc[i].lining.unit, alignment: 'center' },
-                { text: this.calc[i].lining.qty, alignment: 'center' },
-                { text: (this.calc[i].lining.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-                { text: (this.calc[i].lining.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-              ]
-            )
-          }
-        } else if (j == 5) {
-          if (this.item[i].fabric_sheer != null) {
-            items.push(
-              [
-                'Sheer - ' + this.item[i].fabric_sheer,
-                { text: this.calc[i].sheer.unit, alignment: 'center' },
-                { text: this.calc[i].sheer.qty, alignment: 'center' },
-                { text: (this.calc[i].sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-                { text: (this.calc[i].sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-              ]
-            )
-          }
-        } else if (j == 6) {
-          if (this.item[i].fabric != null && this.item[i].fabric_lining != null) {
-            items.push(
-              [
-                'Sewing D/P Curtain + Lining',
-                { text: this.calc[i].sewing_curtain.unit, alignment: 'center' },
-                { text: this.calc[i].sewing_curtain.qty, alignment: 'center' },
-                { text: (this.calc[i].sewing_curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-                { text: (this.calc[i].sewing_curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-              ]
-            )
-          } else if (this.item[i].fabric != null) {
-            items.push(
-              [
-                'Sewing D/P Curtain',
-                { text: this.calc[i].sewing_curtain.unit, alignment: 'center' },
-                { text: this.calc[i].sewing_curtain.qty, alignment: 'center' },
-                { text: (this.calc[i].sewing_curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-                { text: (this.calc[i].sewing_curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-              ]
-            )
-          } else if (this.item[i].fabric_lining != null) {
-            items.push(
-              [
-                'Sewing D/P Lining',
-                { text: this.calc[i].sewing_curtain.unit, alignment: 'center' },
-                { text: this.calc[i].sewing_curtain.qty, alignment: 'center' },
-                { text: (this.calc[i].sewing_curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-                { text: (this.calc[i].sewing_curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-              ]
-            )
-          }
-        } else if (j == 7) {
-          if (this.item[i].fabric_sheer != null) {
-            items.push(
-              [
-                'Sheer D/P Sheer',
-                { text: this.calc[i].sewing_sheer.unit, alignment: 'center' },
-                { text: this.calc[i].sewing_sheer.qty, alignment: 'center' },
-                { text: (this.calc[i].sewing_sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-                { text: (this.calc[i].sewing_sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-              ]
-            )
-          }
-        } else if (j == 8) {
-          if (this.item[i].track != null) {
-            items.push(
-              [
-                this.item[i].track + ' Track',
-                { text: this.calc[i].track.unit, alignment: 'center' },
-                { text: this.calc[i].track.qty, alignment: 'center' },
-                { text: (this.calc[i].track.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-                { text: (this.calc[i].track.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-              ]
-            )
-          }
-        } else if (j == 9) {
-          items.push(
-            [
-              'Installation & Hang',
-              { text: this.calc[i].install.unit, alignment: 'center' },
-              { text: this.calc[i].install.qty, alignment: 'center' },
-              { text: (this.calc[i].install.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-              { text: (this.calc[i].install.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-            ]
-          )
-          // .toFixed(2)
-        } else if (j == 10 && this.item[i].type != 'Blinds') {
-          items.push(
-            [
-              'Belt & Hook',
-              { text: 'set', alignment: 'center' },
-              { text: 1, alignment: 'center' },
-              { text: '25.00', alignment: 'right' },
-              { text: '25.00', alignment: 'right' }
-            ]
-          )
-        } else if (j == 11) {
-          items.push(
-            [
-              { text: '', border: [true, false, true, false] },
-              { text: '', border: [true, false, true, false] },
-              { text: '', border: [true, false, true, false] },
-              { text: '', border: [true, false, true, false] },
-              { text: 'RM ' + (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, true, true, true], decoration: 'underline', bold: true }
-            ],
-          )
-        } else if (j == 12) {
-          items.push(['', '', '', '', ''])
-          items.push(['', '', '', '', ''])
-          items.push(['', '', '', '', ''])
-        }
+      items.push(
+        [
+          { text: this.item[i].location, border: [true, false, true, false], bold: true, decoration: 'underline' },
+          { text: '', alignment: 'center', border: [true, false, true, false] },
+          { text: '', alignment: 'center', border: [true, false, true, false] },
+          { text: '', alignment: 'right', border: [true, false, true, false] },
+          { text: '', alignment: 'right', border: [true, false, true, false] }
+        ]
+      )
+
+      items.push(
+        [
+          { text: width + '"' + ' x ' + height + '"', border: [true, false, true, false] },
+          { text: '', alignment: 'center', border: [true, false, true, false] },
+          { text: '', alignment: 'center', border: [true, false, true, false] },
+          { text: '', alignment: 'right', border: [true, false, true, false] },
+          { text: '', alignment: 'right', border: [true, false, true, false] }
+        ]
+      )
+
+      if (this.item[i].fabric_blind != null) {
+        items.push(
+          [
+            'Blind - ' + this.item[i].fabric_blind,
+            { text: this.calc[i].blind.unit, alignment: 'center' },
+            { text: this.calc[i].blind.qty, alignment: 'center' },
+            { text: ((this.calc[i].blind.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' },
+            { text: ((this.calc[i].blind.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' }
+          ]
+        )
       }
+
+      if (this.item[i].fabric != null) {
+        items.push(
+          [
+            'Curtain - ' + this.item[i].fabric,
+            { text: this.calc[i].curtain.unit, alignment: 'center' },
+            { text: this.calc[i].curtain.qty, alignment: 'center' },
+            { text: (this.calc[i].curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+            { text: (this.calc[i].curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+          ]
+        )
+      }
+
+      if (this.item[i].fabric_lining != null) {
+        items.push(
+          [
+            'Lining - ' + this.item[i].fabric_lining,
+            { text: this.calc[i].lining.unit, alignment: 'center' },
+            { text: this.calc[i].lining.qty, alignment: 'center' },
+            { text: (this.calc[i].lining.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+            { text: (this.calc[i].lining.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+          ]
+        )
+      }
+
+      if (this.item[i].fabric_sheer != null) {
+        items.push(
+          [
+            'Sheer - ' + this.item[i].fabric_sheer,
+            { text: this.calc[i].sheer.unit, alignment: 'center' },
+            { text: this.calc[i].sheer.qty, alignment: 'center' },
+            { text: (this.calc[i].sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+            { text: (this.calc[i].sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+          ]
+        )
+      }
+
+      if (this.item[i].fabric != null && this.item[i].fabric_lining != null) {
+        items.push(
+          [
+            'Sewing D/P Curtain + Lining',
+            { text: this.calc[i].sewing_curtain.unit, alignment: 'center' },
+            { text: this.calc[i].sewing_curtain.qty, alignment: 'center' },
+            { text: (this.calc[i].sewing_curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+            { text: (this.calc[i].sewing_curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+          ]
+        )
+      } else if (this.item[i].fabric != null) {
+        items.push(
+          [
+            'Sewing D/P Curtain',
+            { text: this.calc[i].sewing_curtain.unit, alignment: 'center' },
+            { text: this.calc[i].sewing_curtain.qty, alignment: 'center' },
+            { text: (this.calc[i].sewing_curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+            { text: (this.calc[i].sewing_curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+          ]
+        )
+      } else if (this.item[i].fabric_lining != null) {
+        items.push(
+          [
+            'Sewing D/P Lining',
+            { text: this.calc[i].sewing_curtain.unit, alignment: 'center' },
+            { text: this.calc[i].sewing_curtain.qty, alignment: 'center' },
+            { text: (this.calc[i].sewing_curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+            { text: (this.calc[i].sewing_curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+          ]
+        )
+      }
+
+      if (this.item[i].fabric_sheer != null) {
+        items.push(
+          [
+            'Sheer D/P Sheer',
+            { text: this.calc[i].sewing_sheer.unit, alignment: 'center' },
+            { text: this.calc[i].sewing_sheer.qty, alignment: 'center' },
+            { text: (this.calc[i].sewing_sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+            { text: (this.calc[i].sewing_sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+          ]
+        )
+      }
+
+      if (this.item[i].track != null) {
+        items.push(
+          [
+            this.item[i].track + ' Track',
+            { text: this.calc[i].track.unit, alignment: 'center' },
+            { text: this.calc[i].track.qty, alignment: 'center' },
+            { text: (this.calc[i].track.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+            { text: (this.calc[i].track.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+          ]
+        )
+      }
+
+      items.push(
+        [
+          'Installation & Hang',
+          { text: this.calc[i].install.unit, alignment: 'center' },
+          { text: this.calc[i].install.qty, alignment: 'center' },
+          { text: (this.calc[i].install.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+          { text: (this.calc[i].install.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+        ]
+      )
+
+      if (this.item[i].type != 'Blinds') {
+        items.push(
+          [
+            'Belt & Hook',
+            { text: 'set', alignment: 'center' },
+            { text: 1, alignment: 'center' },
+            { text: '25.00', alignment: 'right' },
+            { text: '25.00', alignment: 'right' }
+          ]
+        )
+      }
+      items.push(
+        [
+          { text: '', border: [true, false, true, false] },
+          { text: '', border: [true, false, true, false] },
+          { text: '', border: [true, false, true, false] },
+          { text: '', border: [true, false, true, false] },
+          { text: 'RM ' + (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, true, true, true], decoration: 'underline', bold: true }
+        ],
+      )
+      items.push(['', '', '', '', ''])
+      items.push(['', '', '', '', ''])
+      items.push(['', '', '', '', ''])
 
     }
     console.log(items);
@@ -625,14 +763,34 @@ export class QuotationOverallPage implements OnInit {
         return [
           {
             columns: [
-              {
-                alignment: 'left',
-                text: 'Crystalace Deco Sdn Bhd (959240-H)\n15,Jln PJU 3/49 Sunway Damansara Technology Park,47810 Petaling Jaya Selangor. www.crystalace.com.my 03-7803 1686',
-                fontSize: 17,
-                bold: true,
-                width: '60%',
-                margin: [40, 20, 0, 0]
-              },
+              [
+                {
+                  alignment: 'left',
+                  text: 'Crystalace Deco Sdn Bhd (959240-H)',
+                  fontSize: 17,
+                  bold: true,
+                  width: '60%',
+                  margin: [40, 20, 0, 0]
+                },
+                {
+                  alignment: 'left',
+                  text: '15, Jln PJU 3/49 Sunway Damansara Technology Park,47810 Petaling Jaya Selangor.',
+                  fontSize: 8,
+                  color: '#888',
+                  bold: false,
+                  width: '60%',
+                  margin: [40, 0, 0, 0]
+                },
+                {
+                  alignment: 'left',
+                  text: 'www.crystalace.com.my        03-7803 1686',
+                  fontSize: 8,
+                  color: '#888',
+                  bold: false,
+                  width: '60%',
+                  margin: [40, 0, 0, 0]
+                }
+              ],
               {
                 alignment: 'right',
                 text: 'Quotation Page ' + currentPage + ' of ' + pageCount,
@@ -671,14 +829,7 @@ export class QuotationOverallPage implements OnInit {
               width: '50%',
               table: {
                 widths: ['50%', '50%'],
-                body: [
-                  [{ text: 'Ref:', alignment: 'center' }, { text: 'Date:', alignment: 'center' }],
-                  [{ text: ref, alignment: 'center' }, { text: date, alignment: 'center' }],
-                  [{ text: '' }, { text: 'Validity:', alignment: 'center' }],
-                  [{ text: '' }, { text: validity, alignment: 'center' }],
-                  [{ text: 'Sales:', alignment: 'center', border: [true, true, false, true] }, { text: 'Prepared by:', alignment: 'center', border: [false, true, true, true] }],
-                  [{ text: salesphone, alignment: 'center', border: [true, true, false, true] }, { text: '', border: [false, true, true, true] }],
-                ],
+                body: quoinfo
               },
               layout: {
                 fillColor: function (rowIndex, node, columnIndex) {
@@ -799,6 +950,65 @@ export class QuotationOverallPage implements OnInit {
             ]
           }
         },
+        {
+          width: '100%',
+          table: {
+            widths: ['100%'],
+            body: [
+              [{ text: 'Terms & Condition', bold: true }],
+            ]
+          },
+          layout: {
+            fillColor: function (rowIndex, node, columnIndex) {
+              return (rowIndex % 2 === 0) ? '#CCCCCC' : null;
+            },
+            hLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 0 : 0;
+            },
+            vLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 1 : 1;
+            },
+            hLineColor: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 'black' : 'white';
+            },
+            vLineColor: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 'black' : 'white';
+            },
+          }
+        },
+        {
+          width: '100%',
+          table: {
+            widths: ['100%'],
+            body: [
+              [{ text: 'Payment ', bold: true }],
+              [{ text: 'Payment Detail: Ambank Account Number 2442 0220 04795 Crystalace Deco Sdn Bhd', fontSize: 9 }],
+              [{ text: '' }],
+              [{ text: 'Delivery ', bold: true }],
+              [{ text: ': Within 2 to 4 working weeks after confirmation of order and it is subject to stock availability.', fontSize: 9 }],
+              [{ text: ': Quotation valid for 30days. Prices are subjected to change according to actual final site measurement and condition.', fontSize: 9 }],
+              [{ text: ': Work contracted is not inclusive of reinforcement and/or site modifications. Crystalace Deco Sdn Bhd is not responsible for cost incurred resulting from delayed site handover or/and unsuitable installation condition.', fontSize: 9 }],
+              [{ text: '' }],
+            ]
+          },
+          layout: {
+            hLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 1 : 1;
+            },
+            vLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 1 : 1;
+            },
+            hLineColor: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 'black' : 'white';
+            },
+            vLineColor: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 'black' : 'white';
+            },
+          }
+        },
+        {
+          text: '\nPlease do not hestitate to contact us at 03-7803 1686 if you have any enquiry, Thank You.', alignment: 'center', italics: true
+        },
 
       ],
       styles: {
@@ -830,9 +1040,654 @@ export class QuotationOverallPage implements OnInit {
 
     // pdfMake.createPdf(dd).open();
     this.pdfObj = pdfMake.createPdf(dd);
-    this.downloadPdf()
+
+    if (pass) {
+      this.uploadPdf(1)
+    } else {
+      this.downloadPdf()
+    }
 
   }
+
+  pdfmakerClient(pass) {
+    console.log(this.info);
+
+    let customer_info = []
+    let today = new Date()
+    let width = null
+    let height = null
+    let count = 0
+
+    let isCurtain = false
+    let isSheer = false
+    let isBlind = false
+
+    //Customer
+    let ci = ''
+    ci = this.info.customer_name + '\n\n\n' + this.info.customer_address + '\n\n\n' + this.info.customer_phone + '\n '
+
+    customer_info.push(ci)
+
+    //Quotation info
+    let quoinfo = [
+      [{ text: 'Ref:', alignment: 'center' }, { text: 'Date:', alignment: 'center' }],
+      [{ text: this.quoRef, alignment: 'center' }, { text: this.quoDate, alignment: 'center' }],
+      [{ text: '' }, { text: 'Validity:', alignment: 'center' }],
+      [{ text: '' }, { text: this.quoValidity, alignment: 'center' }],
+      [{ text: 'Sales:', alignment: 'center', border: [true, true, false, true] }, { text: 'Prepared by:', alignment: 'center', border: [false, true, true, true] }],
+      [{ text: this.quoSales + '\n' + this.quoPhone, alignment: 'center', border: [true, true, false, true] }, { text: '', border: [false, true, true, true] }],
+    ]
+
+    //Items
+    let items = [
+      [{ text: 'Description', bold: true },
+      { text: 'Unit', alignment: 'center', bold: true },
+      { text: 'Qty', alignment: 'center', bold: true },
+      // { text: 'Amount (RM)', alignment: 'center', bold: true },
+      { text: 'Total (RM)', alignment: 'center', bold: true }]
+    ] as any
+
+    for (let i = 0; i < this.item.length; i++) {
+
+      if (this.item[i].height_tech != null || this.item[i].width_tech != null) {
+        if (this.item[i].status_tech == 'Approved' && this.item[i].status_sale == 'Completed') {
+          width = this.item[i].width
+          height = this.item[i].height
+        } else {
+          width = this.item[i].width_tech
+          height = this.item[i].height_tech
+        }
+
+      } else {
+        width = this.item[i].width
+        height = this.item[i].height
+      }
+
+      if (i >= 1) {
+        if (this.item[i].location != this.item[i - 1].location) {
+          count = 0
+        }
+      }
+      count++
+
+      //ITEMS PUSH START HERE
+      if (this.item[i].type != 'Blinds') {
+        if (this.item[i].fabric_type == 'C') {
+          isCurtain = true
+          items.push(
+            [
+              { text: this.item[i].location + ' - W' + count + ' ' + width + ' x ' + height, border: [true, false, true, false], bold: true, decoration: 'underline' },
+              { text: '', alignment: 'center', border: [true, false, true, false] },
+              { text: '', alignment: 'center', border: [true, false, true, false] },
+              { text: '', alignment: 'right', border: [true, false, true, false] },
+              // { text: '', alignment: 'right', border: [true, false, true, false] }
+            ]
+          )
+
+          if (this.item[i].fabric != null) {
+            items.push(
+              [
+                { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
+                { text: 'set', alignment: 'center', border: [true, false, true, false] },
+                { text: 1, alignment: 'center', border: [true, false, true, false] },
+                { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+          }
+
+          if (this.item[i].fabric_lining != null) {
+            items.push(
+              [
+                { text: 'Lining - ' + this.item[i].fabric_lining, border: [true, false, true, false] },
+                { text: 'set', alignment: 'center', border: [true, false, true, false] },
+                { text: 1, alignment: 'center', border: [true, false, true, false] },
+                { text: (this.calc[i].lining.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+          }
+
+          items.push(
+            [
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] }
+            ]
+          )
+
+          items.push(
+            [
+              { text: ' ', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false], bold: true, decoration: 'underline' }
+            ]
+          )
+
+          items.push(
+            [
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] }
+            ]
+          )
+
+          items.push(
+            [
+              { text: '', border: [true, false, true, true] },
+              { text: '', border: [true, false, true, true] },
+              { text: '', border: [true, false, true, true] },
+              { text: '', border: [true, false, true, true] }
+            ]
+          )
+        } else if (this.item[i].fabric_type == 'S') {
+          isSheer = true
+          items.push(
+            [
+              { text: this.item[i].location + ' - W' + count + ' ' + width + ' x ' + height, border: [true, false, true, false], bold: true, decoration: 'underline' },
+              { text: '', alignment: 'center', border: [true, false, true, false] },
+              { text: '', alignment: 'center', border: [true, false, true, false] },
+              { text: '', alignment: 'right', border: [true, false, true, false] },
+              // { text: '', alignment: 'right', border: [true, false, true, false] }
+            ]
+          )
+
+          if (this.item[i].fabric_sheer != null) {
+            items.push(
+              [
+                { text: 'Sheer - ' + this.item[i].fabric_sheer, border: [true, false, true, false] },
+                { text: 'set', alignment: 'center', border: [true, false, true, false] },
+                { text: 1, alignment: 'center', border: [true, false, true, false] },
+                { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+          }
+
+          items.push(
+            [
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] }
+            ]
+          )
+
+          items.push(
+            [
+              { text: ' ', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false], bold: true, decoration: 'underline' }
+            ]
+          )
+
+          items.push(
+            [
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] }
+            ]
+          )
+
+          items.push(
+            [
+              { text: '', border: [true, false, true, true] },
+              { text: '', border: [true, false, true, true] },
+              { text: '', border: [true, false, true, true] },
+              { text: '', border: [true, false, true, true] }
+            ]
+          )
+        } else if (this.item[i].fabric_type == 'CS') {
+          isCurtain = true
+          isSheer = true
+          items.push(
+            [
+              { text: this.item[i].location + ' - W' + count + ' ' + width + ' x ' + height, border: [true, false, true, false], bold: true, decoration: 'underline' },
+              { text: '', alignment: 'center', border: [true, false, true, false] },
+              { text: '', alignment: 'center', border: [true, false, true, false] },
+              { text: '', alignment: 'right', border: [true, false, true, false] },
+              // { text: '', alignment: 'right', border: [true, false, true, false] }
+            ]
+          )
+
+          if (this.item[i].fabric != null) {
+            items.push(
+              [
+                { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
+                { text: 'set', alignment: 'center', border: [true, false, true, false] },
+                { text: 1, alignment: 'center', border: [true, false, true, false] },
+                { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+          }
+
+          if (this.item[i].fabric_lining != null) {
+            items.push(
+              [
+                { text: 'Lining - ' + this.item[i].fabric_lining, border: [true, false, true, false] },
+                { text: 'set', alignment: 'center', border: [true, false, true, false] },
+                { text: 1, alignment: 'center', border: [true, false, true, false] },
+                { text: (this.calc[i].lining.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+          }
+
+          if (this.item[i].fabric_sheer != null) {
+            items.push(
+              [
+                { text: 'Sheer - ' + this.item[i].fabric_sheer, border: [true, false, true, false] },
+                { text: 'set', alignment: 'center', border: [true, false, true, false] },
+                { text: 1, alignment: 'center', border: [true, false, true, false] },
+                { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+          }
+
+          items.push(
+            [
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] }
+            ]
+          )
+
+          items.push(
+            [
+              { text: ' ', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false], bold: true, decoration: 'underline' }
+            ]
+          )
+
+          items.push(
+            [
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] }
+            ]
+          )
+
+          items.push(
+            [
+              { text: '', border: [true, false, true, true] },
+              { text: '', border: [true, false, true, true] },
+              { text: '', border: [true, false, true, true] },
+              { text: '', border: [true, false, true, true] }
+            ]
+          )
+        }
+
+      } else if (this.item[i].type == 'Blinds') {
+        isBlind = true
+
+        items.push(
+          [
+            { text: this.item[i].location + ' - W' + count + ' ' + width + ' x ' + height, border: [true, false, true, false], bold: true, decoration: 'underline' },
+            { text: '', alignment: 'center', border: [true, false, true, false] },
+            { text: '', alignment: 'center', border: [true, false, true, false] },
+            { text: '', alignment: 'right', border: [true, false, true, false] },
+            // { text: '', alignment: 'right', border: [true, false, true, false] }
+          ]
+        )
+
+        items.push(
+          [
+            { text: 'Blind - ' + this.item[i].fabric_blind, border: [true, false, true, false] },
+            { text: 'set', alignment: 'center', border: [true, false, true, false] },
+            { text: 1, alignment: 'center', border: [true, false, true, false] },
+            { text: ((this.calc[i].blind.total + this.calc[i].install.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right', border: [true, false, true, false] },
+            // { text: ((this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right', border: [true, false, true, false] }
+          ]
+        )
+
+        if (this.item[i].fabric != null) {
+          isCurtain = true
+          items.push(
+            [
+              { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
+              { text: 'set', alignment: 'center', border: [true, false, true, false] },
+              { text: 1, alignment: 'center', border: [true, false, true, false] },
+              { text: (this.calc[i].curtain.total + this.calc[i].sewing_curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+              // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+            ]
+          )
+        }
+
+        items.push(
+          [
+            { text: '', border: [true, false, true, false] },
+            { text: '', border: [true, false, true, false] },
+            { text: '', border: [true, false, true, false] },
+            { text: '', border: [true, false, true, false] }
+          ]
+        )
+
+        items.push(
+          [
+            { text: ' ', border: [true, false, true, false] },
+            { text: '', border: [true, false, true, false] },
+            { text: '', border: [true, false, true, false] },
+            { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false], bold: true, decoration: 'underline' }
+          ]
+        )
+
+        items.push(
+          [
+            { text: '', border: [true, false, true, false] },
+            { text: '', border: [true, false, true, false] },
+            { text: '', border: [true, false, true, false] },
+            { text: '', border: [true, false, true, false] }
+          ]
+        )
+
+        items.push(
+          [
+            { text: '', border: [true, false, true, true] },
+            { text: '', border: [true, false, true, true] },
+            { text: '', border: [true, false, true, true] },
+            { text: '', border: [true, false, true, true] }
+          ]
+        )
+      }
+
+    }
+    console.log(items);
+
+    //Ladder & Scaftfolding
+    let ladderscaft = ''
+    let LSprice = ''
+
+    if (this.scaftfolding && this.ladder) {
+      ladderscaft = 'Ladder + Scaftfolding'
+      LSprice = '300.00'
+    } else {
+      if (this.ladder) {
+        ladderscaft = 'Ladder'
+        LSprice = '100.00'
+      }
+      if (this.scaftfolding) {
+        ladderscaft = 'Scaftfolding'
+        LSprice = '200.00'
+      }
+    }
+
+    //Get Before Additional Price
+    let total = 0
+    for (let i = 0; i < this.item.length; i++) {
+      total += this.item[i].price
+    }
+
+    //is Curtain / Sheer / Blind
+    let job = ''
+    if (isCurtain && isSheer && isBlind) {
+      job = 'Curtain, Sheer & Blinds'
+    } else if (isCurtain && isBlind) {
+      job = 'Curtain & Blinds'
+    } else if (isCurtain && isSheer) {
+      job = 'Curtain & Sheer'
+    } else if (isBlind) {
+      job = 'Blinds'
+    } else if (isCurtain) {
+      job = 'Curtain'
+    } else if (isSheer) {
+      job = 'Sheer'
+    }
+
+    var dd = {
+      header: function (currentPage, pageCount, pageSize) {
+        // you can apply any logic and return any valid pdfmake element
+
+        return [
+          {
+            columns: [
+              [
+                {
+                  alignment: 'left',
+                  text: 'Crystalace Deco Sdn Bhd (959240-H)',
+                  fontSize: 17,
+                  bold: true,
+                  width: '60%',
+                  margin: [40, 20, 0, 0]
+                },
+                {
+                  alignment: 'left',
+                  text: '15, Jln PJU 3/49 Sunway Damansara Technology Park,47810 Petaling Jaya Selangor.',
+                  fontSize: 8,
+                  color: '#888',
+                  bold: false,
+                  width: '60%',
+                  margin: [40, 0, 0, 0]
+                },
+                {
+                  alignment: 'left',
+                  text: 'www.crystalace.com.my        03-7803 1686',
+                  fontSize: 8,
+                  color: '#888',
+                  bold: false,
+                  width: '60%',
+                  margin: [40, 0, 0, 0]
+                }
+
+              ],
+              {
+                alignment: 'right',
+                text: 'Quotation Page ' + currentPage + ' of ' + pageCount,
+                fontSize: 14,
+                bold: true,
+                width: '40%',
+                margin: [0, 20, 40, 30],
+              },
+            ]
+          },
+          { canvas: [{ type: 'rect', x: 170, y: 32, w: pageSize.width - 170, h: 40 }] }
+        ]
+      },
+
+      content: [
+        {
+          columns: [
+            {
+              width: '50%',
+              table: {
+                widths: '100%',
+                body: [
+                  ['Customer:'],
+                  customer_info
+                  // ['Ms Chloe \n\n\n No 21, Jalan U13/53UC, Eco Ardence Seksyen U13, 40170 Shah Alam, Selangor \n\n\n 012-5256304 \n ']
+                ]
+              },
+              layout: {
+                fillColor: function (rowIndex, node, columnIndex) {
+                  return (rowIndex % 2 === 0) ? '#CCCCCC' : null;
+                }
+              }
+            },
+            {
+              width: '50%',
+              table: {
+                widths: ['50%', '50%'],
+                body: quoinfo
+              },
+              layout: {
+                fillColor: function (rowIndex, node, columnIndex) {
+                  return (rowIndex % 2 === 0) ? '#CCCCCC' : null;
+                }
+              }
+            }
+          ]
+        },
+
+        // 		NON_DETAILED QUOTATION START
+        // 	    HERE 1
+        {
+          width: '100%',
+          margin: [0, 15, 0, 0],
+          table: {
+            widths: ['100%'],
+            body: [
+              ['Job'],
+              [{ text: job + '\n ', bold: true, alignment: 'center' }]
+            ]
+          },
+          layout: {
+            fillColor: function (rowIndex, node, columnIndex) {
+              return (rowIndex % 2 === 0) ? '#CCCCCC' : null;
+            }
+          }
+        },
+
+        //      HERE 3
+        {
+          width: '100%',
+          margin: [0, 15, 0, 0],
+          table: {
+            headerRows: 1,
+            //  dontBreakRows: true,
+            //  keepWithHeaderRows: 1,
+            widths: ['60%', '10%', '10%', '20%'],
+            body: items
+          },
+        },
+        {
+          width: '100%',
+          table: {
+            widths: ['80%', '20%'],
+            body: [
+              // [
+              //   { text: 'TRANSPORTATION FEES (RM)', bold: true, border: [true, false, false, true] },
+              //   { text: '100.00', bold: true, alignment: 'right', border: [false, false, true, true] },
+              // ],
+              [
+                { text: ladderscaft, bold: true, border: [true, false, false, true] },
+                { text: LSprice, alignment: 'right', border: [false, false, true, true] }
+              ],
+              [
+                { text: 'FINAL TOTAL (RM)', bold: true, border: [true, false, false, true] },
+                { text: ((this.totalPrice()).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), bold: true, alignment: 'right', border: [false, false, true, true] },
+              ],
+            ]
+          },
+        },
+        {
+          width: '100%',
+          table: {
+            widths: ['100%'],
+            body: [
+              [{ text: 'Price above is estimation.', fontSize: 9, border: [true, false, true, false] }],
+              [{ text: 'Final price willbe adjusted according to actual site measurement and material selection', fontSize: 9, border: [true, false, true, true] }],
+            ]
+          }
+        },
+        {
+          width: '100%',
+          table: {
+            widths: ['100%'],
+            body: [
+              [{ text: 'Terms & Condition', bold: true }],
+            ]
+          },
+          layout: {
+            fillColor: function (rowIndex, node, columnIndex) {
+              return (rowIndex % 2 === 0) ? '#CCCCCC' : null;
+            },
+            hLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 0 : 0;
+            },
+            vLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 1 : 1;
+            },
+            hLineColor: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 'black' : 'white';
+            },
+            vLineColor: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 'black' : 'white';
+            },
+          }
+        },
+        {
+          width: '100%',
+          table: {
+            widths: ['100%'],
+            body: [
+              [{ text: 'Payment ', bold: true }],
+              [{ text: 'Payment Detail: Ambank Account Number 2442 0220 04795 Crystalace Deco Sdn Bhd', fontSize: 9 }],
+              [{ text: '' }],
+              [{ text: 'Delivery ', bold: true }],
+              [{ text: ': Within 2 to 4 working weeks after confirmation of order and it is subject to stock availability.', fontSize: 9 }],
+              [{ text: ': Quotation valid for 30days. Prices are subjected to change according to actual final site measurement and condition.', fontSize: 9 }],
+              [{ text: ': Work contracted is not inclusive of reinforcement and/or site modifications. Crystalace Deco Sdn Bhd is not responsible for cost incurred resulting from delayed site handover or/and unsuitable installation condition.', fontSize: 9 }],
+              [{ text: '' }],
+            ]
+          },
+          layout: {
+            hLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 1 : 1;
+            },
+            vLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 1 : 1;
+            },
+            hLineColor: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 'black' : 'white';
+            },
+            vLineColor: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 'black' : 'white';
+            },
+          }
+        },
+        {
+          text: '\nPlease do not hestitate to contact us at 03-7803 1686 if you have any enquiry, Thank You.', alignment: 'center', italics: true
+        },
+        // 	    NON_DETAILED QUOTATION END
+
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 0, 0, 10]
+        },
+        subheader: {
+          fontSize: 16,
+          bold: true,
+          margin: [0, 10, 0, 5]
+        },
+        tableExample: {
+          margin: [0, 5, 0, 15]
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 13,
+          color: 'black'
+        }
+      },
+      defaultStyle: {
+        columnGap: 20
+      },
+      pageMargins: [40, 70, 40, 60]
+
+    }
+
+    // pdfMake.createPdf(dd).open();
+    this.pdfObj = pdfMake.createPdf(dd);
+
+    if (pass) {
+      this.uploadPdf(2)
+    } else {
+      this.downloadPdf()
+    }
+  }
+
   downloadPdf() {
     if (this.plt.is('cordova')) {
       this.pdfObj.getBuffer((buffer) => {
@@ -848,6 +1703,60 @@ export class QuotationOverallPage implements OnInit {
       // On a browser simply use download!
       this.pdfObj.download();
     }
+  }
+
+
+  uploadPdf(x) {
+    this.pdfObj.getBuffer((buffer) => {
+      var blob = new Blob([buffer], { type: 'application/pdf' });
+
+      this.toBase64(blob).then(data => {
+        console.log(data)
+        this.http.post('https://forcar.vsnap.my/uploadPDF', { base64: data }).subscribe((link) => {
+          console.log(link['imageURL']);
+
+          if (x == 1) {
+            console.log(this.info.quotation_detailed);
+            
+            this.info.quotation_detailed.push({ name: this.datepipe.transform(new Date(), 'dd/MM/yyyy hh:mm:ss a'), link: link['imageURL']})
+
+            let temp = {
+              no: this.sales_id,
+              quotation_detailed: JSON.stringify(this.info.quotation_detailed),
+            }
+
+            this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
+              this.pdfmakerClient(true)
+            })
+          } else if (x == 2) {
+            this.info.quotation_client.push({ name: this.datepipe.transform(new Date(), 'dd/MM/yyyy hh:mm:ss a'), link: link['imageURL']})
+
+            let temp = {
+              no: this.sales_id,
+              quotation_client: JSON.stringify(this.info.quotation_client),
+            }
+
+            this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
+              this.checkout()
+            })
+          }
+
+        }, awe => {
+          console.log(awe);
+        })
+      });
+
+    })
+  }
+
+  toBase64(blob) {
+    const reader = new FileReader();
+    return new Promise((res, rej) => {
+      reader.readAsDataURL(blob);
+      reader.onload = function () {
+        res(reader.result);
+      };
+    });
   }
 
 }

@@ -14,12 +14,21 @@
 
     </div>
 
-    <div *ngIf="user.position == 'Sales'">
-      <ion-button style="height: fit-content;--background: #a17635;--background-activated: #b2894c"
-        (click)="pdfmaker()">
-        <div style="margin-left: 10px;font-size: 14px;padding: 10px 0;">Quotation</div>
-        <ion-icon slot="icon-only" name="print" style="width: 20px;height: 20px;"></ion-icon>
-      </ion-button>
+    <div style="width: 50%;" *ngIf="user.position == 'Sales'">
+      <div style="width: 100%;display: flex;align-items: center;justify-content: space-between;">
+        <div style="width: 50%;">
+          <ion-button style="height: fit-content;width: 100%;--background: #a17635;--background-activated: #b2894c"
+          (click)="choosePDF(info.quotation_client)">
+            <div style="font-size: 8px;padding: 5px 0;">Client's<br />Quotation</div>
+          </ion-button>
+        </div>
+        <div style="width: 50%;margin-left: 5px;">
+          <ion-button style="height: fit-content;width: 100%;--background: #a17635;--background-activated: #b2894c"
+            (click)="choosePDF(info.quotation_detailed)">
+            <div style="font-size: 8px;padding: 5px 0;">Detailed<br />Quotation</div>
+          </ion-button>
+        </div>
+      </div>
     </div>
 
   </div>
