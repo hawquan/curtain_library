@@ -1,5 +1,6 @@
 <ion-header *ngIf="loading" style="--background: #FAF7F2">
-  <div style="height: 50px; width: 100%; display: flex;align-items: center; justify-content: space-between; padding: 0 15px;background-color: #ebd1af;">
+  <div
+    style="height: 50px; width: 100%; display: flex;align-items: center; justify-content: space-between; padding: 0 15px;background-color: #ebd1af;">
 
     <div style="display: flex; align-items: center;">
 
@@ -8,17 +9,26 @@
         <ion-icon (click)="back()" style="font-size: 22px; color: #a17635;" name="close-outline"></ion-icon>
       </div>
 
-      <div style="font-weight: 500;color: #a17635;font-size: 18px;padding-left: 15px;letter-spacing: 0.5px;">
+      <div style="font-weight: 500;color: #a17635;font-size: 15px;padding-left: 15px;letter-spacing: 0.5px;">
         Quotations
       </div>
     </div>
 
-    <div *ngIf="user.position == 'Sales'">
-      <ion-button style="height: fit-content;--background: #a17635;--background-activated: #b2894c"
-        (click)="pdfmaker()">
-        <div style="margin-left: 10px;font-size: 14px;padding: 10px 0;">Quotation</div>
-        <ion-icon slot="icon-only" name="print" style="width: 20px;height: 20px;"></ion-icon>
-      </ion-button>
+    <div style="width: 58%;" *ngIf="user.position == 'Sales'">
+      <div style="width: 100%;display: flex;align-items: center;justify-content: space-between;">
+        <div style="width: 50%;">
+          <ion-button style="height: fit-content;width: 100%;--background: #a17635;--background-activated: #b2894c;text-transform: none;"
+            (click)="quotationinfo('client')">
+            <div style="font-size: 10px;padding: 5px 0;">Client's<br />Quotation</div>
+          </ion-button>
+        </div>
+        <div style="width: 50%;margin-left: 5px;">
+          <ion-button style="height: fit-content;width: 100%;--background: #a17635;--background-activated: #b2894c;text-transform: none;"
+            (click)="quotationinfo('detailed')">
+            <div style="font-size: 10px;padding: 5px 0;">Detailed<br />Quotation</div>
+          </ion-button>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -499,15 +509,17 @@
     style="background: #ebd1af; display: flex;padding: 10px 15px;align-items: center;justify-content: space-between;">
 
     <div style="padding-left: 5px;">
-      <div *ngIf="due != 0 && due > 0 && rejected == true" style="color: red;font-size: 14px;font-weight: 500;margin-bottom: 5px;">Due :
+      <div *ngIf="due != 0 && due > 0 && rejected == true"
+        style="color: red;font-size: 14px;font-weight: 500;margin-bottom: 5px;">Due :
         {{due | currency: 'RM '}}</div>
-      <div *ngIf="due != 0 && due < 0 && rejected == true" style="color:green;font-size: 14px;font-weight: 500;margin-bottom: 5px;">
+      <div *ngIf="due != 0 && due < 0 && rejected == true"
+        style="color:green;font-size: 14px;font-weight: 500;margin-bottom: 5px;">
         Refund : {{due | currency: 'RM '}}</div>
       <div style="width: 92px;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
       <div style="color: #a17635;font-size: 14px;font-weight: 500;">{{totalPrice() | currency: 'RM '}}</div>
     </div>
 
-    <ion-button (click)="checkout()"
+    <ion-button (click)="quotationinfo('checkout')"
       style="height: 35px;width: 40%;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 450px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;">
       Checkout
     </ion-button>
