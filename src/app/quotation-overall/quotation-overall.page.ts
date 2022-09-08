@@ -131,7 +131,23 @@ export class QuotationOverallPage implements OnInit {
       total += 200
     }
 
+    total += this.info.transport_fee
     return total || 0
+  }
+
+  addCharges() {
+    let addCharges = 0
+
+    if (this.ladder) {
+      addCharges += 100
+    }
+    if (this.scaftfolding) {
+      addCharges += 200
+    }
+
+    addCharges += this.info.transport_fee
+
+    return addCharges || 0
   }
 
   async quotationinfo(x) {
@@ -144,21 +160,6 @@ export class QuotationOverallPage implements OnInit {
           name: 'ref',
           type: 'text',
           placeholder: 'Ref (eg. WI-AA)'
-        },
-        {
-          name: 'validity',
-          type: 'text',
-          placeholder: 'Enter Validity (eg. COD)'
-        },
-        {
-          name: 'sales',
-          type: 'text',
-          placeholder: 'Enter Sales Short Form (eg. AA)'
-        },
-        {
-          name: 'phone',
-          type: 'number',
-          placeholder: 'Enter Phone Number'
         },
       ],
       buttons: [
@@ -183,36 +184,6 @@ export class QuotationOverallPage implements OnInit {
                 heightAuto: false,
               });
 
-            } else if (data['validity'] == null || data['validity'] == '') {
-
-              Swal.fire({
-                title: 'Validity is Empty',
-                text: 'Please enter Validity and try again!',
-                icon: 'error',
-                timer: 5000,
-                heightAuto: false,
-              });
-
-            } else if (data['sales'] == null || data['sales'] == '') {
-
-              Swal.fire({
-                title: 'Short Form Name is Empty',
-                text: 'Please enter Sales Short Form Name and try again!',
-                icon: 'error',
-                timer: 5000,
-                heightAuto: false,
-              });
-
-            } else if (data['phone'] == null || data['phone'] == '') {
-
-              Swal.fire({
-                title: 'Sales Phone is Empty',
-                text: 'Please enter Sales Phone Number and try again!',
-                icon: 'error',
-                timer: 5000,
-                heightAuto: false,
-              });
-
             } else {
               // let buttoners = {
               //   Cancel: { name: 'Cancel', value: 'Cancel' },
@@ -224,17 +195,17 @@ export class QuotationOverallPage implements OnInit {
 
               this.quoRef = 'QT' + this.datepipe.transform(new Date(), 'yyyyMMdd') + data['ref']
               this.quoDate = this.datepipe.transform(new Date(), 'd/M/yyyy')
-              this.quoValidity = data['validity']
-              this.quoSales = data['sales']
-              this.quoPhone = data['phone']
+              this.quoValidity = '7 Days'
+              this.quoSales = this.salesmaninfo.name
+              this.quoPhone = this.salesmaninfo.phone
 
               if (x == 'client') {
 
-                this.pdfmaker(false)
+                this.pdfmakerClient(false)
 
               } else if (x == 'detailed') {
 
-                this.pdfmakerClient(false)
+                this.pdfmaker(false)
 
               } else {
 
@@ -393,7 +364,7 @@ export class QuotationOverallPage implements OnInit {
           lining = true
           lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
         } else {
-          curtain = false
+          lining = false
         }
       } else {
         lining = false
@@ -404,7 +375,7 @@ export class QuotationOverallPage implements OnInit {
           sheer = true
           sheer_id = this.fabricSheer.filter(x => x.name == this.item[i].fabric_sheer)[0]['id']
         } else {
-          curtain = false
+          sheer = false
         }
       } else {
         sheer = false
@@ -452,32 +423,25 @@ export class QuotationOverallPage implements OnInit {
 
     let temp = {
       width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id, pieces_curtain: this.item[i].pieces_curtain || 0,
+      pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0
     }
 
     console.log(temp);
 
     this.http.post('https://curtain.vsnap.my/calcPrice', temp).subscribe(a => {
 
-      this.dueamount(i)
 
-      if (this.info.rejected) {
-        if (this.info.need_scaftfolding) {
-          this.scaftfolding = true
-        }
-        if (this.info.need_ladder) {
-          this.ladder = true
-        }
-      } else {
-        if (this.item[i].need_scaftfolding == true) {
-          this.scaftfolding = true
-        } else if (this.item[i].need_ladder == true) {
-          this.ladder = true
-        }
+      if (this.item[i].need_scaftfolding == true) {
+        this.scaftfolding = true
+      } else if (this.item[i].need_ladder == true) {
+        this.ladder = true
       }
 
       this.calc.push(a['data'])
       this.count++
+      this.dueamount(i)
+
       if (this.calc.length != this.item.length) {
         this.loop()
       }
@@ -485,6 +449,7 @@ export class QuotationOverallPage implements OnInit {
 
       if (this.calc.length == this.item.length) {
         console.log('finish');
+
 
         // if (this.item.height > 180) {
         //   this.item.need_scaftfolding = true
@@ -507,6 +472,7 @@ export class QuotationOverallPage implements OnInit {
     if (this.item[i].price_old != null) {
       let temp = this.item[i].price - this.item[i].price_old
       this.due += temp
+      console.log(this.due);
 
     }
   }
@@ -572,7 +538,7 @@ export class QuotationOverallPage implements OnInit {
 
       items.push(
         [
-          { text: this.item[i].location, border: [true, false, true, false], bold: true, decoration: 'underline' },
+          { text: this.item[i].location  + ' ' + this.item[i].location_ref, border: [true, false, true, false], bold: true, decoration: 'underline' },
           { text: '', alignment: 'center', border: [true, false, true, false] },
           { text: '', alignment: 'center', border: [true, false, true, false] },
           { text: '', alignment: 'right', border: [true, false, true, false] },
@@ -582,7 +548,7 @@ export class QuotationOverallPage implements OnInit {
 
       items.push(
         [
-          { text: width + '"' + ' x ' + height + '"', border: [true, false, true, false] },
+          { text: width + '"(w)' + ' x ' + height + '"(h)', border: [true, false, true, false] },
           { text: '', alignment: 'center', border: [true, false, true, false] },
           { text: '', alignment: 'center', border: [true, false, true, false] },
           { text: '', alignment: 'right', border: [true, false, true, false] },
@@ -891,10 +857,10 @@ export class QuotationOverallPage implements OnInit {
                 { text: ladderscaft, bold: true, border: [true, false, false, true] },
                 { text: LSprice, alignment: 'right', border: [false, false, true, true] }
               ],
-              // [
-              //   { text: 'TRANSPORTATION FEES (RM)', bold: true, border: [true, false, false, true] },
-              //   { text: '100.00', alignment: 'right', border: [false, false, true, true] },
-              // ],
+              [
+                { text: 'TRANSPORTATION FEES (RM)', bold: true, border: [true, false, false, true] },
+                { text: (this.info.transport_fee).toFixed(2), alignment: 'right', border: [false, false, true, true] },
+              ],
               // [
               //   { text: 'TRANSPORTATION FEES (RM)', bold: true, border: [true, false, false, true] },
               //   { text: '100.00', alignment: 'right', border: [false, false, true, true] },
@@ -1116,7 +1082,7 @@ export class QuotationOverallPage implements OnInit {
           isCurtain = true
           items.push(
             [
-              { text: this.item[i].location + ' - W' + count + ' ' + width + ' x ' + height, border: [true, false, true, false], bold: true, decoration: 'underline' },
+              { text: this.item[i].location  + ' ' + this.item[i].location_ref + ' ' + width + '"(w) x ' + height + '"(h)', border: [true, false, true, false], bold: true, decoration: 'underline' },
               { text: '', alignment: 'center', border: [true, false, true, false] },
               { text: '', alignment: 'center', border: [true, false, true, false] },
               { text: '', alignment: 'right', border: [true, false, true, false] },
@@ -1187,7 +1153,7 @@ export class QuotationOverallPage implements OnInit {
           isSheer = true
           items.push(
             [
-              { text: this.item[i].location + ' - W' + count + ' ' + width + ' x ' + height, border: [true, false, true, false], bold: true, decoration: 'underline' },
+              { text: this.item[i].location  + ' ' + this.item[i].location_ref + ' ' + width + '"(w) x ' + height + '"(h)', border: [true, false, true, false], bold: true, decoration: 'underline' },
               { text: '', alignment: 'center', border: [true, false, true, false] },
               { text: '', alignment: 'center', border: [true, false, true, false] },
               { text: '', alignment: 'right', border: [true, false, true, false] },
@@ -1247,7 +1213,7 @@ export class QuotationOverallPage implements OnInit {
           isSheer = true
           items.push(
             [
-              { text: this.item[i].location + ' - W' + count + ' ' + width + ' x ' + height, border: [true, false, true, false], bold: true, decoration: 'underline' },
+              { text: this.item[i].location  + ' ' + this.item[i].location_ref + ' ' + width + '"(w) x ' + height + '"(h)', border: [true, false, true, false], bold: true, decoration: 'underline' },
               { text: '', alignment: 'center', border: [true, false, true, false] },
               { text: '', alignment: 'center', border: [true, false, true, false] },
               { text: '', alignment: 'right', border: [true, false, true, false] },
@@ -1333,7 +1299,7 @@ export class QuotationOverallPage implements OnInit {
 
         items.push(
           [
-            { text: this.item[i].location + ' - W' + count + ' ' + width + ' x ' + height, border: [true, false, true, false], bold: true, decoration: 'underline' },
+            { text: this.item[i].location  + ' ' + this.item[i].location_ref + ' ' + width + '"(w) x ' + height + '"(h)', border: [true, false, true, false], bold: true, decoration: 'underline' },
             { text: '', alignment: 'center', border: [true, false, true, false] },
             { text: '', alignment: 'center', border: [true, false, true, false] },
             { text: '', alignment: 'right', border: [true, false, true, false] },
@@ -1564,13 +1530,13 @@ export class QuotationOverallPage implements OnInit {
           table: {
             widths: ['80%', '20%'],
             body: [
-              // [
-              //   { text: 'TRANSPORTATION FEES (RM)', bold: true, border: [true, false, false, true] },
-              //   { text: '100.00', bold: true, alignment: 'right', border: [false, false, true, true] },
-              // ],
               [
-                { text: ladderscaft, bold: true, border: [true, false, false, true] },
-                { text: LSprice, alignment: 'right', border: [false, false, true, true] }
+                { text: ladderscaft, bold: true, border: [true, false, false, false] },
+                { text: LSprice, alignment: 'right', border: [false, false, true, false] }
+              ],
+              [
+                { text: 'TRANSPORTATION FEES (RM)', bold: true, border: [true, false, false, true] },
+                { text: (this.info.transport_fee).toFixed(2), bold: true, alignment: 'right', border: [false, false, true, true] },
               ],
               [
                 { text: 'FINAL TOTAL (RM)', bold: true, border: [true, false, false, true] },
@@ -1717,8 +1683,8 @@ export class QuotationOverallPage implements OnInit {
 
           if (x == 1) {
             console.log(this.info.quotation_detailed);
-            
-            this.info.quotation_detailed.push({ name: this.datepipe.transform(new Date(), 'dd/MM/yyyy hh:mm:ss a'), link: link['imageURL']})
+
+            this.info.quotation_detailed.push({ name: this.datepipe.transform(new Date(), 'dd/MM/yyyy hh:mm:ss a'), link: link['imageURL'] })
 
             let temp = {
               no: this.sales_id,
@@ -1729,7 +1695,7 @@ export class QuotationOverallPage implements OnInit {
               this.pdfmakerClient(true)
             })
           } else if (x == 2) {
-            this.info.quotation_client.push({ name: this.datepipe.transform(new Date(), 'dd/MM/yyyy hh:mm:ss a'), link: link['imageURL']})
+            this.info.quotation_client.push({ name: this.datepipe.transform(new Date(), 'dd/MM/yyyy hh:mm:ss a'), link: link['imageURL'] })
 
             let temp = {
               no: this.sales_id,

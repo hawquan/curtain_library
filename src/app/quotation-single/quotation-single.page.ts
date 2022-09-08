@@ -165,7 +165,8 @@ export class QuotationSinglePage implements OnInit {
 
     let temp = {
       width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id, pieces_curtain: this.item.pieces_curtain || 0,
+      pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0
     }
 
     console.log(temp);
