@@ -31,6 +31,15 @@
       </ion-input>
     </div>
 
+    <!-- Area -->
+    <div
+      style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+      <div style="min-width: 70px; color: #999999">Refer </div>
+      <ion-input readonly placeholder="Eg. Living Room" [(ngModel)]="item.location_ref"
+        style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+      </ion-input>
+    </div>
+
     <!-- Width/Height -->
     <div *ngIf="item.width_tech == null && item.height_tech == null"
       style="width: 100%;display: flex;align-items: center;">

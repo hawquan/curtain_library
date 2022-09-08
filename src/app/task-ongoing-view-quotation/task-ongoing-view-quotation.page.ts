@@ -113,7 +113,23 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       total += 200
     }
 
+    total += this.info.transport_fee
     return total || 0
+  }
+
+  addCharges() {
+    let addCharges = 0
+
+    if (this.ladder) {
+      addCharges += 100
+    }
+    if (this.scaftfolding) {
+      addCharges += 200
+    }
+
+    addCharges += this.info.transport_fee
+
+    return addCharges || 0
   }
 
 
@@ -168,7 +184,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           lining = true
           lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
         } else {
-          curtain = false
+          lining = false
         }
       } else {
         lining = false
@@ -179,7 +195,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           sheer = true
           sheer_id = this.fabricSheer.filter(x => x.name == this.item[i].fabric_sheer)[0]['id']
         } else {
-          curtain = false
+          sheer = false
         }
       } else {
         sheer = false
@@ -227,7 +243,8 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
     let temp = {
       width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id, pieces_curtain: this.item[i].pieces_curtain || 0,
+      pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0
     }
 
     console.log(temp);

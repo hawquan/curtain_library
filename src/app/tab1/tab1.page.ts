@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
-import { ModalController, NavController } from '@ionic/angular';
+import { ActionSheetController, ModalController, NavController } from '@ionic/angular';
 import firebase from 'firebase';
 import { TailorTaskDetailPage } from '../tailor-task-detail/tailor-task-detail.page';
 import { TaskDetailCompletedReviewPage } from '../task-detail-completed-review/task-detail-completed-review.page';
@@ -18,6 +18,7 @@ export class Tab1Page implements OnInit {
     private http: HttpClient,
     private modal: ModalController,
     private actRoute: ActivatedRoute,
+    private actionSheetController: ActionSheetController,
   ) { }
 
   user = [] as any
@@ -164,11 +165,11 @@ export class Tab1Page implements OnInit {
 
   filterOnGoingList(type) {
     if (type == 'sales') {
-      return this.salesList.filter(x => x.step >= 2 && x.step < 5).sort((a,b) => b.no - a.no)
+      return this.salesList.filter(x => x.step >= 2 && x.step < 5).sort((a, b) => b.no - a.no)
     } else if (type == 'tech') {
-      return this.salesList.filter(x => x.step >= 3 && x.step < 5).sort((a,b) => b.no - a.no)
+      return this.salesList.filter(x => x.step >= 3 && x.step < 5).sort((a, b) => b.no - a.no)
     } else if (type == 'tailor') {
-      return this.salesList.filter(x => x.step >= 4 && x.step < 5).sort((a,b) => b.no - a.no)
+      return this.salesList.filter(x => x.step >= 4 && x.step < 5).sort((a, b) => b.no - a.no)
     }
     // else if (type == 'installer') {
     //   return this.pendingListInstaller.filter(x => x.step >= 4 && x.step < 5)
@@ -185,7 +186,7 @@ export class Tab1Page implements OnInit {
     // } else if (type == 'installer') {
     //   return this.salesList.filter(x => x.step == 5)
     // }
-    return this.salesList.filter(x => x.step == 5).sort((a,b) => b.no - a.no)
+    return this.salesList.filter(x => x.step == 5).sort((a, b) => b.no - a.no)
 
   }
 
@@ -346,6 +347,52 @@ export class Tab1Page implements OnInit {
       }
     }
     this.nav.navigateForward(['installer-task-detail'], navExtra)
+  }
+
+  async presentActionSheet(x) {
+
+    let destination = x.customer_address
+    console.log(destination);
+
+    //1. Declaring an empty array
+    let actionLinks = [];
+
+    //2. Populating the empty array
+
+    //2A. Add Google Maps App
+    actionLinks.push({
+      text: 'Google Maps App',
+      icon: 'navigate',
+      handler: () => {
+        window.open("https://www.google.com/maps/search/?api=1&query=" + destination)
+      }
+    })
+
+
+    //2B. Add Waze App
+    actionLinks.push({
+      text: 'Waze App',
+      icon: 'navigate',
+      handler: () => {
+        window.open("https://waze.com/ul?q=" + destination + "&navigate=yes&z=6");
+      }
+    });
+
+    //2C. Add a cancel button, you know, just to close down the action sheet controller if the user can't make up his/her mind
+    actionLinks.push({
+      text: 'Cancel',
+      icon: 'close',
+      role: 'cancel',
+      handler: () => {
+        // console.log('Cancel clicked');
+      }
+    })
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Navigate',
+      buttons: actionLinks
+    });
+    await actionSheet.present();
   }
 
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
-import { ModalController, NavController } from '@ionic/angular';
+import { ActionSheetController, ModalController, NavController } from '@ionic/angular';
 import Swal from 'sweetalert2';
 import { QuotationSinglePage } from '../quotation-single/quotation-single.page';
 import { TaskCreatorPage } from '../task-creator/task-creator.page';
@@ -20,7 +20,8 @@ export class TaskOngoingPage implements OnInit {
     private actroute: ActivatedRoute,
     public modal: ModalController,
     private http: HttpClient,
-  ) { }
+    private actionSheetController: ActionSheetController,
+    ) { }
 
   Pleat = []
   PleatChoice = ''
@@ -432,6 +433,52 @@ export class TaskOngoingPage implements OnInit {
     })
 
     this.nav.navigateForward(['task-ongoing-view-quotation'], navExtra)
+  }
+
+  async presentActionSheet() {
+
+    let destination = this.info['customer_address']
+    console.log(destination);
+
+    //1. Declaring an empty array
+    let actionLinks = [];
+
+    //2. Populating the empty array
+
+    //2A. Add Google Maps App
+    actionLinks.push({
+      text: 'Google Maps App',
+      icon: 'navigate',
+      handler: () => {
+        window.open("https://www.google.com/maps/search/?api=1&query=" + destination)
+      }
+    })
+
+
+    //2B. Add Waze App
+    actionLinks.push({
+      text: 'Waze App',
+      icon: 'navigate',
+      handler: () => {
+        window.open("https://waze.com/ul?q=" + destination + "&navigate=yes&z=6");
+      }
+    });
+
+    //2C. Add a cancel button, you know, just to close down the action sheet controller if the user can't make up his/her mind
+    actionLinks.push({
+      text: 'Cancel',
+      icon: 'close',
+      role: 'cancel',
+      handler: () => {
+        // console.log('Cancel clicked');
+      }
+    })
+
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Navigate',
+      buttons: actionLinks
+    });
+    await actionSheet.present();
   }
 
   back() {

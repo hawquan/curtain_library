@@ -66,6 +66,7 @@ export class TaskDetailReviewPage implements OnInit {
   ngOnInit() {
     this.item = this.navparam.get('item')
     this.position = this.navparam.get('position')
+    this.tracklist = this.navparam.get('tracklist')
 
     console.log(this.item, this.position);
 
@@ -260,131 +261,133 @@ export class TaskDetailReviewPage implements OnInit {
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
 
       if (this.hookview) {
-        if (this.item.fabric_lining != null) {
-          if (this.item.fabric_type == 'C') {
-            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'fabric', 'curtain', 'bracket',
-              'hook', 'belt', 'touchfloor', 'sidehook', 'lining'].every(a => this.checker[a])) {
+        // if (this.item.fabric_lining != null) {
+        if (this.item.fabric_type == 'C') {
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'bracket',
+            'hook', 'belt', 'touchfloor', 'sidehook'].every(a => this.checker[a])) {
 
-              this.pass()
+            this.pass()
 
-            } else {
-              this.emptychecker()
-            }
-          } else if (this.item.fabric_type == 'S') {
-            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_sheer', 'fabric',
-              'sheer', 'sheer_bracket', 'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
-
-              this.pass()
-
-            } else {
-              this.emptychecker()
-            }
-          } else if (this.item.fabric_type == 'CS') {
-            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'pieces_sheer', 'fabric', 'curtain', 'bracket',
-              'hook', 'belt', 'touchfloor', 'sidehook', 'lining', 'sheer', 'sheer_bracket', 'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
-
-              this.pass()
-
-            } else {
-              this.emptychecker()
-            }
+          } else {
+            this.emptychecker()
           }
-        } else {
-          if (this.item.fabric_type == 'C') {
-            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'fabric', 'curtain', 'bracket',
-              'hook', 'belt', 'touchfloor', 'sidehook'].every(a => this.checker[a])) {
+        } else if (this.item.fabric_type == 'S') {
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_sheer', 'sheer_bracket',
+            'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
 
-              this.pass()
+            this.pass()
 
-            } else {
-              this.emptychecker()
-            }
-          } else if (this.item.fabric_type == 'S') {
-            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_sheer', 'fabric',
-              'sheer', 'sheer_bracket', 'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
+          } else {
+            this.emptychecker()
+          }
+        } else if (this.item.fabric_type == 'CS') {
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'pieces_sheer', 'bracket',
+            'hook', 'belt', 'touchfloor', 'sidehook', 'sheer_bracket', 'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
 
-              this.pass()
+            this.pass()
 
-            } else {
-              this.emptychecker()
-            }
-          } else if (this.item.fabric_type == 'CS') {
-            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'pieces_sheer', 'fabric', 'curtain', 'bracket',
-              'hook', 'belt', 'touchfloor', 'sidehook', 'sheer', 'sheer_bracket', 'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
-
-              this.pass()
-
-            } else {
-              this.emptychecker()
-            }
+          } else {
+            this.emptychecker()
           }
         }
+        // } 
+        // else {
+        //   if (this.item.fabric_type == 'C') {
+        //     if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'bracket',
+        //       'hook', 'belt', 'touchfloor', 'sidehook'].every(a => this.checker[a])) {
+
+        //       this.pass()
+
+        //     } else {
+        //       this.emptychecker()
+        //     }
+        //   } else if (this.item.fabric_type == 'S') {
+        //     if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_sheer', 'sheer_bracket',
+        //       'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
+
+        //       this.pass()
+
+        //     } else {
+        //       this.emptychecker()
+        //     }
+        //   } else if (this.item.fabric_type == 'CS') {
+        //     if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'pieces_sheer', 'bracket',
+        //       'hook', 'belt', 'touchfloor', 'sidehook', 'sheer_bracket', 'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
+
+        //       this.pass()
+
+        //     } else {
+        //       this.emptychecker()
+        //     }
+        //   }
+        // }
 
       } else {
-        if (this.item.fabric_lining != null) {
-          if (this.item.fabric_type == 'C') {
-            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'fullness', 'pieces', 'fabric', 'curtain', 'bracket',
-              'belt', 'touchfloor', 'sidehook', 'lining'].every(a => this.checker[a])) {
+        // if (this.item.fabric_lining != null) {
+        if (this.item.fabric_type == 'C') {
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'bracket',
+            'belt', 'touchfloor', 'sidehook'].every(a => this.checker[a])) {
 
-              this.pass()
+            this.pass()
 
-            } else {
-              this.emptychecker()
-            }
-          } else if (this.item.fabric_type == 'S') {
-            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_sheer', 'fabric',
-              'sheer', 'sheer_bracket', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
-
-              this.pass()
-
-            } else {
-              this.emptychecker()
-            }
-          } else if (this.item.fabric_type == 'CS') {
-            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'pieces_sheer', 'fabric', 'curtain', 'bracket',
-              'belt', 'touchfloor', 'sidehook', 'lining', 'sheer', 'sheer_bracket', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
-
-              this.pass()
-
-            } else {
-              this.emptychecker()
-            }
+          } else {
+            this.emptychecker()
           }
-        } else {
-          if (this.item.fabric_type == 'C') {
-            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'fabric', 'curtain', 'bracket',
-              'belt', 'touchfloor', 'sidehook'].every(a => this.checker[a])) {
+        } else if (this.item.fabric_type == 'S') {
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_sheer',
+            'sheer_bracket', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
 
-              this.pass()
+            this.pass()
 
-            } else {
-              this.emptychecker()
-            }
-          } else if (this.item.fabric_type == 'S') {
-            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_sheer', 'fabric',
-              'sheer', 'sheer_bracket', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
+          } else {
+            this.emptychecker()
+          }
+        } else if (this.item.fabric_type == 'CS') {
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'pieces_sheer', 'bracket',
+            'belt', 'touchfloor', 'sidehook', 'sheer_bracket', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
 
-              this.pass()
+            this.pass()
 
-            } else {
-              this.emptychecker()
-            }
-          } else if (this.item.fabric_type == 'CS') {
-            if (['area', 'tech_width', 'tech_height', 'product', 'track', 'pleat', 'fullness', 'pieces_curtain', 'pieces_sheer', 'fabric', 'curtain', 'bracket',
-              'belt', 'touchfloor', 'sidehook', 'sheer', 'sheer_bracket', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
-
-              this.pass()
-
-            } else {
-              this.emptychecker()
-            }
+          } else {
+            this.emptychecker()
           }
         }
+        // } 
+        // else {
+        //   if (this.item.fabric_type == 'C') {
+        //     if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'bracket',
+        //       'belt', 'touchfloor', 'sidehook'].every(a => this.checker[a])) {
+
+        //       this.pass()
+
+        //     } else {
+        //       this.emptychecker()
+        //     }
+        //   } else if (this.item.fabric_type == 'S') {
+        //     if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_sheer', 'sheer_bracket',
+        //       'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
+
+        //       this.pass()
+
+        //     } else {
+        //       this.emptychecker()
+        //     }
+        //   } else if (this.item.fabric_type == 'CS') {
+        //     if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'pieces_sheer', 'bracket',
+        //       'belt', 'touchfloor', 'sidehook', 'sheer_bracket', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
+
+        //       this.pass()
+
+        //     } else {
+        //       this.emptychecker()
+        //     }
+        //   }
+        // }
       }
 
     } else if (this.item['type'] == 'Blinds') {
       if (this.item.pleat == 'Roman Blind') {
-        if (['area', 'tech_width', 'tech_height', 'pleat', 'product', 'pieces_blind', 'fabric', 'fabric_curtain', 'bracket'].every(a => this.checker[a])) {
+        if (['area', 'area_ref', 'tech_width', 'tech_height', 'pleat', 'product', 'pieces_blind', 'bracket'].every(a => this.checker[a])) {
 
           this.pass()
 
@@ -392,7 +395,7 @@ export class TaskDetailReviewPage implements OnInit {
           this.emptychecker()
         }
       } else if (this.item.pleat == 'Zebra Blind' || this.item.pleat == 'Roller Blind' || this.item.pleat == 'Wooden Blind') {
-        if (['area', 'tech_width', 'tech_height', 'pleat', 'product', 'pieces_blind', 'fabric', 'bracket', 'decoration'].every(a => this.checker[a])) {
+        if (['area', 'area_ref', 'tech_width', 'tech_height', 'pleat', 'product', 'pieces_blind', 'bracket', 'decoration'].every(a => this.checker[a])) {
 
           this.pass()
 
@@ -400,7 +403,7 @@ export class TaskDetailReviewPage implements OnInit {
           this.emptychecker()
         }
       } else {
-        if (['area', 'tech_width', 'tech_height', 'pleat', 'product', 'pieces_blind', 'fabric', 'bracket'].every(a => this.checker[a])) {
+        if (['area', 'area_ref', 'tech_width', 'tech_height', 'pleat', 'product', 'pieces_blind', 'fabric', 'bracket'].every(a => this.checker[a])) {
 
           this.pass()
 
@@ -411,7 +414,7 @@ export class TaskDetailReviewPage implements OnInit {
 
 
     } else {
-      if (['area', 'tech_width', 'tech_height', 'product', 'bracket',
+      if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'bracket',
         'belt', 'hook'].every(a => this.checker[a])) {
 
         this.pass()
@@ -834,11 +837,14 @@ export class TaskDetailReviewPage implements OnInit {
         no: this.item.no,
         height_tech: this.item.height_tech,
         width_tech: this.item.width_tech,
+        track: this.item.track,
         bracket: this.item.bracket,
         belt: this.item.belt,
         hook: this.item.hook,
         sidehook: this.item.sidehook,
         touchfloor: this.item.touchfloor,
+        pieces_curtain: this.item.pieces_curtain,
+        pieces_sheer: this.item.pieces_sheer,
         sheer_bracket: this.item.sheer_bracket,
         sheer_belt: this.item.sheer_belt,
         sheer_hook: this.item.sheer_hook,

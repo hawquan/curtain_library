@@ -627,10 +627,11 @@
           Revisit Needed
         </div>
 
-        <div *ngFor="let x of salesListRejected; let i = index;" (click)="toDetailRejected(x,i)"
-          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px;margin-top: 10px; margin-bottom: 15px; background-color: #ffffff;">
+        <div *ngFor="let x of salesListRejected; let i = index;"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px;margin-top: 10px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
 
-          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+          <div (click)="toDetailRejected(x,i)"
+            style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
             <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
@@ -658,6 +659,8 @@
 
           </div>
 
+          <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
+          font-size: 12px;padding: 3px 5px;">Navigate</div>
         </div>
       </div>
 
@@ -695,10 +698,11 @@
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div *ngFor="let x of filterPendingList('sales'); let i = index;" (click)="toDetail(x,i)"
-          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+        <div *ngFor="let x of filterPendingList('sales'); let i = index;"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
 
-          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+          <div (click)="toDetail(x,i)"
+            style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
             <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
@@ -725,6 +729,9 @@
             </div>
 
           </div>
+
+          <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
+            font-size: 12px;padding: 3px 5px;">Navigate</div>
 
         </div>
       </div>
@@ -738,10 +745,11 @@
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div *ngFor="let x of filterOnGoingList('sales'); let i = index;" (click)="toOngoing(x,i)"
-          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+        <div *ngFor="let x of filterOnGoingList('sales'); let i = index;"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
 
-          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+          <div (click)="toOngoing(x,i)"
+            style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
             <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
@@ -768,6 +776,10 @@
             </div>
 
           </div>
+
+          <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
+            font-size: 12px;padding: 3px 5px;">Navigate</div>
+
         </div>
 
         <!-- <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
@@ -809,10 +821,11 @@
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div *ngFor="let x of filterCompletedList('sales'); let i = index;" (click)="toCompletedDetail(x,i)"
-          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+        <div *ngFor="let x of filterCompletedList('sales'); let i = index;"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
 
-          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+          <div (click)="toCompletedDetail(x,i)"
+            style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
             <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
@@ -840,7 +853,11 @@
 
           </div>
 
+          <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
+            font-size: 12px;padding: 3px 5px;">Navigate</div>
+
         </div>
+
       </div>
     </div>
 
@@ -902,10 +919,11 @@
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div *ngFor="let x of filterPendingList('tech'); let i = index;" (click)="toDetail(x,i)"
-          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+        <div *ngFor="let x of filterPendingList('tech'); let i = index;"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
 
-          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+          <div (click)="toDetail(x,i)"
+            style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
             <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
@@ -932,6 +950,9 @@
             </div>
 
           </div>
+
+          <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
+            font-size: 12px;padding: 3px 5px;">Navigate</div>
 
         </div>
       </div>
@@ -945,10 +966,11 @@
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div *ngFor="let x of filterOnGoingList('tech'); let i = index;" (click)="toOngoing(x,i)"
-          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+        <div *ngFor="let x of filterOnGoingList('tech'); let i = index;"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
 
-          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+          <div (click)="toOngoing(x,i)"
+            style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
             <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
@@ -975,6 +997,9 @@
             </div>
 
           </div>
+
+          <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;
+            font-size: 12px;padding: 3px 5px;">Navigate</div>
         </div>
 
         <!-- <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
@@ -1016,10 +1041,11 @@
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div *ngFor="let x of filterCompletedList('tech'); let i = index;" (click)="toCompletedDetail(x,i)"
-          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+        <div *ngFor="let x of filterCompletedList('tech'); let i = index;"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
 
-          <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+          <div (click)="toCompletedDetail(x,i)"
+            style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
             <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
@@ -1046,6 +1072,9 @@
             </div>
 
           </div>
+
+          <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
+            font-size: 12px;padding: 3px 5px;">Navigate</div>
 
         </div>
       </div>
@@ -1320,7 +1349,7 @@
         </div>
 
         <div *ngFor="let x of filterPendingList('installer'); let i = index;" (click)="toDetail(x,i)"
-          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
 
           <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
             <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
@@ -1349,6 +1378,9 @@
             </div>
 
           </div>
+
+          <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
+          font-size: 12px;padding: 3px 5px;">Navigate</div>
 
         </div>
       </div>
@@ -1406,7 +1438,7 @@
         </div>
 
         <div *ngFor="let x of filterCompletedList('installer'); let i = index;" (click)="toCompletedDetail(x,i)"
-          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
 
           <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
             <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
@@ -1435,6 +1467,9 @@
             </div>
 
           </div>
+
+          <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
+          font-size: 12px;padding: 3px 5px;">Navigate</div>
 
         </div>
       </div>

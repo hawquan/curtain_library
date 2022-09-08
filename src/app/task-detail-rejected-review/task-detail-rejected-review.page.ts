@@ -213,6 +213,8 @@ export class TaskDetailRejectedReviewPage implements OnInit {
       status_tech: 'Approved',
       step: 3,
       photos: JSON.stringify(this.item.photos),
+      need_ladder: this.item.need_ladder,
+      need_scaftfolding: this.item.need_scaftfolding,
       remark_sale: this.item.remark_sales
     }
     console.log(temp);
@@ -222,7 +224,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
       Swal.fire({
         title: 'Update Task?',
         text: 'Update task of "' + this.item.location + '" to REVISITED. Are you sure?',
-        icon: 'success',
+        icon: 'question',
         heightAuto: false,
         showConfirmButton: true,
         showCancelButton: true,
@@ -243,7 +245,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
       Swal.fire({
         title: 'Update Item?',
         text: 'Update task of "' + this.item.location + '" to REVISITED. Are you sure?',
-        icon: 'success',
+        icon: 'question',
         heightAuto: false,
         showConfirmButton: true,
         showCancelButton: true,
@@ -373,9 +375,11 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
     }
 
-    if (this.item.height > 180) {
+    console.log(height);
+    
+    if (height > 180) {
       this.item.need_scaftfolding = true
-    } else if (this.item.height >= 156 && this.item.height <= 180) {
+    } else if (height >= 156 && height <= 180) {
       this.item.need_ladder = true
     } else {
       this.item.need_scaftfolding = false
@@ -384,7 +388,8 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
     let temp = {
       width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id,
+      pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0
     }
 
     console.log(temp);

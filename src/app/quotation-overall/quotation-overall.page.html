@@ -17,13 +17,15 @@
     <div style="width: 58%;" *ngIf="user.position == 'Sales'">
       <div style="width: 100%;display: flex;align-items: center;justify-content: space-between;">
         <div style="width: 50%;">
-          <ion-button style="height: fit-content;width: 100%;--background: #a17635;--background-activated: #b2894c;text-transform: none;"
+          <ion-button
+            style="height: fit-content;width: 100%;--background: #a17635;--background-activated: #b2894c;text-transform: none;"
             (click)="quotationinfo('client')">
             <div style="font-size: 10px;padding: 5px 0;">Client's<br />Quotation</div>
           </ion-button>
         </div>
         <div style="width: 50%;margin-left: 5px;">
-          <ion-button style="height: fit-content;width: 100%;--background: #a17635;--background-activated: #b2894c;text-transform: none;"
+          <ion-button
+            style="height: fit-content;width: 100%;--background: #a17635;--background-activated: #b2894c;text-transform: none;"
             (click)="quotationinfo('detailed')">
             <div style="font-size: 10px;padding: 5px 0;">Detailed<br />Quotation</div>
           </ion-button>
@@ -446,6 +448,24 @@
           </div>
         </div>
 
+        <!-- Transportation fee -->
+        <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+
+          <div>
+            Transportation Fee
+          </div>
+
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              1
+            </div>
+            <div style="width: 70%;text-align: end;">
+              {{info.transport_fee}}
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <div *ngIf="(info.rejected) && (ladder || scaftfolding)" style="width: 100%; font-size: 13px; font-weight: 400; color: #222222; padding: 10px 0px; margin: 10px 0px;
@@ -463,7 +483,7 @@
               1
             </div>
             <div style="width: 70%;text-align: end;">
-              100
+              100.00
             </div>
           </div>
         </div>
@@ -480,7 +500,24 @@
               1
             </div>
             <div style="width: 70%;text-align: end;">
-              200
+              200.00
+            </div>
+          </div>
+        </div>
+
+        <!-- Transportation fee -->
+        <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+
+          <div>
+            Transportation Fee
+          </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              1
+            </div>
+            <div style="width: 70%;text-align: end;">
+              {{info.transport_fee | currency: ' '}}
             </div>
           </div>
         </div>
@@ -489,14 +526,7 @@
 
       <!-- Price -->
       <div style="display: flex;justify-content: flex-end;">
-        <div *ngIf="!ladder && !scaftfolding" style="font-size: 18px; font-weight: 700; color: #000;">
-          RM 0.00</div>
-        <div *ngIf="ladder && !scaftfolding" style="font-size: 18px; font-weight: 700; color: #000;">
-          RM 100.00</div>
-        <div *ngIf="scaftfolding && !ladder" style="font-size: 18px; font-weight: 700; color: #000;">
-          RM 200.00</div>
-        <div *ngIf="scaftfolding && ladder" style="font-size: 18px; font-weight: 700; color: #000;">
-          RM 300.00</div>
+        <div style="font-size: 18px; font-weight: 700; color: #000;">{{addCharges() | currency: 'RM '}}</div>
       </div>
 
     </div>
@@ -509,10 +539,10 @@
     style="background: #ebd1af; display: flex;padding: 10px 15px;align-items: center;justify-content: space-between;">
 
     <div style="padding-left: 5px;">
-      <div *ngIf="due != 0 && due > 0 && rejected == true"
+      <div *ngIf="due != 0 && due > 0 && info.rejected == true"
         style="color: red;font-size: 14px;font-weight: 500;margin-bottom: 5px;">Due :
         {{due | currency: 'RM '}}</div>
-      <div *ngIf="due != 0 && due < 0 && rejected == true"
+      <div *ngIf="due != 0 && due < 0 && info.rejected == true"
         style="color:green;font-size: 14px;font-weight: 500;margin-bottom: 5px;">
         Refund : {{due | currency: 'RM '}}</div>
       <div style="width: 92px;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
