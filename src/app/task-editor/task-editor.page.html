@@ -16,6 +16,10 @@
 
 <ion-content style="--background: #FAF7F2">
 
+  <!-- <image-drawing [src]="snapURL" width="100px" height="100px" outputMimeType="'image/jpeg'" outputQuality="0.8"
+    (save)="save($event)" (cancel)="cancel()">
+  </image-drawing> -->
+
   <div style="width: 100%; padding:10px;">
 
     <!-- Step 1 -->
@@ -189,7 +193,7 @@
         <div
           style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
           <div style="min-width: 70px;color: #999999">Pieces </div>
-          <ion-input placeholder="Eg. 2" [(ngModel)]="item.pieces_curtain"  type="number"
+          <ion-input placeholder="Eg. 2" [(ngModel)]="item.pieces_curtain" type="number"
             style="width: 100% ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
           </ion-input>
         </div>
@@ -402,7 +406,7 @@
         <div *ngIf="showSheer">
 
           <!-- Bracket -->
-          <div
+          <div *ngIf="item.fabric_type != 'CS'"
             style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
 
             <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
@@ -495,7 +499,7 @@
           </div>
 
           <!-- Belt -->
-          <div
+          <div *ngIf="item.fabric_type != 'CS'"
             style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: flex-start; flex-direction: column;">
 
             <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
@@ -601,6 +605,11 @@
         </div>
 
       </div>
+
+
+      <!-- <div (click)="opencamera()" style="width: 100px;height: 30px;background: orange;">Open camere</div> -->
+
+
 
     </div>
 

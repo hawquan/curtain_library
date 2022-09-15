@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
+import { ImageDrawingModule } from 'ngx-image-drawing';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 
@@ -13,7 +14,8 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule
+    Tab1PageRoutingModule,
+    ImageDrawingModule,
   ],
   declarations: [Tab1Page]
 })

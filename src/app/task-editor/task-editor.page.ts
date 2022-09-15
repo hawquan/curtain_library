@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ModalController, NavController, NavParams } from '@ionic/angular';
 import Swal from 'sweetalert2';
 import { SelectorPage } from '../selector/selector.page';
+import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 
 @Component({
   selector: 'app-task-editor',
@@ -18,6 +19,7 @@ export class TaskEditorPage implements OnInit {
     private model: ModalController, private modalcontroller: ModalController,
     private navparam: NavParams,
     private http: HttpClient,
+    private camera: Camera,
   ) { }
 
   item = { photos: [] as any } as any
@@ -64,7 +66,7 @@ export class TaskEditorPage implements OnInit {
   areaList = ['Living Hall', 'Dining Hall', 'Master Bedroom', 'Kitchen', 'Daughter Room', 'Son Room', 'Guestroom', 'Balcony', 'Room', 'Laundry Area', 'Parent Room'
     , 'Study Room', 'Prayer Room', 'Entertainment Hall'].sort((a: any, b: any) => (a > b ? 1 : -1))
   showSelection = false
-
+  snapURL
   ngOnInit() {
 
     this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
@@ -318,7 +320,7 @@ export class TaskEditorPage implements OnInit {
 
   updateItem() {
     this.item.location = this.keyword
-    
+
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
 
       if (this.item.pleat == 'Eyelet Design' || this.item.pleat == 'Ripplefold') {
@@ -326,7 +328,7 @@ export class TaskEditorPage implements OnInit {
 
         if (this.item.fabric_type == 'C') {
 
-          if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'bracket', 'sidehook', 'belt', 'touchfloor', 'fabric'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'bracket', 'sidehook', 'belt', 'touchfloor', 'fabric'].every(a => this.item[a])) {
 
             let temp = {
               no: this.item.no,
@@ -370,7 +372,7 @@ export class TaskEditorPage implements OnInit {
           }
         } else if (this.item.fabric_type == 'S') {
           console.log('S1');
-          if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_sheer', 'sheer_bracket', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric_sheer'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_sheer', 'sheer_bracket', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric_sheer'].every(a => this.item[a])) {
 
             let temp = {
               no: this.item.no,
@@ -413,7 +415,13 @@ export class TaskEditorPage implements OnInit {
           }
         } else if (this.item.fabric_type == 'CS') {
           console.log('CS1');
-          if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'pieces_sheer', 'bracket', 'sidehook', 'belt', 'touchfloor', 'sheer_bracket', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
+
+          this.item.custom_sheer_bracket = this.item.custom_bracket
+          this.item.sheer_bracket = this.item.bracket
+          this.item.custom_sheer_belt = true
+          this.item.sheer_belt = 'X'
+
+          if (['location', 'location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'pieces_sheer', 'bracket', 'sidehook', 'belt', 'touchfloor', 'sheer_bracket', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
 
             let temp = {
               no: this.item.no,
@@ -468,7 +476,7 @@ export class TaskEditorPage implements OnInit {
       } else {
         if (this.item.fabric_type == 'C') {
           console.log('C2');
-          if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'fabric'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'fabric'].every(a => this.item[a])) {
 
             let temp = {
               no: this.item.no,
@@ -516,7 +524,7 @@ export class TaskEditorPage implements OnInit {
 
         } else if (this.item.fabric_type == 'S') {
           console.log('S2');
-          if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_sheer', 'sheer_bracket', 'sheer_hook', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric_sheer'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_sheer', 'sheer_bracket', 'sheer_hook', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric_sheer'].every(a => this.item[a])) {
 
             let temp = {
               no: this.item.no,
@@ -561,7 +569,13 @@ export class TaskEditorPage implements OnInit {
           }
         } else if (this.item.fabric_type == 'CS') {
           console.log('CS2');
-          if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'pieces_sheer', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'sheer_bracket', 'sheer_hook', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
+
+          this.item.custom_sheer_bracket = this.item.custom_bracket
+          this.item.sheer_bracket = this.item.bracket
+          this.item.custom_sheer_belt = true
+          this.item.sheer_belt = 'X'
+
+          if (['location', 'location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'pieces_sheer', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'sheer_bracket', 'sheer_hook', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
 
             let temp = {
               no: this.item.no,
@@ -622,7 +636,7 @@ export class TaskEditorPage implements OnInit {
     } else if (this.item['type'] == 'Blinds') {
 
       if (this.item.pleat == 'Roman Blind') {
-        if (['location','location_ref', 'width', 'height', 'type', 'pieces_blind', 'fabric', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_blind', 'fabric', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
 
           let temp = {
             no: this.item.no,
@@ -664,7 +678,7 @@ export class TaskEditorPage implements OnInit {
           this.errorEmpty()
         }
       } else if (this.item.pleat == 'Zebra Blind' || this.item.pleat == 'Roller Blind' || this.item.pleat == 'Wooden Blind') {
-        if (['location','location_ref', 'width', 'height', 'type', 'pieces_blind', 'blind_decoration', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_blind', 'blind_decoration', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
 
           let temp = {
             no: this.item.no,
@@ -705,7 +719,7 @@ export class TaskEditorPage implements OnInit {
           this.errorEmpty()
         }
       } else {
-        if (['location','location_ref', 'width', 'height', 'type', 'pieces_blind', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_blind', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
 
           let temp = {
             no: this.item.no,
@@ -1120,7 +1134,7 @@ export class TaskEditorPage implements OnInit {
     let temp = {
       width: parseFloat(this.item.width), height: parseFloat(this.item.height), curtain: curtain, lining: lining, lining_id: lining_id,
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id,
-       pieces_curtain: this.item.pieces_curtain || 0,pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0
+      pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0
     }
 
     console.log(temp);
@@ -1167,6 +1181,31 @@ export class TaskEditorPage implements OnInit {
 
   }
 
+  opencamera(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+
+      console.log(imageData)
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.snapURL = base64Image
+     }, (err) => {
+      // Handle error
+     });
+  }
+
+  save(event){
+    alert(event)
+    alert(JSON.stringify(event))
+    console.log(event)
+  }
 
   imagectype;
   imagec;
