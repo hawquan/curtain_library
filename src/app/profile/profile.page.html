@@ -33,17 +33,17 @@
             <img *ngIf="user['photo']" style="object-fit: cover;" src="{{user['photo']}}">
           </ion-avatar>
 
-          <label for="filessquare" class="btn">
+          <label for="files" class="btn">
             <div style="color: white;text-align: center;margin-top: 10px;font-weight: 500;padding: 8px 6px;
-        background-color: #DEC5A5; border-radius: 20px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; font-size: 12px;">
-              Upload Image
+             background-color: #DEC5A5; border-radius: 20px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; font-size: 12px;">
+              Change Image
             </div>
           </label>
 
-          <input style="display: none" id="filessquare" class="inputclass" accept="image/*" type="file"
-            (change)="fileChange($event, 800,'this.user.photo')">
+          <input style="display: none" id="files" class="inputclass" accept="image/*" type="file"
+            (change)="fileChange($event, '', 600)">
 
-          <canvas style="display: none;" id="canvassquare"></canvas>
+          <canvas style="display: none;" id="canvas"></canvas>
         </div>
 
         <div style="width: 100%; display: flex; align-items: center; flex-direction: column; margin: 0 0 20px 20px;">
@@ -90,7 +90,7 @@
         <div style="font-size: 14px; font-weight: 400; letter-spacing: 0.5px; color: #576d89;">Phone</div>
         <div
           style="width: 100%; margin-top: 10px; border: 1px solid #e7f3f8; border-radius: 2px; background-color: #f5fafc;">
-          <ion-input placeholder="Enter Phone" [(ngModel)]="user['phone']"
+          <ion-input placeholder="Enter Phone" [(ngModel)]="user['phone']" type="number"
             style="background-color: #eeeeee; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
           </ion-input>
         </div>
@@ -99,7 +99,7 @@
     </div>
 
     <div style="display: flex;justify-content: center;padding-bottom: 20px;">
-      <div style="width: 50%;color: white;text-align: center;margin-top: 10px;font-weight: 500;padding: 8px 6px;
+      <div (click)="update()" style="width: 50%;color: white;text-align: center;margin-top: 10px;font-weight: 500;padding: 8px 6px;
         background-color: #DEC5A5; border-radius: 20px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
         Save
       </div>

@@ -360,7 +360,7 @@
         <div *ngIf="showSheer">
 
           <!-- Bracket -->
-          <div
+          <div *ngIf="item.fabric_type != 'CS'"
             style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
             <div style="min-width: 70px;color: #999999">Bracket </div>
             <!-- <ion-select class="ion-no-padding" [(ngModel)]="item.sheer_bracket" placeholder="Select Bracket"
@@ -408,7 +408,7 @@
           </div>
 
           <!-- Belt -->
-          <div
+          <div *ngIf="item.fabric_type != 'CS'"
             style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
             <div style="min-width: 70px;color: #999999">Belt </div>
             <!-- <ion-select class="ion-no-padding" [(ngModel)]="item.sheer_belt" placeholder="Tieback/Velco"

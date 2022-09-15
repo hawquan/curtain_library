@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { TaskDetailPageRoutingModule } from './task-detail-routing.module';
 
 import { TaskDetailPage } from './task-detail.page';
+import { ImageDrawingModule } from 'ngx-image-drawing';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TaskDetailPageRoutingModule
+    TaskDetailPageRoutingModule,
+    ImageDrawingModule
   ],
   declarations: [TaskDetailPage]
 })

@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import firebase from 'firebase';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -31,98 +32,151 @@ export class ProfilePage implements OnInit {
 
   }
 
-  imgurheaders = new HttpHeaders({
-    'Authorization': 'Client-ID 2dc0beb00bb3279'
-    // f425e102d31b175576a219bc7d3ba8ad82d85364
-    // CHANGE TO YOUR OWN ID
-  });
+  update() {
+    if (this.user['name'] == null || this.user['name'] == '') {
 
-  imgur(event, maxsize) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      })
 
-    return new Promise((resolve, reject) => {
-      if (event.target.files && event.target.files[0] && event.target.files[0].size < (10485768)) {
-        let imagectype = event.target.files[0].type;
-        EXIF.getData(event.target.files[0], () => {
-          console.log(event.target.files[0])
-          console.log(event.target.files[0].exifdata.Orientation);
-          var orientation = EXIF.getTag(this, "Orientation");
-          var can = document.createElement('canvas');
-          var ctx = can.getContext('2d');
-          var thisImage = new Image;
+      Toast.fire({
+        icon: 'error',
+        title: 'Name Cannot be Empty.'
+      })
 
-          var maxW = maxsize;
-          var maxH = maxsize;
-          thisImage.onload = (a) => {
+    } else if (this.user['phone'] == null || this.user['phone'] == '') {
 
-            console.log(a)
-            var iw = thisImage.width;
-            var ih = thisImage.height;
-            var scale = Math.min((maxW / iw), (maxH / ih));
-            var iwScaled = iw * scale;
-            var ihScaled = ih * scale;
-            can.width = iwScaled;
-            can.height = ihScaled;
-            ctx.save();
-            var width = can.width; var styleWidth = can.style.width;
-            var height = can.height; var styleHeight = can.style.height;
-            console.log(event.target.files[0])
-            if (event.target.files[0] && event.target.files[0].exifdata.Orientation) {
-              console.log(event.target.files[0].exifdata.Orientation)
-              if (event.target.files[0].exifdata.Orientation > 4) {
-                can.width = height; can.style.width = styleHeight;
-                can.height = width; can.style.height = styleWidth;
-              }
-              switch (event.target.files[0].exifdata.Orientation) {
-                case 2: ctx.translate(width, 0); ctx.scale(-1, 1); break;
-                case 3: ctx.translate(width, height); ctx.rotate(Math.PI); break;
-                case 4: ctx.translate(0, height); ctx.scale(1, -1); break;
-                case 5: ctx.rotate(0.5 * Math.PI); ctx.scale(1, -1); break;
-                case 6: ctx.rotate(0.5 * Math.PI); ctx.translate(0, -height); break;
-                case 7: ctx.rotate(0.5 * Math.PI); ctx.translate(width, -height); ctx.scale(-1, 1); break;
-                case 8: ctx.rotate(-0.5 * Math.PI); ctx.translate(-width, 0); break;
-              }
-            }
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      })
 
-            ctx.drawImage(thisImage, 0, 0, iwScaled, ihScaled);
-            ctx.restore();
+      Toast.fire({
+        icon: 'error',
+        title: 'Phone Cannot be Empty.'
+      })
 
-            let imagec = can.toDataURL();
-            this.user['photo'] = imagec;
-            let imgggg = imagec.replace(';base64,', "thisisathingtoreplace;")
-            let imgarr = imgggg.split("thisisathingtoreplace;")
-            let base64img = imgarr[1]
-            event.target.value = ''
+    } else {
 
-            let body = {
-              image: base64img // this is the base64img from upper part
-            }
-            // this.http.post('https://dpitbsic67.execute-api.ap-southeast-1.amazonaws.com/dev/upload', { image: imagec, folder: 'surefeet', userid: 'surefeet' }).subscribe((link) => {
-            //   // eval(name + '="' + link['imageURL'] + '"');
-
-            //   console.log(link['imageURL'])
-            //   this.user.image = link['imageURL']
-
-            // }, awe => {
-            //   console.log(awe)
-            //   reject(awe)
-            // })
-
-          }
-          thisImage.src = URL.createObjectURL(event.target.files[0]);
-          // eval('this.'+el+'.nativeElement.value = null;')
-        });
-      } else {
-        reject("Your Current Image Too Large, " + event.target.files[0].size / (10241024) + "MB! (Please choose file lesser than 8MB)")
+      let temp = {
+        id: this.user.id,
+        name: this.user['name'] || '',
+        phone: this.user['phone'] || 0,
+        photo: this.user['photo'],
       }
-    })
+
+      console.log(temp);
+      Swal.fire({
+        title: 'Update Profile',
+        text: "Old data will be replaced, are you sure?",
+        icon: 'question',
+        showCancelButton: true,
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirm',
+        reverseButtons: true,
+        heightAuto: false,
+      }).then((result) => {
+
+        if (result.isConfirmed) {
+
+          this.http.post('https://curtain.vsnap.my/updatestaffs', temp).subscribe(a => {
+            console.log(a);
+
+            if (a['message']) {
+
+              Swal.fire({
+                icon: 'success',
+                title: 'Update Successfully',
+                text: 'New data has been updated',
+                timer: 3000,
+                heightAuto: false
+
+              })
+
+            }
+          }, e => {
+
+            Swal.fire({
+              icon: 'error',
+              title: 'Update Fail',
+              text: 'Please try again later',
+              timer: 3000,
+              heightAuto: false
+
+            })
+          })
+        }
+      })
+    }
 
   }
 
-  fileChange(x, y, z) {
-    this.imgur(x, y).then(a => {
-      eval(z + "=a")
-    })
+
+  imagectype;
+  imagec;
+  base64img;
+
+  fileChange(event, name, maxsize) {
+    if (event.target.files && event.target.files[0] && event.target.files[0].size < (10485768)) {
+      // this.imagectype = event.target.files[0].type;
+      // EXIF.getData(event.target.files[0], () => {
+      // console.log(event.target.files[0]);
+      //  console.log(event.target.files[0].exifdata.Orientation);
+      //  const orientation = EXIF.getTag(this, 'Orientation');
+      const can = document.createElement('canvas');
+      const ctx = can.getContext('2d');
+      const thisImage = new Image;
+
+      const maxW = maxsize;
+      const maxH = maxsize;
+      thisImage.onload = (a) => {
+        // console.log(a);
+        const iw = thisImage.width;
+        const ih = thisImage.height;
+        const scale = Math.min((maxW / iw), (maxH / ih));
+        const iwScaled = iw * scale;
+        const ihScaled = ih * scale;
+        can.width = iwScaled;
+        can.height = ihScaled;
+        ctx.save();
+        // const width = can.width; const styleWidth = can.style.width;
+        // const height = can.height; const styleHeight = can.style.height;
+        // console.log(event.target.files[0]);
+        ctx.drawImage(thisImage, 0, 0, iwScaled, ihScaled);
+        ctx.restore();
+        this.imagec = can.toDataURL();
+        // const imgggg = this.imagec.replace(';base64,', 'thisisathingtoreplace;');
+        // const imgarr = imgggg.split('thisisathingtoreplace;');
+        // this.base64img = imgarr[1];
+        // event.target.value = '';
+        this.user['photo'] = 'https://i.pinimg.com/originals/a2/dc/96/a2dc9668f2cf170fe3efeb263128b0e7.gif';
+
+        this.http.post('https://forcar.vsnap.my/upload', { image: this.imagec, folder: 'goalgame', userid: Date.now() }).subscribe((link) => {
+          console.log(link['imageURL']);
+          this.user['photo'] = link['imageURL']
+          console.log(this.user['photo']);
+
+        });
+      };
+      thisImage.src = URL.createObjectURL(event.target.files[0]);
+
+    } else {
+      // S.close();
+      alert('Your Current Image Too Large, ' + event.target.files[0].size / (10241024) + 'MB! (Please choose file lesser than 8MB)');
+    }
   }
+
+  lengthof(x) {
+    return x ? x.length : 0
+  }
+
 
   back() {
     this.nav.pop()

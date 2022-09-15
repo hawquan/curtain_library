@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { NavigationExtras } from '@angular/router';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import firebase from 'firebase';
 import Swal from 'sweetalert2';
 
@@ -15,6 +16,8 @@ export class Tab2Page implements OnInit {
   constructor(
     private nav: NavController,
     private http: HttpClient,
+    private actRoute: ActivatedRoute,
+    private fcm: FCM,
   ) { }
 
   user = [] as any
@@ -24,11 +27,18 @@ export class Tab2Page implements OnInit {
     firebase.auth().onAuthStateChanged(a => {
       if (a) {
         this.uid = a.uid
-        this.http.post('https://curtain.vsnap.my/onestaff', { id: a.uid }).subscribe((s) => {
-          this.user = s['data'][0]
-          console.log(this.user);
+        this.actRoute.queryParams.subscribe((c) => {
+          this.refresh()
         })
       }
+    })
+
+  }
+
+  refresh() {
+    this.http.post('https://curtain.vsnap.my/onestaff', { id: this.uid }).subscribe((s) => {
+      this.user = s['data'][0]
+      console.log(this.user);
     })
   }
 
@@ -51,7 +61,11 @@ export class Tab2Page implements OnInit {
       reverseButtons: true,
     }).then((y) => {
       if (y.isConfirmed) {
-        firebase.auth().signOut();
+        this.fcm.unsubscribeFromTopic(this.uid).then(() => {
+          firebase.auth().signOut();
+        })
+
+        // firebase.auth().signOut();
         this.nav.navigateBack('')
 
         const Toast = Swal.mixin({

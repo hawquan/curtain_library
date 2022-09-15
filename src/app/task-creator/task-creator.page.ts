@@ -433,6 +433,11 @@ export class TaskCreatorPage implements OnInit {
           }
         } else if (this.item.fabric_type == 'CS') {
           console.log('CS1');
+
+          this.item.custom_sheer_bracket = this.item.custom_bracket
+          this.item.sheer_bracket = this.item.bracket
+          this.item.custom_sheer_belt = true
+          this.item.sheer_belt = 'X'
           if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'pieces_sheer', 'bracket', 'sidehook', 'belt', 'touchfloor', 'sheer_bracket', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
 
             let temp = {
@@ -578,6 +583,12 @@ export class TaskCreatorPage implements OnInit {
           }
         } else if (this.item.fabric_type == 'CS') {
           console.log('CS2');
+          
+          this.item.custom_sheer_bracket = this.item.custom_bracket
+          this.item.sheer_bracket = this.item.bracket
+          this.item.custom_sheer_belt = true
+          this.item.sheer_belt = 'X'
+
           if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'pieces_sheer', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'sheer_bracket', 'sheer_hook', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
 
             let temp = {
