@@ -32,6 +32,7 @@
     "firebase": "^8.6.7",
     "http-client": "^4.3.1",
     "httpclient": "^0.1.0",
+    "jetifier": "^2.0.0",
     "ngx-image-drawing": "^1.2.4",
     "pdfmake": "^0.2.5",
     "rxjs": "~6.6.0",
@@ -109,8 +110,11 @@
         "ANDROID_GOOGLE_SERVICES_VERSION": "4.3.4",
         "ANDROID_GRADLE_TOOLS_VERSION": "4.1.0"
       },
-      "cordova-plugin-splashscreen": {}
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-androidx-adapter": {}
     },
-    "platforms": []
+    "platforms": [
+      "android"
+    ]
   }
 }
