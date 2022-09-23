@@ -155,6 +155,8 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
     let sheer_id
     let track = false
     let track_id
+    let track_sheer = false
+    let track_sheer_id
     let blind = false
     let blind_id
     let pleat_id
@@ -204,6 +206,13 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
         track = false
       }
 
+      if (this.item[i].track_sheer != null) {
+        track_sheer = true
+        track_sheer_id = this.tracklist.filter(x => x.name == this.item[i].track_sheer)[0]['id']
+      } else {
+        track_sheer = false
+      }
+
       if (this.item[i].pleat != null && this.item[i].pleat != '') {
         pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
       }
@@ -213,6 +222,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
         curtain = true
         sheer = false
         track = false
+        track_sheer = false
         lining = false
         blind = true
         console.log('blindcurtain');
@@ -226,6 +236,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
         curtain = false
         sheer = false
         track = false
+        track_sheer = false
         lining = false
         blind = true
         console.log('blind');
@@ -239,8 +250,9 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
 
     let temp = {
       width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id, pieces_curtain: this.item[i].pieces_curtain || 0,
-      pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
+      pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
+      promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0
     }
 
     console.log(temp);
@@ -314,7 +326,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
         })
       }
 
-      temp = temp.sort((a, b) => a.name <= b.name ? -1 : 1)
+      temp = temp.reverse()
 
       const alert = await this.alertController.create({
         header: 'Select Date',
@@ -342,7 +354,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
     }
 
   }
-  
+
   pdfmaker() {
     console.log(this.info);
 
@@ -1651,7 +1663,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
     let salesphone = 'TM\n' + this.salesmaninfo.phone
 
     //SO number
-    let sonum = {text: 'SO NO : ' + this.soNumber}
+    let sonum = { text: 'SO NO : ' + this.soNumber }
 
     //SO info left
     let soinfoleft = [

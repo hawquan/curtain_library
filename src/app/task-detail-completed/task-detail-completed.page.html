@@ -74,7 +74,7 @@
 
           <div style="display: flex;">
             <div style="margin-right: 8px;"></div>
-            <div *ngIf="x.status_tail != 'Completed'" [ngClass]="x.status_inst == 'Completed' ? 'approve' : 'reject'"
+            <!-- <div *ngIf="x.status_tail != 'Completed'" [ngClass]="x.status_inst == 'Completed' ? 'approve' : 'reject'"
               style="margin-right: 15px;">
               {{x.status_inst || 'Curtains Not Ready'}}
             </div>
@@ -85,7 +85,7 @@
             <div *ngIf="x.status_inst == 'Completed'" [ngClass]="x.status_inst == 'Completed' ? 'approve' : 'approve'"
               style="margin-right: 15px;">
               Task {{x.status_inst}}
-            </div>
+            </div> -->
             <ion-icon [ngStyle]="{'transform': show == i ? 'rotate(180deg)' : ''}" name="chevron-down-outline">
             </ion-icon>
           </div>

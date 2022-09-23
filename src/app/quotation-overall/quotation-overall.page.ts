@@ -339,6 +339,8 @@ export class QuotationOverallPage implements OnInit {
     let sheer_id
     let track = false
     let track_id
+    let track_sheer = false
+    let track_sheer_id
     let blind = false
     let blind_id
 
@@ -388,6 +390,13 @@ export class QuotationOverallPage implements OnInit {
         track = false
       }
 
+      if (this.item[i].track_sheer != null) {
+        track_sheer = true
+        track_sheer_id = this.tracklist.filter(x => x.name == this.item[i].track_sheer)[0]['id']
+      } else {
+        track_sheer = false
+      }
+
       if (this.item[i].pleat != null && this.item[i].pleat != '') {
         pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
       }
@@ -397,6 +406,7 @@ export class QuotationOverallPage implements OnInit {
         curtain = true
         sheer = false
         track = false
+        track_sheer = false
         lining = false
         blind = true
         console.log('blindcurtain');
@@ -410,6 +420,7 @@ export class QuotationOverallPage implements OnInit {
         curtain = false
         sheer = false
         track = false
+        track_sheer = false
         lining = false
         blind = true
         console.log('blind');
@@ -423,8 +434,10 @@ export class QuotationOverallPage implements OnInit {
 
     let temp = {
       width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id, pieces_curtain: this.item[i].pieces_curtain || 0,
-      pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
+      pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
+      promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0
+
     }
 
     console.log(temp);
@@ -432,9 +445,9 @@ export class QuotationOverallPage implements OnInit {
     this.http.post('https://curtain.vsnap.my/calcPrice', temp).subscribe(a => {
 
 
-      if (this.item[i].need_scaftfolding == true) {
+      if (this.info.need_scaftfolding == true) {
         this.scaftfolding = true
-      } else if (this.item[i].need_ladder == true) {
+      } else if (this.info.need_ladder == true) {
         this.ladder = true
       }
 
@@ -538,7 +551,7 @@ export class QuotationOverallPage implements OnInit {
 
       items.push(
         [
-          { text: this.item[i].location  + ' ' + this.item[i].location_ref, border: [true, false, true, false], bold: true, decoration: 'underline' },
+          { text: this.item[i].location + ' ' + this.item[i].location_ref, border: [true, false, true, false], bold: true, decoration: 'underline' },
           { text: '', alignment: 'center', border: [true, false, true, false] },
           { text: '', alignment: 'center', border: [true, false, true, false] },
           { text: '', alignment: 'right', border: [true, false, true, false] },
@@ -651,11 +664,23 @@ export class QuotationOverallPage implements OnInit {
       if (this.item[i].track != null) {
         items.push(
           [
-            this.item[i].track + ' Track',
+            '(C) ' + this.item[i].track + ' Track',
             { text: this.calc[i].track.unit, alignment: 'center' },
             { text: this.calc[i].track.qty, alignment: 'center' },
             { text: (this.calc[i].track.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
             { text: (this.calc[i].track.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+          ]
+        )
+      }
+
+      if (this.item[i].track_sheer != null) {
+        items.push(
+          [
+            '(S) ' + this.item[i].track_sheer + ' Track',
+            { text: this.calc[i].track_sheer.unit, alignment: 'center' },
+            { text: this.calc[i].track_sheer.qty, alignment: 'center' },
+            { text: (this.calc[i].track_sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+            { text: (this.calc[i].track_sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
           ]
         )
       }
@@ -1082,7 +1107,7 @@ export class QuotationOverallPage implements OnInit {
           isCurtain = true
           items.push(
             [
-              { text: this.item[i].location  + ' ' + this.item[i].location_ref + ' ' + width + '"(w) x ' + height + '"(h)', border: [true, false, true, false], bold: true, decoration: 'underline' },
+              { text: this.item[i].location + ' ' + this.item[i].location_ref, border: [true, false, true, false], bold: true, decoration: 'underline' },
               { text: '', alignment: 'center', border: [true, false, true, false] },
               { text: '', alignment: 'center', border: [true, false, true, false] },
               { text: '', alignment: 'right', border: [true, false, true, false] },
@@ -1153,7 +1178,7 @@ export class QuotationOverallPage implements OnInit {
           isSheer = true
           items.push(
             [
-              { text: this.item[i].location  + ' ' + this.item[i].location_ref + ' ' + width + '"(w) x ' + height + '"(h)', border: [true, false, true, false], bold: true, decoration: 'underline' },
+              { text: this.item[i].location + ' ' + this.item[i].location_ref, border: [true, false, true, false], bold: true, decoration: 'underline' },
               { text: '', alignment: 'center', border: [true, false, true, false] },
               { text: '', alignment: 'center', border: [true, false, true, false] },
               { text: '', alignment: 'right', border: [true, false, true, false] },
@@ -1167,7 +1192,7 @@ export class QuotationOverallPage implements OnInit {
                 { text: 'Sheer - ' + this.item[i].fabric_sheer, border: [true, false, true, false] },
                 { text: 'set', alignment: 'center', border: [true, false, true, false] },
                 { text: 1, alignment: 'center', border: [true, false, true, false] },
-                { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                 // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
               ]
             )
@@ -1213,7 +1238,7 @@ export class QuotationOverallPage implements OnInit {
           isSheer = true
           items.push(
             [
-              { text: this.item[i].location  + ' ' + this.item[i].location_ref + ' ' + width + '"(w) x ' + height + '"(h)', border: [true, false, true, false], bold: true, decoration: 'underline' },
+              { text: this.item[i].location + ' ' + this.item[i].location_ref, border: [true, false, true, false], bold: true, decoration: 'underline' },
               { text: '', alignment: 'center', border: [true, false, true, false] },
               { text: '', alignment: 'center', border: [true, false, true, false] },
               { text: '', alignment: 'right', border: [true, false, true, false] },
@@ -1251,7 +1276,7 @@ export class QuotationOverallPage implements OnInit {
                 { text: 'Sheer - ' + this.item[i].fabric_sheer, border: [true, false, true, false] },
                 { text: 'set', alignment: 'center', border: [true, false, true, false] },
                 { text: 1, alignment: 'center', border: [true, false, true, false] },
-                { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].track_sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                 // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
               ]
             )
@@ -1299,7 +1324,7 @@ export class QuotationOverallPage implements OnInit {
 
         items.push(
           [
-            { text: this.item[i].location  + ' ' + this.item[i].location_ref + ' ' + width + '"(w) x ' + height + '"(h)', border: [true, false, true, false], bold: true, decoration: 'underline' },
+            { text: this.item[i].location + ' ' + this.item[i].location_ref, border: [true, false, true, false], bold: true, decoration: 'underline' },
             { text: '', alignment: 'center', border: [true, false, true, false] },
             { text: '', alignment: 'center', border: [true, false, true, false] },
             { text: '', alignment: 'right', border: [true, false, true, false] },

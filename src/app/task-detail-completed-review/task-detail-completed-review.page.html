@@ -94,15 +94,6 @@
       <!-- Step 2 -->
       <div style="color: #888888;font-weight: 600;margin-bottom: 5px;margin-top: 25px;">Step 2</div>
 
-      <!-- Track -->
-      <div
-        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
-        <div style="min-width: 70px;color: #999999">Track </div>
-        <ion-input readonly placeholder="inch" [(ngModel)]="item.track"
-          style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
-        </ion-input>
-      </div>
-
       <!-- Pleat -->
       <div
         style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
@@ -122,8 +113,6 @@
             style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
           </ion-input>
         </div>
-
-
 
       </div>
 
@@ -170,6 +159,16 @@
           </div>
         </div>
 
+        <!-- Track -->
+        <div
+          style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 70px;color: #999999">C.Track </div>
+          <ion-input readonly placeholder="inch" [(ngModel)]="item.track"
+            style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+          </ion-input>
+        </div>
+
+        <!-- Pieces -->
         <div
           style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
           <div style="min-width: 70px;color: #999999">Pieces </div>
@@ -286,6 +285,16 @@
           </div>
         </div>
 
+        <!-- Track -->
+        <div
+          style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 70px;color: #999999">S.Track </div>
+          <ion-input readonly placeholder="track" [(ngModel)]="item.track_sheer"
+            style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+          </ion-input>
+        </div>
+
+        <!-- Pieces -->
         <div
           style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
           <div style="min-width: 70px;color: #999999">Pieces </div>
@@ -458,9 +467,9 @@
       <!-- Blind Fabric -->
       <div
         style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
-        <div style="min-width: 70px;color: #999999">Blind </div>
+        <div style="min-width: 70px;color: #999999">Blind</div>
         <div style="width: 100%;display: flex;align-items: center;font-size: 14px;">
-          <ion-input class="ion-no-padding" readonly [(ngModel)]="item.fabric_blind" placeholder="Select Blind Fabric"
+          <ion-input class="ion-no-padding" readonly [(ngModel)]="item.fabric_blind" placeholder="Select Blind"
             style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;">
           </ion-input>
           <!-- <ion-icon *ngIf="item.fabric_blind != null && item.fabric_blind != ''" (click)="clearFabric('blind')"
@@ -471,9 +480,9 @@
       <!-- Curtain Fabric -->
       <div *ngIf="item.pleat == 'Roman Blind'"
         style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
-        <div style="min-width: 70px;color: #999999">Fabric Curtain</div>
+        <div style="min-width: 70px;color: #999999">Fabrics</div>
         <div style="width: 100%;display: flex;align-items: center;padding: 13px 0px;font-size: 14px;">
-          <ion-input class="ion-no-padding" readonly [(ngModel)]="item.fabric" placeholder="Select Curtain Fabric"
+          <ion-input class="ion-no-padding" readonly [(ngModel)]="item.fabric" placeholder="Select Fabrics"
             style="width: calc(100% - 70px); font-size: 14px;--padding-start: 10px;">
           </ion-input>
           <!-- <ion-icon *ngIf="item.fabric != null && item.fabric != ''" (click)="clearFabric('curtain')"

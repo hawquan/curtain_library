@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { AlertController, ModalController, NavController, NavParams } from '@ionic/angular';
 import Swal from 'sweetalert2';
 import { SelectorPage } from '../selector/selector.page';
+import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 
 @Component({
   selector: 'app-task-detail-review',
@@ -19,7 +20,8 @@ export class TaskDetailReviewPage implements OnInit {
     private navparam: NavParams,
     private http: HttpClient,
     private alertController: AlertController,
-  ) { }
+    private camera: Camera,
+    ) { }
 
   item = [] as any
   info = []
@@ -272,7 +274,7 @@ export class TaskDetailReviewPage implements OnInit {
             this.emptychecker()
           }
         } else if (this.item.fabric_type == 'S') {
-          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_sheer', 'sheer_bracket',
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track_sheer', 'pieces_sheer', 'sheer_bracket',
             'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
 
             this.pass()
@@ -285,7 +287,7 @@ export class TaskDetailReviewPage implements OnInit {
           this.item.sheer_bracket = this.item.bracket
           this.item.custom_sheer_belt = true
           this.item.sheer_belt = 'X'
-          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'pieces_sheer', 'bracket',
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'track_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket',
             'hook', 'belt', 'touchfloor', 'sidehook', 'sheer_hook', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
 
             this.pass()
@@ -338,7 +340,7 @@ export class TaskDetailReviewPage implements OnInit {
             this.emptychecker()
           }
         } else if (this.item.fabric_type == 'S') {
-          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_sheer',
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track_sheer', 'pieces_sheer',
             'sheer_bracket', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
 
             this.pass()
@@ -352,7 +354,7 @@ export class TaskDetailReviewPage implements OnInit {
           this.item.custom_sheer_belt = true
           this.item.sheer_belt = 'X'
 
-          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'pieces_sheer', 'bracket',
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'track_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket',
             'belt', 'touchfloor', 'sidehook', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
 
             this.pass()
@@ -468,6 +470,8 @@ export class TaskDetailReviewPage implements OnInit {
           bracket: this.item.bracket,
           belt: this.item.belt,
           hook: this.item.hook,
+          track: this.item.track,
+          track_sheer: this.item.track_sheer,
           sidehook: this.item.sidehook,
           touchfloor: this.item.touchfloor,
           sheer_bracket: this.item.sheer_bracket,
@@ -847,6 +851,7 @@ export class TaskDetailReviewPage implements OnInit {
         height_tech: this.item.height_tech,
         width_tech: this.item.width_tech,
         track: this.item.track,
+        track_sheer: this.item.track_sheer,
         bracket: this.item.bracket,
         belt: this.item.belt,
         hook: this.item.hook,
@@ -1024,6 +1029,32 @@ export class TaskDetailReviewPage implements OnInit {
     // }
     // })
 
+  }
+
+  opencamera() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      this.instPhoto['photos'].push('https://i.pinimg.com/originals/a2/dc/96/a2dc9668f2cf170fe3efeb263128b0e7.gif');
+
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+
+      this.http.post('https://forcar.vsnap.my/upload', { image: base64Image, folder: 'goalgame', userid: Date.now() }).subscribe((link) => {
+        console.log(link['imageURL']);
+        this.instPhoto['photos'][this.lengthof(this.instPhoto['photos']) - 1] = link['imageURL']
+        console.log(this.instPhoto['photos']);
+
+      });
+    }, (err) => {
+      // Handle error
+    });
   }
 
   imagectype;
