@@ -61,25 +61,27 @@ export class Tab2Page implements OnInit {
       reverseButtons: true,
     }).then((y) => {
       if (y.isConfirmed) {
-        this.fcm.unsubscribeFromTopic(this.uid).then(() => {
+        // this.fcm.unsubscribeFromTopic(this.uid).then(() => {
           firebase.auth().signOut();
-        })
+        // })
 
-        // firebase.auth().signOut();
-        this.nav.navigateBack('')
+        setTimeout(() => {
+          this.nav.navigateBack('')
 
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top',
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-        })
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+          })
 
-        Toast.fire({
-          icon: 'success',
-          title: 'Logged out.'
-        })
+          Toast.fire({
+            icon: 'success',
+            title: 'Logged out.'
+          })
+        }, 100);
+
       }
     })
 

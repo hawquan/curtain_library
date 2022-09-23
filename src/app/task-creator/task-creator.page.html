@@ -91,17 +91,6 @@
       <!-- Step 2 -->
       <div style="color: #888888;font-weight: 600;margin-bottom: 5px;margin-top: 25px;">Step 2</div>
 
-      <!-- Track -->
-      <div
-        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
-        <div style="min-width: 60px;color: #999999">Track </div>
-        <ion-select class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a product type"
-          interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-          style="width: 100%;padding: 11px 10px;font-size: 14px;">
-          <ion-select-option *ngFor="let x of tracklist; let i = index" [value]="x.name">{{x.name}}</ion-select-option>
-        </ion-select>
-      </div>
-
       <!-- Pleat -->
       <div
         style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
@@ -175,6 +164,18 @@
             <ion-icon *ngIf="item.fabric != null && item.fabric != ''" (click)="clearFabric('curtain')"
               style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
           </div>
+        </div>
+
+        <!-- Track -->
+        <div
+          style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 70px;color: #999999">C.Track </div>
+          <ion-select class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a track"
+            interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+            style="width: 100%;padding: 11px 10px;font-size: 14px;">
+            <ion-select-option *ngFor="let x of tracklist; let i = index" [value]="x.name">{{x.name}}
+            </ion-select-option>
+          </ion-select>
         </div>
 
         <!-- Pieces -->
@@ -340,7 +341,7 @@
           <!-- Lining -->
           <div style="color: #888888;font-weight: 600;margin: 10px 0 5px 0;">Optional</div>
           <div
-            style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px;margin-bottom: 10px;display: flex; align-items: center; justify-content: space-between;">
+            style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px;display: flex; align-items: center; justify-content: space-between;">
             <div style="min-width: 70px;color: #999999">Lining </div>
             <div style="width: 100%;display: flex;align-items: center;padding: 13px 5px 13px 10px;font-size: 14px;">
               <ion-input class="ion-no-padding" (click)="selector('this.fabricLining', 'this.item.fabric_lining')"
@@ -350,6 +351,31 @@
                 style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
             </div>
           </div>
+
+          <!-- Discount Curtain -->
+          <div
+            style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+            <div style="min-width: 85px;color: yellowgreen">Curtain Promo</div>
+            <ion-input placeholder="Enter (0 ~ 10)" [(ngModel)]="item.promo_curtain" type="number"
+              (keypress)="numberOnlyValidation($event)"
+              style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+            </ion-input>
+          </div>
+          <div *ngIf="item.promo_curtain > 10" style="color: red;">Amount Exceeded</div>
+
+          <!-- Discount Lining -->
+          <div style="width: 100%;margin-bottom: 10px;">
+            <div
+              style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+              <div style="min-width: 85px;color: yellowgreen">Lining Promo</div>
+              <ion-input placeholder="Enter (0 ~ 10)" [(ngModel)]="item.promo_lining" type="number"
+                (keypress)="numberOnlyValidation($event)"
+                style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+              </ion-input>
+            </div>
+            <div *ngIf="item.promo_lining > 10" style="color: red;">Amount Exceeded</div>
+          </div>
+
         </div>
 
       </div>
@@ -380,6 +406,18 @@
             <ion-icon *ngIf="item.fabric_sheer != null && item.fabric_sheer != ''" (click)="clearFabric('sheer')"
               style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
           </div>
+        </div>
+
+        <!-- Track -->
+        <div
+          style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 70px;color: #999999">S.Track </div>
+          <ion-select class="ion-no-padding" [(ngModel)]="item.track_sheer" placeholder="Select a track"
+            interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+            style="width: 100%;padding: 11px 10px;font-size: 14px;">
+            <ion-select-option *ngFor="let x of tracklist; let i = index" [value]="x.name">{{x.name}}
+            </ion-select-option>
+          </ion-select>
         </div>
 
         <!-- Pieces -->
@@ -517,7 +555,7 @@
           </div>
 
           <!-- SideHook / Touch Floor -->
-          <div style="width: 100%;display: flex;align-items: center;margin-bottom: 10px;">
+          <div style="width: 100%;display: flex;align-items: center;">
 
             <div
               style="width: 50%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
@@ -543,6 +581,20 @@
 
           </div>
 
+          <!-- Discount Sheer -->
+          <div style="color: #888888;font-weight: 600;margin: 10px 0 5px 0;">Optional</div>
+          <div style="width: 100%;margin-bottom: 10px;">
+            <div
+              style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+              <div style="min-width: 85px;color: yellowgreen">Sheer Promo</div>
+              <ion-input placeholder="Enter (0 ~ 10)" [(ngModel)]="item.promo_sheer" type="number"
+                (keypress)="numberOnlyValidation($event)"
+                style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+              </ion-input>
+            </div>
+            <div *ngIf="item.promo_sheer > 10" style="color: red;">Amount Exceeded</div>
+          </div>
+
         </div>
 
       </div>
@@ -562,6 +614,13 @@
       <div *ngIf="item.fabric_type != null && item.fabric_type != ''"
         style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));height: 100%; margin: 10px 0 50px 0;  ">
         <div style="display: flex;justify-content: center;padding: 5px 5px 5px 10px;">
+          <div (click)="opencamera()"
+            style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;
+            display: flex;align-items: center;justify-content: center;background-color: gray; box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
+            <ion-icon style="width: 100%; font-size: 15px; color: #ffffff;" name="camera"></ion-icon>
+          </div>
+        </div>
+        <!-- <div style="display: flex;justify-content: center;padding: 5px 5px 5px 10px;">
 
           <label for="files" class="btn" style="width: 100px;">
             <div id="button" style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;display: flex;align-items: center;justify-content: center;
@@ -576,7 +635,7 @@
 
             </div>
           </label>
-        </div>
+        </div> -->
 
         <div *ngFor="let x of item.photos; let i = index"
           style="height: 100%;padding: 5px;display: flex;justify-content: center;">
@@ -604,7 +663,7 @@
       <!-- Blinds -->
       <div
         style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;margin-top: 15px;">
-        <div style="min-width: 65px;color: #999999">Blind Type </div>
+        <div style="min-width: 65px;color: #999999">Blind Category </div>
         <ion-select class="ion-no-padding" [(ngModel)]="item.pleat" placeholder="Select a blind type"
           (ionChange)="blindChanged()" interface="popover" mode="ios"
           [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
@@ -631,11 +690,11 @@
         <!-- Blind Fabric -->
         <div
           style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
-          <div style="min-width: 85px;color: #999999">Fabric Blind</div>
+          <div style="min-width: 85px;color: #999999">Blind</div>
           <div style="width: 100%;display: flex;align-items: center;padding: 13px 0px;font-size: 14px;">
             <ion-input class="ion-no-padding"
               (click)="selectorblind('this.fabricBlind', 'this.item.fabric_blind', item.pleat)" readonly
-              [(ngModel)]="item.fabric_blind" placeholder="Select Blind Fabric" style="font-size: 14px;">
+              [(ngModel)]="item.fabric_blind" placeholder="Select Blind" style="font-size: 14px;">
             </ion-input>
             <ion-icon *ngIf="item.fabric_blind != null && item.fabric_blind != ''" (click)="clearFabric('blind')"
               style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
@@ -645,10 +704,10 @@
         <!-- Curtain Fabric -->
         <div *ngIf="item.pleat == 'Roman Blind'"
           style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
-          <div style="min-width: 85px;color: #999999">Fabric Curtain</div>
+          <div style="min-width: 85px;color: #999999">Fabrics</div>
           <div style="width: 100%;display: flex;align-items: center;padding: 13px 0px;font-size: 14px;">
-            <ion-input class="ion-no-padding" (click)="selector('this.fabricCurtain', 'this.item.fabric')" readonly
-              [(ngModel)]="item.fabric" placeholder="Select Curtain Fabric" style="font-size: 14px;">
+            <ion-input class="ion-no-padding" (click)="selector('this.fabricCurtainSheer', 'this.item.fabric')" readonly
+              [(ngModel)]="item.fabric" placeholder="Select Fabrics" style="font-size: 14px;">
             </ion-input>
             <ion-icon *ngIf="item.fabric != null && item.fabric != ''" (click)="clearFabric('curtain')"
               style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
@@ -717,6 +776,20 @@
             style="width: 100% ;--padding-top: 6.5px;--padding-bottom: 6.5px;font-size: 14px;font-weight: 500; color: #333333">
           </ion-input>
 
+        </div>
+
+        <!-- Discount Blind -->
+        <div style="color: #888888;font-weight: 600;margin: 10px 0 5px 0;">Optional</div>
+        <div style="width: 100%;margin-bottom: 10px;">
+          <div
+            style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+            <div style="min-width: 85px;color: yellowgreen">Blind Promo</div>
+            <ion-input placeholder="Enter (0 ~ 10)" [(ngModel)]="item.promo_blind" type="number"
+              (keypress)="numberOnlyValidation($event)"
+              style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+            </ion-input>
+          </div>
+          <div *ngIf="item.promo_blind > 10" style="color: red;">Amount Exceeded</div>
         </div>
 
         <!-- Hook -->
@@ -820,7 +893,6 @@
           </ion-select>
         </div> -->
 
-
         <!-- Remark -->
         <div style="margin-top: 25px;color: #333333;font-weight: 600;">
           <div style="min-width: 56px;font-weight: 500;color: #999999">Remark :</div>
@@ -834,20 +906,11 @@
         <div
           style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));height: 100%; margin: 10px 0 50px 0;  ">
           <div style="display: flex;justify-content: center;padding: 5px 5px 5px 10px;">
-
-            <label for="files" class="btn" style="width: 100px;">
-              <div id="button" style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;display: flex;align-items: center;justify-content: center;
-            background-color: gray; box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
-
-                <ion-icon style="width: 100%; font-size: 15px; color: #ffffff;" name="camera"></ion-icon>
-
-                <input #uploadEl style="display: none" id="files" class="inputclass" accept="image/*" type="file"
-                  (change)="fileChange($event, '', 600)">
-
-                <canvas style="display: none;" id="canvas"></canvas>
-
-              </div>
-            </label>
+            <div (click)="opencamera()"
+              style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;
+              display: flex;align-items: center;justify-content: center;background-color: gray; box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
+              <ion-icon style="width: 100%; font-size: 15px; color: #ffffff;" name="camera"></ion-icon>
+            </div>
           </div>
 
           <div *ngFor="let x of item.photos; let i = index"

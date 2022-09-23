@@ -5,6 +5,7 @@ import { AlertController, ModalController, NavController, NavParams } from '@ion
 import * as EXIF from 'exif-js';
 import Swal from 'sweetalert2';
 import { SelectorPage } from '../selector/selector.page';
+import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 
 @Component({
   selector: 'app-task-creator',
@@ -21,6 +22,7 @@ export class TaskCreatorPage implements OnInit {
     private http: HttpClient,
     private navparam: NavParams,
     private alertController: AlertController,
+    private camera: Camera,
   ) { }
 
   item = {
@@ -51,6 +53,7 @@ export class TaskCreatorPage implements OnInit {
   fabricLining = []
   fabricSheer = []
   fabricBlind = []
+  fabricCurtainSheer = []
   otherslist = []
   pieceslist = []
 
@@ -114,7 +117,7 @@ export class TaskCreatorPage implements OnInit {
         this.fabricSheer = this.fabriclist.filter(x => x.type == 'Sheer')
         this.fabricLining = this.fabriclist.filter(x => x.type == 'Lining')
         this.fabricBlind = this.fabriclist.filter(x => x.type == 'Blind').sort((a, b) => (a['type_category'] > b['type_category'] ? 1 : -1) && (a['name'] > b['name'] ? 1 : -1) && (a['id'] > b['id'] ? 1 : -1))
-
+        this.fabricCurtainSheer = this.fabriclist.filter(x => x.type == 'Curtain' || x.type == 'Sheer')
         console.log(this.sales_no, this.pleatlist, this.blindlist, this.position, this.tracklist, this.fabricBlind);
 
       })
@@ -348,7 +351,7 @@ export class TaskCreatorPage implements OnInit {
 
         if (this.item.fabric_type == 'C') {
 
-          if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'bracket', 'sidehook', 'belt', 'touchfloor', 'fabric'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'bracket', 'sidehook', 'belt', 'touchfloor', 'fabric'].every(a => this.item[a])) {
 
             let temp = {
               sales_id: this.sales_no,
@@ -379,6 +382,8 @@ export class TaskCreatorPage implements OnInit {
               need_ladder: this.item.need_ladder,
               need_scaftfolding: this.item.need_scaftfolding,
               step: 2,
+              promo_curtain: this.item.promo_curtain || 0,
+              promo_lining: this.item.promo_lining || 0,
             }
 
             console.log(temp);
@@ -391,7 +396,7 @@ export class TaskCreatorPage implements OnInit {
           }
         } else if (this.item.fabric_type == 'S') {
           console.log('S1');
-          if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_sheer', 'sheer_bracket', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric_sheer'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'track_sheer', 'type', 'pleat', 'pieces_sheer', 'sheer_bracket', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric_sheer'].every(a => this.item[a])) {
 
             let temp = {
               sales_id: this.sales_no,
@@ -399,7 +404,7 @@ export class TaskCreatorPage implements OnInit {
               location_ref: this.item.location_ref,
               height: this.item.height,
               width: this.item.width,
-              track: this.item.track,
+              track_sheer: this.item.track_sheer,
               type: this.item.type,
               pleat: this.item.pleat,
               fullness: this.item.fullness,
@@ -421,6 +426,7 @@ export class TaskCreatorPage implements OnInit {
               need_ladder: this.item.need_ladder,
               need_scaftfolding: this.item.need_scaftfolding,
               step: 2,
+              promo_sheer: this.item.promo_sheer || 0,
             }
 
             console.log(temp);
@@ -438,7 +444,7 @@ export class TaskCreatorPage implements OnInit {
           this.item.sheer_bracket = this.item.bracket
           this.item.custom_sheer_belt = true
           this.item.sheer_belt = 'X'
-          if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'pieces_sheer', 'bracket', 'sidehook', 'belt', 'touchfloor', 'sheer_bracket', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'track', 'track_sheer', 'type', 'pleat', 'pieces_curtain', 'pieces_sheer', 'bracket', 'sidehook', 'belt', 'touchfloor', 'sheer_bracket', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
 
             let temp = {
               sales_id: this.sales_no,
@@ -447,6 +453,7 @@ export class TaskCreatorPage implements OnInit {
               height: this.item.height,
               width: this.item.width,
               track: this.item.track,
+              track_sheer: this.item.track_sheer,
               type: this.item.type,
               pleat: this.item.pleat,
               fullness: this.item.fullness,
@@ -477,6 +484,9 @@ export class TaskCreatorPage implements OnInit {
               need_ladder: this.item.need_ladder,
               need_scaftfolding: this.item.need_scaftfolding,
               step: 2,
+              promo_curtain: this.item.promo_curtain || 0,
+              promo_lining: this.item.promo_lining || 0,
+              promo_sheer: this.item.promo_sheer || 0,
             }
 
             console.log(temp);
@@ -492,7 +502,7 @@ export class TaskCreatorPage implements OnInit {
       } else {
         if (this.item.fabric_type == 'C') {
           console.log('C2');
-          if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'fabric'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'fabric'].every(a => this.item[a])) {
 
             let temp = {
               sales_id: this.sales_no,
@@ -525,6 +535,8 @@ export class TaskCreatorPage implements OnInit {
               need_ladder: this.item.need_ladder,
               need_scaftfolding: this.item.need_scaftfolding,
               step: 2,
+              promo_curtain: this.item.promo_curtain || 0,
+              promo_lining: this.item.promo_lining || 0,
             }
 
             console.log(temp);
@@ -539,7 +551,7 @@ export class TaskCreatorPage implements OnInit {
 
         } else if (this.item.fabric_type == 'S') {
           console.log('S2');
-          if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_sheer', 'sheer_bracket', 'sheer_hook', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric_sheer'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'track_sheer', 'type', 'pleat', 'pieces_sheer', 'sheer_bracket', 'sheer_hook', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric_sheer'].every(a => this.item[a])) {
 
             let temp = {
               sales_id: this.sales_no,
@@ -547,7 +559,7 @@ export class TaskCreatorPage implements OnInit {
               location_ref: this.item.location_ref,
               height: this.item.height,
               width: this.item.width,
-              track: this.item.track,
+              track_sheer: this.item.track_sheer,
               type: this.item.type,
               pleat: this.item.pleat,
               fullness: this.item.fullness,
@@ -571,6 +583,7 @@ export class TaskCreatorPage implements OnInit {
               need_ladder: this.item.need_ladder,
               need_scaftfolding: this.item.need_scaftfolding,
               step: 2,
+              promo_sheer: this.item.promo_sheer || 0,
             }
 
             console.log(temp);
@@ -583,13 +596,13 @@ export class TaskCreatorPage implements OnInit {
           }
         } else if (this.item.fabric_type == 'CS') {
           console.log('CS2');
-          
+
           this.item.custom_sheer_bracket = this.item.custom_bracket
           this.item.sheer_bracket = this.item.bracket
           this.item.custom_sheer_belt = true
           this.item.sheer_belt = 'X'
 
-          if (['location','location_ref', 'width', 'height', 'track', 'type', 'pleat', 'pieces_curtain', 'pieces_sheer', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'sheer_bracket', 'sheer_hook', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'track', 'track_sheer', 'type', 'pleat', 'pieces_curtain', 'pieces_sheer', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'sheer_bracket', 'sheer_hook', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
 
             let temp = {
               sales_id: this.sales_no,
@@ -598,6 +611,7 @@ export class TaskCreatorPage implements OnInit {
               height: this.item.height,
               width: this.item.width,
               track: this.item.track,
+              track_sheer: this.item.track_sheer,
               type: this.item.type,
               pleat: this.item.pleat,
               fullness: this.item.fullness,
@@ -632,6 +646,9 @@ export class TaskCreatorPage implements OnInit {
               need_ladder: this.item.need_ladder,
               need_scaftfolding: this.item.need_scaftfolding,
               step: 2,
+              promo_curtain: this.item.promo_curtain || 0,
+              promo_lining: this.item.promo_lining || 0,
+              promo_sheer: this.item.promo_sheer || 0,
             }
 
             console.log(temp);
@@ -649,7 +666,7 @@ export class TaskCreatorPage implements OnInit {
     } else if (this.item['type'] == 'Blinds') {
 
       if (this.item.pleat == 'Roman Blind') {
-        if (['location','location_ref', 'width', 'height', 'type', 'pieces_blind', 'fabric', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_blind', 'fabric', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
 
           let temp = {
             sales_id: this.sales_no,
@@ -679,6 +696,7 @@ export class TaskCreatorPage implements OnInit {
             need_ladder: this.item.need_ladder,
             need_scaftfolding: this.item.need_scaftfolding,
             step: 2,
+            promo_blind: this.item.promo_blind || 0,
           }
           console.log(temp);
 
@@ -690,7 +708,7 @@ export class TaskCreatorPage implements OnInit {
           this.errorEmpty()
         }
       } else if (this.item.pleat == 'Zebra Blind' || this.item.pleat == 'Roller Blind' || this.item.pleat == 'Wooden Blind') {
-        if (['location','location_ref', 'width', 'height', 'type', 'pieces_blind', 'blind_decoration', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_blind', 'blind_decoration', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
 
           let temp = {
             sales_id: this.sales_no,
@@ -719,6 +737,7 @@ export class TaskCreatorPage implements OnInit {
             need_ladder: this.item.need_ladder,
             need_scaftfolding: this.item.need_scaftfolding,
             step: 2,
+            promo_blind: this.item.promo_blind || 0,
           }
           console.log(temp);
 
@@ -730,7 +749,7 @@ export class TaskCreatorPage implements OnInit {
           this.errorEmpty()
         }
       } else {
-        if (['location','location_ref', 'width', 'height', 'type', 'pieces_blind', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_blind', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
 
           let temp = {
             sales_id: this.sales_no,
@@ -758,6 +777,7 @@ export class TaskCreatorPage implements OnInit {
             need_ladder: this.item.need_ladder,
             need_scaftfolding: this.item.need_scaftfolding,
             step: 2,
+            promo_blind: this.item.promo_blind || 0,
           }
           console.log(temp);
 
@@ -791,28 +811,45 @@ export class TaskCreatorPage implements OnInit {
 
   createOrder(temp) {
 
-    Swal.fire({
-      title: 'Create Order',
-      text: 'Create this new order?',
-      heightAuto: false,
-      icon: 'question',
-      showConfirmButton: true,
-      showCancelButton: true,
-      cancelButtonText: 'Cancel',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Create',
-      reverseButtons: true,
-    }).then((y) => {
-      if (y.isConfirmed) {
-        this.http.post('https://curtain.vsnap.my/insertorders', temp).subscribe(a => {
-          console.log('insert orders success');
-          this.model.dismiss(1)
+    if (temp.promo_curtain < 0 || temp.promo_curtain > 10 || temp.promo_lining < 0 || temp.promo_lining > 10 || temp.promo_sheer < 0 || temp.promo_sheer > 10 || temp.promo_blind < 0 || temp.promo_blind > 10) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+      })
 
-        })
-      } else {
+      Toast.fire({
+        icon: 'error',
+        title: 'Promo price exceeded limit.'
+      })
+    } else {
 
-      }
-    })
+      Swal.fire({
+        title: 'Create Order',
+        text: 'Create this new order?',
+        heightAuto: false,
+        icon: 'question',
+        showConfirmButton: true,
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Create',
+        reverseButtons: true,
+      }).then((y) => {
+        if (y.isConfirmed) {
+          this.http.post('https://curtain.vsnap.my/insertorders', temp).subscribe(a => {
+            console.log('insert orders success');
+            this.model.dismiss(1)
+
+          })
+        } else {
+
+        }
+      })
+
+    }
 
   }
 
@@ -841,6 +878,8 @@ export class TaskCreatorPage implements OnInit {
     let sheer_id
     let track = false
     let track_id
+    let track_sheer = false
+    let track_sheer_id
 
     let blind = false
     let blind_id
@@ -849,7 +888,6 @@ export class TaskCreatorPage implements OnInit {
 
     if (this.item.type != 'Blinds') {
       console.log('curtain');
-
 
       if (this.item.fabric != null) {
         if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
@@ -891,6 +929,13 @@ export class TaskCreatorPage implements OnInit {
         track = false
       }
 
+      if (this.item.track_sheer != null) {
+        track_sheer = true
+        track_sheer_id = this.tracklist.filter(x => x.name == this.item.track_sheer)[0]['id']
+      } else {
+        track_sheer = false
+      }
+
       if (this.item.pleat != null && this.item.pleat != '') {
         pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
       }
@@ -902,6 +947,7 @@ export class TaskCreatorPage implements OnInit {
         curtain = true
         sheer = false
         track = false
+        track_sheer = false
         lining = false
         blind = true
         console.log('blindcurtain');
@@ -915,6 +961,7 @@ export class TaskCreatorPage implements OnInit {
         curtain = false
         sheer = false
         track = false
+        track_sheer = false
         lining = false
         blind = true
         console.log('blind');
@@ -939,8 +986,10 @@ export class TaskCreatorPage implements OnInit {
 
     let temp = {
       width: parseFloat(this.item.width), height: parseFloat(this.item.height), curtain: curtain, lining: lining, lining_id: lining_id,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id, pieces_curtain: this.item.pieces_curtain || 0,
-      pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id,
+      pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0,
+      promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0
+
     }
 
     console.log(temp);
@@ -1001,6 +1050,32 @@ export class TaskCreatorPage implements OnInit {
     this.item.photos.splice(x, 1)
     console.log(this.item.photos);
 
+  }
+
+  opencamera() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      this.item['photos'].push('https://i.pinimg.com/originals/a2/dc/96/a2dc9668f2cf170fe3efeb263128b0e7.gif');
+
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+
+      this.http.post('https://forcar.vsnap.my/upload', { image: base64Image, folder: 'goalgame', userid: Date.now() }).subscribe((link) => {
+        console.log(link['imageURL']);
+        this.item['photos'][this.lengthof(this.item['photos']) - 1] = link['imageURL']
+        console.log(this.item['photos']);
+
+      });
+    }, (err) => {
+      // Handle error
+    });
   }
 
   imagectype;

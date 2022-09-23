@@ -83,6 +83,8 @@ export class QuotationSinglePage implements OnInit {
     let sheer_id
     let track = false
     let track_id
+    let track_sheer = false
+    let track_sheer_id
     let blind = false
     let blind_id
     let pleat_id
@@ -129,6 +131,13 @@ export class QuotationSinglePage implements OnInit {
         track = false
       }
 
+      if (this.item.track_sheer != null) {
+        track_sheer = true
+        track_sheer_id = this.tracklist.filter(x => x.name == this.item.track_sheer)[0]['id']
+      } else {
+        track_sheer = false
+      }
+
       if (this.item.pleat != null && this.item.pleat != '') {
         pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
       }
@@ -139,6 +148,7 @@ export class QuotationSinglePage implements OnInit {
         curtain = true
         sheer = false
         track = false
+        track_sheer = false
         lining = false
         blind = true
         console.log('blindcurtain');
@@ -152,6 +162,7 @@ export class QuotationSinglePage implements OnInit {
         curtain = false
         sheer = false
         track = false
+        track_sheer = false
         lining = false
         blind = true
         console.log('blind');
@@ -165,8 +176,10 @@ export class QuotationSinglePage implements OnInit {
 
     let temp = {
       width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id, pieces_curtain: this.item.pieces_curtain || 0,
-      pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id, 
+      pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0,
+      promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0
+
     }
 
     console.log(temp);

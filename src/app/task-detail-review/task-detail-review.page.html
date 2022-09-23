@@ -168,25 +168,6 @@
 
       </div>
 
-      <!-- Track -->
-      <div
-        style="width: 100%;  border: 1px solid #a17635; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
-        <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
-          <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Track </div>
-          <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="checker.track"
-            style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
-          </ion-checkbox>
-        </div>
-        <!-- <ion-input readonly placeholder="inch" [(ngModel)]="item.track" class="ion-no-padding"
-          style="width: calc(100%) ;height: 20px;font-weight: 400;font-weight: 500; color: #333333">
-        </ion-input> -->
-        <ion-select class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a product type"
-          interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-          style="width: 100%;font-size: 14px;font-weight: 500;color: #333333;padding-right: 5px;">
-          <ion-select-option *ngFor="let x of tracklist; let i = index" [value]="x.name">{{x.name}}</ion-select-option>
-        </ion-select>
-      </div>
-
       <!-- Pleat -->
       <div
         style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
@@ -299,6 +280,26 @@
             <!-- <ion-icon *ngIf="item.fabric != null && item.fabric != ''" (click)="clearFabric('curtain')"
               style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon> -->
           </div>
+        </div>
+
+        <!-- Track -->
+        <div
+          style="width: 100%;  border: 1px solid #a17635; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
+          <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
+            <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Track Curtain</div>
+            <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="checker.track"
+              style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
+            </ion-checkbox>
+          </div>
+          <!-- <ion-input readonly placeholder="inch" [(ngModel)]="item.track" class="ion-no-padding"
+        style="width: calc(100%) ;height: 20px;font-weight: 400;font-weight: 500; color: #333333">
+      </ion-input> -->
+          <ion-select class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a track"
+            interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+            style="width: 100%;font-size: 14px;font-weight: 500;color: #333333;padding-right: 5px;">
+            <ion-select-option *ngFor="let x of tracklist; let i = index" [value]="x.name">{{x.name}}
+            </ion-select-option>
+          </ion-select>
         </div>
 
         <!-- Pieces -->
@@ -549,6 +550,26 @@
           </div>
         </div>
 
+        <!-- Track -->
+        <div
+          style="width: 100%;  border: 1px solid #a17635; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
+          <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
+            <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Track Sheer</div>
+            <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="checker.track_sheer"
+              style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
+            </ion-checkbox>
+          </div>
+          <!-- <ion-input readonly placeholder="inch" [(ngModel)]="item.track" class="ion-no-padding"
+        style="width: calc(100%) ;height: 20px;font-weight: 400;font-weight: 500; color: #333333">
+      </ion-input> -->
+          <ion-select class="ion-no-padding" [(ngModel)]="item.track_sheer" placeholder="Select a track"
+            interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+            style="width: 100%;font-size: 14px;font-weight: 500;color: #333333;padding-right: 5px;">
+            <ion-select-option *ngFor="let x of tracklist; let i = index" [value]="x.name">{{x.name}}
+            </ion-select-option>
+          </ion-select>
+        </div>
+
         <!-- Pieces -->
         <div
           style="width: 100%;  border: 1px solid #a17635; border-radius: 2px; padding: 5px 10px;  display: flex; align-items: flex-start; flex-direction: column;">
@@ -767,20 +788,11 @@
       <div
         style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));height: 100%; margin-top: 10px; ">
         <div style="display: flex;justify-content: center;padding: 5px 5px 5px 10px;">
-
-          <label for="files" class="btn" style="width: 100px;">
-            <div id="button" style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;display: flex;align-items: center;justify-content: center;
-         background-color: gray; box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
-
-              <ion-icon style="width: 100%; font-size: 15px; color: #ffffff;" name="camera"></ion-icon>
-
-              <input #uploadEl style="display: none" id="files" class="inputclass" accept="image/*" type="file"
-                (change)="fileChange($event, '', 600)">
-
-              <canvas style="display: none;" id="canvas"></canvas>
-
-            </div>
-          </label>
+          <div (click)="opencamera()"
+            style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;
+            display: flex;align-items: center;justify-content: center;background-color: gray; box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
+            <ion-icon style="width: 100%; font-size: 15px; color: #ffffff;" name="camera"></ion-icon>
+          </div>
         </div>
 
         <div *ngFor="let x of instPhoto.photos; let i = index"
@@ -847,7 +859,7 @@
       <div
         style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex;  align-items: flex-start; flex-direction: column;margin-top: 15px;">
         <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
-          <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Blind Type</div>
+          <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Blind Category</div>
           <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="checker.pleat"
             style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
           </ion-checkbox>
@@ -884,14 +896,14 @@
       <div
         style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
         <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
-          <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Fabric</div>
+          <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Blind</div>
           <!-- <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="checker.fabric"
             style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
           </ion-checkbox> -->
         </div>
         <div style="width: 100%;display: flex;align-items: center;">
           <ion-input style="width: calc(100% - 70px);font-size: 14px ;" class="ion-no-padding" readonly
-            [(ngModel)]="item.fabric_blind" placeholder="Select Blind Fabric">
+            [(ngModel)]="item.fabric_blind" placeholder="Select Blind">
           </ion-input>
           <!-- <ion-icon *ngIf="item.fabric_blind != null && item.fabric_blind != ''" (click)="clearFabric('blind')"
             style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon> -->
@@ -902,13 +914,13 @@
       <div *ngIf="item.pleat == 'Roman Blind'"
         style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
         <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
-          <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Fabric Curtain</div>
+          <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Fabrics</div>
           <!-- <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="checker.fabric_curtain"
             style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
           </ion-checkbox> -->
         </div>
         <div style="width: 100%;display: flex;align-items: center;">
-          <ion-input class="ion-no-padding" readonly [(ngModel)]="item.fabric" placeholder="Select Curtain Fabric"
+          <ion-input class="ion-no-padding" readonly [(ngModel)]="item.fabric" placeholder="Select Fabrics"
             style="width: calc(100% - 70px);font-size: 14px ;" class="ion-no-padding">
           </ion-input>
           <!-- <ion-icon *ngIf="item.fabric != null && item.fabric != ''" (click)="clearFabric('curtain')"
@@ -1078,20 +1090,11 @@
       <div
         style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));height: 100%; margin-top: 10px;  ">
         <div style="display: flex;justify-content: center;padding: 5px 5px 5px 10px;">
-
-          <label for="files" class="btn" style="width: 100px;">
-            <div id="button" style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;display: flex;align-items: center;justify-content: center;
-         background-color: gray; box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
-
-              <ion-icon style="width: 100%; font-size: 15px; color: #ffffff;" name="camera"></ion-icon>
-
-              <input #uploadEl style="display: none" id="files" class="inputclass" accept="image/*" type="file"
-                (change)="fileChange($event, '', 600)">
-
-              <canvas style="display: none;" id="canvas"></canvas>
-
-            </div>
-          </label>
+          <div (click)="opencamera()"
+            style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;
+            display: flex;align-items: center;justify-content: center;background-color: gray; box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
+            <ion-icon style="width: 100%; font-size: 15px; color: #ffffff;" name="camera"></ion-icon>
+          </div>
         </div>
 
         <div *ngFor="let x of instPhoto.photos; let i = index"
@@ -1824,20 +1827,11 @@
       <div
         style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));height: 100%; margin-top: 10px;  ">
         <div style="display: flex;justify-content: center;padding: 5px 5px 5px 10px;">
-
-          <label for="files" class="btn" style="width: 100px;">
-            <div id="button" style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;display: flex;align-items: center;justify-content: center;
-         background-color: gray; box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
-
-              <ion-icon style="width: 100%; font-size: 15px; color: #ffffff;" name="camera"></ion-icon>
-
-              <input #uploadEl style="display: none" id="files" class="inputclass" accept="image/*" type="file"
-                (change)="fileChange($event, '', 600)">
-
-              <canvas style="display: none;" id="canvas"></canvas>
-
-            </div>
-          </label>
+          <div (click)="opencamera()"
+            style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;
+            display: flex;align-items: center;justify-content: center;background-color: gray; box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
+            <ion-icon style="width: 100%; font-size: 15px; color: #ffffff;" name="camera"></ion-icon>
+          </div>
         </div>
 
         <div *ngFor="let x of instPhoto.photos; let i = index"

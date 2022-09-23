@@ -82,7 +82,7 @@
         <div *ngIf="item.fabric_lining != null && lengthof(calc.lining) > 0 "
           style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
           <div>
-            Curtain - {{item.fabric_lining}} (m)
+            Lining - {{item.fabric_lining}} (m)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -161,6 +161,22 @@
             </div>
             <div style="width: 70%;text-align: end;">
               {{calc.track.total | currency: ' '}}
+            </div>
+          </div>
+        </div>
+
+        <!-- Track Sheer -->
+        <div *ngIf="lengthof(calc.track_sheer) > 0" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+          <div>
+            (S) {{item.track_sheer}} Track (ft)
+          </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              {{calc.track_sheer.qty}}
+            </div>
+            <div style="width: 70%;text-align: end;">
+              {{calc.track_sheer.total | currency: ' '}}
             </div>
           </div>
         </div>

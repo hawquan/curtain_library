@@ -174,7 +174,7 @@
           <!-- Track -->
           <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              {{x.track}} Track (ft)
+              (C) {{x.track}} Track (ft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -183,6 +183,23 @@
               </div>
               <div style="width: 70%;text-align: end;">
                 {{calc[i].track.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Track Sheer -->
+          <div *ngIf="lengthof(calc[i].track_sheer) > 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              (S) {{x.track_sheer}} Track (ft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].track_sheer.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].track_sheer.total | currency: ' '}}
               </div>
             </div>
           </div>
@@ -448,23 +465,22 @@
           </div>
         </div>
 
-        <!-- Transportation fee -->
-        <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+              <!-- Transportation fee -->
+      <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
 
-          <div>
-            Transportation Fee
+        <div>
+          Transportation Fee
+        </div>
+
+        <div style="width: 40%;display: flex;justify-content: flex-end;">
+          <div style="width: 30%;text-align: center;">
+            1
           </div>
-
-
-          <div style="width: 40%;display: flex;justify-content: flex-end;">
-            <div style="width: 30%;text-align: center;">
-              1
-            </div>
-            <div style="width: 70%;text-align: end;">
-              {{info.transport_fee}}
-            </div>
+          <div style="width: 70%;text-align: end;">
+            {{info.transport_fee | currency: ' '}}
           </div>
         </div>
+      </div>
 
       </div>
 
