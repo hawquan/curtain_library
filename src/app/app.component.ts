@@ -4,7 +4,6 @@ import { firebaseConfig } from './app.firebase.config';
 import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { Market } from '@ionic-native/market/ngx';
 import { Platform } from '@ionic/angular';
-// import { version } from 'process';
 import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 
 @Component({
@@ -14,6 +13,10 @@ import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 })
 
 export class AppComponent {
+
+  bundle = {}
+  currentPlatform = ''
+
   constructor(
     private screenOrientation: ScreenOrientation,
     private market: Market,
@@ -21,8 +24,10 @@ export class AppComponent {
     private fcm: FCM,
   ) {
 
-    let version = '000001'
-
+    let version = '000002'
+    // jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore curtain.jks app-release.aab curtain 
+    // curtain12345
+    // D:\Sdk\build-tools\32.0.0\zipalign -v 4 app-release.aab curtain0.0.2.aab 
     firebase.initializeApp(firebaseConfig)
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
 
@@ -37,22 +42,29 @@ export class AppComponent {
       })
     }
 
-    // firebase.database().ref('/version/' + version).on('value', data => {
-    //   if (data.val() == true) {
 
-    //   } else {
-    //     if (platform.is('ios')) {
-    //       // this.market.open('com.curtain_library.user');
-    //     } else {
-    //       this.market.open('com.curtain_library.user');
-    //     }
-    //   }
-    // })
+    firebase.database().ref('/bundle').once('value', bund => {
+      this.bundle = bund.val()
+      this.currentPlatform = this.platform.is('android') ? 'android' : 'ios'
+
+      firebase.database().ref('/version/' + this.currentPlatform + '/' + version).on('value', data => {
+        let canProceed = data.val()
+        if (canProceed != true) {
+          //show modal cant close one
+
+        }
+      })
+    })
+
+  }
+
+  goMarket() {
+    this.market.open(this.bundle[this.currentPlatform])
   }
 
   lengthof(x) {
     return x ? Object.keys(x).length : 0
   }
-  
+
 
 }
