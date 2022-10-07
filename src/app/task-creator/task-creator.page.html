@@ -170,8 +170,8 @@
         <div
           style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 70px;color: #999999">C.Track </div>
-          <ion-select class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a track"
-            interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+          <ion-select class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a track" interface="popover"
+            mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
             style="width: 100%;padding: 11px 10px;font-size: 14px;">
             <ion-select-option *ngFor="let x of tracklist; let i = index" [value]="x.name">{{x.name}}
             </ion-select-option>
@@ -287,27 +287,26 @@
             style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
 
             <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
-              <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Belt</div>
-              <div style="display: flex;">
+              <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Tieback</div>
+              <!-- <div style="display: flex;">
                 <div style="font-size: 13px;color: #888888;font-weight: 500;">Custom</div>
                 <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="item.custom_belt"
                   (click)="selectCustom('belt')"
                   style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 5px;--background-checked: #a17635;--border-color-checked: #a17635">
                 </ion-checkbox>
-              </div>
+              </div> -->
             </div>
 
-            <ion-select *ngIf="!item.custom_belt" class="ion-no-padding" [(ngModel)]="item.belt"
-              placeholder="Tieback/Velco" interface="popover" mode="ios"
-              [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+            <ion-select class="ion-no-padding" [(ngModel)]="item.belt" placeholder="Tieback" interface="popover"
+              mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
               style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
-              <ion-select-option *ngFor="let x of beltlist; let i = index" [value]="x.name">{{x.name}}
-              </ion-select-option>
+              <ion-select-option value="Yes">Yes</ion-select-option>
+              <ion-select-option value="No">No</ion-select-option>
             </ion-select>
 
-            <ion-input class="ion-no-padding" *ngIf="item.custom_belt" placeholder="Enter Belt" [(ngModel)]="item.belt"
+            <!-- <ion-input class="ion-no-padding" *ngIf="item.custom_belt" placeholder="Enter Belt" [(ngModel)]="item.belt"
               style="width: 100% ;--padding-top: 6.5px;--padding-bottom: 6.5px;font-size: 14px;font-weight: 500; color: #333333">
-            </ion-input>
+            </ion-input> -->
 
           </div>
 
@@ -529,28 +528,34 @@
             style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
 
             <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
-              <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Belt</div>
-              <div style="display: flex;">
+              <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Tieback</div>
+              <!-- <div style="display: flex;">
                 <div style="font-size: 13px;color: #888888;font-weight: 500;">Custom</div>
                 <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="item.custom_sheer_belt"
                   (click)="selectCustom('sheer_belt')"
                   style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 5px;--background-checked: #a17635;--border-color-checked: #a17635">
                 </ion-checkbox>
-              </div>
+              </div> -->
             </div>
 
-            <ion-select *ngIf="!item.custom_sheer_belt" class="ion-no-padding" [(ngModel)]="item.sheer_belt"
+            <!-- <ion-select *ngIf="!item.custom_sheer_belt" class="ion-no-padding" [(ngModel)]="item.sheer_belt"
               placeholder="Tieback/Velco" interface="popover" mode="ios"
               [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
               style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
               <ion-select-option *ngFor="let x of beltlist; let i = index" [value]="x.name">{{x.name}}
               </ion-select-option>
+            </ion-select> -->
+            <ion-select class="ion-no-padding" [(ngModel)]="item.sheer_belt" placeholder="Tieback" interface="popover"
+              mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+              style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
+              <ion-select-option value="Yes">Yes</ion-select-option>
+              <ion-select-option value="No">No</ion-select-option>
             </ion-select>
 
-            <ion-input class="ion-no-padding" *ngIf="item.custom_sheer_belt" placeholder="Enter Belt"
+            <!-- <ion-input class="ion-no-padding" *ngIf="item.custom_sheer_belt" placeholder="Enter Belt"
               [(ngModel)]="item.sheer_belt"
               style="width: 100% ;--padding-top: 6.5px;--padding-bottom: 6.5px;font-size: 14px;font-weight: 500; color: #333333">
-            </ion-input>
+            </ion-input> -->
 
           </div>
 
@@ -603,7 +608,8 @@
       <div *ngIf="item.fabric_type != null && item.fabric_type != ''"
         style="margin-top: 25px;color: #888888;font-weight: 600;">
         <div style="min-width: 56px;font-weight: 500;color: #999999">Remark :</div>
-        <ion-textarea placeholder="Enter additional remark... (If Any)" row="4" [(ngModel)]="item.remark_sale" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea auto-grow="true" placeholder="Enter additional remark... (If Any)" row="4"
+          [(ngModel)]="item.remark_sale" style="min-height: 65px;height: auto;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
       </div>
 
@@ -778,6 +784,23 @@
 
         </div>
 
+        <!-- Rope/Chain -->
+        <div
+          style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
+
+          <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
+            <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Rope/Chain</div>
+          </div>
+
+          <ion-select class="ion-no-padding" [(ngModel)]="item.rope_chain" placeholder="Select L/R" interface="popover"
+            mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+            style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
+            <ion-select-option value="Left">Left</ion-select-option>
+            <ion-select-option value="Right">Right</ion-select-option>
+          </ion-select>
+
+        </div>
+
         <!-- Discount Blind -->
         <div style="color: #888888;font-weight: 600;margin: 10px 0 5px 0;">Optional</div>
         <div style="width: 100%;margin-bottom: 10px;">
@@ -896,7 +919,8 @@
         <!-- Remark -->
         <div style="margin-top: 25px;color: #333333;font-weight: 600;">
           <div style="min-width: 56px;font-weight: 500;color: #999999">Remark :</div>
-          <ion-textarea placeholder="Enter additional remark... (If Any)" row="4" [(ngModel)]="item.remark_sale" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+          <ion-textarea auto-grow="true" placeholder="Enter additional remark... (If Any)" row="4"
+            [(ngModel)]="item.remark_sale" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
         </div>
 
@@ -1027,813 +1051,6 @@
       </div>
 
     </div> -->
-  </div>
-
-  <div *ngIf="position == 'Technician'" style="border-radius: 15px 15px 0 0;">
-
-    <div style="width: 100%;padding: 20px 15px 0 15px;">
-      <div style="width: 100%;min-width: 60px;font-weight: 500;">Area :</div>
-      <ion-input placeholder="Enter Area" [(ngModel)]="item.location"
-        style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;">
-      </ion-input>
-
-    </div>
-
-    <div style="width: 100%;display: flex;align-items: center;background: #FAF7F2">
-
-      <div style="width: 100%;margin: 15px 5px 0 15px;">
-        <div style="width: 100%;min-width: 60px;font-weight: 500;">Width :</div>
-        <div style="display: flex;align-items: center;margin-top: 5px;">
-          <ion-input type="number" placeholder="Enter Width" [(ngModel)]="item.width"
-            style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
-          </ion-input>
-          <div style="margin-left: 5px;">inch</div>
-        </div>
-      </div>
-
-      <div style="width: 100%;margin: 15px 10px 0 10px;">
-        <div style="width: 100%;min-width: 60px;font-weight: 500;">Height :</div>
-        <div style="display: flex;align-items: center;margin-top: 5px;">
-          <ion-input type="number" placeholder="Enter Height" [(ngModel)]="item.height"
-            style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 1px solid #a17635;">
-          </ion-input>
-          <div style="margin-left: 5px;">inch</div>
-        </div>
-      </div>
-
-    </div>
-
-    <div style="margin: 15px 15px 0 15px;">
-      <div style="min-width: 56px;font-weight: 500;">Product Type :</div>
-      <ion-select class="ion-no-padding" [(ngModel)]="item['type']" placeholder="Select a product type"
-        interface="popover" mode="ios" (ionChange)="typeChanged()"
-        [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="width: 100%;height: 30px; margin-right: 10px;
-        padding: 0 10px;margin-top: 5px; border-radius: 5px;border: 1px solid #a17635;">
-        <ion-select-option value="Tailor-Made Curtains">Tailor-Made Curtains</ion-select-option>
-        <!-- <ion-select-option value="Motorised Curtains">Motorised Curtains</ion-select-option> -->
-        <ion-select-option value="Blinds">Blinds</ion-select-option>
-        <!-- <ion-select-option value="Wallpaper">Wallpaper</ion-select-option> -->
-      </ion-select>
-    </div>
-
-    <div *ngIf="item['type'] == 'Tailor-Made Curtains' || item['type'] == 'Motorised Curtains'">
-
-      <!-- Track -->
-      <div style="width: 100%;padding: 15px 15px 0 15px;">
-        <div style="width: 100%;min-width: 60px;font-weight: 500;">Track :</div>
-        <ion-select class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a product type"
-          interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="width: 100%;height: 30px; margin-right: 10px;
-          padding: 0 10px;margin-top: 5px; border-radius: 5px;border: 1px solid #a17635;">
-          <ion-select-option *ngFor="let x of tracks; let i = index" [value]="x">{{x}}</ion-select-option>
-        </ion-select>
-      </div>
-
-      <!-- Pleat -->
-      <div style="display: flex;margin: 15px 15px 5px 15px;">
-        <div style="font-weight: 500;">Pleat Type :</div>
-        <div style="font-weight: 450; margin-left: 15px;">{{pleatChoice()}}</div>
-      </div>
-
-      <div style="margin: 10px 0px;padding: 0 15px 10px 15px;display: flex;overflow-x: auto;">
-
-        <div *ngFor="let x of pleatlist" (click)="pleatSelection(x)"
-          [ngClass]="pleatChoice() == x.name ? 'selected' :'' " style="margin-right: 15px;">
-          <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
-            src="assets/icon/curtains/single-pleat.png" alt="">
-          <div
-            style="height: 35px;width: 120px;margin-top: -41px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
-            <div style="height: 33px;width: 100%;background: #606060a8;display: flex;justify-content: center;align-items: center;color: white;position: relative;
-              font-size: 15px;font-weight: 500;">
-              {{x.name}}
-            </div>
-          </div>
-        </div>
-
-        <!-- <div (click)="PleatSelection('Ripple Fold')" [ngClass]="PleatRipple ? 'selected' :'' "
-          style="margin-right: 15px;">
-          <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
-            src="assets/icon/curtains/ripple-fold.png" alt="">
-          <div
-            style="height: 35px;width: 120px;margin-top: -41px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
-            <div style="height: 33px;width: 100%;background: #606060a8;display: flex;justify-content: center;align-items: center; color: white;position: relative;
-                font-size: 15px;font-weight: 500;">
-              Ripple Fold
-            </div>
-          </div>
-        </div>
-
-        <div (click)="PleatSelection('Double Pleat')" [ngClass]="PleatDouble ? 'selected' :'' "
-          style="margin-right: 15px;">
-          <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
-            src="assets/icon/curtains/double-pleat.png" alt="">
-          <div
-            style="height: 35px;width: 120px;margin-top: -41px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
-            <div style="height: 33px;width: 100%;background: #606060a8;display: flex;justify-content: center;align-items: center;color: white;position: relative;
-          font-size: 15px;font-weight: 500;">
-              Double Pleat
-            </div>
-          </div>
-        </div>
-
-        <div (click)="PleatSelection('French Pleat')" [ngClass]="PleatFrench ? 'selected' :'' "
-          style="margin-right: 15px;">
-          <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
-            src="assets/icon/curtains/french-pleat.png" alt="">
-          <div
-            style="height: 35px;width: 120px;margin-top: -41px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
-            <div style="height: 33px;width: 100%;background: #606060a8;display: flex;justify-content: center;align-items: center;color: white;position: relative;
-          font-size: 15px;font-weight: 500;">
-              French Pleat
-            </div>
-          </div>
-        </div>
-
-        <div (click)="PleatSelection('Eyelet')" [ngClass]="PleatEyelet ? 'selected' :'' " style="margin-right: 15px;">
-          <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
-            src="assets/icon/curtains/eyelet.png" alt="">
-          <div
-            style="height: 35px;width: 120px;margin-top: -41px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
-            <div style="height: 33px;width: 100%;background: #606060a8;display: flex;justify-content: center;align-items: center;color: white;position: relative;
-          font-size: 15px;font-weight: 500;">
-              Eyelet
-            </div>
-          </div>
-        </div> -->
-
-      </div>
-
-      <!-- Fullness -->
-      <div style="margin: 20px 15px 0 15px;">
-        <div style="min-width: 56px;font-weight: 500;">Fullness :</div>
-        <ion-input [(ngModel)]="item.fullness" placeholder="Enter Fullness" style="max-width: 50%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
-        border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;">
-        </ion-input>
-      </div>
-
-      <!-- Pieces -->
-      <div style="margin: 20px 15px 0 15px;">
-        <div style="display: flex;">
-          <div style="min-width: 56px;font-weight: 500;">Pieces :</div>
-          <div style="color: green;">{{item.pieces}}</div>
-        </div>
-
-        <ion-radio-group [(ngModel)]="item.pieces" style="max-width: 300px;;display: flex;flex-wrap: wrap;">
-          <div style="width: 100%;height: 35px;display: flex;align-items: center;justify-content: space-between;">
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="1"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 10px;">1</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="2"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 10px;">2</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="3"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 10px;">3</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="4"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 10px;">4</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="5"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 10px;">5</ion-label>
-            </div>
-
-          </div>
-        </ion-radio-group>
-      </div>
-
-      <!-- Bracket -->
-      <div style="margin: 20px 15px 0 15px;">
-        <div style="display: flex;">
-          <div style="min-width: 56px;font-weight: 500;">Bracket :</div>
-          <div style="color: green;">{{item.bracket}}</div>
-        </div>
-
-        <ion-radio-group [(ngModel)]="item.bracket" style="max-width: 300px;display: flex;flex-wrap: wrap;">
-          <div style="width: 100%;height: 35px;display: flex;align-items: center;justify-content: space-between;">
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Wall Single"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Wall Single</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Wall Double"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Wall Double</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Ceiling Single"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Ceiling Single</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Ceiling Double"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Ceiling Double</ion-label>
-            </div>
-
-          </div>
-        </ion-radio-group>
-      </div>
-
-      <!-- Hook -->
-      <div style="margin: 20px 15px 0 15px;">
-        <div style="display: flex;">
-          <div style="min-width: 40px;font-weight: 500;">Hook :</div>
-          <div style="color: green;">{{item.hook}}</div>
-        </div>
-
-        <ion-radio-group [(ngModel)]="item.hook" style="max-width: 230px;display: flex;flex-wrap: wrap;">
-          <div style="width: 100%;height: 35px;display: flex;align-items: center;justify-content: space-between;">
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="101-S"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">101-S</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="104-L"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">104-L</ion-label>
-            </div>
-
-            <div *ngIf="PleatChoice != 'French Pleat'"
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Adjust"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Adjust</ion-label>
-            </div>
-
-          </div>
-        </ion-radio-group>
-      </div>
-
-      <!-- SideHook -->
-      <div style="margin: 20px 15px 0 15px;">
-        <div style="display: flex;">
-          <div style="min-width: 65px;font-weight: 500;">Sidehook :</div>
-          <div style="color: green;">{{item.sidehook}}</div>
-        </div>
-
-        <ion-radio-group [(ngModel)]="item.sidehook" style="max-width: 120px;display: flex;flex-wrap: wrap;">
-          <div style="width: 100%;height: 35px;display: flex;align-items: center;justify-content: space-between;">
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Yes"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Yes</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="No"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">No</ion-label>
-            </div>
-
-          </div>
-        </ion-radio-group>
-      </div>
-
-      <!-- Belt -->
-      <div style="margin: 20px 15px 0 15px;">
-        <div style="display: flex;">
-          <div style="min-width: 35px;font-weight: 500;">Belt :</div>
-          <div style="color: green;">{{item.belt}}</div>
-        </div>
-
-        <ion-radio-group [(ngModel)]="item.belt" style="max-width: 155px;display: flex;flex-wrap: wrap;">
-          <div style="width: 100%;height: 35px;display: flex;align-items: center;justify-content: space-between;">
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Tieback"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Tieback</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Velco"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Velco</ion-label>
-            </div>
-
-          </div>
-        </ion-radio-group>
-      </div>
-
-      <!-- Fabric -->
-      <div style="width: 100%;display: flex;">
-
-        <div style="width: 50%;margin: 15px 15px 0 15px;">
-          <div style="min-width: 56px;font-weight: 500;">Fabric Curtain :</div>
-          <ion-input type="text" [(ngModel)]="item.fabric" placeholder="Enter Curtain Code" style="max-width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
-            border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;">
-          </ion-input>
-          <div (click)="selector('this.item.fabric')" style="width: 90px;display: flex;align-items: center;justify-content: center;padding-right: 5px;box-shadow: rgba(0, 0, 0, 0.50) 0px 1px 2px 0px;
-            background: #ebd1af;color: #a17635;padding: 5px 0;margin: 5px 0 0 2px;border-radius: 5px;">
-            Select Curtain
-          </div>
-        </div>
-
-        <div style="width: 50%;margin: 15px 15px 0 15px;">
-          <div style="min-width: 56px;font-weight: 500;">Fabric Sheer :</div>
-          <ion-input type="text" [(ngModel)]="item.fabric_sheer" placeholder="Enter Sheer Code" style="max-width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
-            border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;">
-          </ion-input>
-          <div (click)="selector('this.item.fabric_sheer')" style="width: 90px;display: flex;align-items: center;justify-content: center;padding-right: 5px;box-shadow: rgba(0, 0, 0, 0.50) 0px 1px 2px 0px;
-            background: #ebd1af;color: #a17635;padding: 5px 0;margin: 5px 0 0 2px;border-radius: 5px;">
-            Select Sheer
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Others -->
-      <div style="margin: 20px 15px 0 15px;">
-        <div style="display: flex;">
-          <div style="min-width: 50px;font-weight: 500;">Others :</div>
-          <div style="color: green;">{{item.others}}</div>
-        </div>
-
-        <ion-radio-group [(ngModel)]="item.others" style="max-width: 145px;display: flex;flex-wrap: wrap;">
-          <div style="width: 100%;height: 35px;display: flex;align-items: center;justify-content: space-between;">
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Panel"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Panel</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Meter"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Meter</ion-label>
-            </div>
-
-          </div>
-        </ion-radio-group>
-      </div>
-
-      <!-- Touch Floor -->
-      <div style="margin: 20px 15px 0 15px;">
-        <div style="display: flex;">
-          <div style="min-width: 80px;font-weight: 500;">Touch Floor :</div>
-          <div style="color: green;">{{item.touchfloor}}</div>
-        </div>
-
-        <ion-radio-group [(ngModel)]="item.touchfloor" style="max-width: 120px;display: flex;flex-wrap: wrap;">
-          <div style="width: 100%;height: 35px;display: flex;align-items: center;justify-content: space-between;">
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Yes"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Yes</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="No"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">No</ion-label>
-            </div>
-
-          </div>
-        </ion-radio-group>
-      </div>
-
-      <!-- Remark -->
-      <div style="margin: 15px 15px 0 15px;">
-        <div style="min-width: 56px;font-weight: 500;">Remark :</div>
-        <ion-textarea placeholder="Enter additional remark... (If Any)" row="4" [(ngModel)]="item.remark_tech" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
-         border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
-      </div>
-
-      <!-- Picture -->
-      <div style="margin: 15px 15px 0 15px;min-width: 56px;font-weight: 500;">Images : <span
-          style="font-size: 12px;color: #8080808d;">(Click image to view)</span></div>
-      <div
-        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));height: 100%; margin: 10px 10px 50px 10px;  ">
-        <div style="display: flex;justify-content: center;padding: 5px 5px 5px 10px;">
-
-          <label for="files" class="btn" style="width: 100px;">
-            <div id="button" style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;display: flex;align-items: center;justify-content: center;
-           background-color: gray; box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
-
-              <ion-icon style="width: 100%; font-size: 15px; color: #ffffff;" name="camera"></ion-icon>
-
-              <input #uploadEl style="display: none" id="files" class="inputclass" accept="image/*" type="file"
-                (change)="fileChange($event, '', 600)">
-
-              <canvas style="display: none;" id="canvas"></canvas>
-
-            </div>
-          </label>
-        </div>
-
-        <div *ngFor="let x of item.photos; let i = index"
-          style="height: 100%;padding: 5px;display: flex;justify-content: center;">
-
-          <img (click)="openPic(x)"
-            style="border-radius: 5px; height: 100px;min-width: 100px;max-width: 100px; object-fit: cover;"
-            src="{{x || ''}}" alt="">
-
-          <div
-            style="height: 15px;width: 15px;background-color: white;border-radius: 100px;margin-left: -20px;margin-top: 5px;display: flex;justify-content: center;align-items: center;">
-            <ion-icon (click)="deletePic(i)" style="font-size: 13px; color: #a17635;" name="close-outline"></ion-icon>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div *ngIf="item['type'] == 'Blinds' ">
-
-
-      <!-- Blinds -->
-      <div style="display: flex;margin: 15px 15px 5px 15px;">
-        <div style="font-weight: 500;">Blinds Type :</div>
-        <div style="font-weight: 450; margin-left: 15px;">{{blindChoice()}}</div>
-      </div>
-
-      <div style="margin: 10px 0px;padding: 0 15px 10px 15px;display: flex;overflow-x: auto;">
-        <div *ngFor="let x of blindlist" (click)="blindsSelection(x)"
-          [ngClass]="blindChoice() == x.name ? 'selected' :'' " style="margin-right: 15px;">
-          <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
-            src="assets/icon/blinds/roman-blinds.png" alt="">
-          <div
-            style="height: 35px;width: 120px;margin-top: -41px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
-            <div style="height: 33px;width: 100%;background: #606060a8;display: flex;justify-content: center;align-items: center;color: white;position: relative;
-              font-size: 15px;font-weight: 500;">
-              {{x.name}}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pieces -->
-      <div style="margin: 20px 15px 0 15px;">
-        <div style="display: flex;">
-          <div style="min-width: 56px;font-weight: 500;">Pieces :</div>
-          <div style="color: green;">{{item.pieces}}</div>
-        </div>
-
-        <ion-radio-group [(ngModel)]="item.pieces" style="max-width: 300px;;display: flex;flex-wrap: wrap;">
-          <div style="width: 100%;height: 35px;display: flex;align-items: center;justify-content: space-between;">
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="1"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 10px;">1</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="2"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 10px;">2</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="3"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 10px;">3</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="4"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 10px;">4</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="5"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 10px;">5</ion-label>
-            </div>
-
-          </div>
-        </ion-radio-group>
-      </div>
-
-      <!-- Bracket -->
-      <div style="margin: 20px 15px 0 15px;">
-        <div style="display: flex;">
-          <div style="min-width: 56px;font-weight: 500;">Bracket :</div>
-          <div style="color: green;">{{item.bracket}}</div>
-        </div>
-
-
-        <ion-radio-group [(ngModel)]="item.bracket" style="max-width: 300px;display: flex;flex-wrap: wrap;">
-          <div style="width: 100%;height: 35px;display: flex;align-items: center;justify-content: space-between;">
-            <div *ngFor="let x of bracketlist"
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="{{x.name}}"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">{{x.name}}</ion-label>
-            </div>
-
-            <!-- <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Ceiling"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Ceiling</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Single"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Single</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Double"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Double</ion-label>
-            </div> -->
-
-          </div>
-        </ion-radio-group>
-      </div>
-
-      <!-- Hook -->
-      <div style="margin: 20px 15px 0 15px;">
-        <div style="display: flex;">
-          <div style="min-width: 40px;font-weight: 500;">Hook :</div>
-          <div style="color: green;">{{item.hook}}</div>
-        </div>
-
-        <ion-radio-group [(ngModel)]="item.hook" style="max-width: 230px;display: flex;flex-wrap: wrap;">
-          <div style="width: 100%;height: 35px;display: flex;align-items: center;justify-content: space-between;">
-
-            <div *ngFor="let x of hooklist"
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="{{x.name}}"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">{{x.name}}</ion-label>
-            </div>
-
-            <!-- <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="104-L"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">104-L</ion-label>
-            </div>
-
-            <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Adjust"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Adjust</ion-label>
-            </div> -->
-
-          </div>
-        </ion-radio-group>
-      </div>
-
-      <!-- Belt -->
-      <div style="margin: 20px 15px 0 15px;">
-        <div style="display: flex;">
-          <div style="min-width: 35px;font-weight: 500;">Belt :</div>
-          <div style="color: green;">{{item.belt}}</div>
-        </div>
-
-        <ion-radio-group [(ngModel)]="item.belt" style="max-width: 155px;display: flex;flex-wrap: wrap;">
-          <div style="width: 100%;height: 35px;display: flex;align-items: center;justify-content: space-between;">
-
-            <div *ngFor="let x of beltlist"
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="{{x.name}}"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">{{x.name}}</ion-label>
-            </div>
-
-            <!-- <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Velco"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Velco</ion-label>
-            </div> -->
-
-          </div>
-        </ion-radio-group>
-      </div>
-
-      <!-- Fabric -->
-      <!-- <div style="width: 100%;display: flex;">
-
-        <div style="width: 50%;margin: 15px 15px 0 15px;">
-          <div style="min-width: 56px;font-weight: 500;">Fabric Curtain :</div>
-          <ion-input type="text" [(ngModel)]="item.fabric" placeholder="Enter Curtain Code" style="max-width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
-            border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;">
-          </ion-input>
-          <div (click)="selector('this.item.fabric')" style="width: 90px;display: flex;align-items: center;justify-content: center;padding-right: 5px;box-shadow: rgba(0, 0, 0, 0.50) 0px 1px 2px 0px;
-            background: #ebd1af;color: #a17635;padding: 5px 0;margin: 5px 0 0 2px;border-radius: 5px;">
-            Select Curtain
-          </div>
-        </div>
-
-        <div style="width: 50%;margin: 15px 15px 0 15px;">
-          <div style="min-width: 56px;font-weight: 500;">Fabric Sheer :</div>
-          <ion-input type="text" [(ngModel)]="item.fabric_sheer" placeholder="Enter Sheer Code" style="max-width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
-            border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;">
-          </ion-input>
-          <div (click)="selector('this.item.fabric_sheer')" style="width: 90px;display: flex;align-items: center;justify-content: center;padding-right: 5px;box-shadow: rgba(0, 0, 0, 0.50) 0px 1px 2px 0px;
-            background: #ebd1af;color: #a17635;padding: 5px 0;margin: 5px 0 0 2px;border-radius: 5px;">
-            Select Sheer
-          </div>
-        </div>
-
-      </div> -->
-
-      <!-- Others -->
-      <div style="margin: 20px 15px 0 15px;">
-        <div style="display: flex;">
-          <div style="min-width: 50px;font-weight: 500;">Others :</div>
-          <div style="color: green;">{{item.others}}</div>
-        </div>
-
-        <ion-radio-group [(ngModel)]="item.others" style="max-width: 145px;display: flex;flex-wrap: wrap;">
-          <div style="width: 100%;height: 35px;display: flex;align-items: center;justify-content: space-between;">
-
-            <div *ngFor="let x of otherslist"
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="{{x.name}}"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">{{x.name}}</ion-label>
-            </div>
-
-            <!-- <div
-              style="display: flex; align-items: center;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;border-radius: 5px;padding: 5px;">
-              <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
-                value="Meter"></ion-radio>
-              <ion-label style="font-size: 0.75rem;padding-left: 5px;">Meter</ion-label>
-            </div> -->
-
-          </div>
-        </ion-radio-group>
-      </div>
-
-      <!-- Remark -->
-      <div style="margin: 15px 15px 0 15px;">
-        <div style="min-width: 56px;font-weight: 500;">Remark :</div>
-        <ion-textarea placeholder="Enter additional remark... (If Any)" row="4" [(ngModel)]="item.remark_sale" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
-         border-radius: 5px;border: 1px solid #a17635;margin-top: 5px;"></ion-textarea>
-      </div>
-
-      <!-- Picture -->
-      <div style="margin: 15px 15px 0 15px;min-width: 56px;font-weight: 500;">Images : <span
-          style="font-size: 12px;color: #8080808d;">(Click image to view)</span></div>
-      <div
-        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));height: 100%; margin: 10px 10px 50px 10px;  ">
-        <div style="display: flex;justify-content: center;padding: 5px 5px 5px 10px;">
-
-          <label for="files" class="btn" style="width: 100px;">
-            <div id="button" style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;display: flex;align-items: center;justify-content: center;
-           background-color: gray; box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
-
-              <ion-icon style="width: 100%; font-size: 15px; color: #ffffff;" name="camera"></ion-icon>
-
-              <input #uploadEl style="display: none" id="files" class="inputclass" accept="image/*" type="file"
-                (change)="fileChange($event, '', 600)">
-
-              <canvas style="display: none;" id="canvas"></canvas>
-
-            </div>
-          </label>
-        </div>
-
-        <div *ngFor="let x of item.photos; let i = index"
-          style="height: 100%;padding: 5px;display: flex;justify-content: center;">
-
-          <img (click)="openPic(x)"
-            style="border-radius: 5px; height: 100px;min-width: 100px;max-width: 100px; object-fit: cover;"
-            src="{{x || ''}}" alt="">
-
-          <div
-            style="height: 15px;width: 15px;background-color: white;border-radius: 100px;margin-left: -20px;margin-top: 5px;display: flex;justify-content: center;align-items: center;">
-            <ion-icon (click)="deletePic(i)" style="font-size: 13px; color: #a17635;" name="close-outline"></ion-icon>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- <div *ngIf="item['type'] == 'Wallpaper' ">
-
-      <div style="display: flex;margin: 15px 15px 5px 15px;">
-        <div style="font-weight: 500;">WallerPaper Type :</div>
-        <div style="font-weight: 450; margin-left: 15px;">{{WallpaperChoice}}</div>
-      </div>
-      <div style="margin: 10px 0px;padding: 0 15px 10px 15px;display: flex;overflow-x: auto;">
-
-        <div (click)="wallpaperSelection('Plain')" [ngClass]="PlainWall ? 'selected' :'' " style="margin-right: 15px;">
-          <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
-            src="assets/icon/wallpaper/plain-wallpaper.jpg" alt="">
-          <div
-            style="height: 35px;width: 120px;margin-top: -41px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
-            <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
-        font-size: 15px;font-weight: 500;">
-              Plain
-            </div>
-          </div>
-        </div>
-
-        <div (click)="wallpaperSelection('Fabric')" [ngClass]="FabricWall ? 'selected' :'' "
-          style="margin-right: 15px;">
-          <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
-            src="assets/icon/wallpaper/fabric-wallpaper.jpg" alt="">
-          <div
-            style="height: 35px;width: 120px;margin-top: -41px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
-            <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
-          font-size: 15px;font-weight: 500;">
-              Fabric
-            </div>
-          </div>
-        </div>
-
-        <div (click)="wallpaperSelection('Non-Woven')" [ngClass]="NonWovenWall ? 'selected' :'' "
-          style="margin-right: 15px;">
-          <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
-            src="assets/icon/wallpaper/non-woven-wallpaper.jpg" alt="">
-          <div
-            style="height: 35px;width: 120px;margin-top: -41px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
-            <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
-          font-size: 15px;font-weight: 500;">
-              Non-Woven
-            </div>
-          </div>
-        </div>
-
-        <div (click)="wallpaperSelection('Patterned')" [ngClass]="PatternWall ? 'selected' :'' "
-          style="margin-right: 15px;">
-          <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
-            src="assets/icon/wallpaper/pattern-wallpaper.jpg" alt="">
-          <div
-            style="height: 35px;width: 120px;margin-top: -41px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
-            <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
-          font-size: 15px;font-weight: 500;">
-              Patterned
-            </div>
-          </div>
-        </div>
-
-        <div (click)="wallpaperSelection('Vinyl')" [ngClass]="VinylWall ? 'selected' :'' " style="margin-right: 15px;">
-          <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
-            src="assets/icon/wallpaper/vinyl-wallpaper.jpg" alt="">
-          <div
-            style="height: 35px;width: 120px;margin-top: -41px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
-            <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
-          font-size: 15px;font-weight: 500;">
-              Vinyl
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div> -->
-
   </div>
 
 </ion-content>

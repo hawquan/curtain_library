@@ -570,51 +570,109 @@ export class QuotationOverallPage implements OnInit {
       )
 
       if (this.item[i].fabric_blind != null) {
-        items.push(
-          [
-            'Blind - ' + this.item[i].fabric_blind,
-            { text: this.calc[i].blind.unit, alignment: 'center' },
-            { text: this.calc[i].blind.qty, alignment: 'center' },
-            { text: ((this.calc[i].blind.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' },
-            { text: ((this.calc[i].blind.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' }
-          ]
-        )
+        // <span
+        //           *ngIf="calc[i].blind.promo_rate != 0 && calc[i].blind.promo_rate != null">
+        //           (-{{calc[i].blind.promo_rate}}%)</span>
+        if (this.calc[i].blind.promo_rate != 0 && this.calc[i].blind.promo_rate != null) {
+          items.push(
+            [
+              'Blind - ' + this.item[i].fabric_blind,
+              { text: this.calc[i].blind.unit, alignment: 'center' },
+              { text: this.calc[i].blind.qty, alignment: 'center' },
+              { text: ((this.calc[i].blind.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' },
+              { text:  '(-' + this.calc[i].blind.promo_rate + '%) ' + ((this.calc[i].blind.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' }
+            ]
+          )
+        } else {
+          items.push(
+            [
+              'Blind - ' + this.item[i].fabric_blind,
+              { text: this.calc[i].blind.unit, alignment: 'center' },
+              { text: this.calc[i].blind.qty, alignment: 'center' },
+              { text: ((this.calc[i].blind.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' },
+              { text: ((this.calc[i].blind.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' }
+            ]
+          )
+        }
       }
 
       if (this.item[i].fabric != null) {
-        items.push(
-          [
-            'Curtain - ' + this.item[i].fabric,
-            { text: this.calc[i].curtain.unit, alignment: 'center' },
-            { text: this.calc[i].curtain.qty, alignment: 'center' },
-            { text: (this.calc[i].curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-            { text: (this.calc[i].curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-          ]
-        )
+        if (this.calc[i].curtain.promo_rate != 0 && this.calc[i].curtain.promo_rate != null) {
+          items.push(
+            [
+              'Curtain - ' + this.item[i].fabric,
+              { text: this.calc[i].curtain.unit, alignment: 'center' },
+              { text: this.calc[i].curtain.qty, alignment: 'center' },
+              { text: (this.calc[i].curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+              { text: '(-' + this.calc[i].curtain.promo_rate + '%) ' + (this.calc[i].curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+            ]
+          )
+
+        } else {
+
+          items.push(
+            [
+              'Curtain - ' + this.item[i].fabric,
+              { text: this.calc[i].curtain.unit, alignment: 'center' },
+              { text: this.calc[i].curtain.qty, alignment: 'center' },
+              { text: (this.calc[i].curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+              { text: (this.calc[i].curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+            ]
+          )
+        }
+
       }
 
       if (this.item[i].fabric_lining != null) {
-        items.push(
-          [
-            'Lining - ' + this.item[i].fabric_lining,
-            { text: this.calc[i].lining.unit, alignment: 'center' },
-            { text: this.calc[i].lining.qty, alignment: 'center' },
-            { text: (this.calc[i].lining.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-            { text: (this.calc[i].lining.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-          ]
-        )
+        if (this.calc[i].lining.promo_rate != 0 && this.calc[i].lining.promo_rate != null) {
+          items.push(
+            [
+              'Lining - ' + this.item[i].fabric_lining,
+              { text: this.calc[i].lining.unit, alignment: 'center' },
+              { text: this.calc[i].lining.qty, alignment: 'center' },
+              { text: (this.calc[i].lining.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+              { text: '(-' + this.calc[i].lining.promo_rate + '%) ' +(this.calc[i].lining.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) , alignment: 'right' }
+            ]
+          )
+        }
+        else {
+          items.push(
+            [
+              'Lining - ' + this.item[i].fabric_lining,
+              { text: this.calc[i].lining.unit, alignment: 'center' },
+              { text: this.calc[i].lining.qty, alignment: 'center' },
+              { text: (this.calc[i].lining.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+              { text: (this.calc[i].lining.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+            ]
+          )
+        }
+
       }
 
       if (this.item[i].fabric_sheer != null) {
-        items.push(
-          [
-            'Sheer - ' + this.item[i].fabric_sheer,
-            { text: this.calc[i].sheer.unit, alignment: 'center' },
-            { text: this.calc[i].sheer.qty, alignment: 'center' },
-            { text: (this.calc[i].sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-            { text: (this.calc[i].sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-          ]
-        )
+        if (this.calc[i].sheer.promo_rate != 0 && this.calc[i].sheer.promo_rate != null) {
+          items.push(
+            [
+              'Sheer - ' + this.item[i].fabric_sheer,
+              { text: this.calc[i].sheer.unit, alignment: 'center' },
+              { text: this.calc[i].sheer.qty, alignment: 'center' },
+              { text: (this.calc[i].sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+              { text:  '(-' + this.calc[i].sheer.promo_rate + '%) ' +(this.calc[i].sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+            ]
+          )
+        } else {
+          items.push(
+            [
+              'Sheer - ' + this.item[i].fabric_sheer,
+              { text: this.calc[i].sheer.unit, alignment: 'center' },
+              { text: this.calc[i].sheer.qty, alignment: 'center' },
+              { text: (this.calc[i].sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+              { text: (this.calc[i].sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+            ]
+          )
+        }
+
+       
       }
 
       if (this.item[i].fabric != null && this.item[i].fabric_lining != null) {

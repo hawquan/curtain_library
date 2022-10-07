@@ -650,7 +650,7 @@ export class TaskEditorPage implements OnInit {
     } else if (this.item['type'] == 'Blinds') {
 
       if (this.item.pleat == 'Roman Blind') {
-        if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_blind', 'fabric', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'rope_chain', 'pieces_blind', 'fabric', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
 
           let temp = {
             no: this.item.no,
@@ -664,6 +664,7 @@ export class TaskEditorPage implements OnInit {
             pieces_blind: this.item.pieces_blind,
             blind_decoration: this.item.blind_decoration,
             bracket: this.item.bracket,
+            rope_chain: this.item.rope_chain,
             // hook: this.item.hook,
             // sidehook: this.item.sidehook,
             // belt: this.item.belt,
@@ -693,7 +694,7 @@ export class TaskEditorPage implements OnInit {
           this.errorEmpty()
         }
       } else if (this.item.pleat == 'Zebra Blind' || this.item.pleat == 'Roller Blind' || this.item.pleat == 'Wooden Blind') {
-        if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_blind', 'blind_decoration', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'rope_chain', 'pieces_blind', 'blind_decoration', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
 
           let temp = {
             no: this.item.no,
@@ -707,6 +708,7 @@ export class TaskEditorPage implements OnInit {
             pieces_blind: this.item.pieces_blind,
             blind_decoration: this.item.blind_decoration,
             bracket: this.item.bracket,
+            rope_chain: this.item.rope_chain,
             // hook: this.item.hook,
             // sidehook: this.item.sidehook,
             // belt: this.item.belt,
@@ -735,7 +737,7 @@ export class TaskEditorPage implements OnInit {
           this.errorEmpty()
         }
       } else {
-        if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_blind', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_blind', 'rope_chain', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
 
           let temp = {
             no: this.item.no,
@@ -748,6 +750,7 @@ export class TaskEditorPage implements OnInit {
             pleat: this.item.pleat,
             pieces_blind: this.item.pieces_blind,
             bracket: this.item.bracket,
+            rope_chain: this.item.rope_chain,
             // hook: this.item.hook,
             // sidehook: this.item.sidehook,
             // belt: this.item.belt,
