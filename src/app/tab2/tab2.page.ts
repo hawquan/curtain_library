@@ -61,9 +61,9 @@ export class Tab2Page implements OnInit {
       reverseButtons: true,
     }).then((y) => {
       if (y.isConfirmed) {
-        // this.fcm.unsubscribeFromTopic(this.uid).then(() => {
+        this.fcm.unsubscribeFromTopic(this.uid).then(() => {
           firebase.auth().signOut();
-        // })
+        })
 
         setTimeout(() => {
           this.nav.navigateBack('')
