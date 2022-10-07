@@ -93,12 +93,14 @@
                 {{calc[i].curtain.qty}}
               </div>
               <div style="width: 70%;text-align: end;">
-                {{calc[i].curtain.total | currency: ' '}}
+                {{calc[i].curtain.total | currency: ' '}}<span
+                *ngIf="calc[i].curtain.promo_rate != 0 && calc[i].curtain.promo_rate != null">
+                (-{{calc[i].curtain.promo_rate}}%)</span>
               </div>
             </div>
           </div>
 
-          <!-- Curtain -->
+          <!-- Lining -->
           <div *ngIf="x.fabric_lining != null"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
@@ -110,7 +112,9 @@
                 {{calc[i].lining.qty}}
               </div>
               <div style="width: 70%;text-align: end;">
-                {{calc[i].lining.total | currency: ' '}}
+                {{calc[i].lining.total | currency: ' '}}<span
+                *ngIf="calc[i].lining.promo_rate != 0 && calc[i].lining.promo_rate != null">
+                (-{{calc[i].lining.promo_rate}}%)</span>
               </div>
             </div>
           </div>
@@ -127,7 +131,9 @@
                 {{calc[i].sheer.qty}}
               </div>
               <div style="width: 70%;text-align: end;">
-                {{calc[i].sheer.total | currency: ' '}}
+                {{calc[i].sheer.total | currency: ' '}}<span
+                *ngIf="calc[i].sheer.promo_rate != 0 && calc[i].sheer.promo_rate != null">
+                (-{{calc[i].sheer.promo_rate}}%)</span>
               </div>
             </div>
           </div>
@@ -300,7 +306,9 @@
                 1
               </div>
               <div style="width: 70%;text-align: end;">
-                {{calc[i].blind.total | currency: ' '}}
+                {{calc[i].blind.total | currency: ' '}}<span
+                *ngIf="calc[i].blind.promo_rate != 0 && calc[i].blind.promo_rate != null">
+                (-{{calc[i].blind.promo_rate}}%)</span>
               </div>
             </div>
           </div>

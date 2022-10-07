@@ -299,27 +299,34 @@
             style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
 
             <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
-              <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Belt</div>
-              <div style="display: flex;">
+              <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Tieback</div>
+              <!-- <div style="display: flex;">
                 <div style="font-size: 13px;color: #888888;font-weight: 500;">Custom</div>
                 <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="item.custom_belt"
                   (click)="selectCustom('belt')"
                   style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 5px;--background-checked: #a17635;--border-color-checked: #a17635">
                 </ion-checkbox>
-              </div>
+              </div> -->
             </div>
 
-            <ion-select *ngIf="!item.custom_belt" class="ion-no-padding" [(ngModel)]="item.belt"
+            <!-- <ion-select *ngIf="!item.custom_belt" class="ion-no-padding" [(ngModel)]="item.belt"
               placeholder="Tieback/Velco" interface="popover" mode="ios"
               [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
               style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
               <ion-select-option *ngFor="let x of beltlist; let i = index" [value]="x.name">{{x.name}}
               </ion-select-option>
+            </ion-select> -->
+
+            <ion-select class="ion-no-padding" [(ngModel)]="item.belt" placeholder="Tieback" interface="popover"
+              mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+              style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
+              <ion-select-option value="Yes">Yes</ion-select-option>
+              <ion-select-option value="No">No</ion-select-option>
             </ion-select>
 
-            <ion-input class="ion-no-padding" *ngIf="item.custom_belt" placeholder="Enter Belt" [(ngModel)]="item.belt"
+            <!-- <ion-input class="ion-no-padding" *ngIf="item.custom_belt" placeholder="Enter Belt" [(ngModel)]="item.belt"
               style="width: 100% ;--padding-top: 6.5px;--padding-bottom: 6.5px;font-size: 14px;font-weight: 500; color: #333333">
-            </ion-input>
+            </ion-input> -->
 
           </div>
 
@@ -541,28 +548,35 @@
             style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: flex-start; flex-direction: column;">
 
             <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
-              <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Belt</div>
-              <div style="display: flex;">
+              <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Tieback</div>
+              <!-- <div style="display: flex;">
                 <div style="font-size: 13px;color: #888888;font-weight: 500;">Custom</div>
                 <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="item.custom_sheer_belt"
                   (click)="selectCustom('sheer_belt')"
                   style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 5px;--background-checked: #a17635;--border-color-checked: #a17635">
                 </ion-checkbox>
-              </div>
+              </div> -->
             </div>
 
-            <ion-select *ngIf="!item.custom_sheer_belt" class="ion-no-padding" [(ngModel)]="item.sheer_belt"
+            <!-- <ion-select *ngIf="!item.custom_sheer_belt" class="ion-no-padding" [(ngModel)]="item.sheer_belt"
               placeholder="Tieback/Velco" interface="popover" mode="ios"
               [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
               style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
               <ion-select-option *ngFor="let x of beltlist; let i = index" [value]="x.name">{{x.name}}
               </ion-select-option>
+            </ion-select> -->
+
+            <ion-select class="ion-no-padding" [(ngModel)]="item.sheer_belt" placeholder="Tieback" interface="popover"
+              mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+              style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
+              <ion-select-option value="Yes">Yes</ion-select-option>
+              <ion-select-option value="No">No</ion-select-option>
             </ion-select>
 
-            <ion-input class="ion-no-padding" *ngIf="item.custom_sheer_belt" placeholder="Enter Belt"
+            <!-- <ion-input class="ion-no-padding" *ngIf="item.custom_sheer_belt" placeholder="Enter Belt"
               [(ngModel)]="item.sheer_belt"
               style="width: 100% ;--padding-top: 6.5px;--padding-bottom: 6.5px;font-size: 14px;font-weight: 500; color: #333333">
-            </ion-input>
+            </ion-input> -->
 
           </div>
 
@@ -615,7 +629,8 @@
       <div *ngIf="item.fabric_type != null && item.fabric_type != ''"
         style="margin-top: 25px;color: #888888;font-weight: 600;">
         <div style="min-width: 56px;font-weight: 500;color: #999999">Remark :</div>
-        <ion-textarea placeholder="Enter additional remark... (If Any)" row="4" [(ngModel)]="item.remark_sale" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea auto-grow="true" placeholder="Enter additional remark... (If Any)" row="4"
+          [(ngModel)]="item.remark_sale" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
       </div>
 
@@ -774,6 +789,23 @@
 
         </div>
 
+        <!-- Rope/Chain -->
+        <div
+          style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
+
+          <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
+            <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Rope/Chain</div>
+          </div>
+
+          <ion-select class="ion-no-padding" [(ngModel)]="item.rope_chain" placeholder="Select L/R" interface="popover"
+            mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+            style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
+            <ion-select-option value="Left">Left</ion-select-option>
+            <ion-select-option value="Right">Right</ion-select-option>
+          </ion-select>
+
+        </div>
+
         <!-- Discount Blind -->
         <div style="color: #888888;font-weight: 600;margin: 10px 0 5px 0;">Optional</div>
         <div style="width: 100%;margin-bottom: 10px;">
@@ -892,7 +924,8 @@
         <!-- Remark -->
         <div style="margin-top: 25px;color: #333333;font-weight: 600;">
           <div style="min-width: 56px;font-weight: 500;color: #999999">Remark :</div>
-          <ion-textarea placeholder="Enter additional remark... (If Any)" row="4" [(ngModel)]="item.remark_sale" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+          <ion-textarea auto-grow="true" placeholder="Enter additional remark... (If Any)" row="4"
+            [(ngModel)]="item.remark_sale" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
         </div>
 

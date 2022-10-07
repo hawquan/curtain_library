@@ -42,7 +42,6 @@ export class AppComponent {
       })
     }
 
-
     firebase.database().ref('/bundle').once('value', bund => {
       this.bundle = bund.val()
       this.currentPlatform = this.platform.is('android') ? 'android' : 'ios'

@@ -428,6 +428,7 @@ export class TaskDetailPage implements OnInit {
                   no: this.sales_id,
                   step: 1,
                   rejected: true,
+                  been_rejected: true,
                 }
                 // let navExtra: NavigationExtras = {
                 //   queryParams: {

@@ -21,7 +21,7 @@ export class TaskDetailReviewPage implements OnInit {
     private http: HttpClient,
     private alertController: AlertController,
     private camera: Camera,
-    ) { }
+  ) { }
 
   item = [] as any
   info = []
@@ -398,7 +398,7 @@ export class TaskDetailReviewPage implements OnInit {
 
     } else if (this.item['type'] == 'Blinds') {
       if (this.item.pleat == 'Roman Blind') {
-        if (['area', 'area_ref', 'tech_width', 'tech_height', 'pleat', 'product', 'pieces_blind', 'bracket'].every(a => this.checker[a])) {
+        if (['area', 'area_ref', 'tech_width', 'tech_height', 'rope_chain', 'pleat', 'product', 'pieces_blind', 'bracket'].every(a => this.checker[a])) {
 
           this.pass()
 
@@ -406,7 +406,7 @@ export class TaskDetailReviewPage implements OnInit {
           this.emptychecker()
         }
       } else if (this.item.pleat == 'Zebra Blind' || this.item.pleat == 'Roller Blind' || this.item.pleat == 'Wooden Blind') {
-        if (['area', 'area_ref', 'tech_width', 'tech_height', 'pleat', 'product', 'pieces_blind', 'bracket', 'decoration'].every(a => this.checker[a])) {
+        if (['area', 'area_ref', 'tech_width', 'tech_height', 'rope_chain', 'pleat', 'product', 'pieces_blind', 'bracket', 'decoration'].every(a => this.checker[a])) {
 
           this.pass()
 
@@ -414,7 +414,7 @@ export class TaskDetailReviewPage implements OnInit {
           this.emptychecker()
         }
       } else {
-        if (['area', 'area_ref', 'tech_width', 'tech_height', 'pleat', 'product', 'pieces_blind', 'fabric', 'bracket'].every(a => this.checker[a])) {
+        if (['area', 'area_ref', 'tech_width', 'tech_height', 'pleat', 'rope_chain', 'product', 'pieces_blind', 'fabric', 'bracket'].every(a => this.checker[a])) {
 
           this.pass()
 
@@ -576,6 +576,7 @@ export class TaskDetailReviewPage implements OnInit {
           height_tech: this.item.height_tech,
           width_tech: this.item.width_tech,
           bracket: this.item.bracket,
+          rope_chain: this.item.rope_chain,
           // belt: this.item.belt,
           // hook: this.item.hook,
           // sidehook: this.item.sidehook,
@@ -928,6 +929,7 @@ export class TaskDetailReviewPage implements OnInit {
         height_tech: this.item.height_tech,
         width_tech: this.item.width_tech,
         bracket: this.item.bracket,
+        rope_chain: this.item.rope_chain,
         // belt: this.item.belt,
         // hook: this.item.hook,
         // sidehook: this.item.sidehook,
