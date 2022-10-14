@@ -88,6 +88,14 @@ const routes: Routes = [
   {
     path: 'task-detail-completed-quotation',
     loadChildren: () => import('./task-detail-completed-quotation/task-detail-completed-quotation.module').then( m => m.TaskDetailCompletedQuotationPageModule)
+  },
+  {
+    path: 'product-details',
+    loadChildren: () => import('./product-details/product-details.module').then( m => m.ProductDetailsPageModule)
+  },
+  {
+    path: 'product-category',
+    loadChildren: () => import('./product-category/product-category.module').then( m => m.ProductCategoryPageModule)
   }
 
 ];

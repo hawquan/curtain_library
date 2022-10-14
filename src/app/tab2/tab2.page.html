@@ -1,65 +1,31 @@
-<ion-content [scrollY]="false">
-
-  <div style="width: 100vw;height: 100vh;">
-
-    <div style="background-color: #ebd1af; height: 150px; padding: 40px 20px 10px 20px; display: flex;align-items: center; 
-      justify-content: space-between; border-radius: 0 0 10px 10px;box-shadow: 0 3px 5px #adadad;">
-
-      <div style="display: flex;align-items: center;">
-
-        <div style="padding-right: 15px;">
-
-          <div style="font-size: 11px;font-weight: 500;color: white;">Name:</div>
-          <div style="margin-bottom: 10px;font-size: 15px;font-weight: 600;color: white;">
-            {{user.name}}
-          </div>
-
-          <div style="font-size: 11px;font-weight: 500;color: white;">Position:</div>
-          <div style="font-size: 15px;font-weight: 600;color: white;">
-            {{user.position}}
-          </div>
-
-        </div>
-
-      </div>
-
-      <img *ngIf="!user['photo']"
-        style="min-height: 70px;min-width: 70px;max-height: 60px;max-width: 60px;object-fit: cover;border-radius: 50px;border: 2px solid white;"
-        src="https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg">
-      <img *ngIf="user['photo']"
-        style="min-height: 70px;min-width: 70px;max-height: 60px;max-width: 60px;object-fit: cover;border-radius: 50px;border: 2px solid white;"
-        src="{{user['photo']}}">
-      <!-- <div style="display: flex;color: white;">
-        <ion-icon style="font-size:20px" name="log-out-outline"></ion-icon>
-        Logout
-      </div> -->
-
-    </div>
-
-    <div (click)="toProfile()" style="height: 50px;margin-top: 50px;display: flex;align-items: center;padding-left: 20px;justify-content: space-between;box-shadow: 0 2px 4px #adadad;
-    background-color: #ebd1af;">
-      <div style="display: flex;">
-        <ion-icon style="font-size:20px;color: white;margin-right: 15px;" name="create-outline"></ion-icon>
-        <div style="color: white;font-size: 15px;font-weight: 500;margin-right: 15px;">|</div>
-        <div style="color: white;font-size: 15px;font-weight: 500;display: flex;align-items: center;">Edit Profile</div>
-      </div>
-      <div style="display: flex;justify-content: center;">
-        <ion-icon style="color: white;margin-right: 15px;" name="chevron-forward-outline"></ion-icon>
-      </div>
-    </div>
-
-    <div (click)="logout()" style="height: 50px;margin-top: 20px;display: flex;align-items: center;padding-left: 20px;justify-content: space-between;box-shadow: 0 2px 4px #adadad;
-      background-color: #ebd1af;">
-      <div style="display: flex;">
-        <ion-icon style="font-size:20px;color: white;margin-right: 15px;" name="log-out-outline"></ion-icon>
-        <div style="color: white;font-size: 15px;font-weight: 500;margin-right: 15px;">|</div>
-        <div style="color: white;font-size: 15px;font-weight: 500;display: flex;align-items: center;">Logout</div>
-      </div>
-      <div style="display: flex;justify-content: center;">
-        <ion-icon style="color: white;margin-right: 15px;" name="chevron-forward-outline"></ion-icon>
-      </div>
-    </div>
-
+<ion-content style="--background: #FAF7F2;">
+  <div style="margin: 3px 8px;">
+    <ion-searchbar class="searchbar" show-clear-button="focus" value=""></ion-searchbar>
   </div>
 
+  <ion-slides loop="true" pager="true" [options]="slideOpts">
+    <ion-slide *ngFor="let item of newsImage">
+      <img src="{{item.pic}}">
+    </ion-slide>
+  </ion-slides>
+
+  <div style="padding: 20px 20px 0 20px; font-size: 20px; font-weight: 600;">Products</div>
+
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; padding: 0 20px">
+    <div (click)="goProductCategory('category')" *ngFor="let item of products" style="border-radius: 5px; width: calc((100% - 20px) / 2); text-align: justify; background: white; box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.12); margin-top: 20px;">
+      <img style="height: 150px; border-radius: 5px 5px 0 0;" src="{{item.img}}">
+      <div style="font-size: 14px; font-weight: 600; margin-top: 5px; padding: 0 10px;">{{item.h1}}</div>
+      <div style="font-size: 12px; padding: 10px;">{{item.h2}}</div>
+    </div>
+  </div>
+
+  <div style="padding: 20px 20px 0 20px; font-size: 20px; font-weight: 600;">Services</div>
+
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; padding: 0 20px; margin-bottom: 20px;">
+    <div (click)="goProductCategory('services')" *ngFor="let item of services" style="border-radius: 5px; width: calc((100% - 20px) / 2); text-align: justify; background: white; box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.12); margin-top: 20px;">
+      <img style="height: 150px; border-radius: 5px 5px 0 0;" src="{{item.img}}">
+      <div style="font-size: 14px; font-weight: 600; margin-top: 5px; padding: 0 10px;">{{item.h1}}</div>
+      <div style="font-size: 12px; padding: 10px;">{{item.h2}}</div>
+    </div>
+  </div>
 </ion-content>
