@@ -1,0 +1,37 @@
+<ion-content style="--background: #FAF7F2;">
+  <div *ngIf="isCategory == 'category'">
+    <div (click)="back()"
+      style="padding: 20px; display: flex; align-items: center; font-size: 20px; font-weight: 600; ">
+      <ion-icon style="margin-right: 10px;" name="chevron-back-outline"></ion-icon>
+      <div>Category</div>
+    </div>
+
+    <div style="padding-left: 20px;">Collection of Designer <span style="font-weight: 600;">Blinds</span></div>
+
+    <div style="padding: 0 20px 20px 20px;">
+      <div *ngFor="let item of categoryDetails" style="border-radius: 5px; text-align: justify; background: white; box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.12); margin-top: 20px;">
+
+      </div>
+    </div>
+
+    <!-- <div style="padding: 0 20px 20px 20px;">
+      <div *ngFor="let item of categoryDetails"
+        style="border-radius: 5px; width: 100%; display: flex; text-align: justify; background: white; box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.12); margin-top: 20px;">
+        <div style="width: 40%;">
+          <img style="height: 150px; width: 100%; border-radius: 5px 0 0 5px;" src="{{item.img}}">
+        </div>
+
+        <div style="width: 60%;">
+          <div style="font-size: 14px; font-weight: 600; margin-top: 5px; padding: 0 10px;">{{item.h1}}</div>
+          <div style="font-size: 12px; padding: 20px;">{{item.h2}}</div>
+        </div>
+
+      </div>
+    </div> -->
+
+  </div>
+
+  <div *ngIf="isCategory == 'services'">
+
+  </div>
+</ion-content>
