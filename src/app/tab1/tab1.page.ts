@@ -156,6 +156,8 @@ export class Tab1Page implements OnInit {
 
         })
 
+      } else {
+        this.nav.pop()
       }
     })
   }

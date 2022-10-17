@@ -109,5 +109,9 @@ export class LoginPage implements OnInit {
     this.nav.navigateForward('tabs/tab1')
   }
 
+  tab2() {
+    this.nav.navigateForward('tabs/tab2')
+  }
+
 }
 

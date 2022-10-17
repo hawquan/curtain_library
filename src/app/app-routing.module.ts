@@ -96,6 +96,10 @@ const routes: Routes = [
   {
     path: 'product-category',
     loadChildren: () => import('./product-category/product-category.module').then( m => m.ProductCategoryPageModule)
+  },
+  {
+    path: 'tab4',
+    loadChildren: () => import('./tab4/tab4.module').then( m => m.Tab4PageModule)
   }
 
 ];

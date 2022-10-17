@@ -1,7 +1,13 @@
 <ion-content style="--background: #FAF7F2;">
+  <!-- <div style="display: flex; justify-content:space-between; width: 100%; align-items: center;">
+
+    <ion-icon (click)="login()" style="font-size: 30px; margin-right: 20px; color: #a17635;" name="person-circle-sharp"></ion-icon>
+  </div> -->
+
   <div style="margin: 3px 8px;">
     <ion-searchbar class="searchbar" show-clear-button="focus" value=""></ion-searchbar>
   </div>
+
 
   <ion-slides loop="true" pager="true" [options]="slideOpts">
     <ion-slide *ngFor="let item of newsImage">
@@ -12,20 +18,36 @@
   <div style="padding: 20px 20px 0 20px; font-size: 20px; font-weight: 600;">Products</div>
 
   <div style="display: flex; flex-wrap: wrap; justify-content: space-between; padding: 0 20px">
-    <div (click)="goProductCategory('category')" *ngFor="let item of products" style="border-radius: 5px; width: calc((100% - 20px) / 2); text-align: justify; background: white; box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.12); margin-top: 20px;">
-      <img style="height: 150px; border-radius: 5px 5px 0 0;" src="{{item.img}}">
-      <div style="font-size: 14px; font-weight: 600; margin-top: 5px; padding: 0 10px;">{{item.h1}}</div>
-      <div style="font-size: 12px; padding: 10px;">{{item.h2}}</div>
+    <div (click)="goProductCategory('category')" *ngFor="let item of products, index as index"
+      style="width: calc((100% - 20px) / 2); text-align: justify; margin-top: 20px;">
+      <div *ngIf="index != products.length"
+        style="background: white; box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.12); border-radius: 5px; ">
+        <img style="height: 150px; border-radius: 5px 5px 0 0;" src="{{item.img}}">
+        <div style="font-size: 14px; font-weight: 600; margin-top: 5px; padding: 0 10px;">{{item.h1}}</div>
+        <div style="font-size: 12px; padding: 10px;">{{item.h2}}</div>
+      </div>
+
+      <!-- <div *ngIf="index == products.length-1" style="color: #DEC5A5; border-radius: 10px; border: 2px dashed #DEC5A5; height: 100%; display: flex; justify-content: center; align-items: center;">
+        <div style="font-size: 30px; text-align:center;">{{item.h1}}</div>
+      </div> -->
     </div>
   </div>
 
   <div style="padding: 20px 20px 0 20px; font-size: 20px; font-weight: 600;">Services</div>
 
   <div style="display: flex; flex-wrap: wrap; justify-content: space-between; padding: 0 20px; margin-bottom: 20px;">
-    <div (click)="goProductCategory('services')" *ngFor="let item of services" style="border-radius: 5px; width: calc((100% - 20px) / 2); text-align: justify; background: white; box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.12); margin-top: 20px;">
-      <img style="height: 150px; border-radius: 5px 5px 0 0;" src="{{item.img}}">
-      <div style="font-size: 14px; font-weight: 600; margin-top: 5px; padding: 0 10px;">{{item.h1}}</div>
-      <div style="font-size: 12px; padding: 10px;">{{item.h2}}</div>
+    <div (click)="goProductCategory('services')" *ngFor="let item of services, index as index"
+      style="width: calc((100% - 20px) / 2); text-align: justify; margin-top: 20px;">
+      <div *ngIf="index != services.length"
+        style="background: white; box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.12); border-radius: 5px;">
+        <img style="height: 150px; border-radius: 5px 5px 0 0;" src="{{item.img}}">
+        <div style="font-size: 14px; font-weight: 600; margin-top: 5px; padding: 0 10px;">{{item.h1}}</div>
+        <div style="font-size: 12px; padding: 10px;">{{item.h2}}</div>
+      </div>
+
+      <!-- <div *ngIf="index == services.length-1" style="color: #DEC5A5; border-radius: 10px; border: 2px dashed #DEC5A5; height: 100%; display: flex; justify-content: center; align-items: center;">
+        <div style="font-size: 30px; text-align:center;">{{item.h1}}</div>
+      </div> -->
     </div>
   </div>
 </ion-content>

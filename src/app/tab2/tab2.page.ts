@@ -19,11 +19,17 @@ export class Tab2Page implements OnInit {
     this.nav.navigateForward('product-category?isCategory=' + passData)
   }
 
+  login() {
+    this.nav.navigateForward('login')
+  }
+
   slideOpts = {
     initialSlide: 0,
     slidesPerView: 1,
     autoplay:true
    };
+
+   comingSoon = {img: '', h1: 'Coming Soon', h2: ''}
 
    products = [{
     img: 'https://abef3c1b204b2c90c.zapwp.com/q:lossless/retina:true/webp:true/w:412/url:https://images.squarespace-cdn.com/content/v1/5cb5f0cf7eb88c562b08911a/1580747159100-GINMCH0GWNG5DNOXYUR0/curtains-and-draperies.jpg?format=2500w',
@@ -58,6 +64,9 @@ export class Tab2Page implements OnInit {
   // uid = ""
 
   ngOnInit() {
+    // this.products = this.products.concat(this.comingSoon)
+    // this.services = this.services.concat(this.comingSoon)
+
     // firebase.auth().onAuthStateChanged(a => {
     //   if (a) {
     //     this.uid = a.uid

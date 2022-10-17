@@ -30,6 +30,8 @@ export class Tab3Page {
         this.actRoute.queryParams.subscribe((c) => {
           this.refresh()
         })
+      } else {
+        this.nav.pop()
       }
     })
 
@@ -61,9 +63,11 @@ export class Tab3Page {
       reverseButtons: true,
     }).then((y) => {
       if (y.isConfirmed) {
-        this.fcm.unsubscribeFromTopic(this.uid).then(() => {
+        console.log(this.uid);
+        
+        // this.fcm.unsubscribeFromTopic(this.uid).then(() => {
           firebase.auth().signOut();
-        })
+        // })
 
         setTimeout(() => {
           this.nav.navigateBack('')
