@@ -64,10 +64,10 @@ export class Tab3Page {
     }).then((y) => {
       if (y.isConfirmed) {
         console.log(this.uid);
-        
-        // this.fcm.unsubscribeFromTopic(this.uid).then(() => {
+
+        this.fcm.unsubscribeFromTopic(this.uid).then(() => {
           firebase.auth().signOut();
-        // })
+        })
 
         setTimeout(() => {
           this.nav.navigateBack('')
