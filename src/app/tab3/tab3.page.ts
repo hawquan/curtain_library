@@ -31,6 +31,19 @@ export class Tab3Page {
           this.refresh()
         })
       } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true,
+        })
+
+        Toast.fire({
+          icon: 'warning',
+          title: 'Account login is needed before proceeding.'
+        })
+
         this.nav.pop()
       }
     })

@@ -7,6 +7,7 @@ import { TailorTaskDetailPage } from '../tailor-task-detail/tailor-task-detail.p
 import { TaskDetailCompletedReviewPage } from '../task-detail-completed-review/task-detail-completed-review.page';
 import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tab1',
@@ -25,7 +26,7 @@ export class Tab1Page implements OnInit {
     private fcm: FCM,
     private toastController: ToastController,
     private platform: Platform,
-    ) { }
+  ) { }
 
   user = [] as any
   pleatlist = []
@@ -157,12 +158,26 @@ export class Tab1Page implements OnInit {
         })
 
       } else {
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true,
+        })
+
+        Toast.fire({
+          icon: 'warning',
+          title: 'Account login is needed before proceeding.'
+        })
+
         this.nav.pop()
       }
     })
   }
 
-  opencamera(){
+  opencamera() {
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -177,12 +192,12 @@ export class Tab1Page implements OnInit {
       console.log(imageData)
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.snapURL = base64Image
-     }, (err) => {
+    }, (err) => {
       // Handle error
-     });
+    });
   }
 
-  save(event){
+  save(event) {
     console.log(event)
   }
 
