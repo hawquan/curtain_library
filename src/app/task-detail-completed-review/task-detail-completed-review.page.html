@@ -35,7 +35,7 @@
     <div
       style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
       <div style="min-width: 70px; color: #999999">Refer </div>
-      <ion-input readonly placeholder="Eg. Living Room" [(ngModel)]="item.location_ref"
+      <ion-input readonly placeholder="-" [(ngModel)]="item.location_ref"
         style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
       </ion-input>
     </div>
@@ -163,7 +163,7 @@
         <div
           style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 70px;color: #999999">C.Track </div>
-          <ion-input readonly placeholder="inch" [(ngModel)]="item.track"
+          <ion-input readonly placeholder="-" [(ngModel)]="item.track"
             style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
           </ion-input>
         </div>
@@ -289,7 +289,7 @@
         <div
           style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 70px;color: #999999">S.Track </div>
-          <ion-input readonly placeholder="track" [(ngModel)]="item.track_sheer"
+          <ion-input readonly placeholder="-" [(ngModel)]="item.track_sheer"
             style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
           </ion-input>
         </div>
@@ -350,7 +350,7 @@
             <div
               style="width: 50%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
               <div style="min-width: 70px;color: #999999">Touch Floor </div>
-              <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.sheer_touchfloor"
+              <ion-input readonly placeholder="-" [(ngModel)]="item.sheer_touchfloor"
                 style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
               </ion-input>
             </div>
@@ -372,28 +372,28 @@
       <!-- Remark Sales -->
       <div style="margin-top: 25px;color: #333333;font-weight: 600;">
         <div style="min-width: 56px;font-weight: 500;color: #999999">Remark Sales:</div>
-        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_sale" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_sale" style="min-height: 65px;height: auto;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
            border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Tech -->
       <div style="margin-top: 15px;color: #333333;font-weight: 600;">
         <div style="min-width: 56px;font-weight: 500;color: #999999">Remark Tech:</div>
-        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_tech" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_tech" style="min-height: 65px;height: auto;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
            border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Tailor -->
       <div style="margin-top: 15px;color: #333333;font-weight: 600;">
         <div style="min-width: 56px;font-weight: 500;color: #999999">Remark Tailor:</div>
-        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_tail" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_tail" style="min-height: 65px;height: auto;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
            border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Installer -->
       <div style="margin-top: 15px;color: #333333;font-weight: 600;">
         <div style="min-width: 56px;font-weight: 500;color: #999999">Remark Installer:</div>
-        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_inst" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_inst" style="min-height: 65px;height: auto;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
            border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
       </div>
 
@@ -575,28 +575,28 @@
       <!-- Remark Sales -->
       <div style="margin-top: 25px;color: #333333;font-weight: 600;">
         <div style="min-width: 56px;font-weight: 500;color: #999999">Remark Sales:</div>
-        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_sale" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_sale" style="min-height: 65px;height: auto;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Tech -->
       <div style="margin-top: 15px;color: #333333;font-weight: 600;">
         <div style="min-width: 56px;font-weight: 500;color: #999999">Remark Tech:</div>
-        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_tech" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_tech" style="min-height: 65px;height: auto;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
          border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Tailor -->
       <div style="margin-top: 15px;color: #333333;font-weight: 600;">
         <div style="min-width: 56px;font-weight: 500;color: #999999">Remark Tailor:</div>
-        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_tail" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_tail" style="min-height: 65px;height: auto;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
            border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
       </div>
 
       <!-- Remark Installer -->
       <div style="margin-top: 15px;color: #333333;font-weight: 600;">
         <div style="min-width: 56px;font-weight: 500;color: #999999">Remark Installer:</div>
-        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_inst" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+        <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_inst" style="min-height: 65px;height: auto;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
            border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
       </div>
 

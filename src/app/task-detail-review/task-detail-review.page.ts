@@ -180,6 +180,14 @@ export class TaskDetailReviewPage implements OnInit {
     }
   }
 
+  clearTrack(x) {
+    if (x == 'curtain') {
+      this.item.track = null
+    } else if (x == 'sheer') {
+      this.item.track_sheer = null
+    }
+  }
+
   checkFabric() {
 
     if (this.item.fabric_type == 'C') {
@@ -265,7 +273,7 @@ export class TaskDetailReviewPage implements OnInit {
       if (this.hookview) {
         // if (this.item.fabric_lining != null) {
         if (this.item.fabric_type == 'C') {
-          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'bracket',
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'pieces_curtain', 'bracket',
             'hook', 'belt', 'touchfloor', 'sidehook'].every(a => this.checker[a])) {
 
             this.pass()
@@ -274,7 +282,7 @@ export class TaskDetailReviewPage implements OnInit {
             this.emptychecker()
           }
         } else if (this.item.fabric_type == 'S') {
-          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track_sheer', 'pieces_sheer', 'sheer_bracket',
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'pieces_sheer', 'sheer_bracket',
             'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
 
             this.pass()
@@ -287,9 +295,9 @@ export class TaskDetailReviewPage implements OnInit {
           this.item.sheer_bracket = this.item.bracket
           this.item.custom_sheer_belt = true
           this.item.sheer_belt = 'X'
-          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'track_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket',
-            'hook', 'belt', 'touchfloor', 'sidehook', 'sheer_hook', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
-
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'pieces_curtain', 'pieces_sheer', 'bracket',
+            'hook', 'belt', 'touchfloor', 'sidehook', 'sheer_hook', 'sheer_sidehook',].every(a => this.checker[a])) {
+            // 'sheer_touchfloor',
             this.pass()
 
           } else {
@@ -331,7 +339,7 @@ export class TaskDetailReviewPage implements OnInit {
       } else {
         // if (this.item.fabric_lining != null) {
         if (this.item.fabric_type == 'C') {
-          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'pieces_curtain', 'bracket',
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'pieces_curtain', 'bracket',
             'belt', 'touchfloor', 'sidehook'].every(a => this.checker[a])) {
 
             this.pass()
@@ -340,7 +348,7 @@ export class TaskDetailReviewPage implements OnInit {
             this.emptychecker()
           }
         } else if (this.item.fabric_type == 'S') {
-          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track_sheer', 'pieces_sheer',
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'pieces_sheer',
             'sheer_bracket', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
 
             this.pass()
@@ -354,9 +362,9 @@ export class TaskDetailReviewPage implements OnInit {
           this.item.custom_sheer_belt = true
           this.item.sheer_belt = 'X'
 
-          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'track', 'track_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket',
-            'belt', 'touchfloor', 'sidehook', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
-
+          if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'pieces_curtain', 'pieces_sheer', 'bracket',
+            'belt', 'touchfloor', 'sidehook', 'sheer_sidehook',].every(a => this.checker[a])) {
+            // 'sheer_touchfloor',
             this.pass()
 
           } else {
@@ -489,7 +497,9 @@ export class TaskDetailReviewPage implements OnInit {
           photos: JSON.stringify(this.item.photos),
           status_tech: 'Approved',
           step: 3,
-          remark_tech: this.item.remark_tech
+          remark_tech: this.item.remark_tech,
+          remark_curtain: this.item.remark_curtain,
+          remark_sheer: this.item.remark_sheer,
         }
 
         console.log(temp);

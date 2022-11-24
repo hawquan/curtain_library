@@ -178,18 +178,6 @@
           </div>
         </div>
 
-        <!-- Track -->
-        <div
-          style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
-          <div style="min-width: 70px;color: #999999">C.Track </div>
-          <ion-select class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a track" interface="popover"
-            mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-            style="width: 100%;padding: 11px 10px;font-size: 14px;">
-            <ion-select-option *ngFor="let x of tracklist; let i = index" [value]="x.name">{{x.name}}
-            </ion-select-option>
-          </ion-select>
-        </div>
-
         <!-- Pieces -->
         <div
           style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
@@ -357,8 +345,26 @@
 
           </div>
 
-          <!-- Lining -->
+          <!-- Optional -->
           <div style="color: #888888;font-weight: 600;margin: 10px 0 5px 0;">Optional</div>
+
+          <!-- Track -->
+          <div
+            style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="min-width: 70px;color: #999999">C.Track </div>
+            <div style="width: 100%;display: flex;align-items: center;">
+              <ion-select class="ion-no-padding" [(ngModel)]="item.track" placeholder="Select a track"
+                interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                style="width: 100%;padding: 11px 10px;font-size: 14px;">
+                <ion-select-option *ngFor="let x of tracklist; let i = index" [value]="x.name">{{x.name}}
+                </ion-select-option>
+              </ion-select>
+              <ion-icon *ngIf="item.track != null && item.track != ''" (click)="clearTrack('curtain')"
+                style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
+            </div>
+          </div>
+
+          <!-- Lining -->
           <div
             style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px;display: flex; align-items: center; justify-content: space-between;">
             <div style="min-width: 70px;color: #999999">Lining </div>
@@ -369,6 +375,19 @@
               <ion-icon *ngIf="item.fabric_lining != null && item.fabric_lining != ''" (click)="clearFabric('lining')"
                 style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
             </div>
+          </div>
+
+          <!-- Curtain Remark -->
+          <div
+            style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; justify-content: space-between;">
+            <div style="min-width: 60px; color: #999999;margin-top: 10px;">Curtain Remark</div>
+            <!-- <ion-input placeholder="Eg. Remark" [(ngModel)]="item.remark_curtain"
+              style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+            </ion-input> -->
+            <ion-textarea auto-grow="true" class="ion-no-padding" placeholder="Enter Curtain Remark" row="1"
+              [(ngModel)]="item.remark_curtain"
+              style="min-height: 30px;height: auto;font-weight: 500;--padding-top: 10px;--padding-start: 10px;--padding-end: 10px;color: #333333">
+            </ion-textarea>
           </div>
 
           <!-- Discount Curtain -->
@@ -425,18 +444,6 @@
             <ion-icon *ngIf="item.fabric_sheer != null && item.fabric_sheer != ''" (click)="clearFabric('sheer')"
               style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
           </div>
-        </div>
-
-        <!-- Track -->
-        <div
-          style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
-          <div style="min-width: 70px;color: #999999">S.Track </div>
-          <ion-select class="ion-no-padding" [(ngModel)]="item.track_sheer" placeholder="Select a track"
-            interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-            style="width: 100%;padding: 11px 10px;font-size: 14px;">
-            <ion-select-option *ngFor="let x of tracklist; let i = index" [value]="x.name">{{x.name}}
-            </ion-select-option>
-          </ion-select>
         </div>
 
         <!-- Pieces -->
@@ -583,8 +590,8 @@
           <!-- SideHook / Touch Floor -->
           <div style="width: 100%;display: flex;align-items: center;">
 
-            <div
-              style="width: 50%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+            <div *ngIf="item.fabric_type != 'CS'"
+              style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
               <div style="min-width: 70px;color: #999999">Touch Floor </div>
               <ion-select [(ngModel)]="item.sheer_touchfloor" placeholder="Y/N" interface="popover" mode="ios"
                 [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
@@ -595,7 +602,7 @@
             </div>
 
             <div
-              style="width: 50%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+              style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
               <div style="min-width: 55px;color: #999999">Sidehook </div>
               <ion-select [(ngModel)]="item.sheer_sidehook" placeholder="Yes/No" interface="popover" mode="ios"
                 [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
@@ -609,6 +616,37 @@
 
           <!-- Discount Sheer -->
           <div style="color: #888888;font-weight: 600;margin: 10px 0 5px 0;">Optional</div>
+
+          <!-- Track -->
+          <div
+            style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="min-width: 85px;color: #999999">S.Track </div>
+            <div style="width: 100%;display: flex;align-items: center;">
+              <ion-select class="ion-no-padding" [(ngModel)]="item.track_sheer" placeholder="Select a track"
+                interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                style="width: 100%;padding: 11px 10px;font-size: 14px;">
+                <ion-select-option *ngFor="let x of tracklist; let i = index" [value]="x.name">{{x.name}}
+                </ion-select-option>
+              </ion-select>
+              <ion-icon *ngIf="item.track_sheer != null && item.track_sheer != ''" (click)="clearTrack('sheer')"
+                style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
+            </div>
+          </div>
+
+          <!-- Sheer Remark -->
+          <div
+            style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; justify-content: space-between;">
+            <div style="min-width: 60px; color: #999999;margin-top: 10px;">Sheer Remark</div>
+            <!-- <ion-input placeholder="Eg. Remark" [(ngModel)]="item.remark_curtain"
+              style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+            </ion-input> -->
+            <ion-textarea auto-grow="true" class="ion-no-padding" placeholder="Enter Sheer Remark" row="1"
+              [(ngModel)]="item.remark_sheer"
+              style="min-height: 30px;height: auto;font-weight: 500;--padding-top: 10px;--padding-start: 10px;--padding-end: 10px;color: #333333">
+            </ion-textarea>
+          </div>
+
+          <!-- Sheer Promo -->
           <div style="width: 100%;margin-bottom: 10px;">
             <div
               style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">

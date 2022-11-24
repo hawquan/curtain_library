@@ -84,6 +84,11 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       this.pleatlist = JSON.parse(a["pleatlist"])
       this.blindlist = JSON.parse(a["blindlist"])
       this.tracklist = JSON.parse(a["tracklist"])
+      
+      this.http.post('https://curtain.vsnap.my/onestaff', { id: this.info['id_sales'] }).subscribe(a => {
+        this.salesmaninfo = a['data'][0]
+        console.log(this.salesmaninfo);
+      })
 
       this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
         this.fabriclist = s['data']
@@ -471,6 +476,10 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
   pdfmakerSO() {
 
+    this.ref = this.info.reference + '-' + this.salesmaninfo.shortname
+
+    let quoRef = 'QT' + this.datepipe.transform(new Date(), 'yyyyMMdd') + this.ref
+
     if (this.customSoNum != null && this.customSoNum != '' && this.checkChangeSO) {
       this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + this.customSoNum).slice(-4)
       this.soNumDigit = this.customSoNum
@@ -508,7 +517,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
     //SO info right
     let soinforight = [
-      [{ text: 'QT No.', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.info.latest_quo_id, border: [false, false, false, true], bold: true, fontSize: 9 }],
+      [{ text: 'QT No.', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + quoRef, border: [false, false, false, true], bold: true, fontSize: 9 }],
       [{ text: 'Date Order', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.datepipe.transform(new Date(), 'd/M/yyyy'), border: [false, true, false, true], bold: true, fontSize: 9 }],
       [{ text: 'Scheduled Inst Date', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.datepipe.transform(this.soInstDate, 'd/M/yyyy'), border: [false, true, false, true], bold: true, fontSize: 9 }],
       [{ text: 'Sales P.I.C', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.salesmaninfo.name, border: [false, true, false, true], bold: true, fontSize: 9 }],
