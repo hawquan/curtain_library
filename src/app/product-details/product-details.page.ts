@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
 import { AlertController, NavController } from '@ionic/angular';
 import Swal from 'sweetalert2';
 
@@ -12,14 +13,37 @@ export class ProductDetailsPage implements OnInit {
   constructor(
     public nav: NavController,
     private alertController: AlertController,
+    private safariViewController: SafariViewController,
   ) { }
 
   ngOnInit() {
   }
 
   goWhatsapp() {
-    window.open("https://api.whatsapp.com/send?phone=60192253055&amp;text=I%20want%20to%20find%20out%20about%20your%20products");
+    // window.open("https://api.whatsapp.com/send?phone=60192253055&amp;text=I%20want%20to%20find%20out%20about%20your%20products");
     // 60192253055
+    this.safariViewController.isAvailable()
+      .then(async (available: boolean) => {
+        if (available) {
+
+          this.safariViewController.show({
+            url: 'https://api.whatsapp.com/send?phone=60192253055&amp;text=I%20want%20to%20find%20out%20about%20your%20products',
+          })
+            .subscribe((result: any) => {
+              if (result.event === 'opened') console.log('Opened');
+              else if (result.event === 'loaded') console.log('Loaded');
+              else if (result.event === 'closed') console.log('Closed');
+            },
+              (error: any) => console.error(error)
+            );
+
+        } else {
+          window.open("https://api.whatsapp.com/send?phone=60192253055&amp;text=I%20want%20to%20find%20out%20about%20your%20products", '_system');
+          // use fallback browser, example InAppBrowser
+        }
+      }).catch(async (error) => {
+        window.open("https://api.whatsapp.com/send?phone=60192253055&amp;text=I%20want%20to%20find%20out%20about%20your%20products", '_system');
+      })
   }
 
   async booking() {

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TaskDetailPageRoutingModule } from './task-detail-routing.module';
 
 import { TaskDetailPage } from './task-detail.page';
-import { ImageDrawingModule } from 'ngx-image-drawing';
+// import { ImageDrawingModule } from 'ngx-image-drawing';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { ImageDrawingModule } from 'ngx-image-drawing';
     FormsModule,
     IonicModule,
     TaskDetailPageRoutingModule,
-    ImageDrawingModule
+    // ImageDrawingModule
   ],
   declarations: [TaskDetailPage]
 })
