@@ -11,6 +11,7 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { DatePipe } from '@angular/common';
+import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 @Component({
@@ -29,6 +30,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
     private fileOpener: FileOpener,
     private plt: Platform,
     private alertController: AlertController,
+    private safariViewController: SafariViewController,
   ) { }
 
   item = [] as any
@@ -84,7 +86,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       this.pleatlist = JSON.parse(a["pleatlist"])
       this.blindlist = JSON.parse(a["blindlist"])
       this.tracklist = JSON.parse(a["tracklist"])
-      
+
       this.http.post('https://curtain.vsnap.my/onestaff', { id: this.info['id_sales'] }).subscribe(a => {
         this.salesmaninfo = a['data'][0]
         console.log(this.salesmaninfo);
@@ -107,7 +109,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
         })
       })
 
-      
+
       this.http.post('https://curtain.vsnap.my/getthismonthsales', { month: this.datepipe.transform(new Date(), 'MM') }).subscribe(a => {
         this.thismonthsales = a['data'].sort((a, b) => b.sales_so_id - a.sales_so_id) || []
         console.log(this.thismonthsales);
@@ -293,7 +295,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
     let temp = {
       width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id, 
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
       promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0
     }
@@ -381,7 +383,29 @@ export class TaskOngoingViewQuotationPage implements OnInit {
             text: 'Confirm',
             handler: (data) => {
               console.log(data)
-              window.open(data, '_system');
+              // window.open(data, '_system');
+              this.safariViewController.isAvailable()
+                .then(async (available: boolean) => {
+                  if (available) {
+
+                    this.safariViewController.show({
+                      url: data,
+                    })
+                      .subscribe((result: any) => {
+                        if (result.event === 'opened') console.log('Opened');
+                        else if (result.event === 'loaded') console.log('Loaded');
+                        else if (result.event === 'closed') console.log('Closed');
+                      },
+                        (error: any) => console.error(error)
+                      );
+
+                  } else {
+                    window.open(data, '_system');
+                    // use fallback browser, example InAppBrowser
+                  }
+                }).catch(async (error) => {
+                  window.open(data, '_system');
+                })
             }
           }
         ]
