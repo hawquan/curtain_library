@@ -356,7 +356,7 @@ export class TaskDetailPage implements OnInit {
     let navExtra: NavigationExtras = {
       queryParams: {
         sales_id: this.sales_id,
-        info: JSON.stringify(this.info),
+        // info: JSON.stringify(this.info),
         tracklist: JSON.stringify(this.tracklist),
         pleatlist: JSON.stringify(this.pleatlist),
         blindlist: JSON.stringify(this.blindlist),
