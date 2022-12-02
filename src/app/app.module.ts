@@ -16,12 +16,13 @@ import { Market } from '@ionic-native/market/ngx';
 import { Camera } from '@awesome-cordova-plugins/camera/ngx';
 
 import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
+import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
-  providers: [DatePipe ,ScreenOrientation,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, File, FileOpener,Market,Camera,FCM],
+  providers: [DatePipe ,ScreenOrientation,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, File, FileOpener,Market,Camera,FCM,SafariViewController],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -11,6 +11,7 @@ import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { DatePipe } from '@angular/common';
+import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 @Component({
@@ -29,6 +30,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
     private fileOpener: FileOpener,
     private plt: Platform,
     private alertController: AlertController,
+    private safariViewController: SafariViewController,
   ) { }
 
   item = [] as any
@@ -382,7 +384,29 @@ export class TaskOngoingViewQuotationPage implements OnInit {
             text: 'Confirm',
             handler: (data) => {
               console.log(data)
-              window.open(data, '_system');
+              // window.open(data, '_system');
+              this.safariViewController.isAvailable()
+                .then(async (available: boolean) => {
+                  if (available) {
+
+                    this.safariViewController.show({
+                      url: data,
+                    })
+                      .subscribe((result: any) => {
+                        if (result.event === 'opened') console.log('Opened');
+                        else if (result.event === 'loaded') console.log('Loaded');
+                        else if (result.event === 'closed') console.log('Closed');
+                      },
+                        (error: any) => console.error(error)
+                      );
+
+                  } else {
+                    window.open(data, '_system');
+                    // use fallback browser, example InAppBrowser
+                  }
+                }).catch(async (error) => {
+                  window.open(data, '_system');
+                })
             }
           }
         ]

@@ -9,6 +9,7 @@ import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import Swal from 'sweetalert2';
 import { AddSalesPage } from '../add-sales/add-sales.page';
+import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
 
 @Component({
   selector: 'app-tab1',
@@ -27,6 +28,7 @@ export class Tab1Page implements OnInit {
     private fcm: FCM,
     private toastController: ToastController,
     private platform: Platform,
+    private safariViewController: SafariViewController,
   ) { }
 
   user = [] as any
@@ -467,7 +469,29 @@ export class Tab1Page implements OnInit {
       text: 'Google Maps App',
       icon: 'navigate',
       handler: () => {
-        window.open("https://www.google.com/maps/search/?api=1&query=" + destination)
+        // window.open("https://www.google.com/maps/search/?api=1&query=" + destination)
+        this.safariViewController.isAvailable()
+          .then(async (available: boolean) => {
+            if (available) {
+
+              this.safariViewController.show({
+                url: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(destination),
+              })
+                .subscribe((result: any) => {
+                  if (result.event === 'opened') console.log('Opened');
+                  else if (result.event === 'loaded') console.log('Loaded');
+                  else if (result.event === 'closed') console.log('Closed');
+                },
+                  (error: any) => console.error(error)
+                );
+
+            } else {
+              window.open("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(destination), '_system');
+              // use fallback browser, example InAppBrowser
+            }
+          }).catch(async (error) => {
+            window.open("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(destination), '_system');
+          })
       }
     })
 
@@ -477,7 +501,30 @@ export class Tab1Page implements OnInit {
       text: 'Waze App',
       icon: 'navigate',
       handler: () => {
-        window.open("https://waze.com/ul?q=" + destination + "&navigate=yes&z=6");
+        // window.open("https://waze.com/ul?q=" + destination + "&navigate=yes&z=6");
+        this.safariViewController.isAvailable()
+        .then(async (available: boolean) => {
+          if (available) {
+
+            this.safariViewController.show({
+              url: "https://waze.com/ul?q=" + encodeURIComponent(destination) + "&navigate=yes&z=6",
+            })
+              .subscribe((result: any) => {
+                if (result.event === 'opened') console.log('Opened');
+                else if (result.event === 'loaded') console.log('Loaded');
+                else if (result.event === 'closed') console.log('Closed');
+              },
+                (error: any) => console.error(error)
+              );
+
+          } else {
+            // window.open("maps://?q=" + destination , '_system');
+            window.open("https://waze.com/ul?q=" + encodeURIComponent(destination) + "&navigate=yes&z=6", '_system');
+            // use fallback browser, example InAppBrowser
+          }
+        }).catch(async (error) => {
+          window.open("https://waze.com/ul?q=" + encodeURIComponent(destination) + "&navigate=yes&z=6", '_system');
+        })
       }
     });
 

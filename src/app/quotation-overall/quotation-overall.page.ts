@@ -10,6 +10,7 @@ import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 @Component({
@@ -28,6 +29,7 @@ export class QuotationOverallPage implements OnInit {
     private fileOpener: FileOpener,
     private plt: Platform,
     private alertController: AlertController,
+    private safariViewController: SafariViewController,
   ) { }
 
   item = [] as any
@@ -1082,7 +1084,30 @@ export class QuotationOverallPage implements OnInit {
 
           this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
             // this.pdfmakerClient(true)
-            window.open(link['imageURL'], '_system');
+            // window.open(link['imageURL'], '_system');
+            this.safariViewController.isAvailable()
+              .then(async (available: boolean) => {
+                if (available) {
+
+                  this.safariViewController.show({
+                    url: link['imageURL'],
+                  })
+                    .subscribe((result: any) => {
+                      if (result.event === 'opened') console.log('Opened');
+                      else if (result.event === 'loaded') console.log('Loaded');
+                      else if (result.event === 'closed') console.log('Closed');
+                    },
+                      (error: any) => console.error(error)
+                    );
+
+                } else {
+                  window.open(link['imageURL'], '_system');
+                  // use fallback browser, example InAppBrowser
+                }
+              }).catch(async (error) => {
+                window.open(link['imageURL'], '_system');
+              })
+
             Swal.fire({
               icon: 'success',
               title: 'SO Generated Successfully.',
