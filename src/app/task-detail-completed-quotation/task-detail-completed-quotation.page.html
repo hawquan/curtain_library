@@ -14,7 +14,8 @@
       </div>
     </div>
 
-    <div *ngIf="salesmaninfo.position == 'Sales'" style="width: 50%;display: flex;align-items: center;justify-content: space-between;">
+    <div *ngIf="salesmaninfo.position == 'Sales'"
+      style="width: 50%;display: flex;align-items: center;justify-content: space-between;">
       <div style="width: 50%;">
         <ion-button style="height: fit-content;width: 100%;--background: #a17635;--background-activated: #b2894c"
           (click)="choosePDF(info.quotation_client)">
@@ -25,10 +26,10 @@
         <ion-button style="height: fit-content;width: 100%;--background: #a17635;--background-activated: #b2894c"
           (click)="choosePDF(info.quotation_detailed)">
           <div style=" font-size: 8px;padding: 5px 0;">Detailed<br />Quotation
+          </div>
+        </ion-button>
       </div>
-      </ion-button>
     </div>
-  </div>
 
   </div>
 
@@ -94,8 +95,8 @@
               </div>
               <div style="width: 70%;text-align: end;">
                 {{calc[i].curtain.total | currency: ' '}}<span
-                *ngIf="calc[i].curtain.promo_rate != 0 && calc[i].curtain.promo_rate != null">
-                (-{{calc[i].curtain.promo_rate}}%)</span>
+                  *ngIf="calc[i].curtain.promo_rate != 0 && calc[i].curtain.promo_rate != null">
+                  (-{{calc[i].curtain.promo_rate}}%)</span>
               </div>
             </div>
           </div>
@@ -113,8 +114,8 @@
               </div>
               <div style="width: 70%;text-align: end;">
                 {{calc[i].lining.total | currency: ' '}}<span
-                *ngIf="calc[i].lining.promo_rate != 0 && calc[i].lining.promo_rate != null">
-                (-{{calc[i].lining.promo_rate}}%)</span>
+                  *ngIf="calc[i].lining.promo_rate != 0 && calc[i].lining.promo_rate != null">
+                  (-{{calc[i].lining.promo_rate}}%)</span>
               </div>
             </div>
           </div>
@@ -132,8 +133,8 @@
               </div>
               <div style="width: 70%;text-align: end;">
                 {{calc[i].sheer.total | currency: ' '}}<span
-                *ngIf="calc[i].sheer.promo_rate != 0 && calc[i].sheer.promo_rate != null">
-                (-{{calc[i].sheer.promo_rate}}%)</span>
+                  *ngIf="calc[i].sheer.promo_rate != 0 && calc[i].sheer.promo_rate != null">
+                  (-{{calc[i].sheer.promo_rate}}%)</span>
               </div>
             </div>
           </div>
@@ -176,7 +177,7 @@
 
 
           <!-- Track -->
-          <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+          <div *ngIf="lengthof(calc[i].track) > 0" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
               {{x.track}} Track (ft)
             </div>
@@ -192,7 +193,8 @@
           </div>
 
           <!-- Track Sheer -->
-          <div *ngIf="lengthof(calc[i].track_sheer) > 0" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+          <div *ngIf="lengthof(calc[i].track_sheer) > 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
               (S) {{x.track_sheer}} Track (ft)
             </div>
@@ -206,7 +208,27 @@
               </div>
             </div>
           </div>
-          
+
+          <!-- Motorized -->
+          <div *ngIf="lengthof(calc[i].motorized) > 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Upgrade Motorized Track ({{calc[i].motorized.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].motorized.qty}}
+              </div>
+              <div *ngIf="calc[i].motorized.cost == 'FOC'" style="width: 70%;text-align: end;">
+                FOC
+              </div>
+              <div *ngIf="calc[i].motorized.cost != 'FOC'" style="width: 70%;text-align: end;">
+                {{calc[i].motorized.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
           <!-- Installation & Hang -->
           <div style="display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
@@ -307,8 +329,8 @@
               </div>
               <div style="width: 70%;text-align: end;">
                 {{calc[i].blind.total | currency: ' '}}<span
-                *ngIf="calc[i].blind.promo_rate != 0 && calc[i].blind.promo_rate != null">
-                (-{{calc[i].blind.promo_rate}}%)</span>
+                  *ngIf="calc[i].blind.promo_rate != 0 && calc[i].blind.promo_rate != null">
+                  (-{{calc[i].blind.promo_rate}}%)</span>
               </div>
             </div>
           </div>
