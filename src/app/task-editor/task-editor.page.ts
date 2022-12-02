@@ -371,6 +371,17 @@ export class TaskEditorPage implements OnInit {
               step: 2,
               promo_curtain: this.item.promo_curtain || 0,
               promo_lining: this.item.promo_lining || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+            }
+
+            if (this.item.motorized_upgrade) {
+              temp.motorized_upgrade = this.item.motorized_upgrade
+              temp.motorized_power = this.item.motorized_power
+              temp.motorized_sides = this.item.motorized_sides
+              temp.motorized_cost = this.item.motorized_cost
             }
 
             console.log(temp);
@@ -415,7 +426,18 @@ export class TaskEditorPage implements OnInit {
               need_ladder: this.item.need_ladder,
               need_scaftfolding: this.item.need_scaftfolding,
               step: 2,
-              promo_sheer: this.item.promo_sheer || 0
+              promo_sheer: this.item.promo_sheer || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+            }
+
+            if (this.item.motorized_upgrade) {
+              temp.motorized_upgrade = this.item.motorized_upgrade
+              temp.motorized_power = this.item.motorized_power
+              temp.motorized_sides = this.item.motorized_sides
+              temp.motorized_cost = this.item.motorized_cost
             }
 
             console.log(temp);
@@ -480,6 +502,17 @@ export class TaskEditorPage implements OnInit {
               promo_curtain: this.item.promo_curtain || 0,
               promo_lining: this.item.promo_lining || 0,
               promo_sheer: this.item.promo_sheer || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+            }
+
+            if (this.item.motorized_upgrade) {
+              temp.motorized_upgrade = this.item.motorized_upgrade
+              temp.motorized_power = this.item.motorized_power
+              temp.motorized_sides = this.item.motorized_sides
+              temp.motorized_cost = this.item.motorized_cost
             }
 
             console.log(temp);
@@ -532,6 +565,17 @@ export class TaskEditorPage implements OnInit {
               step: 2,
               promo_curtain: this.item.promo_curtain || 0,
               promo_lining: this.item.promo_lining || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+            }
+
+            if (this.item.motorized_upgrade) {
+              temp.motorized_upgrade = this.item.motorized_upgrade
+              temp.motorized_power = this.item.motorized_power
+              temp.motorized_sides = this.item.motorized_sides
+              temp.motorized_cost = this.item.motorized_cost
             }
 
             console.log(temp);
@@ -581,6 +625,17 @@ export class TaskEditorPage implements OnInit {
               need_scaftfolding: this.item.need_scaftfolding,
               step: 2,
               promo_sheer: this.item.promo_sheer || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+            }
+
+            if (this.item.motorized_upgrade) {
+              temp.motorized_upgrade = this.item.motorized_upgrade
+              temp.motorized_power = this.item.motorized_power
+              temp.motorized_sides = this.item.motorized_sides
+              temp.motorized_cost = this.item.motorized_cost
             }
 
             console.log(temp);
@@ -649,6 +704,17 @@ export class TaskEditorPage implements OnInit {
               promo_curtain: this.item.promo_curtain || 0,
               promo_lining: this.item.promo_lining || 0,
               promo_sheer: this.item.promo_sheer || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+            }
+
+            if (this.item.motorized_upgrade) {
+              temp.motorized_upgrade = this.item.motorized_upgrade
+              temp.motorized_power = this.item.motorized_power
+              temp.motorized_sides = this.item.motorized_sides
+              temp.motorized_cost = this.item.motorized_cost
             }
 
             console.log(temp);
@@ -1138,15 +1204,23 @@ export class TaskEditorPage implements OnInit {
       }
 
       if (this.item.track != null) {
-        track = true
-        track_id = this.tracklist.filter(x => x.name == this.item.track)[0]['id']
+        if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
+          track = true
+          track_id = this.tracklist.filter(x => x.name == this.item.track)[0]['id']
+        } else {
+          track = false
+        }
       } else {
         track = false
       }
 
       if (this.item.track_sheer != null) {
-        track_sheer = true
-        track_sheer_id = this.tracklist.filter(x => x.name == this.item.track_sheer)[0]['id']
+        if (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') {
+          track_sheer = true
+          track_sheer_id = this.tracklist.filter(x => x.name == this.item.track_sheer)[0]['id']
+        } else {
+          track_sheer = false
+        }
       } else {
         track_sheer = false
       }
@@ -1206,7 +1280,8 @@ export class TaskEditorPage implements OnInit {
       width: parseFloat(this.item.width), height: parseFloat(this.item.height), curtain: curtain, lining: lining, lining_id: lining_id,
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0,
-      promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0
+      promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0,
+      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost,
     }
 
     console.log(temp);

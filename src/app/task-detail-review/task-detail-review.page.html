@@ -533,7 +533,8 @@
             <!-- <ion-input placeholder="Eg. Remark" [(ngModel)]="item.remark_curtain"
               style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
             </ion-input> -->
-            <ion-textarea auto-grow="true" class="ion-no-padding" placeholder="Enter Curtain Remark" row="1" [(ngModel)]="item.remark_curtain"
+            <ion-textarea auto-grow="true" class="ion-no-padding" placeholder="Enter Curtain Remark" row="1"
+              [(ngModel)]="item.remark_curtain"
               style="min-height: 30px;height: auto;font-weight: 500;--padding-top: 10px;--padding-start: 10px;--padding-end: 10px;color: #333333">
             </ion-textarea>
           </div>
@@ -809,11 +810,73 @@
             <!-- <ion-input placeholder="Eg. Remark" [(ngModel)]="item.remark_curtain"
               style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
             </ion-input> -->
-            <ion-textarea auto-grow="true" class="ion-no-padding" placeholder="Enter Sheer Remark" row="1" [(ngModel)]="item.remark_sheer"
+            <ion-textarea auto-grow="true" class="ion-no-padding" placeholder="Enter Sheer Remark" row="1"
+              [(ngModel)]="item.remark_sheer"
               style="min-height: 30px;height: auto;font-weight: 500;--padding-top: 10px;--padding-start: 10px;--padding-end: 10px;color: #333333">
             </ion-textarea>
           </div>
 
+        </div>
+
+      </div>
+
+      <!-- Upgrade to Motorized -->
+      <div *ngIf="item.motorized_upgrade">
+
+        <div style="display: flex;justify-content: space-between;">
+          <div style="min-width: 56px;font-weight: 500;color: #999999">Upgrade to Motorized Track: <span
+              style="font-size: 10px;font-weight: 400;">(Optional)</span></div>
+        </div>
+
+        <div>
+
+          <!-- Power By / Sides -->
+          <div style="width: 100%;display: flex;align-items: center;margin-top: 10px;">
+
+            <div
+              style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+              <div style="min-width: 55px;color: #999999">Power By</div>
+              <!-- <ion-select [(ngModel)]="item.motorized_power" placeholder="Y/N" interface="popover" mode="ios"
+                  [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                  style="width: calc(100% - 55px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 5px; font-weight: 500; color: #333333">
+                  <ion-select-option value="Battery">Battery</ion-select-option>
+                  <ion-select-option value="Power Point">Power Point</ion-select-option>
+                </ion-select> -->
+              <ion-input readonly [(ngModel)]="item.motorized_power"
+                style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+              </ion-input>
+            </div>
+
+            <div
+              style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+              <div style="min-width: 35px;color: #999999">Sides</div>
+              <!-- <ion-select [(ngModel)]="item.motorized_sides" placeholder="Yes/No" interface="popover" mode="ios"
+                  [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                  style="width: calc(100% - 35px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 10px; font-weight: 500; color: #333333">
+                  <ion-select-option value="Left">Left</ion-select-option>
+                  <ion-select-option value="Right">Right</ion-select-option>
+                </ion-select> -->
+              <ion-input readonly [(ngModel)]="item.motorized_sides"
+                style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+              </ion-input>
+            </div>
+
+          </div>
+
+          <!-- Cost -->
+          <div
+            style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="min-width: 55px;color: #999999">Cost</div>
+            <!-- <ion-select class="ion-no-padding" [(ngModel)]="item.motorized_cost" placeholder="Select Cost Choice"
+                interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                style="width: 100%;padding: 11px 10px;font-size: 14px;">
+                <ion-select-option value="FOC">Free of Charge</ion-select-option>
+                <ion-select-option value="Add Cost">Add Cost</ion-select-option>
+              </ion-select> -->
+            <ion-input readonly [(ngModel)]="item.motorized_cost"
+              style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+            </ion-input>
+          </div>
         </div>
 
       </div>

@@ -482,26 +482,48 @@ export class QuotationOverallPage implements OnInit {
                 { text: '', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 },
+                
               ],
             )
 
-            items.push(
-              [
-                { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
-                { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
-                { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fabric, alignment: 'center', fontSize: 8.5 },
-                { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-                { text: pleatShort, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
-                { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                { text: 'P', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].remark_curtain + '\n\n *' + this.item[i].remark_sale, fontSize: 8.5 }
-              ],
-            )
+            if (this.item[i].motorized_upgrade) {
+              items.push(
+                [
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: 'Motorized ' + this.item[i].track, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fabric, alignment: 'center', fontSize: 8.5 },
+                  { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+                  { text: pleatShort, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
+                  { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
+                  { text: 'P', alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].remark_curtain + '\n\n *' + this.item[i].remark_sale || '', fontSize: 8.5 }
+                ],
+              )
+            } else {
+              items.push(
+                [
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: this.item[i].track || '-', alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fabric, alignment: 'center', fontSize: 8.5 },
+                  { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+                  { text: pleatShort, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
+                  { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
+                  { text: 'P', alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].remark_curtain + '\n\n *' + this.item[i].remark_sale || '', fontSize: 8.5 }
+                ],
+              )
+            }
+
           }
 
           if (this.item[i].fabric_lining != null) {
@@ -587,23 +609,45 @@ export class QuotationOverallPage implements OnInit {
               ],
             )
 
-            items.push(
-              [
-                { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
-                { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fabric_bracket || 'X', alignment: 'center', fontSize: 8.5 },
-                { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fabric_sheer, alignment: 'center', fontSize: 8.5 },
-                { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-                { text: pleatShort, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pieces_sheer, alignment: 'center', fontSize: 8.5 },
-                { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                { text: 'M', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].remark_sheer + '\n\n *' + this.item[i].remark_sale, fontSize: 8.5 }
-              ],
-            )
+            if (this.item[i].motorized_upgrade) {
+              items.push(
+                [
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: 'Motorized ' + this.item[i].track_sheer, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].sheer_bracket || 'X', alignment: 'center', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fabric_sheer, alignment: 'center', fontSize: 8.5 },
+                  { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+                  { text: pleatShort, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].pieces_sheer, alignment: 'center', fontSize: 8.5 },
+                  { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
+                  { text: 'M', alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].remark_sheer + '\n\n *' + this.item[i].remark_sale || '', fontSize: 8.5 }
+                ],
+              )
+            } else {
+              items.push(
+                [
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: this.item[i].track_sheer || '-', alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].sheer_bracket || 'X', alignment: 'center', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fabric_sheer, alignment: 'center', fontSize: 8.5 },
+                  { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+                  { text: pleatShort, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].pieces_sheer, alignment: 'center', fontSize: 8.5 },
+                  { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
+                  { text: 'M', alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].remark_sheer + '\n\n *' + this.item[i].remark_sale || '', fontSize: 8.5 }
+                ],
+              )
+            }
+
+
           }
 
           items.push(
@@ -646,23 +690,46 @@ export class QuotationOverallPage implements OnInit {
               ],
             )
 
-            items.push(
-              [
-                { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
-                { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
-                { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fabric, alignment: 'center', fontSize: 8.5 },
-                { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-                { text: pleatShort, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
-                { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                { text: 'P', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].remark_curtain, fontSize: 8.5 }
-              ],
-            )
+            if (this.item[i].motorized_upgrade) {
+              items.push(
+                [
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: 'Motorized ' + this.item[i].track, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fabric, alignment: 'center', fontSize: 8.5 },
+                  { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+                  { text: pleatShort, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
+                  { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
+                  { text: 'P', alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].remark_curtain, fontSize: 8.5 }
+                ],
+              )
+            }else{
+              items.push(
+                [
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: this.item[i].track || '-', alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fabric, alignment: 'center', fontSize: 8.5 },
+                  { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+                  { text: pleatShort, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
+                  { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
+                  { text: 'P', alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].remark_curtain, fontSize: 8.5 }
+                ],
+              )
+            }
+
+
+            
           }
 
           if (this.item[i].fabric_lining != null) {
@@ -731,8 +798,8 @@ export class QuotationOverallPage implements OnInit {
             items.push(
               [
                 { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
-                { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
+                { text: this.item[i].track_sheer, alignment: 'center', fontSize: 8.5 },
+                { text: this.item[i].sheer_bracket || 'X', alignment: 'center', fontSize: 8.5 },
                 { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].fabric_sheer, alignment: 'center', fontSize: 8.5 },
                 { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
@@ -740,9 +807,9 @@ export class QuotationOverallPage implements OnInit {
                 { text: this.item[i].pieces_sheer, alignment: 'center', fontSize: 8.5 },
                 { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
+                { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                 { text: 'M', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].remark_sheer + '\n\n *' + this.item[i].remark_sale, fontSize: 8.5 }
+                { text: this.item[i].remark_sheer + '\n\n *' + this.item[i].remark_sale || '', fontSize: 8.5 }
               ],
             )
           }
@@ -938,7 +1005,7 @@ export class QuotationOverallPage implements OnInit {
             headerRows: 1,
             //  dontBreakRows: true,
             //  keepWithHeaderRows: 1,
-            widths: ['17%', '4%', '5%', '15%', '13%', '4%', '3%', '3%', '5%', '5%', '4%', '4%', '18%'],
+            widths: ['17%', '7%', '5%', '15%', '12%', '4%', '3%', '3%', '5%', '5%', '4%', '4%', '16%'],
             body: items
           },
           layout: {
@@ -1192,15 +1259,23 @@ export class QuotationOverallPage implements OnInit {
       }
 
       if (this.item[i].track != null) {
-        track = true
-        track_id = this.tracklist.filter(x => x.name == this.item[i].track)[0]['id']
+        if (this.item[i].fabric_type == 'C' || this.item[i].fabric_type == 'CS') {
+          track = true
+          track_id = this.tracklist.filter(x => x.name == this.item[i].track)[0]['id']
+        } else {
+          track = false
+        }
       } else {
         track = false
       }
 
       if (this.item[i].track_sheer != null) {
-        track_sheer = true
-        track_sheer_id = this.tracklist.filter(x => x.name == this.item[i].track_sheer)[0]['id']
+        if (this.item[i].fabric_type == 'S' || this.item[i].fabric_type == 'CS') {
+          track_sheer = true
+          track_sheer_id = this.tracklist.filter(x => x.name == this.item[i].track_sheer)[0]['id']
+        } else {
+          track_sheer = false
+        }
       } else {
         track_sheer = false
       }
@@ -1244,7 +1319,8 @@ export class QuotationOverallPage implements OnInit {
       width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
-      promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0
+      promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0,
+      motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost,
 
     }
 
@@ -1551,6 +1627,31 @@ export class QuotationOverallPage implements OnInit {
         )
       }
 
+      if (this.item[i].motorized_upgrade) {
+        if (this.calc[i].motorized.cost != 'FOC') {
+          items.push(
+            [
+              'Upgrade Motorized Track',
+              { text: 'set', alignment: 'center' },
+              { text: this.calc[i].motorized.qty, alignment: 'center' },
+              { text: (this.calc[i].motorized.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+              { text: (this.calc[i].motorized.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+            ]
+          )
+        } else {
+          items.push(
+            [
+              'Upgrade Motorized Track',
+              { text: 'set', alignment: 'center' },
+              { text: this.calc[i].motorized.qty, alignment: 'center' },
+              { text: 'FOC', alignment: 'right' },
+              { text: 'FOC', alignment: 'right' }
+            ]
+          )
+        }
+
+      }
+
       items.push(
         [
           'Installation & Hang',
@@ -1572,6 +1673,7 @@ export class QuotationOverallPage implements OnInit {
           ]
         )
       }
+
       items.push(
         [
           { text: '', border: [true, false, true, false] },
@@ -1969,6 +2071,7 @@ export class QuotationOverallPage implements OnInit {
 
       //ITEMS PUSH START HERE
       if (this.item[i].type != 'Blinds') {
+
         if (this.item[i].fabric_type == 'C') {
           isCurtain = true
           items.push(
@@ -1982,16 +2085,29 @@ export class QuotationOverallPage implements OnInit {
           )
 
           if (this.item[i].fabric != null) {
-            if (this.calc[i].track.length > 0) {
-              items.push(
-                [
-                  { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
-                  { text: 'set', alignment: 'center', border: [true, false, true, false] },
-                  { text: 1, alignment: 'center', border: [true, false, true, false] },
-                  { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
-                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
-                ]
-              )
+            if (this.lengthof(this.calc[i].track) > 0) {
+              if (this.lengthof(this.calc[i].motorized) > 0) {
+                items.push(
+                  [
+                    { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
+                    { text: 'set', alignment: 'center', border: [true, false, true, false] },
+                    { text: 1, alignment: 'center', border: [true, false, true, false] },
+                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i].motorized.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+                  ]
+                )
+
+              } else {
+                items.push(
+                  [
+                    { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
+                    { text: 'set', alignment: 'center', border: [true, false, true, false] },
+                    { text: 1, alignment: 'center', border: [true, false, true, false] },
+                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+                  ]
+                )
+              }
             } else {
               items.push(
                 [
@@ -2064,18 +2180,33 @@ export class QuotationOverallPage implements OnInit {
               // { text: '', alignment: 'right', border: [true, false, true, false] }
             ]
           )
+          console.log(this.calc[i]);
+
 
           if (this.item[i].fabric_sheer != null) {
-            if (this.calc[i].track_sheer.length > 0) {
-              items.push(
-                [
-                  { text: 'Sheer - ' + this.item[i].fabric_sheer, border: [true, false, true, false] },
-                  { text: 'set', alignment: 'center', border: [true, false, true, false] },
-                  { text: 1, alignment: 'center', border: [true, false, true, false] },
-                  { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
-                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
-                ]
-              )
+            if (this.lengthof(this.calc[i].track_sheer) > 0) {
+              if (this.lengthof(this.calc[i].motorized) > 0) {
+                items.push(
+                  [
+                    { text: 'Sheer - ' + this.item[i].fabric_sheer, border: [true, false, true, false] },
+                    { text: 'set', alignment: 'center', border: [true, false, true, false] },
+                    { text: 1, alignment: 'center', border: [true, false, true, false] },
+                    { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total + this.calc[i].motorized.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+                  ]
+                )
+              } else {
+                items.push(
+                  [
+                    { text: 'Sheer - ' + this.item[i].fabric_sheer, border: [true, false, true, false] },
+                    { text: 'set', alignment: 'center', border: [true, false, true, false] },
+                    { text: 1, alignment: 'center', border: [true, false, true, false] },
+                    { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+                  ]
+                )
+              }
+
             } else {
               items.push(
                 [
@@ -2127,6 +2258,9 @@ export class QuotationOverallPage implements OnInit {
             ]
           )
         } else if (this.item[i].fabric_type == 'CS') {
+
+          console.log(this.calc[i]);
+
           isCurtain = true
           isSheer = true
           items.push(
@@ -2140,16 +2274,29 @@ export class QuotationOverallPage implements OnInit {
           )
 
           if (this.item[i].fabric != null) {
-            if (this.calc[i].track.length > 0) {
-              items.push(
-                [
-                  { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
-                  { text: 'set', alignment: 'center', border: [true, false, true, false] },
-                  { text: 1, alignment: 'center', border: [true, false, true, false] },
-                  { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
-                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
-                ]
-              )
+            if (this.lengthof(this.calc[i].track) > 0) {
+              if (this.lengthof(this.calc[i].motorized) > 0) {
+                items.push(
+                  [
+                    { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
+                    { text: 'set', alignment: 'center', border: [true, false, true, false] },
+                    { text: 1, alignment: 'center', border: [true, false, true, false] },
+                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i].motorized.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+                  ]
+                )
+              } else {
+                items.push(
+                  [
+                    { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
+                    { text: 'set', alignment: 'center', border: [true, false, true, false] },
+                    { text: 1, alignment: 'center', border: [true, false, true, false] },
+                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+                  ]
+                )
+              }
+
             } else {
               items.push(
                 [
@@ -2178,7 +2325,7 @@ export class QuotationOverallPage implements OnInit {
           }
 
           if (this.item[i].fabric_sheer != null) {
-            if (this.calc[i].track_sheer.length > 0) {
+            if (this.lengthof(this.calc[i].track_sheer) > 0) {
               items.push(
                 [
                   { text: 'Sheer - ' + this.item[i].fabric_sheer, border: [true, false, true, false] },

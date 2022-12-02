@@ -8,6 +8,7 @@ import { TaskDetailCompletedReviewPage } from '../task-detail-completed-review/t
 import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import Swal from 'sweetalert2';
+import { AddSalesPage } from '../add-sales/add-sales.page';
 
 @Component({
   selector: 'app-tab1',
@@ -282,6 +283,22 @@ export class Tab1Page implements OnInit {
 
   toProfile() {
     this.nav.navigateForward('profile?id=' + this.uid)
+  }
+
+  async createNewSales() {
+    const modal = await this.modal.create({
+      component: AddSalesPage,
+      cssClass: 'fullModal'
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+    console.log(data)
+
+    if (data == 1) {
+      this.refresher(this.uid)
+    }
   }
 
   toDetail(x) {

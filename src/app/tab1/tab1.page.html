@@ -673,9 +673,12 @@
       <div
         style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 10px;">
         <div style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('sales').length}})</div>
-        <div (click)="refresher(uid)" style="display: flex;align-items: center;">
-          <ion-icon style="color: #a17635;margin-right: 5px;" name="refresh-outline"></ion-icon>
-          <div style="color: #a17635;font-size: 12px;display: flex;align-items: center;">Refresh List</div>
+        <div style="display: flex;align-items: center;">
+          <div (click)="refresher(uid)" style="display: flex;align-items: center;">
+            <ion-icon style="color: #a17635;margin-right: 5px;" name="refresh-outline"></ion-icon>
+            <div style="color: #a17635;font-size: 12px;display: flex;align-items: center;">Refresh List</div>
+          </div>
+          <ion-icon (click)="createNewSales()" style="margin-left: 10px;" name="ellipsis-horizontal-outline"></ion-icon>
         </div>
       </div>
 

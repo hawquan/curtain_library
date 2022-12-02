@@ -181,6 +181,26 @@
           </div>
         </div>
 
+        <!-- Motorized -->
+        <div *ngIf="lengthof(calc.motorized) > 0"
+          style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+          <div>
+            Upgrade Motorized Track ({{calc.motorized.unit}})
+          </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              {{calc.motorized.qty}}
+            </div>
+            <div *ngIf="calc.motorized.cost == 'FOC'" style="width: 70%;text-align: end;">
+              FOC
+            </div>
+            <div *ngIf="calc.motorized.cost != 'FOC'" style="width: 70%;text-align: end;">
+              {{calc.motorized.total | currency: ' '}}
+            </div>
+          </div>
+        </div>
+
         <!-- Installation & Hang -->
         <div *ngIf="lengthof(calc.install) > 0"
           style="display: flex;justify-content: space-between;margin-bottom: 10px;">
@@ -227,6 +247,7 @@
 
       </div>
     </div>
+
     <div *ngIf="item.type == 'Blinds'">
 
       <div style="display: flex;justify-content: space-between; margin-bottom: 15px;">
@@ -364,7 +385,6 @@
             '}}</span></div>
       </div>
     </div>
-
 
   </div>
 
