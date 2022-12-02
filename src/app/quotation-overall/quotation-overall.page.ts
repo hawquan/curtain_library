@@ -1085,6 +1085,14 @@ export class QuotationOverallPage implements OnInit {
           this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
             // this.pdfmakerClient(true)
             // window.open(link['imageURL'], '_system');
+            Swal.fire({
+              icon: 'success',
+              title: 'SO Generated Successfully.',
+              heightAuto: false,
+              showConfirmButton: false,
+              timer: 2500,
+            })
+
             this.safariViewController.isAvailable()
               .then(async (available: boolean) => {
                 if (available) {
@@ -1108,13 +1116,6 @@ export class QuotationOverallPage implements OnInit {
                 window.open(link['imageURL'], '_system');
               })
 
-            Swal.fire({
-              icon: 'success',
-              title: 'SO Generated Successfully.',
-              heightAuto: false,
-              showConfirmButton: false,
-              timer: 2500,
-            })
             this.isCreateSo = false
             this.nav.navigateRoot('/tabs/tab1')
           })
