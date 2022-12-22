@@ -34,6 +34,7 @@ export class TaskDetailReviewPage implements OnInit {
   fabriclist = []
   misclist = []
   bracketlist = []
+  bracketlistblind = [{name:'Wall'}, {name:'Ceiling'}, {name:'Ceiling Pelmet'}]
   hooklist = []
   hooklistadjust = []
   beltlist = []

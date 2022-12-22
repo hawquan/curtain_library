@@ -45,6 +45,7 @@ export class TaskCreatorPage implements OnInit {
   tracklist = []
   misclist = []
   bracketlist = []
+  bracketlistblind = [{name:'Wall'}, {name:'Ceiling'}, {name:'Ceiling Pelmet'}]
   hooklist = []
   hooklistadjust = []
   beltlist = []

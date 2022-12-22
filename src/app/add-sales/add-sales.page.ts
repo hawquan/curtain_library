@@ -39,7 +39,7 @@ export class AddSalesPage implements OnInit {
 
   keywordPro = ''
   keywordSales = ''
-  propertyList = ['Bungalow', 'Condominium', 'Semi-D', 'Others']
+  propertyList = ['Apartment', 'Bungalow', 'Condominium', 'Semi-D', 'Terrace', 'Others']
   // propertyList = ['Bungalow', 'Condominium', 'Semi-D', 'Others'].sort((a: any, b: any) => (a > b ? 1 : -1))
   showSelection = false
   selectionSales = false
@@ -72,7 +72,7 @@ export class AddSalesPage implements OnInit {
     this.keyword2 = ''
   }
 
-  
+
   focus(x) {
     if (x) {
       this.showSelection = true
@@ -359,7 +359,7 @@ export class AddSalesPage implements OnInit {
         heightAuto: false,
       })
 
-    }else if (!this.id_sales) {
+    } else if (!this.id_sales) {
 
       Swal.fire({
         icon: 'error',

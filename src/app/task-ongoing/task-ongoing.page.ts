@@ -437,6 +437,54 @@ export class TaskOngoingPage implements OnInit {
     this.nav.navigateForward(['task-ongoing-view-quotation'], navExtra)
   }
 
+  retractProgress() {
+    let temp = {
+      no: this.sales_id,
+      step: 1,
+    }
+
+    Swal.fire({
+      title: 'Retract Progress',
+      text: 'Progress will be retract back to sales person (Sales will be able to edit item again). Are you sure?',
+      heightAuto: false,
+      icon: 'warning',
+      showConfirmButton: true,
+      showCancelButton: true,
+      cancelButtonText: 'Cancel',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Retract',
+      reverseButtons: true,
+    }).then((y) => {
+      if (y.isConfirmed) {
+        this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
+
+          let body2 = {
+            title: "Sales Retracted",
+            body: "Sales have been RETRACTED back to you.",
+            path: 'tabs/tab1',
+            topic: this.user['id'],
+          }
+          this.http.post('https://curtain.vsnap.my/fcmAny', body2).subscribe(data2 => {
+            console.log(data2);
+          }, e => {
+            console.log(e);
+          });
+
+          Swal.fire({
+            title: 'Retract Completed',
+            icon: 'success',
+            heightAuto: false,
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 2000,
+          })
+          this.nav.pop()
+        })
+        // this.items.splice(x, 1)
+      }
+    })
+  }
+
   async presentActionSheet() {
 
     let destination = this.info['customer_address']
@@ -474,7 +522,7 @@ export class TaskOngoingPage implements OnInit {
                 );
 
             } else {
-              window.open("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(destination) , '_system');
+              window.open("https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(destination), '_system');
               // use fallback browser, example InAppBrowser
             }
           }).catch(async (error) => {

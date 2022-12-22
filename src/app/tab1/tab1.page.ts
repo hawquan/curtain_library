@@ -84,6 +84,8 @@ export class Tab1Page implements OnInit {
   },]
 
   salesList = []
+  salesListOngoing = []
+  salesListCompleted = []
   salesListRejected = []
   tailorList = []
 
@@ -110,6 +112,9 @@ export class Tab1Page implements OnInit {
   status = 'p'
   uid = ""
   snapURL = ''
+  sortSalesP = true
+  sortSalesO = true
+  sortSalesC = true
 
   async presentToastWithOptions(header, msg, id, path) {
 
@@ -146,11 +151,13 @@ export class Tab1Page implements OnInit {
   ngOnInit() {
     firebase.auth().onAuthStateChanged(a => {
       if (a) {
+        console.log(a);
+        
         this.uid = a.uid
 
         if (!this.platform.is('desktop') && !this.platform.is('mobileweb')) {
-          // this.fcm.subscribeToTopic(a.uid);
-          // this.fcmNotification()
+          this.fcm.subscribeToTopic(a.uid);
+          this.fcmNotification()
         } else {
           console.log(this.platform.platforms(), 'NO FCM');
         }
@@ -219,18 +226,30 @@ export class Tab1Page implements OnInit {
         console.log(this.blindlist)
       })
 
+      this.http.post('https://curtain.vsnap.my/getsaleslist', { id_sales: x, id_tech: x, id_tail: x, id_inst: x }).subscribe((s) => {
+        this.salesList = s['data'].sort((a, b) => a.no - b.no)
+        this.salesListOngoing = s['data'].sort((a, b) => a.no - b.no)
+        this.salesListCompleted = s['data'].sort((a, b) => a.no - b.no)
+        this.sortSalesP = true
+        this.sortSalesO = true
+        this.sortSalesC = true
+        this.filterPendingList()
+        this.filterOnGoingList()
+        this.filterCompletedList()
+        console.log(this.salesList, this.salesListOngoing, this.salesListCompleted);
+
+      })
+
+      this.http.post('https://curtain.vsnap.my/getrejected', { id_sales: x }).subscribe((s) => {
+        this.salesListRejected = s['data']
+        console.log(this.salesListRejected.length, this.salesListRejected);
+
+      })
+
     })
     // if (this.user.position == "Sales" || this.user.position == "Technician" || this.user.position == "Installer") {
-    this.http.post('https://curtain.vsnap.my/getsaleslist', { id_sales: x, id_tech: x, id_tail: x, id_inst: x }).subscribe((s) => {
-      this.salesList = s['data']
-      console.log(this.salesList);
-    })
 
-    this.http.post('https://curtain.vsnap.my/getrejected', { id_sales: x }).subscribe((s) => {
-      this.salesListRejected = s['data']
-      console.log(this.salesListRejected.length, this.salesListRejected);
 
-    })
 
     // } else if (this.user.position == "Tailor") {
     //   this.http.post('https://curtain.vsnap.my/getorderlist2', { id_tail: x }).subscribe((s) => {
@@ -240,32 +259,32 @@ export class Tab1Page implements OnInit {
     // }
   }
 
-  filterPendingList(type) {
-    if (type == 'sales') {
-      return this.salesList.filter(x => x.step == 1 && x.rejected != true)
-    } else if (type == 'tech') {
-      return this.salesList.filter(x => x.step == 2)
-    } else if (type == 'tailor') {
-      return this.salesList.filter(x => x.step == 3)
-    } else if (type == 'installer') {
-      return this.salesList.filter(x => x.step == 4)
+  filterPendingList() {
+    if (this.user.position == 'Sales') {
+      this.salesList = this.salesList.filter(x => x.step == 1 && x.rejected != true)
+    } else if (this.user.position == 'Technician') {
+      this.salesList = this.salesList.filter(x => x.step == 2)
+    } else if (this.user.position == 'Tailor') {
+      this.salesList = this.salesList.filter(x => x.step == 3)
+    } else if (this.user.position == 'Installer') {
+      this.salesList = this.salesList.filter(x => x.step == 4)
     }
   }
 
-  filterOnGoingList(type) {
-    if (type == 'sales') {
-      return this.salesList.filter(x => x.step >= 2 && x.step < 5).sort((a, b) => b.no - a.no)
-    } else if (type == 'tech') {
-      return this.salesList.filter(x => x.step >= 3 && x.step < 5).sort((a, b) => b.no - a.no)
-    } else if (type == 'tailor') {
-      return this.salesList.filter(x => x.step >= 4 && x.step < 5).sort((a, b) => b.no - a.no)
+  filterOnGoingList() {
+    if (this.user.position == 'Sales') {
+      this.salesListOngoing = this.salesListOngoing.filter(x => x.step >= 2 && x.step < 5)
+    } else if (this.user.position == 'Technician') {
+      this.salesListOngoing = this.salesListOngoing.filter(x => x.step >= 3 && x.step < 5)
+    } else if (this.user.position == 'Tailor') {
+      this.salesListOngoing = this.salesListOngoing.filter(x => x.step >= 4 && x.step < 5)
     }
     // else if (type == 'installer') {
     //   return this.pendingListInstaller.filter(x => x.step >= 4 && x.step < 5)
     // }
   }
 
-  filterCompletedList(type) {
+  filterCompletedList() {
     // if (type == 'sales') {
     //   return this.salesList.filter(x => x.step == 5)
     // } else if (type == 'tech') {
@@ -275,8 +294,34 @@ export class Tab1Page implements OnInit {
     // } else if (type == 'installer') {
     //   return this.salesList.filter(x => x.step == 5)
     // }
-    return this.salesList.filter(x => x.step == 5).sort((a, b) => b.no - a.no)
+    this.salesListCompleted = this.salesListCompleted.filter(x => x.step == 5)
+  }
 
+  sortListP() {
+    this.sortSalesP = !this.sortSalesP
+    if (this.sortSalesP) {
+      this.salesList.sort((a, b) => a.no - b.no)
+    } else {
+      this.salesList.sort((a, b) => b.no - a.no)
+    }
+  }
+
+  sortListO() {
+    this.sortSalesO = !this.sortSalesO
+    if (this.sortSalesO) {
+      this.salesListOngoing.sort((a, b) => a.no - b.no)
+    } else {
+      this.salesListOngoing.sort((a, b) => b.no - a.no)
+    }
+  }
+
+  sortListC() {
+    this.sortSalesC = !this.sortSalesC
+    if (this.sortSalesC) {
+      this.salesListCompleted.sort((a, b) => a.no - b.no)
+    } else {
+      this.salesListCompleted.sort((a, b) => b.no - a.no)
+    }
   }
 
   selectTab(x) {
@@ -503,28 +548,28 @@ export class Tab1Page implements OnInit {
       handler: () => {
         // window.open("https://waze.com/ul?q=" + destination + "&navigate=yes&z=6");
         this.safariViewController.isAvailable()
-        .then(async (available: boolean) => {
-          if (available) {
+          .then(async (available: boolean) => {
+            if (available) {
 
-            this.safariViewController.show({
-              url: "https://waze.com/ul?q=" + encodeURIComponent(destination) + "&navigate=yes&z=6",
-            })
-              .subscribe((result: any) => {
-                if (result.event === 'opened') console.log('Opened');
-                else if (result.event === 'loaded') console.log('Loaded');
-                else if (result.event === 'closed') console.log('Closed');
-              },
-                (error: any) => console.error(error)
-              );
+              this.safariViewController.show({
+                url: "https://waze.com/ul?q=" + encodeURIComponent(destination) + "&navigate=yes&z=6",
+              })
+                .subscribe((result: any) => {
+                  if (result.event === 'opened') console.log('Opened');
+                  else if (result.event === 'loaded') console.log('Loaded');
+                  else if (result.event === 'closed') console.log('Closed');
+                },
+                  (error: any) => console.error(error)
+                );
 
-          } else {
-            // window.open("maps://?q=" + destination , '_system');
+            } else {
+              // window.open("maps://?q=" + destination , '_system');
+              window.open("https://waze.com/ul?q=" + encodeURIComponent(destination) + "&navigate=yes&z=6", '_system');
+              // use fallback browser, example InAppBrowser
+            }
+          }).catch(async (error) => {
             window.open("https://waze.com/ul?q=" + encodeURIComponent(destination) + "&navigate=yes&z=6", '_system');
-            // use fallback browser, example InAppBrowser
-          }
-        }).catch(async (error) => {
-          window.open("https://waze.com/ul?q=" + encodeURIComponent(destination) + "&navigate=yes&z=6", '_system');
-        })
+          })
       }
     });
 
@@ -545,4 +590,7 @@ export class Tab1Page implements OnInit {
     await actionSheet.present();
   }
 
+  lengthof(x) {
+    return x ? x.length : 0
+  }
 }
