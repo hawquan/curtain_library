@@ -235,7 +235,7 @@
                 <ion-select-option *ngFor="let x of hooklist; let i = index" [value]="x.name">{{x.name}}
                 </ion-select-option>
               </ion-select> -->
-              <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.hook"
+              <ion-input readonly placeholder="Select Hook" [(ngModel)]="item.hook"
                 style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
               </ion-input>
             </div>
@@ -249,7 +249,7 @@
                 <ion-select-option *ngFor="let x of hooklistadjust; let i = index" [value]="x.name">{{x.name}}
                 </ion-select-option>
               </ion-select> -->
-              <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.hook"
+              <ion-input readonly placeholder="Select Hook" [(ngModel)]="item.hook"
                 style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
               </ion-input>
             </div>
@@ -266,7 +266,7 @@
               <ion-select-option *ngFor="let x of beltlist; let i = index" [value]="x.name">{{x.name}}
               </ion-select-option>
             </ion-select> -->
-            <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.belt"
+            <ion-input readonly placeholder="Select Belt" [(ngModel)]="item.belt"
               style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
             </ion-input>
           </div>
@@ -283,7 +283,7 @@
                 <ion-select-option value="Yes">Yes</ion-select-option>
                 <ion-select-option value="No">No</ion-select-option>
               </ion-select> -->
-              <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.touchfloor"
+              <ion-input readonly placeholder="Select Touch Floor" [(ngModel)]="item.touchfloor"
                 style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
               </ion-input>
             </div>
@@ -297,7 +297,7 @@
                 <ion-select-option value="Yes">Yes</ion-select-option>
                 <ion-select-option value="No">No</ion-select-option>
               </ion-select> -->
-              <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.sidehook"
+              <ion-input readonly placeholder="Select Sidehook" [(ngModel)]="item.sidehook"
                 style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
               </ion-input>
             </div>
@@ -403,7 +403,7 @@
                 <ion-select-option *ngFor="let x of hooklist; let i = index" [value]="x.name">{{x.name}}
                 </ion-select-option>
               </ion-select> -->
-              <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.sheer_hook"
+              <ion-input readonly placeholder="Select Hook" [(ngModel)]="item.sheer_hook"
                 style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
               </ion-input>
             </div>
@@ -417,7 +417,7 @@
                 <ion-select-option *ngFor="let x of hooklistadjust; let i = index" [value]="x.name">{{x.name}}
                 </ion-select-option>
               </ion-select> -->
-              <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.sheer_hook"
+              <ion-input readonly placeholder="Select Hook" [(ngModel)]="item.sheer_hook"
                 style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
               </ion-input>
             </div>
@@ -434,7 +434,7 @@
               <ion-select-option *ngFor="let x of beltlist; let i = index" [value]="x.name">{{x.name}}
               </ion-select-option>
             </ion-select> -->
-            <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.sheer_belt"
+            <ion-input readonly placeholder="Select Belt" [(ngModel)]="item.sheer_belt"
               style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
             </ion-input>
           </div>
@@ -465,7 +465,7 @@
                 <ion-select-option value="Yes">Yes</ion-select-option>
                 <ion-select-option value="No">No</ion-select-option>
               </ion-select> -->
-              <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.sheer_sidehook"
+              <ion-input readonly placeholder="Select Sidehook" [(ngModel)]="item.sheer_sidehook"
                 style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
               </ion-input>
             </div>
@@ -506,7 +506,7 @@
             <div
               style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
               <div style="min-width: 35px;color: #999999">Sides</div>
-              <!-- <ion-select [(ngModel)]="item.motorized_sides" placeholder="Yes/No" interface="popover" mode="ios"
+              <!-- <ion-select [(ngModel)]="item.motorized_sides" placeholder="Left/Right" interface="popover" mode="ios"
                   [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
                   style="width: calc(100% - 35px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 10px; font-weight: 500; color: #333333">
                   <ion-select-option value="Left">Left</ion-select-option>
@@ -613,7 +613,7 @@
           <ion-select-option *ngFor="let x of blindlist; let i = index" [value]="x.name">{{x.name}}
           </ion-select-option>
         </ion-select> -->
-        <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.pleat"
+        <ion-input readonly placeholder="Select Type" [(ngModel)]="item.pleat"
           style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
         </ion-input>
       </div>
@@ -622,7 +622,7 @@
       <div
         style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
         <div style="min-width: 70px;color: #999999">Set </div>
-        <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.pieces_blind"
+        <ion-input readonly placeholder="Enter Number" [(ngModel)]="item.pieces_blind"
           style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
         </ion-input>
       </div>
@@ -717,7 +717,7 @@
           style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 70px;color: #999999">Hook </div>
  
-          <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.hook"
+          <ion-input readonly placeholder="Select Hook" [(ngModel)]="item.hook"
             style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
           </ion-input>
         </div>
@@ -726,7 +726,7 @@
           style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 70px;color: #999999">Hook </div>
    
-          <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.hook"
+          <ion-input readonly placeholder="Select Hook" [(ngModel)]="item.hook"
             style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
           </ion-input>
         </div>
@@ -738,7 +738,7 @@
         style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
         <div style="min-width: 70px;color: #999999">Belt </div>
 
-        <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.belt"
+        <ion-input readonly placeholder="Select Belt" [(ngModel)]="item.belt"
           style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
         </ion-input>
       </div> -->
@@ -748,7 +748,7 @@
         style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
         <div style="min-width: 70px;color: #999999">Sidehook </div>
 
-        <ion-input readonly placeholder="Select Bracket" [(ngModel)]="item.sidehook"
+        <ion-input readonly placeholder="Select Sidehook" [(ngModel)]="item.sidehook"
           style="width: calc(100% - 70px) ;height: 30px;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
         </ion-input>
       </div> -->

@@ -33,6 +33,7 @@ export class TaskEditorPage implements OnInit {
   fabriclist = []
   misclist = []
   bracketlist = []
+  bracketlistblind = [{name:'Wall'}, {name:'Ceiling'}, {name:'Ceiling Pelmet'}]
   hooklist = []
   hooklistadjust = []
   beltlist = []
@@ -116,7 +117,7 @@ export class TaskEditorPage implements OnInit {
         this.checkFabric()
       })
 
-      // console.log(this.bracketlist, this.hooklist, this.beltlist, this.otherslist);
+      console.log(this.bracketlist, this.hooklist, this.beltlist, this.otherslist);
 
     })
 

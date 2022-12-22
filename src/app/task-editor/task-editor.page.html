@@ -708,7 +708,7 @@
               <div
                 style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
                 <div style="min-width: 35px;color: #999999">Sides</div>
-                <ion-select [(ngModel)]="item.motorized_sides" placeholder="Yes/No" interface="popover" mode="ios"
+                <ion-select [(ngModel)]="item.motorized_sides" placeholder="Left/Right" interface="popover" mode="ios"
                   [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
                   style="width: calc(100% - 35px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 10px; font-weight: 500; color: #333333">
                   <ion-select-option value="Left">Left</ion-select-option>
@@ -887,7 +887,7 @@
             placeholder="Select Bracket" interface="popover" mode="ios"
             [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
             style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
-            <ion-select-option *ngFor="let x of bracketlist; let i = index" [value]="x.name">{{x.name}}
+            <ion-select-option *ngFor="let x of bracketlistblind; let i = index" [value]="x.name">{{x.name}}
             </ion-select-option>
           </ion-select>
 
