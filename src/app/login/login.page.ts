@@ -23,7 +23,9 @@ export class LoginPage implements OnInit {
     email: "",
     password: "",
   }
+  register = [] as any
   show
+  status = 'l'
 
   ngOnInit() {
 
@@ -57,7 +59,7 @@ export class LoginPage implements OnInit {
             firebase.auth().signOut();
             Swal.fire({
               title: 'Error',
-              text: "This user is deactivated, please contact admin for more information.",
+              text: "This user is deactivated or doesn't exist, please contact admin for more information.",
               icon: 'error',
               heightAuto: false,
               showConfirmButton: true,
@@ -75,6 +77,10 @@ export class LoginPage implements OnInit {
         })
       }
     })
+  }
+
+  selectTab(x) {
+    this.status = x
   }
 
   async loginUser(credentials): Promise<void> {
@@ -103,6 +109,117 @@ export class LoginPage implements OnInit {
         })
       }
     );
+  }
+
+  registerUser() {
+
+    if (!this.register['name']) {
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Staff name is missing',
+        timer: 3000,
+        heightAuto: false,
+
+      })
+
+    } else if (!this.register['email']) {
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Staff email is missing',
+        timer: 3000,
+        heightAuto: false,
+
+
+      })
+
+    } else if (!this.register['phone']) {
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Staff phone is missing',
+        timer: 3000,
+        heightAuto: false,
+
+
+      })
+
+    } else if (!this.register['password']) {
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Password is missing',
+        timer: 3000,
+        heightAuto: false,
+
+
+      })
+
+    }
+    else {
+
+      let temp = {
+        name: this.register.name,
+        email: this.register.email,
+        password: this.register.password,
+        photo: "https://forcarserver.s3.ap-southeast-1.amazonaws.com/forcar/goalgame/1662972739683l7yj1aq48.png",
+        phone: this.register.phone,
+        date_join: new Date().getTime(),
+        id: "",
+        position: "Sales",
+        status: true,
+      }
+
+      console.log(temp);
+
+      Swal.fire({
+        title: 'Register',
+        text: "Are you sure to register?",
+        icon: 'question',
+        heightAuto: false,
+        showCancelButton: true,
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Confirm!',
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          this.http.post('https://curtain.vsnap.my/insertstaffs', temp).subscribe(s => {
+
+            Swal.fire({
+              icon: 'success',
+              title: 'Register Successfully. Logging in...',
+              timer: 3000,
+              heightAuto: false
+
+            })
+
+            this.loginUser(this.register)
+
+          }, e => {
+            console.log(e);
+
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: e.error.message.message,
+              heightAuto: false
+
+            })
+          })
+        }
+
+
+      })
+
+    }
+    // console.log(this.user)
+
   }
 
   tohome() {

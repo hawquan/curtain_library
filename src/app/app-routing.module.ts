@@ -33,7 +33,8 @@ const routes: Routes = [
   {
     path: 'installer-task-detail',
     loadChildren: () => import('./installer-task-detail/installer-task-detail.module').then( m => m.InstallerTaskDetailPageModule)
-  },  {
+  },
+  {
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
   },
@@ -104,7 +105,7 @@ const routes: Routes = [
   {
     path: 'add-sales',
     loadChildren: () => import('./add-sales/add-sales.module').then( m => m.AddSalesPageModule)
-  }
+  },
 
 ];
 @NgModule({

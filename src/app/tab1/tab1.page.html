@@ -673,13 +673,24 @@
       <div
         style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 10px;">
         <div style="font-weight: 600; color: #000000;">Appointments ({{salesList.length}})</div>
-        <div style="display: flex;align-items: center;">
-          <div (click)="refresher(uid)" style="display: flex;align-items: center;">
-            <ion-icon style="color: #a17635;margin-right: 5px;" name="refresh-outline"></ion-icon>
-            <div style="color: #a17635;font-size: 12px;display: flex;align-items: center;">Refresh List</div>
+
+        <div style="display: flex;align-items: center">
+
+          <div (click)="createNewSales()"
+            style="height: 22px;background-color: white;box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;border-radius: 5px;margin-right: 4px;display: flex;align-items: center;padding: 0 5px;">
+            <ion-icon style="font-size: 14px; --ionicon-stroke-width: 50px;color: #a17635;"
+              name="add-outline"></ion-icon>
+            <div style="height: 14px;font-size: 12px;font-weight: 500;margin-left: 2px;color: #a17635;margin-top: 1px;">
+              Add Lead</div>
           </div>
-          <ion-icon (click)="createNewSales()" style="margin-left: 10px;" name="ellipsis-horizontal-outline"></ion-icon>
+
+          <div (click)="refresher(uid)"
+            style="height: 22px;width: 22px;display: flex;align-items: center;justify-content: center;background-color: white;box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 2px 0px;border-radius: 5px;">
+            <ion-icon style="color: #a17635;margin: 2px;" name="refresh-outline"></ion-icon>
+          </div>
+
         </div>
+
       </div>
 
       <div style="width: 100%; display: flex;align-items: center;">

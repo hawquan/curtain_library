@@ -178,6 +178,76 @@ export class ProfilePage implements OnInit {
   }
 
 
+  deleteAccount() {
+    Swal.fire({
+      icon: 'warning',
+      title: "Warning",
+      text: "You are about to DELETE your account. Enter 'DELETE ACCOUNT' to continue action.",
+      input: 'text',
+      heightAuto: false,
+      showCancelButton: true,
+      showConfirmButton: true,
+      cancelButtonText: 'Cancel',
+      confirmButtonText: 'Delete Account',
+      reverseButtons: true,
+      cancelButtonColor: '#ff0000',
+    }).then(a => {
+
+      if (a.isConfirmed && a.value == 'DELETE ACCOUNT') {
+
+        let temp = {
+          id: this.user.id,
+          status: false,
+        }
+
+        this.http.post('https://curtain.vsnap.my/updatestaffs', temp).subscribe(a => {
+          console.log(a);
+
+          if (a['message']) {
+
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top',
+              showConfirmButton: false,
+              timer: 2500,
+              timerProgressBar: true,
+            })
+
+            Toast.fire({
+              icon: 'info',
+              title: 'Your Account Had Been Deleted.'
+            })
+
+            firebase.auth().signOut();
+            this.nav.navigateBack('')
+
+          }
+        }, e => {
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Please try again later',
+            timer: 3000,
+            heightAuto: false
+
+          })
+        })
+
+      } else if (a.isConfirmed && a.value != 'DELETE ACCOUNT') {
+        Swal.fire({
+          icon: 'error',
+          title: "Error",
+          text: "Enter 'DELETE ACCOUNT' to continue action",
+          heightAuto: false,
+          showCancelButton: false,
+        })
+      }
+
+    })
+  }
+
+
   back() {
     this.nav.pop()
   }
