@@ -7,6 +7,7 @@
           <ion-icon (click)="back()" style="font-size: 18px; color: #636161; --ionicon-stroke-width: 50px"
             name="chevron-back-outline"></ion-icon>
         </div>
+
         <div style="font-weight: 600;color: #000;font-size: 18px;">Profile Details</div>
 
         <div>
@@ -34,7 +35,8 @@
           </ion-avatar>
 
           <label for="files" class="btn">
-            <div style="color: white;text-align: center;margin-top: 10px;font-weight: 500;padding: 8px 6px;
+            <div
+              style="color: white;text-align: center;margin-top: 10px;font-weight: 500;padding: 8px 6px;
              background-color: #DEC5A5; border-radius: 20px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; font-size: 12px;">
               Change Image
             </div>
@@ -98,14 +100,16 @@
 
     </div>
 
-    <div style="display: flex;justify-content: center;padding-bottom: 20px;">
+    <div style="display: flex;align-items: center;flex-direction: column;padding-bottom: 10px;">
       <div (click)="update()" style="width: 50%;color: white;text-align: center;margin-top: 10px;font-weight: 500;padding: 8px 6px;
         background-color: #DEC5A5; border-radius: 20px; box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;">
         Save
       </div>
+      <div (click)="deleteAccount()" style="color: red;font-size: 12px;font-weight: 600;margin-top: 30px;">
+        Delete Account
+      </div>
     </div>
 
   </div>
-
 
 </ion-content>
