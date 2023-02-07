@@ -652,7 +652,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                 { text: '', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 },
-                
+
               ],
             )
 
@@ -878,7 +878,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                   { text: this.item[i].remark_curtain, fontSize: 8.5 }
                 ],
               )
-            }else{
+            } else {
               items.push(
                 [
                   { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
@@ -899,7 +899,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
             }
 
 
-            
+
           }
 
           if (this.item[i].fabric_lining != null) {
@@ -1252,7 +1252,6 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
           this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
             // this.pdfmakerClient(true)
-            window.open(link['imageURL'], '_system');
             Swal.fire({
               icon: 'success',
               title: 'SO Generated Successfully.',
@@ -1260,6 +1259,29 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               showConfirmButton: false,
               timer: 2500,
             })
+
+            this.safariViewController.isAvailable()
+              .then(async (available: boolean) => {
+                if (available) {
+
+                  this.safariViewController.show({
+                    url: link['imageURL'],
+                  })
+                    .subscribe((result: any) => {
+                      if (result.event === 'opened') console.log('Opened');
+                      else if (result.event === 'loaded') console.log('Loaded');
+                      else if (result.event === 'closed') console.log('Closed');
+                    },
+                      (error: any) => console.error(error)
+                    );
+
+                } else {
+                  window.open(link['imageURL'], '_system');
+                  // use fallback browser, example InAppBrowser
+                }
+              }).catch(async (error) => {
+                window.open(link['imageURL'], '_system');
+              })
             this.isCreateSo = false
             // this.nav.navigateRoot('/tabs/tab1')
           })
