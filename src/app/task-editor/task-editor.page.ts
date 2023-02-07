@@ -33,7 +33,7 @@ export class TaskEditorPage implements OnInit {
   fabriclist = []
   misclist = []
   bracketlist = []
-  bracketlistblind = [{name:'Wall'}, {name:'Ceiling'}, {name:'Ceiling Pelmet'}]
+  bracketlistblind = [{ name: 'Wall' }, { name: 'Ceiling' }, { name: 'Ceiling Pelmet' }]
   hooklist = []
   hooklistadjust = []
   beltlist = []
@@ -1094,7 +1094,7 @@ export class TaskEditorPage implements OnInit {
   updateOrder(temp) {
     console.log(this.sales_no);
 
-    if (temp.promo_curtain < 0 || temp.promo_curtain > 10 || temp.promo_lining < 0 || temp.promo_lining > 10 || temp.promo_sheer < 0 || temp.promo_sheer > 10 || temp.promo_blind < 0 || temp.promo_blind > 10) {
+    if (temp.promo_curtain < 0 || temp.promo_curtain > 20 || temp.promo_lining < 0 || temp.promo_lining > 20 || temp.promo_sheer < 0 || temp.promo_sheer > 20 || temp.promo_blind < 0 || temp.promo_blind > 20) {
       const Toast = Swal.mixin({
         toast: true,
         position: 'top',
@@ -1282,7 +1282,7 @@ export class TaskEditorPage implements OnInit {
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0,
       promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0,
-      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost,
+      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power : this.item.motorized_power
     }
 
     console.log(temp);
@@ -1294,7 +1294,11 @@ export class TaskEditorPage implements OnInit {
       if (this.item.type == 'Blinds') {
         this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0)
       } else {
-        this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25
+        if (this.item.motorized_upgrade) {
+          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25 + a['data']['motorized']['install']
+        } else {
+          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25
+        }
       }
 
       if (x == 'sales') {

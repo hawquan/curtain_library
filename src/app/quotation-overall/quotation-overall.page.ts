@@ -484,7 +484,7 @@ export class QuotationOverallPage implements OnInit {
                 { text: '', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 },
-                
+
               ],
             )
 
@@ -710,7 +710,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: this.item[i].remark_curtain, fontSize: 8.5 }
                 ],
               )
-            }else{
+            } else {
               items.push(
                 [
                   { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
@@ -731,7 +731,7 @@ export class QuotationOverallPage implements OnInit {
             }
 
 
-            
+
           }
 
           if (this.item[i].fabric_lining != null) {
@@ -1346,7 +1346,7 @@ export class QuotationOverallPage implements OnInit {
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
       promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0,
-      motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost,
+      motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost, motorized_power: this.item[i].motorized_power
 
     }
 
@@ -1630,27 +1630,52 @@ export class QuotationOverallPage implements OnInit {
       }
 
       if (this.item[i].track != null) {
-        items.push(
-          [
-            '(C) ' + this.item[i].track + ' Track',
-            { text: this.calc[i].track.unit, alignment: 'center' },
-            { text: this.calc[i].track.qty, alignment: 'center' },
-            { text: (this.calc[i].track.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-            { text: (this.calc[i].track.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-          ]
-        )
+        if (this.calc[i].track.total > 0) {
+          items.push(
+            [
+              '(C) ' + this.item[i].track + ' Track',
+              { text: this.calc[i].track.unit, alignment: 'center' },
+              { text: this.calc[i].track.qty, alignment: 'center' },
+              { text: (this.calc[i].track.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+              { text: (this.calc[i].track.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+            ]
+          )
+        } else {
+          items.push(
+            [
+              '(C) ' + this.item[i].track + ' Track',
+              { text: this.calc[i].track.unit, alignment: 'center' },
+              { text: this.calc[i].track.qty, alignment: 'center' },
+              { text: 'WAIVED', alignment: 'right' },
+              { text: 'WAIVED', alignment: 'right' }
+            ]
+          )
+        }
+
       }
 
       if (this.item[i].track_sheer != null) {
-        items.push(
-          [
-            '(S) ' + this.item[i].track_sheer + ' Track',
-            { text: this.calc[i].track_sheer.unit, alignment: 'center' },
-            { text: this.calc[i].track_sheer.qty, alignment: 'center' },
-            { text: (this.calc[i].track_sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-            { text: (this.calc[i].track_sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-          ]
-        )
+        if (this.calc[i].track_sheer.total > 0) {
+          items.push(
+            [
+              '(S) ' + this.item[i].track_sheer + ' Track',
+              { text: this.calc[i].track_sheer.unit, alignment: 'center' },
+              { text: this.calc[i].track_sheer.qty, alignment: 'center' },
+              { text: (this.calc[i].track_sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+              { text: (this.calc[i].track_sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+            ]
+          )
+        } else {
+          items.push(
+            [
+              '(S) ' + this.item[i].track_sheer + ' Track',
+              { text: this.calc[i].track_sheer.unit, alignment: 'center' },
+              { text: this.calc[i].track_sheer.qty, alignment: 'center' },
+              { text: 'WAIVED', alignment: 'right' },
+              { text: 'WAIVED', alignment: 'right' }
+            ]
+          )
+        }
       }
 
       if (this.item[i].motorized_upgrade) {
@@ -1675,6 +1700,16 @@ export class QuotationOverallPage implements OnInit {
             ]
           )
         }
+
+        items.push(
+          [
+            'Installation Motorized Track',
+            { text: 'set', alignment: 'center' },
+            { text: this.calc[i].motorized.qty, alignment: 'center' },
+            { text: (this.calc[i].motorized.install).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+            { text: (this.calc[i].motorized.install).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+          ]
+        )
 
       }
 
@@ -2187,6 +2222,41 @@ export class QuotationOverallPage implements OnInit {
             ]
           )
 
+          if (this.item[i].remark_curtain) {
+
+            items.push(
+              [
+                { text: 'Remark', border: [true, false, true, false], decoration: 'underline' },
+                { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                { text: '', alignment: 'center', border: [true, false, true, false] },
+                { text: '', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+
+            items.push(
+              [
+                { text: 'Curtain : ' + (this.item[i].remark_curtain || ''), fontSize: 8, border: [true, false, true, false] },
+                { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                { text: '', alignment: 'center', border: [true, false, true, false] },
+                { text: '', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+          }
+
+          // if (this.item[i].remark_sale) {
+          //   items.push(
+          //     [
+          //       { text: 'Remark Order : ' + (this.item[i].remark_sale || ''), fontSize: 8, border: [true, false, true, false] },
+          //       { text: '', fontSize: 8.5, border: [true, false, true, false] },
+          //       { text: '', alignment: 'center', border: [true, false, true, false] },
+          //       { text: '', border: [true, false, true, false] },
+          //       // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+          //     ]
+          //   )
+          // }
+
           items.push(
             [
               { text: '', border: [true, false, true, true] },
@@ -2217,7 +2287,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Sheer - ' + this.item[i].fabric_sheer, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total + this.calc[i].motorized.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total + this.calc[i].motorized.total + this.calc[i].motorized.install + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2275,6 +2345,41 @@ export class QuotationOverallPage implements OnInit {
             ]
           )
 
+          if (this.item[i].remark_sheer) {
+
+            items.push(
+              [
+                { text: 'Remark', border: [true, false, true, false], decoration: 'underline' },
+                { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                { text: '', alignment: 'center', border: [true, false, true, false] },
+                { text: '', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+
+            items.push(
+              [
+                { text: 'Sheer : ' + (this.item[i].remark_sheer || ''), fontSize: 8, border: [true, false, true, false] },
+                { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                { text: '', alignment: 'center', border: [true, false, true, false] },
+                { text: '', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+          }
+
+          // if (this.item[i].remark_sale) {
+          //   items.push(
+          //     [
+          //       { text: 'Remark Order : ' + (this.item[i].remark_sale || ''), fontSize: 8, border: [true, false, true, false] },
+          //       { text: '', fontSize: 8.5, border: [true, false, true, false] },
+          //       { text: '', alignment: 'center', border: [true, false, true, false] },
+          //       { text: '', border: [true, false, true, false] },
+          //       // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+          //     ]
+          //   )
+          // }
+
           items.push(
             [
               { text: '', border: [true, false, true, true] },
@@ -2307,7 +2412,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i].motorized.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i].motorized.total + this.calc[i].motorized.install + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2401,6 +2506,54 @@ export class QuotationOverallPage implements OnInit {
               { text: '', border: [true, false, true, false] }
             ]
           )
+
+          if (this.item[i].remark_curtain || this.item[i].remark_sheer) {
+            items.push(
+              [
+                { text: 'Remark', border: [true, false, true, false], decoration: 'underline' },
+                { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                { text: '', alignment: 'center', border: [true, false, true, false] },
+                { text: '', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+          }
+
+          if (this.item[i].remark_curtain) {
+            items.push(
+              [
+                { text: 'Curtain : ' + (this.item[i].remark_curtain || ''), fontSize: 8, border: [true, false, true, false] },
+                { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                { text: '', alignment: 'center', border: [true, false, true, false] },
+                { text: '', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+          }
+
+          if (this.item[i].remark_sheer) {
+            items.push(
+              [
+                { text: 'Sheer : ' + (this.item[i].remark_sheer || ''), fontSize: 8, border: [true, false, true, false] },
+                { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                { text: '', alignment: 'center', border: [true, false, true, false] },
+                { text: '', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+          }
+
+          // if (this.item[i].remark_sale) {
+          //   items.push(
+          //     [
+          //       { text: 'Order : ' + (this.item[i].remark_sale || ''), fontSize: 8, border: [true, false, true, false] },
+          //       { text: '', fontSize: 8.5, border: [true, false, true, false] },
+          //       { text: '', alignment: 'center', border: [true, false, true, false] },
+          //       { text: '', border: [true, false, true, false] },
+          //       // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+          //     ]
+          //   )
+          // }
 
           items.push(
             [

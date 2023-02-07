@@ -179,7 +179,8 @@
 
 
           <!-- Track -->
-          <div  *ngIf="lengthof(calc[i].track) > 0" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+          <div *ngIf="lengthof(calc[i].track) > 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
               (C) {{x.track}} Track (ft)
             </div>
@@ -188,8 +189,11 @@
               <div style="width: 30%;text-align: center;">
                 {{calc[i].track.qty}}
               </div>
-              <div style="width: 70%;text-align: end;">
+              <div *ngIf="calc[i].track.total > 0" style="width: 70%;text-align: end;">
                 {{calc[i].track.total | currency: ' '}}
+              </div>
+              <div *ngIf="calc[i].track.total <= 0" style="width: 70%;text-align: end;">
+                WAIVED
               </div>
             </div>
           </div>
@@ -205,8 +209,11 @@
               <div style="width: 30%;text-align: center;">
                 {{calc[i].track_sheer.qty}}
               </div>
-              <div style="width: 70%;text-align: end;">
+              <div *ngIf="calc[i].track_sheer.total > 0" style="width: 70%;text-align: end;">
                 {{calc[i].track_sheer.total | currency: ' '}}
+              </div>
+              <div *ngIf="calc[i].track_sheer.total <= 0" style="width: 70%;text-align: end;">
+                WAIVED
               </div>
             </div>
           </div>
@@ -227,6 +234,23 @@
               </div>
               <div *ngIf="calc[i].motorized.cost != 'FOC'" style="width: 70%;text-align: end;">
                 {{calc[i].motorized.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Motorized -->
+          <div *ngIf="lengthof(calc[i].motorized) > 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation Motorized Track ({{calc[i].motorized.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].motorized.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].motorized.install | currency: ' '}}
               </div>
             </div>
           </div>

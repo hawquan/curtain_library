@@ -73,7 +73,9 @@
               {{calc.curtain.qty}}
             </div>
             <div style="width: 70%;text-align: end;">
-              {{calc.curtain.total | currency: ' '}}
+              {{calc.curtain.total | currency: ' '}}<span
+              *ngIf="calc.curtain.promo_rate != 0 && calc.curtain.promo_rate != null">
+              (-{{calc.curtain.promo_rate}}%)</span>
             </div>
           </div>
         </div>
@@ -90,7 +92,9 @@
               {{calc.lining.qty}}
             </div>
             <div style="width: 70%;text-align: end;">
-              {{calc.lining.total | currency: ' '}}
+              {{calc.lining.total | currency: ' '}}<span
+              *ngIf="calc.lining.promo_rate != 0 && calc.lining.promo_rate != null">
+              (-{{calc.lining.promo_rate}}%)</span>
             </div>
           </div>
         </div>
@@ -107,7 +111,9 @@
               {{calc.sheer.qty}}
             </div>
             <div style="width: 70%;text-align: end;">
-              {{calc.sheer.total | currency: ' '}}
+              {{calc.sheer.total | currency: ' '}}<span
+              *ngIf="calc.sheer.promo_rate != 0 && calc.sheer.promo_rate != null">
+              (-{{calc.sheer.promo_rate}}%)</span>
             </div>
           </div>
         </div>
@@ -197,6 +203,23 @@
             </div>
             <div *ngIf="calc.motorized.cost != 'FOC'" style="width: 70%;text-align: end;">
               {{calc.motorized.total | currency: ' '}}
+            </div>
+          </div>
+        </div>
+
+        <!-- Motorized -->
+        <div *ngIf="lengthof(calc.motorized) > 0"
+          style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+          <div>
+            Installation Motorized Track ({{calc.motorized.unit}})
+          </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              {{calc.motorized.qty}}
+            </div>
+            <div style="width: 70%;text-align: end;">
+              {{calc.motorized.install | currency: ' '}}
             </div>
           </div>
         </div>
@@ -303,7 +326,9 @@
               1
             </div>
             <div style="width: 70%;text-align: end;">
-              {{calc.blind.total | currency: ' '}}
+              {{calc.blind.total | currency: ' '}}<span
+              *ngIf="calc.blind.promo_rate != 0 && calc.blind.promo_rate != null">
+              (-{{calc.blind.promo_rate}}%)</span>
             </div>
           </div>
         </div>
