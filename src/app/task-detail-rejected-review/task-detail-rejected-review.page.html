@@ -323,24 +323,24 @@
           <div
             style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
             <div style="min-width: 85px;color: yellowgreen">Curtain Promo</div>
-            <ion-input placeholder="Enter (0 ~ 10)" [(ngModel)]="item.promo_curtain" type="number" readonly
+            <ion-input placeholder="Enter (0 ~ 20)" [(ngModel)]="item.promo_curtain" type="number" readonly
               (keypress)="numberOnlyValidation($event)"
               style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
             </ion-input>
           </div>
-          <div *ngIf="item.promo_curtain > 10" style="color: red;">Amount Exceeded</div>
+          <div *ngIf="item.promo_curtain > 20" style="color: red;">Amount Exceeded</div>
 
           <!-- Discount Lining -->
           <div style="width: 100%;margin-bottom: 10px;">
             <div
               style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
               <div style="min-width: 85px;color: yellowgreen">Lining Promo</div>
-              <ion-input placeholder="Enter (0 ~ 10)" [(ngModel)]="item.promo_lining" type="number" readonly
+              <ion-input placeholder="Enter (0 ~ 20)" [(ngModel)]="item.promo_lining" type="number" readonly
                 (keypress)="numberOnlyValidation($event)"
                 style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
               </ion-input>
             </div>
-            <div *ngIf="item.promo_lining > 10" style="color: red;">Amount Exceeded</div>
+            <div *ngIf="item.promo_lining > 20" style="color: red;">Amount Exceeded</div>
           </div>
 
         </div>
@@ -502,12 +502,12 @@
             <div
               style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
               <div style="min-width: 85px;color: yellowgreen">Sheer Promo</div>
-              <ion-input placeholder="Enter (0 ~ 10)" [(ngModel)]="item.promo_sheer" type="number" readonly
+              <ion-input placeholder="Enter (0 ~ 20)" [(ngModel)]="item.promo_sheer" type="number" readonly
                 (keypress)="numberOnlyValidation($event)"
                 style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
               </ion-input>
             </div>
-            <div *ngIf="item.promo_sheer > 10" style="color: red;">Amount Exceeded</div>
+            <div *ngIf="item.promo_sheer > 20" style="color: red;">Amount Exceeded</div>
           </div>
 
         </div>
@@ -704,12 +704,12 @@
         <div
           style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
           <div style="min-width: 85px;color: yellowgreen">Blind Promo</div>
-          <ion-input placeholder="Enter (0 ~ 10)" [(ngModel)]="item.promo_blind" type="number" readonly
+          <ion-input placeholder="Enter (0 ~ 20)" [(ngModel)]="item.promo_blind" type="number" readonly
             (keypress)="numberOnlyValidation($event)"
             style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
           </ion-input>
         </div>
-        <div *ngIf="item.promo_blind > 10" style="color: red;">Amount Exceeded</div>
+        <div *ngIf="item.promo_blind > 20" style="color: red;">Amount Exceeded</div>
       </div>
 
       <!-- Hook -->
