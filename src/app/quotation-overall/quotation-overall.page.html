@@ -616,7 +616,7 @@
       <div *ngIf="due != 0 && due < 0 && info.rejected == true"
         style="color:green;font-size: 14px;font-weight: 500;margin-bottom: 5px;">
         Refund : {{due | currency: 'RM '}}</div>
-      <div style="width: 92px;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
+      <div style="width: fit-content;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
       <div style="color: #a17635;font-size: 14px;font-weight: 500;">{{totalPrice() | currency: 'RM '}}</div>
     </div>
 
