@@ -30,31 +30,34 @@ export class AppComponent {
     // curtain12345
     // D:\Sdk\build-tools\32.0.0\zipalign -v 4 app-release.aab curtain0.0.7.aab 
     firebase.initializeApp(firebaseConfig)
-    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    this.platform.ready().then(() => {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
 
-    if (this.platform.is('ios') && this.lengthof(this.fcm) > 0) {
-      this.fcm.requestPushPermission({
-        ios9Support: {
-          timeout: 10,  // How long it will wait for a decision from the user before returning `false`
-          interval: 1, // How long between each permission verification
-        }
-      }).then(a => { console.log(a) }).catch(e => {
-        console.log(e)
-      })
-    }
-
-    firebase.database().ref('/bundle').once('value', bund => {
-      this.bundle = bund.val()
-      this.currentPlatform = this.platform.is('android') ? 'android' : 'ios'
-
-      firebase.database().ref('/version/' + this.currentPlatform + '/' + version).on('value', data => {
-        let canProceed = data.val()
-        if (canProceed != true) {
-          //show modal cant close one
-
-        }
+      if (this.platform.is('ios') && this.lengthof(this.fcm) > 0) {
+        this.fcm.requestPushPermission({
+          ios9Support: {
+            timeout: 10,  // How long it will wait for a decision from the user before returning `false`
+            interval: 1, // How long between each permission verification
+          }
+        }).then(a => { console.log(a) }).catch(e => {
+          console.log(e)
+        })
+      }
+  
+      firebase.database().ref('/bundle').once('value', bund => {
+        this.bundle = bund.val()
+        this.currentPlatform = this.platform.is('android') ? 'android' : 'ios'
+  
+        firebase.database().ref('/version/' + this.currentPlatform + '/' + version).on('value', data => {
+          let canProceed = data.val()
+          if (canProceed != true) {
+            //show modal cant close one
+  
+          }
+        })
       })
     })
+    
 
   }
 

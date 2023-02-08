@@ -156,8 +156,11 @@ export class Tab1Page implements OnInit {
         this.uid = a.uid
 
         if (!this.platform.is('desktop') && !this.platform.is('mobileweb')) {
-          this.fcm.subscribeToTopic(a.uid);
-          this.fcmNotification()
+          this.platform.ready().then(() => {
+            this.fcm.subscribeToTopic(a.uid);
+            this.fcmNotification()
+          })
+          
         } else {
           console.log(this.platform.platforms(), 'NO FCM');
         }

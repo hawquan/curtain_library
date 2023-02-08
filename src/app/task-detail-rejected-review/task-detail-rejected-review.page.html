@@ -939,8 +939,8 @@
   <div
     style="background: #ebd1af; display: flex;padding: 10px 15px;align-items: center;justify-content: space-between;">
 
-    <div style="width: 40%;padding-left: 5px;">
-      <div style="width: 92px;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
+    <div style="width: 50%;padding-left: 5px;">
+      <div style="width: fit-content;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
       <div *ngIf="item.price_old == null" style="color: #a17635;font-size: 14px;font-weight: 500;">RM {{price |
         currency: ' '}}</div>
       <div *ngIf="item.price_old != null" style="color: #a17635;font-size: 14px;font-weight: 500;">RM <span
