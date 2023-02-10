@@ -37,51 +37,9 @@ export class Tab1Page implements OnInit {
 
   today = new Date().toISOString()
   salesSelection = ['Pending', 'On-Going', 'Completed']
-  pendingList = [{
-    client: 'Tom Cruise',
-    address: 'F-3A-16, IOI Boulevard, Jalan Kenari 5, Bandar Puchong Jaya, 47170 Puchong, Selangor',
-    contact: '010-1234567',
-    house_type: 'semi-d',
-    step: 1,
-    img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
-  },
-
-  {
-    client: 'Val Kilmer',
-    address: 'F-3A-16, IOI Boulevard, Jalan Kenari 5, Bandar Puchong Jaya, 47170 Puchong, Selangor',
-    contact: '010-1234567',
-    house_type: 'semi-d',
-    step: 1,
-    img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
-  }, {
-    client: 'Lorem Ipsum2',
-    address: 'No.123 Jalan 4 dddddddd dddddddddd',
-    contact: '010-1234567',
-    house_type: 'bangalow',
-    step: 2,
-    img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
-  }, {
-    client: 'Lorem Ipsum3',
-    address: 'No.123 Jalan 4 dddddddd dddddddddd dddddddd ddddddddd ddddddddddd',
-    contact: '010-1234567',
-    house_type: 'condo',
-    step: 3,
-    img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
-  }, {
-    client: 'Lorem Ipsum4',
-    address: 'No.123 Jalan 4 dddddddd dddddddddd dddddddd ddddddddd ddddddddddd',
-    contact: '010-1234567',
-    house_type: 'bangalow',
-    step: 4,
-    img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
-  }, {
-    client: 'Lorem Ipsum5',
-    address: 'No.123 Jalan 4 dddddddd dddddddddd',
-    contact: '010-1234567',
-    house_type: 'semi-d',
-    step: 5,
-    img: ['https://wallpaperaccess.com/full/3292878.jpg', 'https://expertphotography.b-cdn.net/wp-content/uploads/2019/05/beautiful-photography-man-sitting-in-front-of-lake.jpg']
-  },]
+  keywordP = ''
+  keywordO = ''
+  keywordC = ''
 
   salesList = []
   salesListOngoing = []
@@ -152,7 +110,7 @@ export class Tab1Page implements OnInit {
     firebase.auth().onAuthStateChanged(a => {
       if (a) {
         console.log(a);
-        
+
         this.uid = a.uid
 
         if (!this.platform.is('desktop') && !this.platform.is('mobileweb')) {
@@ -160,7 +118,7 @@ export class Tab1Page implements OnInit {
             this.fcm.subscribeToTopic(a.uid);
             this.fcmNotification()
           })
-          
+
         } else {
           console.log(this.platform.platforms(), 'NO FCM');
         }
@@ -591,6 +549,18 @@ export class Tab1Page implements OnInit {
       buttons: actionLinks
     });
     await actionSheet.present();
+  }
+
+  filtererP(x) {
+    return x ? x.filter(a => (((a.customer_name || '') + (a.customer_address || '') + (a.customer_phone || '')).toLowerCase()).includes(this.keywordP.toLowerCase())) : []
+  }
+
+  filtererO(x) {
+    return x ? x.filter(a => (((a.customer_name || '') + (a.customer_address || '') + (a.customer_phone || '')).toLowerCase()).includes(this.keywordO.toLowerCase())) : []
+  }
+
+  filtererC(x) {
+    return x ? x.filter(a => (((a.customer_name || '') + (a.customer_address || '') + (a.customer_phone || '')).toLowerCase()).includes(this.keywordC.toLowerCase())) : []
   }
 
   lengthof(x) {

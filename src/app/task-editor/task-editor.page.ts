@@ -1292,12 +1292,12 @@ export class TaskEditorPage implements OnInit {
       console.log(a);
 
       if (this.item.type == 'Blinds') {
-        this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0)
+        this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
       } else {
         if (this.item.motorized_upgrade) {
-          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25 + a['data']['motorized']['install']
+          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25 + a['data']['motorized']['install'] + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
         } else {
-          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25
+          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25 + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
         }
       }
 
