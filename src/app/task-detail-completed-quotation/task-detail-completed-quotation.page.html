@@ -143,8 +143,8 @@
           <div *ngIf="lengthof(calc[i].curtain) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Sewing D/P <span *ngIf="lengthof(calc[i].curtain) > 0">curtain</span> <span
-                *ngIf="lengthof(calc[i].curtain) > 0 && lengthof(calc[i].lining) > 0 "> + </span>
+              Sewing <span>{{item[i].pleat_short}} </span><span *ngIf="lengthof(calc[i].curtain) > 0">curtain</span>
+              <span *ngIf="lengthof(calc[i].curtain) > 0 && lengthof(calc[i].lining) > 0 "> + </span>
               <span *ngIf="lengthof(calc[i].lining) > 0">lining</span> (ft)
             </div>
 
@@ -162,7 +162,7 @@
           <div *ngIf="lengthof(calc[i].sewing_sheer) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Sewing D/P sheer (ft)
+              Sewing <span>{{item[i].pleat_short}} </span>sheer (ft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -177,7 +177,8 @@
 
 
           <!-- Track -->
-          <div *ngIf="lengthof(calc[i].track) > 0" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+          <div *ngIf="lengthof(calc[i].track) > 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
               {{x.track}} Track (ft)
             </div>
@@ -186,8 +187,11 @@
               <div style="width: 30%;text-align: center;">
                 {{calc[i].track.qty}}
               </div>
-              <div style="width: 70%;text-align: end;">
+              <div *ngIf="calc[i].track.total > 0" style="width: 70%;text-align: end;">
                 {{calc[i].track.total | currency: ' '}}
+              </div>
+              <div *ngIf="calc[i].track.total <= 0" style="width: 70%;text-align: end;">
+                WAIVED
               </div>
             </div>
           </div>
@@ -203,8 +207,11 @@
               <div style="width: 30%;text-align: center;">
                 {{calc[i].track_sheer.qty}}
               </div>
-              <div style="width: 70%;text-align: end;">
+              <div *ngIf="calc[i].track_sheer.total > 0" style="width: 70%;text-align: end;">
                 {{calc[i].track_sheer.total | currency: ' '}}
+              </div>
+              <div *ngIf="calc[i].track_sheer.total <= 0" style="width: 70%;text-align: end;">
+                WAIVED
               </div>
             </div>
           </div>
@@ -225,6 +232,40 @@
               </div>
               <div *ngIf="calc[i].motorized.cost != 'FOC'" style="width: 70%;text-align: end;">
                 {{calc[i].motorized.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Installation Ladder -->
+          <div *ngIf="calc[i].install.ladder"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation w/Ladder ({{calc[i].install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.ladder_price | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Installation Scaftfolding -->
+          <div *ngIf="calc[i].install.scaftfolding"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation w/Scaftfolding ({{calc[i].install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.scaftfolding_price | currency: ' '}}
               </div>
             </div>
           </div>
@@ -356,7 +397,7 @@
           <div *ngIf="lengthof(calc[i].curtain) > 0 && x.pleat == 'Roman Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Sewing D/P curtain (ft)
+              Sewing <span>{{item[i].pleat_short}} </span>curtain (ft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -365,6 +406,40 @@
               </div>
               <div style="width: 70%;text-align: end;">
                 {{calc[i].sewing_curtain.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Installation Ladder -->
+          <div *ngIf="calc[i].install.ladder"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation w/Ladder ({{calc[i].install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.ladder_price | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Installation Scaftfolding -->
+          <div *ngIf="calc[i].install.scaftfolding"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation w/Scaftfolding ({{calc[i].install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.scaftfolding_price | currency: ' '}}
               </div>
             </div>
           </div>

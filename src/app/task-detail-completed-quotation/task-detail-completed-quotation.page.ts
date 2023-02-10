@@ -498,7 +498,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
       if (this.item[i].fabric != null && this.item[i].fabric_lining != null) {
         items.push(
           [
-            'Sewing D/P Curtain + Lining',
+            'Sewing ' + this.item[i].pleat_short + ' Curtain + Lining',
             { text: this.calc[i].sewing_curtain.unit, alignment: 'center' },
             { text: this.calc[i].sewing_curtain.qty, alignment: 'center' },
             { text: (this.calc[i].sewing_curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
@@ -508,7 +508,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
       } else if (this.item[i].fabric != null) {
         items.push(
           [
-            'Sewing D/P Curtain',
+            'Sewing ' + this.item[i].pleat_short + ' Curtain',
             { text: this.calc[i].sewing_curtain.unit, alignment: 'center' },
             { text: this.calc[i].sewing_curtain.qty, alignment: 'center' },
             { text: (this.calc[i].sewing_curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
@@ -518,7 +518,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
       } else if (this.item[i].fabric_lining != null) {
         items.push(
           [
-            'Sewing D/P Lining',
+            'Sewing ' + this.item[i].pleat_short + ' Lining',
             { text: this.calc[i].sewing_curtain.unit, alignment: 'center' },
             { text: this.calc[i].sewing_curtain.qty, alignment: 'center' },
             { text: (this.calc[i].sewing_curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
@@ -530,7 +530,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
       if (this.item[i].fabric_sheer != null) {
         items.push(
           [
-            'Sheer D/P Sheer',
+            'Sewing ' + this.item[i].pleat_short + ' Sheer',
             { text: this.calc[i].sewing_sheer.unit, alignment: 'center' },
             { text: this.calc[i].sewing_sheer.qty, alignment: 'center' },
             { text: (this.calc[i].sewing_sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },

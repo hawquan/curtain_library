@@ -1588,7 +1588,7 @@ export class QuotationOverallPage implements OnInit {
       if (this.item[i].fabric != null && this.item[i].fabric_lining != null) {
         items.push(
           [
-            'Sewing D/P Curtain + Lining',
+            'Sewing ' + this.item[i].pleat_short + ' Curtain + Lining',
             { text: this.calc[i].sewing_curtain.unit, alignment: 'center' },
             { text: this.calc[i].sewing_curtain.qty, alignment: 'center' },
             { text: (this.calc[i].sewing_curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
@@ -1598,7 +1598,7 @@ export class QuotationOverallPage implements OnInit {
       } else if (this.item[i].fabric != null) {
         items.push(
           [
-            'Sewing D/P Curtain',
+            'Sewing ' + this.item[i].pleat_short + ' Curtain',
             { text: this.calc[i].sewing_curtain.unit, alignment: 'center' },
             { text: this.calc[i].sewing_curtain.qty, alignment: 'center' },
             { text: (this.calc[i].sewing_curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
@@ -1608,7 +1608,7 @@ export class QuotationOverallPage implements OnInit {
       } else if (this.item[i].fabric_lining != null) {
         items.push(
           [
-            'Sewing D/P Lining',
+            'Sewing ' + this.item[i].pleat_short + ' Lining',
             { text: this.calc[i].sewing_curtain.unit, alignment: 'center' },
             { text: this.calc[i].sewing_curtain.qty, alignment: 'center' },
             { text: (this.calc[i].sewing_curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
@@ -1620,7 +1620,7 @@ export class QuotationOverallPage implements OnInit {
       if (this.item[i].fabric_sheer != null) {
         items.push(
           [
-            'Sheer D/P Sheer',
+            'Sewing ' + this.item[i].pleat_short + ' Sheer',
             { text: this.calc[i].sewing_sheer.unit, alignment: 'center' },
             { text: this.calc[i].sewing_sheer.qty, alignment: 'center' },
             { text: (this.calc[i].sewing_sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
@@ -1713,6 +1713,32 @@ export class QuotationOverallPage implements OnInit {
 
       }
 
+      if (this.calc[i].install.ladder) {
+
+        items.push(
+          [
+            'Installation w/Ladder',
+            { text: this.calc[i].install.unit, alignment: 'center' },
+            { text: this.calc[i].install.qty, alignment: 'center' },
+            { text: (this.calc[i].install.ladder_price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+            { text: (this.calc[i].install.ladder_price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+          ]
+        )
+      }
+
+      if (this.calc[i].install.scaftfolding) {
+
+        items.push(
+          [
+            'Installation w/Scaftfolding',
+            { text: this.calc[i].install.unit, alignment: 'center' },
+            { text: this.calc[i].install.qty, alignment: 'center' },
+            { text: (this.calc[i].install.scaftfolding_price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+            { text: (this.calc[i].install.scaftfolding_price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+          ]
+        )
+      }
+
       items.push(
         [
           'Installation & Hang',
@@ -1756,15 +1782,15 @@ export class QuotationOverallPage implements OnInit {
     let LSprice = ''
 
     if (this.scaftfolding && this.ladder) {
-      ladderscaft = 'Ladder + Scaftfolding'
+      ladderscaft = 'Ladder (Delivery) + Scaftfolding (Delivery)'
       LSprice = '300.00'
     } else {
       if (this.ladder) {
-        ladderscaft = 'Ladder'
+        ladderscaft = 'Ladder (Delivery)'
         LSprice = '100.00'
       }
       if (this.scaftfolding) {
-        ladderscaft = 'Scaftfolding'
+        ladderscaft = 'Scaftfolding (Delivery)'
         LSprice = '200.00'
       }
     }
