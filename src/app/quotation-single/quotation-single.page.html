@@ -141,7 +141,7 @@
         <div *ngIf="lengthof(calc.sewing_sheer) > 0"
           style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
           <div>
-            Sewing  <span>{{item.pleat_short}} </span>sheer (ft)
+            Sewing <span>{{item.pleat_short}} </span>sheer (ft)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -165,8 +165,11 @@
             <div style="width: 30%;text-align: center;">
               {{calc.track.qty}}
             </div>
-            <div style="width: 70%;text-align: end;">
+            <div *ngIf="calc.track.total > 0" style="width: 70%;text-align: end;">
               {{calc.track.total | currency: ' '}}
+            </div>
+            <div *ngIf="calc.track.total <= 0" style="width: 70%;text-align: end;">
+              WAIVED
             </div>
           </div>
         </div>
@@ -182,8 +185,11 @@
             <div style="width: 30%;text-align: center;">
               {{calc.track_sheer.qty}}
             </div>
-            <div style="width: 70%;text-align: end;">
+            <div *ngIf="calc.track_sheer.total > 0" style="width: 70%;text-align: end;">
               {{calc.track_sheer.total | currency: ' '}}
+            </div>
+            <div *ngIf="calc.track_sheer.total <= 0" style="width: 70%;text-align: end;">
+              WAIVED
             </div>
           </div>
         </div>
@@ -225,6 +231,40 @@
           </div>
         </div>
 
+        <div *ngIf="pass">
+          <!-- Installation Ladder -->
+          <div *ngIf="calc.install.ladder" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation w/Ladder ({{calc.install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc.install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc.install.ladder_price | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Installation Scaftfolding -->
+          <div *ngIf="calc.install.scaftfolding"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation w/Scaftfolding ({{calc.install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc.install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc.install.scaftfolding_price | currency: ' '}}
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- Installation & Hang -->
         <div *ngIf="lengthof(calc.install) > 0"
           style="display: flex;justify-content: space-between;margin-bottom: 10px;">
@@ -364,6 +404,41 @@
             </div>
             <div style="width: 70%;text-align: end;">
               {{calc.sewing_curtain.total | currency: ' '}}
+            </div>
+          </div>
+        </div>
+        <div *ngIf="pass">
+
+          <!-- Installation Ladder -->
+          <div *ngIf="calc.install.ladder" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation w/Ladder ({{calc.install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc.install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc.install.ladder_price | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Installation Scaftfolding -->
+          <div *ngIf="calc.install.scaftfolding"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation w/Scaftfolding ({{calc.install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc.install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc.install.scaftfolding_price | currency: ' '}}
+              </div>
             </div>
           </div>
         </div>

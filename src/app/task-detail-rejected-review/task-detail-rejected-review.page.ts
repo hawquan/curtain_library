@@ -114,6 +114,9 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
   typeChanged() {
     this.item.pleat = ''
+    this.item.pleat_sheer = ''
+    this.item.fullness = ''
+    this.item.fullness_sheer = ''
 
     this.PlainWall = false
     this.FabricWall = false
@@ -217,8 +220,20 @@ export class TaskDetailRejectedReviewPage implements OnInit {
       photos: JSON.stringify(this.item.photos),
       need_ladder: this.item.need_ladder,
       need_scaftfolding: this.item.need_scaftfolding,
-      remark_sale: this.item.remark_sales
+      remark_sale: this.item.remark_sales,
+      motorized_upgrade: null,
+      motorized_power: null,
+      motorized_sides: null,
+      motorized_cost: null,
     }
+
+    if (this.item.motorized_upgrade) {
+      temp.motorized_upgrade = this.item.motorized_upgrade
+      temp.motorized_power = this.item.motorized_power
+      temp.motorized_sides = this.item.motorized_sides
+      temp.motorized_cost = this.item.motorized_cost
+    }
+
     console.log(temp);
 
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
@@ -302,6 +317,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
     let blind = false
     let blind_id
     let pleat_id
+    let pleat_sheer_id
 
     if (this.item.type != 'Blinds') {
 
@@ -363,6 +379,11 @@ export class TaskDetailRejectedReviewPage implements OnInit {
       if (this.item.pleat != null && this.item.pleat != '') {
         pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
       }
+
+      if (this.item.pleat_sheer != null && this.item.pleat_sheer != '') {
+        pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item.pleat_sheer)[0]['id']
+      }
+
       console.log(curtain_id, sheer_id, track_id, pleat_id);
 
     } else {
@@ -409,10 +430,10 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
     let temp = {
       width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, pleat_id: pleat_id, blind: blind, blind_id: blind_id,
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0,
       promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0,
-      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost,motorized_power : this.item.motorized_power
+      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power
 
     }
 
