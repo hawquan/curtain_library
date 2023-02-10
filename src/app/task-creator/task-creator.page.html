@@ -91,36 +91,6 @@
       <!-- Step 2 -->
       <div style="color: #888888;font-weight: 600;margin-bottom: 5px;margin-top: 25px;">Step 2</div>
 
-      <!-- Pleat -->
-      <div
-        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
-        <div style="min-width: 65px;color: #999999">Pleat Type </div>
-        <!-- <div style="font-weight: 450; margin-left: 15px;">{{pleatChoice()}}</div> -->
-        <ion-select class="ion-no-padding" [(ngModel)]="item.pleat" placeholder="Select a pleat type"
-          (ionChange)="pleatSelection()" interface="popover" mode="ios"
-          [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-          style="width: 100%;padding: 11px 10px 11px 5px;font-size: 14px;">
-          <ion-select-option *ngFor="let x of pleatlist; let i = index" [value]="x.name">{{x.name}}
-          </ion-select-option>
-        </ion-select>
-      </div>
-
-      <!-- Fullness -->
-      <div style="width: 100%;display: flex;align-items: center;">
-
-        <div
-          style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
-          <div style="min-width: 60px;color: #999999">Fullness </div>
-          <ion-input readonly placeholder="Eg. 2.0" [(ngModel)]="item.fullness"
-            style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
-          </ion-input>
-        </div>
-
-      </div>
-
-      <!-- Step 3 -->
-      <div style="color: #888888;font-weight: 600;margin-bottom: 10px;margin-top: 25px;">Step 3</div>
-
       <!-- Fabric -->
       <div
         style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
@@ -133,6 +103,68 @@
           <ion-select-option value="S">Sheer</ion-select-option>
           <ion-select-option value="CS">Curtain + Sheer</ion-select-option>
         </ion-select>
+      </div>
+
+      <!-- Step 3 -->
+      <div *ngIf="item.fabric_type" style="color: #888888;font-weight: 600;margin-bottom: 10px;margin-top: 25px;">Step 3
+      </div>
+
+      <!-- Curtain Pleat -->
+      <div *ngIf="item.fabric_type == 'C' || item.fabric_type == 'CS'" style="margin-bottom: 7.5px;">
+        <div
+          style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 100px;color: #999999">Curtain Pleat</div>
+          <!-- <div style="font-weight: 450; margin-left: 15px;">{{pleatChoice()}}</div> -->
+          <ion-select class="ion-no-padding" [(ngModel)]="item.pleat" placeholder="Select a pleat type"
+            (ionChange)="pleatSelection()" interface="popover" mode="ios"
+            [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+            style="width: 100%;padding: 11px 10px 11px 5px;font-size: 14px;">
+            <ion-select-option *ngFor="let x of pleatlist; let i = index" [value]="x.name">{{x.name}}
+            </ion-select-option>
+          </ion-select>
+        </div>
+
+        <!-- Fullness -->
+        <div style="width: 100%;display: flex;align-items: center;">
+
+          <div
+            style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+            <div style="min-width: 100px;color: #999999">Curtain Fullness</div>
+            <ion-input readonly placeholder="Eg. 2.0" [(ngModel)]="item.fullness"
+              style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+            </ion-input>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Sheer Pleat -->
+      <div *ngIf="item.fabric_type == 'S' || item.fabric_type == 'CS'" style="margin-top: 7.5px;">
+        <div
+          style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 100px;color: #999999">Sheer Pleat</div>
+          <!-- <div style="font-weight: 450; margin-left: 15px;">{{pleatChoice()}}</div> -->
+          <ion-select class="ion-no-padding" [(ngModel)]="item.pleat_sheer" placeholder="Select a pleat type"
+            (ionChange)="pleatSelection()" interface="popover" mode="ios"
+            [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+            style="width: 100%;padding: 11px 10px 11px 5px;font-size: 14px;">
+            <ion-select-option *ngFor="let x of pleatlist; let i = index" [value]="x.name">{{x.name}}
+            </ion-select-option>
+          </ion-select>
+        </div>
+
+        <!-- Fullness -->
+        <div style="width: 100%;display: flex;align-items: center;">
+
+          <div
+            style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+            <div style="min-width: 95px;color: #999999">Sheer Fullness </div>
+            <ion-input readonly placeholder="Eg. 2.0" [(ngModel)]="item.fullness_sheer"
+              style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+            </ion-input>
+          </div>
+
+        </div>
       </div>
 
       <div *ngIf="item.fabric_type != null && item.fabric_type != ''"

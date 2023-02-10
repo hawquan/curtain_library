@@ -204,6 +204,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
     let track_sheer_id
     let blind = false
     let pleat_id
+    let pleat_sheer_id
     let blind_id
 
     console.log(this.item[i]);
@@ -262,6 +263,10 @@ export class TaskOngoingViewQuotationPage implements OnInit {
         pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
       }
 
+      if (this.item[i].pleat_sheer != null && this.item[i].pleat_sheer != '') {
+        pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item[i].pleat_sheer)[0]['id']
+      }
+
     } else {
       if (this.item[i].pleat == 'Roman Blind') {
         curtain = true
@@ -295,7 +300,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
     let temp = {
       width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
       promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0,
       motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost,

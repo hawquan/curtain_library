@@ -592,6 +592,7 @@ export class QuotationOverallPage implements OnInit {
           if (this.item[i].fabric_sheer != null) {
             let fabricWidth = this.fabricSheer.filter(a => a.name == this.item[i].fabric_sheer)[0]['size']
             let pleatShort = this.pleatlist.filter(a => a.name == this.item[i].pleat)[0]['name_short']
+            let pleatSheerShort = this.pleatlist.filter(a => a.name == this.item[i].pleat_sheer)[0]['name_short']
 
             items.push(
               [
@@ -620,10 +621,10 @@ export class QuotationOverallPage implements OnInit {
                   { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fabric_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-                  { text: pleatShort, alignment: 'center', fontSize: 8.5 },
+                  { text: pleatSheerShort, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].pieces_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
-                  { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: 'M', alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].remark_sheer + '\n\n *' + this.item[i].remark_sale || '', fontSize: 8.5 }
@@ -638,10 +639,10 @@ export class QuotationOverallPage implements OnInit {
                   { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fabric_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-                  { text: pleatShort, alignment: 'center', fontSize: 8.5 },
+                  { text: pleatSheerShort, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].pieces_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
-                  { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
+                  { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: 'M', alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].remark_sheer + '\n\n *' + this.item[i].remark_sale || '', fontSize: 8.5 }
@@ -778,6 +779,7 @@ export class QuotationOverallPage implements OnInit {
           if (this.item[i].fabric_sheer != null) {
             let fabricWidth = this.fabricSheer.filter(a => a.name == this.item[i].fabric_sheer)[0]['size']
             let pleatShort = this.pleatlist.filter(a => a.name == this.item[i].pleat)[0]['name_short']
+            let pleatSheerShort = this.pleatlist.filter(a => a.name == this.item[i].pleat_sheer)[0]['name_short']
 
             items.push(
               [
@@ -805,10 +807,10 @@ export class QuotationOverallPage implements OnInit {
                 { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].fabric_sheer, alignment: 'center', fontSize: 8.5 },
                 { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-                { text: pleatShort, alignment: 'center', fontSize: 8.5 },
+                { text: pleatSheerShort, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].pieces_sheer, alignment: 'center', fontSize: 8.5 },
                 { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
+                { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                 { text: 'M', alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].remark_sheer + '\n\n *' + this.item[i].remark_sale || '', fontSize: 8.5 }
@@ -1246,6 +1248,7 @@ export class QuotationOverallPage implements OnInit {
     let blind_id
 
     let pleat_id
+    let pleat_sheer_id
 
     console.log(this.item[i]);
 
@@ -1310,6 +1313,10 @@ export class QuotationOverallPage implements OnInit {
         pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
       }
 
+      if (this.item[i].pleat_sheer != null && this.item[i].pleat_sheer != '') {
+        pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item[i].pleat_sheer)[0]['id']
+      }
+
     } else {
       if (this.item[i].pleat == 'Roman Blind') {
         curtain = true
@@ -1339,11 +1346,14 @@ export class QuotationOverallPage implements OnInit {
         }
       }
 
+      // if (this.item[i].pleat != null && this.item[i].pleat != '') {
+      //   pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
+      // }
     }
 
     let temp = {
       width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
       promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0,
       motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost, motorized_power: this.item[i].motorized_power
@@ -1620,7 +1630,7 @@ export class QuotationOverallPage implements OnInit {
       if (this.item[i].fabric_sheer != null) {
         items.push(
           [
-            'Sewing ' + this.item[i].pleat_short + ' Sheer',
+            'Sewing ' + this.item[i].pleat_sheer_short + ' Sheer',
             { text: this.calc[i].sewing_sheer.unit, alignment: 'center' },
             { text: this.calc[i].sewing_sheer.qty, alignment: 'center' },
             { text: (this.calc[i].sewing_sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
@@ -2179,7 +2189,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i].motorized.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i].motorized.total + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2190,7 +2200,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2201,7 +2211,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
                   { text: 'set', alignment: 'center', border: [true, false, true, false] },
                   { text: 1, alignment: 'center', border: [true, false, true, false] },
-                  { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                  { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                   // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                 ]
               )
@@ -2313,7 +2323,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Sheer - ' + this.item[i].fabric_sheer, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total + this.calc[i].motorized.total + this.calc[i].motorized.install + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total + this.calc[i].motorized.total + this.calc[i].motorized.install + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2323,7 +2333,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Sheer - ' + this.item[i].fabric_sheer, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2438,7 +2448,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i].motorized.total + this.calc[i].motorized.install + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i].motorized.total + this.calc[i].motorized.install + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2448,7 +2458,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2460,7 +2470,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
                   { text: 'set', alignment: 'center', border: [true, false, true, false] },
                   { text: 1, alignment: 'center', border: [true, false, true, false] },
-                  { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + 25).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                  { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                   // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                 ]
               )
