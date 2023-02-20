@@ -5,6 +5,7 @@ import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/n
 import { Market } from '@ionic-native/market/ngx';
 import { Platform } from '@ionic/angular';
 import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-root',
@@ -24,11 +25,11 @@ export class AppComponent {
     private fcm: FCM,
   ) {
 
-    let version = '000011'
+    let version = '000013'
     // ionic cordova build android --release -- -- --packageType=bundle
-    // jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore curtain.jks app-release.aab curtain 
+    // jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore curtain.jks app-release.aab curtain
     // curtain12345
-    // D:\Sdk\build-tools\32.0.0\zipalign -v 4 app-release.aab curtain0.0.7.aab 
+    // D:\Sdk\build-tools\32.0.0\zipalign -v 4 app-release.aab curtain0.0.7.aab
     firebase.initializeApp(firebaseConfig)
     this.platform.ready().then(() => {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
@@ -43,21 +44,58 @@ export class AppComponent {
           console.log(e)
         })
       }
-  
+
       firebase.database().ref('/bundle').once('value', bund => {
         this.bundle = bund.val()
         this.currentPlatform = this.platform.is('android') ? 'android' : 'ios'
-  
+
         firebase.database().ref('/version/' + this.currentPlatform + '/' + version).on('value', data => {
           let canProceed = data.val()
           if (canProceed != true) {
             //show modal cant close one
-  
+            if (this.currentPlatform == 'android') {
+
+              Swal.fire({
+                icon: 'warning',
+                title: 'Latest Version Available',
+                text: 'Please update your app in your Application Store',
+                heightAuto: false,
+                showConfirmButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'To Update',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+              }).then((a) => {
+                if (a.isConfirmed) {
+                  window.open("https://play.google.com/store/apps/details?id=com.curtainlibrary.user", "_system");
+                }
+              })
+            } else if (this.currentPlatform == 'ios') {
+              Swal.fire({
+                icon: 'warning',
+                title: 'Latest Version Available',
+                text: 'Please Check TestFlight or Contact Management for latest version',
+                heightAuto: false,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+              })
+            }
+
           }
+          //  else {
+          //   Swal.fire({
+          //     icon: 'success',
+          //     title: 'Version Match',
+          //     text: 'Continue',
+          //     heightAuto: false,
+          //   })
+
+          // }
+
         })
       })
     })
-    
+
 
   }
 

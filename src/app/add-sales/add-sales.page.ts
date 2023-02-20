@@ -253,15 +253,18 @@ export class AddSalesPage implements OnInit {
   }
 
   condis(x) {
-    if (((x || '').toString()).substring(0, 1) == '+') {
-      return x.substring(1, x.length)
-    } else if (((x || '').toString()).substring(0, 1) == '6') {
-      return x
-    } else if (((x || '').toString()).substring(0, 1) == '0') {
-      return '6' + x
-    } else {
-      return '60' + x
+    if (x) {
+      if (((x || '').toString()).substring(0, 1) == '+') {
+        return x.substring(1, x.length)
+      } else if (((x || '').toString()).substring(0, 1) == '6') {
+        return x
+      } else if (((x || '').toString()).substring(0, 1) == '0') {
+        return '6' + x
+      } else {
+        return '60' + x
+      }
     }
+
   }
 
   emailValidator(email) {
@@ -376,10 +379,10 @@ export class AddSalesPage implements OnInit {
         customer_name: this.sales.customer_name,
         // customer_email: this.sales.customer_email,
         customer_address: this.sales.customer_address,
-        customer_phone: this.sales.customer_phone,
+        customer_phone: this.condis(this.sales.customer_phone),
         customer_property: this.sales.customer_property,
         customer_nric: this.sales.customer_nric || null,
-        customer_phone_2: this.sales.customer_phone_2 || null,
+        customer_phone_2: this.condis(this.sales.customer_phone_2) || null,
         customer_address_2: this.sales.customer_address_2 || null,
         reference: this.sales.reference,
         id_sales: this.id_sales,

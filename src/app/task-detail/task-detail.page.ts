@@ -127,6 +127,20 @@ export class TaskDetailPage implements OnInit {
     })
   }
 
+  condis(x) {
+    if (x) {
+      if (((x || '').toString()).substring(0, 1) == '+') {
+        return x.substring(1, x.length)
+      } else if (((x || '').toString()).substring(0, 1) == '6') {
+        return x
+      } else if (((x || '').toString()).substring(0, 1) == '0') {
+        return '6' + x
+      } else {
+        return '60' + x
+      }
+    }
+  }
+
   typeChanged() {
     this.PleatSingle = false
     this.PleatRipple = false
@@ -870,7 +884,7 @@ export class TaskDetailPage implements OnInit {
       customer_address: this.info.customer_address,
       customer_email: this.info.customer_email,
       customer_name: this.info.customer_name,
-      customer_phone: this.info.customer_phone,
+      customer_phone: this.condis(this.info.customer_phone),
       customer_property: this.keywordPro,
     }
 
@@ -941,6 +955,7 @@ export class TaskDetailPage implements OnInit {
       })
 
     } else {
+
       Swal.fire({
         title: 'Update Details',
         text: `Are you sure to update customer's details?`,
