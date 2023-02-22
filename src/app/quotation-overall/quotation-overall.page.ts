@@ -1249,6 +1249,7 @@ export class QuotationOverallPage implements OnInit {
 
     let pleat_id
     let pleat_sheer_id
+    let belt_hook = false
 
     console.log(this.item[i]);
 
@@ -1317,6 +1318,10 @@ export class QuotationOverallPage implements OnInit {
         pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item[i].pleat_sheer)[0]['id']
       }
 
+      if ((this.item[i].sidehook == 'Yes' && this.item[i].belt == 'Yes') || (this.item[i].sheer_sidehook == 'Yes' && this.item[i].sheer_belt == 'Yes')) {
+        belt_hook = true
+      }
+
     } else {
       if (this.item[i].pleat == 'Roman Blind') {
         curtain = true
@@ -1356,7 +1361,7 @@ export class QuotationOverallPage implements OnInit {
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
       promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0,
-      motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost, motorized_power: this.item[i].motorized_power
+      motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost, motorized_power: this.item[i].motorized_power, belt_hook: belt_hook,
 
     }
 
@@ -1759,14 +1764,14 @@ export class QuotationOverallPage implements OnInit {
         ]
       )
 
-      if (this.item[i].type != 'Blinds') {
+      if (this.item[i].type != 'Blinds' && this.calc[i].install.belt_hook != 0) {
         items.push(
           [
             'Belt & Hook',
             { text: 'set', alignment: 'center' },
             { text: 1, alignment: 'center' },
-            { text: '25.00', alignment: 'right' },
-            { text: '25.00', alignment: 'right' }
+            { text: (this.calc[i].install.belt_hook).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+            { text: (this.calc[i].install.belt_hook).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
           ]
         )
       }
@@ -2189,7 +2194,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i].motorized.total + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i].motorized.total + this.calc[i]['install']['belt_hook'] + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2200,7 +2205,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i]['install']['belt_hook'] + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2211,7 +2216,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
                   { text: 'set', alignment: 'center', border: [true, false, true, false] },
                   { text: 1, alignment: 'center', border: [true, false, true, false] },
-                  { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                  { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i]['install']['belt_hook'] + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                   // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                 ]
               )
@@ -2323,7 +2328,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Sheer - ' + this.item[i].fabric_sheer, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total + this.calc[i].motorized.total + this.calc[i].motorized.install + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total + this.calc[i].motorized.total + this.calc[i].motorized.install + this.calc[i]['install']['belt_hook'] + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2333,7 +2338,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Sheer - ' + this.item[i].fabric_sheer, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].sheer.total + this.calc[i].sewing_sheer.total + this.calc[i].install.total + this.calc[i].track_sheer.total + this.calc[i]['install']['belt_hook'] + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2448,7 +2453,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i].motorized.total + this.calc[i].motorized.install + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i].motorized.total + this.calc[i].motorized.install + this.calc[i]['install']['belt_hook'] + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2458,7 +2463,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
                     { text: 'set', alignment: 'center', border: [true, false, true, false] },
                     { text: 1, alignment: 'center', border: [true, false, true, false] },
-                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                    { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i].track.total + this.calc[i]['install']['belt_hook'] + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                     // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                   ]
                 )
@@ -2470,7 +2475,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: 'Curtain - ' + this.item[i].fabric, border: [true, false, true, false] },
                   { text: 'set', alignment: 'center', border: [true, false, true, false] },
                   { text: 1, alignment: 'center', border: [true, false, true, false] },
-                  { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + 25 + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+                  { text: (this.calc[i].curtain.total + this.calc[i].install.total + this.calc[i].sewing_curtain.total + this.calc[i]['install']['belt_hook'] + this.calc[i]['install']['ladder_price'] + this.calc[i]['install']['scaftfolding_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
                   // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
                 ]
               )
@@ -2838,6 +2843,10 @@ export class QuotationOverallPage implements OnInit {
             widths: ['80%', '20%'],
             body: [
               [
+                { text: 'Total', alignment: 'right', border: [true, false, false, true] },
+                { text: ((total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right', border: [false, false, true, true] },
+              ],
+              [
                 { text: ladderscaft, bold: true, border: [true, false, false, false] },
                 { text: LSprice, alignment: 'right', border: [false, false, true, false] }
               ],
@@ -2846,11 +2855,37 @@ export class QuotationOverallPage implements OnInit {
                 { text: (this.info.transport_fee).toFixed(2), bold: true, alignment: 'right', border: [false, false, true, true] },
               ],
               [
+                '',
+                '',
+              ],
+              [
+                '',
+                '',
+              ],
+              [
+                '',
+                '',
+              ],
+              [
                 { text: 'FINAL TOTAL (RM)', bold: true, border: [true, false, false, true] },
                 { text: ((this.totalPrice()).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), bold: true, alignment: 'right', border: [false, false, true, true] },
               ],
             ]
           },
+          layout: {
+            hLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 1 : 1;
+            },
+            vLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 1 : 1;
+            },
+            hLineColor: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 'black' : 'white';
+            },
+            vLineColor: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 'black' : 'white';
+            },
+          }
         },
         {
           width: '100%',

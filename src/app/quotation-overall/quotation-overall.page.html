@@ -305,7 +305,8 @@
           </div>
 
           <!-- Belt & Hook -->
-          <div style="display: flex;justify-content: space-between;margin-bottom: 5px;">
+          <div *ngIf="calc[i].install.belt_hook != 0"
+            style="display: flex;justify-content: space-between;margin-bottom: 5px;">
             <div>
               Belt & Hook (set)
             </div>
@@ -315,11 +316,10 @@
                 1
               </div>
               <div style="width: 70%;text-align: end;">
-                25.00
+                {{calc[i].install.belt_hook | currency: ' '}}
               </div>
             </div>
           </div>
-
         </div>
 
         <!-- Price -->
