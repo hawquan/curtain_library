@@ -89,6 +89,7 @@ export class QuotationSinglePage implements OnInit {
     let blind_id
     let pleat_sheer_id
     let pleat_id
+    let belt_hook = false
 
     if (this.item.type != 'Blinds') {
 
@@ -155,6 +156,9 @@ export class QuotationSinglePage implements OnInit {
         pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item.pleat_sheer)[0]['id']
       }
 
+      if((this.item.sidehook == 'Yes' && this.item.belt == 'Yes') || (this.item.sheer_sidehook == 'Yes' && this.item.sheer_belt == 'Yes')){
+        belt_hook = true
+      }
       console.log(curtain_id, sheer_id, track_id, pleat_id);
 
     } else {
@@ -197,7 +201,7 @@ export class QuotationSinglePage implements OnInit {
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0,
       promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0,
-      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power
+      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, belt_hook : belt_hook, 
 
     }
 
@@ -213,13 +217,13 @@ export class QuotationSinglePage implements OnInit {
         this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
       } else {
         if (this.item.motorized_upgrade) {
-          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25 + a['data']['motorized']['install'] + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
+          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['motorized']['install'] + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
         } else {
-          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25 + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
+          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
         }
-        // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25
+        // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook']
       }
-      // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + 25
+      // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook']
 
     })
 

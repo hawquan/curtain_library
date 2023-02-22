@@ -25,7 +25,7 @@ export class AppComponent {
     private fcm: FCM,
   ) {
 
-    let version = '000013'
+    let version = '000014'
     // ionic cordova build android --release -- -- --packageType=bundle
     // jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore curtain.jks app-release.aab curtain
     // curtain12345
@@ -57,7 +57,7 @@ export class AppComponent {
 
               Swal.fire({
                 icon: 'warning',
-                title: 'Latest Version Available',
+                title: 'New Version Available',
                 text: 'Please update your app in your Application Store',
                 heightAuto: false,
                 showConfirmButton: true,
@@ -73,9 +73,11 @@ export class AppComponent {
             } else if (this.currentPlatform == 'ios') {
               Swal.fire({
                 icon: 'warning',
-                title: 'Latest Version Available',
+                title: 'New Version Available',
                 text: 'Please Check TestFlight or Contact Management for latest version',
                 heightAuto: false,
+                showConfirmButton: true,
+                showCancelButton: false,
                 allowOutsideClick: false,
                 allowEscapeKey: false,
               })
