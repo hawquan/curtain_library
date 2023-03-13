@@ -43,6 +43,7 @@ export class TaskEditorPage implements OnInit {
   fabricSheer = []
   fabricLining = []
   fabricBlind = []
+  blindTape = []
 
   BlindsChoice = ''
 
@@ -120,6 +121,11 @@ export class TaskEditorPage implements OnInit {
 
     })
 
+    this.http.get('https://curtain.vsnap.my/tapeList').subscribe(a => {
+      this.blindTape = a['data']
+      console.log(this.blindTape);
+    })
+
   }
 
   typeChanged() {
@@ -180,6 +186,8 @@ export class TaskEditorPage implements OnInit {
       this.item.fabric_lining = null
     } else if (x == 'blind') {
       this.item.fabric_blind = null
+    } else if (x == 'tape') {
+      this.item.blind_tape = null
     }
   }
 
@@ -276,6 +284,14 @@ export class TaskEditorPage implements OnInit {
 
 
   async selector(x, y) {
+
+    if (x == 'this.blindTape') {
+
+      if (this.item.blind_decoration == '25mm') {
+        x = eval(x).filter(a => a.size == 25)
+
+      }
+    }
     const modal = await this.modalcontroller.create({
       component: SelectorPage,
       componentProps: { array: eval(x) }
@@ -368,6 +384,8 @@ export class TaskEditorPage implements OnInit {
               touchfloor: this.item.touchfloor,
               fabric: this.item.fabric,
               fabric_lining: this.item.fabric_lining,
+              code_lining: this.item.code_lining,
+              code_curtain: this.item.code_curtain,
               fabric_type: this.item.fabric_type,
               custom_bracket: this.item.custom_bracket,
               custom_belt: this.item.custom_belt,
@@ -425,6 +443,7 @@ export class TaskEditorPage implements OnInit {
               sheer_belt: this.item.sheer_belt,
               sheer_touchfloor: this.item.sheer_touchfloor,
               fabric_sheer: this.item.fabric_sheer,
+              code_sheer: this.item.code_sheer,
               fabric_type: this.item.fabric_type,
               custom_sheer_bracket: this.item.custom_sheer_bracket,
               custom_sheer_belt: this.item.custom_sheer_belt,
@@ -497,6 +516,9 @@ export class TaskEditorPage implements OnInit {
               fabric: this.item.fabric,
               fabric_sheer: this.item.fabric_sheer,
               fabric_lining: this.item.fabric_lining,
+              code_sheer: this.item.code_sheer,
+              code_lining: this.item.code_lining,
+              code_curtain: this.item.code_curtain,
               fabric_type: this.item.fabric_type,
               custom_bracket: this.item.custom_bracket,
               custom_belt: this.item.custom_belt,
@@ -563,6 +585,8 @@ export class TaskEditorPage implements OnInit {
               touchfloor: this.item.touchfloor,
               fabric: this.item.fabric,
               fabric_lining: this.item.fabric_lining,
+              code_lining: this.item.code_lining,
+              code_curtain: this.item.code_curtain,
               fabric_type: this.item.fabric_type,
               custom_bracket: this.item.custom_bracket,
               custom_hook: this.item.custom_hook,
@@ -624,6 +648,7 @@ export class TaskEditorPage implements OnInit {
               sheer_belt: this.item.sheer_belt,
               sheer_touchfloor: this.item.sheer_touchfloor,
               fabric_sheer: this.item.fabric_sheer,
+              code_sheer: this.item.code_sheer,
               fabric_type: this.item.fabric_type,
               custom_sheer_bracket: this.item.custom_sheer_bracket,
               custom_sheer_hook: this.item.custom_sheer_hook,
@@ -699,6 +724,9 @@ export class TaskEditorPage implements OnInit {
               fabric: this.item.fabric,
               fabric_sheer: this.item.fabric_sheer,
               fabric_lining: this.item.fabric_lining,
+              code_sheer: this.item.code_sheer,
+              code_lining: this.item.code_lining,
+              code_curtain: this.item.code_curtain,
               fabric_type: this.item.fabric_type,
               custom_bracket: this.item.custom_bracket,
               custom_hook: this.item.custom_hook,
@@ -748,7 +776,7 @@ export class TaskEditorPage implements OnInit {
     } else if (this.item['type'] == 'Blinds') {
 
       if (this.item.pleat == 'Roman Blind') {
-        if (['location', 'location_ref', 'width', 'height', 'type', 'rope_chain', 'pieces_blind', 'fabric', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_blind', 'fabric', 'bracket', 'rope_chain'].every(a => this.item[a])) {
 
           let temp = {
             no: this.item.no,
@@ -766,8 +794,11 @@ export class TaskEditorPage implements OnInit {
             // hook: this.item.hook,
             // sidehook: this.item.sidehook,
             // belt: this.item.belt,
-            fabric_blind: this.item.fabric_blind,
+            // fabric_blind: this.item.fabric_blind,
             fabric: this.item.fabric,
+            fabric_lining: this.item.fabric_lining,
+            code_lining: this.item.code_lining,
+            code_curtain: this.item.code_curtain,
             custom_bracket: this.item.custom_bracket,
             // custom_hook: this.item.custom_hook,
             // custom_belt: this.item.custom_belt,
@@ -780,6 +811,7 @@ export class TaskEditorPage implements OnInit {
             need_ladder: this.item.need_ladder,
             need_scaftfolding: this.item.need_scaftfolding,
             step: 2,
+            promo_lining: this.item.promo_lining || 0,
             promo_blind: this.item.promo_blind || 0,
           }
           console.log(temp);
@@ -792,42 +824,61 @@ export class TaskEditorPage implements OnInit {
           this.errorEmpty()
         }
       } else if (this.item.pleat == 'Zebra Blind' || this.item.pleat == 'Roller Blind' || this.item.pleat == 'Wooden Blind') {
-        if (['location', 'location_ref', 'width', 'height', 'type', 'rope_chain', 'pieces_blind', 'blind_decoration', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'rope_chain', 'pieces_blind', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
 
-          let temp = {
-            no: this.item.no,
-            sales_id: this.sales_no,
-            location: this.item.location,
-            location_ref: this.item.location_ref,
-            height: this.item.height,
-            width: this.item.width,
-            type: this.item.type,
-            pleat: this.item.pleat,
-            pieces_blind: this.item.pieces_blind,
-            blind_decoration: this.item.blind_decoration,
-            bracket: this.item.bracket,
-            rope_chain: this.item.rope_chain,
-            // hook: this.item.hook,
-            // sidehook: this.item.sidehook,
-            // belt: this.item.belt,
-            fabric_blind: this.item.fabric_blind,
-            custom_bracket: this.item.custom_bracket,
-            // custom_hook: this.item.custom_hook,
-            // custom_belt: this.item.custom_belt,
-            price: this.price,
-            status: true,
-            photos: JSON.stringify(this.item.photos),
-            remark_sale: this.item.remark_sale,
-            status_sale: 'Completed',
-            status_tech: 'Pending',
-            need_ladder: this.item.need_ladder,
-            need_scaftfolding: this.item.need_scaftfolding,
-            step: 2,
-            promo_blind: this.item.promo_blind || 0,
+
+          if ((this.item.blind_decoration && !this.item.blind_tape) || (!this.item.blind_decoration && this.item.blind_tape)) {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top',
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+            })
+
+            Toast.fire({
+              icon: 'error',
+              title: 'Decorations or Tape is empty.'
+            })
+          } else {
+
+            let temp = {
+              no: this.item.no,
+              sales_id: this.sales_no,
+              location: this.item.location,
+              location_ref: this.item.location_ref,
+              height: this.item.height,
+              width: this.item.width,
+              type: this.item.type,
+              pleat: this.item.pleat,
+              pieces_blind: this.item.pieces_blind,
+              blind_decoration: this.item.blind_decoration,
+              blind_tape: this.item.blind_tape,
+              bracket: this.item.bracket,
+              rope_chain: this.item.rope_chain,
+              // hook: this.item.hook,
+              // sidehook: this.item.sidehook,
+              // belt: this.item.belt,
+              fabric_blind: this.item.fabric_blind,
+              code_blind: this.item.code_blind,
+              custom_bracket: this.item.custom_bracket,
+              // custom_hook: this.item.custom_hook,
+              // custom_belt: this.item.custom_belt,
+              price: this.price,
+              status: true,
+              photos: JSON.stringify(this.item.photos),
+              remark_sale: this.item.remark_sale,
+              status_sale: 'Completed',
+              status_tech: 'Pending',
+              need_ladder: this.item.need_ladder,
+              need_scaftfolding: this.item.need_scaftfolding,
+              step: 2,
+              promo_blind: this.item.promo_blind || 0,
+            }
+            console.log(temp);
+
+            this.updateOrder(temp)
           }
-          console.log(temp);
-
-          this.updateOrder(temp)
 
 
         } else {
@@ -853,6 +904,7 @@ export class TaskEditorPage implements OnInit {
             // sidehook: this.item.sidehook,
             // belt: this.item.belt,
             fabric_blind: this.item.fabric_blind,
+            code_blind: this.item.code_blind,
             custom_bracket: this.item.custom_bracket,
             // custom_hook: this.item.custom_hook,
             // custom_belt: this.item.custom_belt,
@@ -1184,8 +1236,8 @@ export class TaskEditorPage implements OnInit {
     let blind_id
     let pleat_id
     let pleat_sheer_id
-    
     let belt_hook = false
+    let isRomanBlind = false
 
     if (this.item.type != 'Blinds') {
 
@@ -1252,7 +1304,7 @@ export class TaskEditorPage implements OnInit {
         pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item.pleat_sheer)[0]['id']
       }
 
-      if((this.item.sidehook == 'Yes' && this.item.belt == 'Yes') || (this.item.sheer_sidehook == 'Yes' && this.item.sheer_belt == 'Yes')){
+      if ((this.item.sidehook == 'Yes' && this.item.belt == 'Yes') || (this.item.sheer_sidehook == 'Yes' && this.item.sheer_belt == 'Yes')) {
         belt_hook = true
       }
 
@@ -1260,17 +1312,33 @@ export class TaskEditorPage implements OnInit {
 
     } else {
       if (this.item.pleat == 'Roman Blind') {
-        curtain = true
+        // curtain = true
         sheer = false
         track = false
         track_sheer = false
-        lining = false
+        // lining = false
         blind = true
+        isRomanBlind = true
+        belt_hook = false
         console.log('blindcurtain');
 
-        if ((this.item.fabric_blind != null && this.item.fabric_blind != '') && (this.item.fabric != null && this.item.fabric != '')) {
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+        if (this.item.fabric_blind != null) {
+          blind = true
           blind_id = this.fabricBlind.filter(x => x.name == this.item.fabric_blind)[0]['id']
+        }
+
+        if (this.item.fabric != null) {
+          curtain = true
+          curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+        } else {
+          curtain = false
+        }
+
+        if (this.item.fabric_lining != null) {
+          lining = true
+          lining_id = this.fabricLining.filter(x => x.name == this.item.fabric_lining)[0]['id']
+        } else {
+          lining = false
         }
 
       } else {
@@ -1279,6 +1347,8 @@ export class TaskEditorPage implements OnInit {
         track = false
         track_sheer = false
         lining = false
+        belt_hook = false
+        isRomanBlind = false
         blind = true
         console.log('blind');
 
@@ -1309,7 +1379,7 @@ export class TaskEditorPage implements OnInit {
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0,
       promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0,
-      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, belt_hook : belt_hook, 
+      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, belt_hook: belt_hook, isRomanBlind: isRomanBlind,
     }
 
     console.log(temp);

@@ -87,7 +87,7 @@
           <!-- Curtain -->
           <div *ngIf="x.fabric != null" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Curtain - {{x.fabric}} (m)
+              Curtain - {{x.fabric}}<span *ngIf="x.code_curtain">-{{x.code_curtain}}</span> (m)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -106,7 +106,7 @@
           <div *ngIf="x.fabric_lining != null"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Lining - {{x.fabric_lining}} (m)
+              Lining - {{x.fabric_lining}}<span *ngIf="x.code_lining">-{{x.code_lining}}</span> (m)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -125,7 +125,7 @@
           <div *ngIf="lengthof(x.fabric_sheer) > 0 "
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Sheer - {{x.fabric_sheer}} (m)
+              Sheer - {{x.fabric_sheer}}<span *ngIf="x.code_sheer">-{{x.code_sheer}}</span> (m)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -144,9 +144,9 @@
           <div *ngIf="lengthof(calc[i].curtain) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Sewing <span>{{item[i].pleat_short}} </span><span *ngIf="lengthof(calc[i].curtain) > 0">curtain</span> <span
+              Sewing <span>{{item[i].pleat_short}} </span><span *ngIf="lengthof(calc[i].curtain) > 0">Curtain</span> <span
                 *ngIf="lengthof(calc[i].curtain) > 0 && lengthof(calc[i].lining) > 0 "> + </span>
-              <span *ngIf="lengthof(calc[i].lining) > 0">lining</span> (ft)
+              <span *ngIf="lengthof(calc[i].lining) > 0">Lining</span> (ft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -163,7 +163,7 @@
           <div *ngIf="lengthof(calc[i].sewing_sheer) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Sewing <span>{{item[i].pleat_short}} </span>sheer (ft)
+              Sewing <span>{{item[i].pleat_sheer_short}} </span>Sheer (ft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -298,7 +298,7 @@
                 1
               </div>
               <div style="width: 70%;text-align: end;">
-                25.00
+                {{calc[i].install.belt_hook | currency: ' '}}
               </div>
             </div>
           </div>
@@ -315,6 +315,7 @@
         </div>
       </div>
 
+      <!-- Blinds -->
       <div *ngIf="x.type == 'Blinds'">
 
         <div style="display: flex;justify-content: space-between; margin-bottom: 15px;">
@@ -358,10 +359,10 @@
           </div>
 
           <!-- Blind -->
-          <div *ngIf="x.fabric_blind != null"
+          <div *ngIf="x.fabric_blind != null && x.pleat != 'Roman Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Blind - {{x.fabric_blind}} (sqft)
+              Blind - {{x.fabric_blind}}<span *ngIf="x.code_blind">-{{x.code_blind}}</span> (sqft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -378,10 +379,10 @@
           </div>
 
           <!-- Curtain -->
-          <div *ngIf="x.fabric != null && x.pleat == 'Roman Blind'"
+          <div *ngIf="x.fabric != null && lengthof(calc[i].curtain) > 0 && x.pleat == 'Roman Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Curtain - {{x.fabric}} (sqft)
+              Roman Blind - {{x.fabric}}<span *ngIf="x.code_curtain">-{{x.code_curtain}}</span> (sqft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -394,11 +395,30 @@
             </div>
           </div>
 
+          <!-- Lining -->
+          <div *ngIf="x.fabric_lining != null && lengthof(calc[i].lining) > 0 && x.pleat == 'Roman Blind'"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Lining - {{x.fabric_lining}}<span *ngIf="x.code_lining">-{{x.code_lining}}</span> (m)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].lining.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].lining.total | currency: ' '}}<span
+                  *ngIf="calc[i].lining.promo_rate != 0 && calc[i].lining.promo_rate != null">
+                  (-{{calc[i].lining.promo_rate}}%)</span>
+              </div>
+            </div>
+          </div>
+
           <!-- Sewing Curtain -->
           <div *ngIf="lengthof(calc[i].curtain) > 0 && x.pleat == 'Roman Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Sewing <span>{{item[i].pleat_short}} </span>curtain (ft)
+              Sewing for Roman Blind (ft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -407,6 +427,40 @@
               </div>
               <div style="width: 70%;text-align: end;">
                 {{calc[i].sewing_curtain.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Sewing Lining -->
+          <div *ngIf="lengthof(calc[i].lining) > 0 && x.pleat == 'Roman Blind'"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Sewing for Lining (ft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].sewing_lining.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].sewing_lining.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Mechanism -->
+          <div *ngIf="lengthof(calc[i].mechanism) > 0 && x.pleat == 'Roman Blind'"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Mechanism (ft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].mechanism.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].mechanism.total | currency: ' '}}
               </div>
             </div>
           </div>
@@ -448,7 +502,7 @@
           <!-- Installation & Hang -->
           <div style="display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Installation & Hang (set)
+              Installation (set)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
