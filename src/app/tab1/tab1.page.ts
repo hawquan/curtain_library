@@ -40,11 +40,13 @@ export class Tab1Page implements OnInit {
   keywordP = ''
   keywordO = ''
   keywordC = ''
+  keywordV = ''
 
   salesList = []
   salesListOngoing = []
   salesListCompleted = []
   salesListRejected = []
+  salesListVoid = []
   tailorList = []
 
   pendingListTailor = [{
@@ -73,6 +75,7 @@ export class Tab1Page implements OnInit {
   sortSalesP = true
   sortSalesO = true
   sortSalesC = true
+  sortSalesV = true
 
   async presentToastWithOptions(header, msg, id, path) {
 
@@ -188,16 +191,18 @@ export class Tab1Page implements OnInit {
       })
 
       this.http.post('https://curtain.vsnap.my/getsaleslist', { id_sales: x, id_tech: x, id_tail: x, id_inst: x }).subscribe((s) => {
-        this.salesList = s['data'].sort((a, b) => a.no - b.no)
-        this.salesListOngoing = s['data'].sort((a, b) => a.no - b.no)
-        this.salesListCompleted = s['data'].sort((a, b) => a.no - b.no)
+        this.salesList = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+        this.salesListOngoing = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+        this.salesListCompleted = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+        this.salesListVoid = s['data'].filter(a => !a.status).sort((a, b) => a.no - b.no)
         this.sortSalesP = true
         this.sortSalesO = true
         this.sortSalesC = true
+        this.sortSalesV = true
         this.filterPendingList()
         this.filterOnGoingList()
         this.filterCompletedList()
-        console.log(this.salesList, this.salesListOngoing, this.salesListCompleted);
+        console.log(this.salesList, this.salesListOngoing, this.salesListCompleted, this.salesListVoid);
 
       })
 
@@ -282,6 +287,15 @@ export class Tab1Page implements OnInit {
       this.salesListCompleted.sort((a, b) => a.no - b.no)
     } else {
       this.salesListCompleted.sort((a, b) => b.no - a.no)
+    }
+  }
+
+  sortListV() {
+    this.sortSalesV = !this.sortSalesV
+    if (this.sortSalesV) {
+      this.salesListVoid.sort((a, b) => a.no - b.no)
+    } else {
+      this.salesListVoid.sort((a, b) => b.no - a.no)
     }
   }
 
@@ -561,6 +575,10 @@ export class Tab1Page implements OnInit {
 
   filtererC(x) {
     return x ? x.filter(a => (((a.customer_name || '') + (a.customer_address || '') + (a.customer_phone || '')).toLowerCase()).includes(this.keywordC.toLowerCase())) : []
+  }
+
+  filtererV(x) {
+    return x ? x.filter(a => (((a.customer_name || '') + (a.customer_address || '') + (a.customer_phone || '')).toLowerCase()).includes(this.keywordV.toLowerCase())) : []
   }
 
   lengthof(x) {

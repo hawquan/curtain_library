@@ -510,7 +510,7 @@ export class QuotationOverallPage implements OnInit {
             if (this.item[i].motorized_upgrade) {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
                   { text: 'Motorized ' + this.item[i].track, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -528,7 +528,7 @@ export class QuotationOverallPage implements OnInit {
             } else {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
                   { text: this.item[i].track || '-', alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -571,7 +571,7 @@ export class QuotationOverallPage implements OnInit {
 
             items.push(
               [
-                { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', fontSize: 8.5 },
+                { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
                 { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                 { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -634,7 +634,7 @@ export class QuotationOverallPage implements OnInit {
             if (this.item[i].motorized_upgrade) {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + S_height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
                   { text: 'Motorized ' + this.item[i].track_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + S_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -652,7 +652,7 @@ export class QuotationOverallPage implements OnInit {
             } else {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + S_height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
                   { text: this.item[i].track_sheer || '-', alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + S_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -715,7 +715,7 @@ export class QuotationOverallPage implements OnInit {
             if (this.item[i].motorized_upgrade) {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
                   { text: 'Motorized ' + this.item[i].track, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -733,7 +733,7 @@ export class QuotationOverallPage implements OnInit {
             } else {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
                   { text: this.item[i].track || '-', alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -778,7 +778,7 @@ export class QuotationOverallPage implements OnInit {
 
             items.push(
               [
-                { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', fontSize: 8.5 },
+                { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
                 { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                 { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -820,7 +820,7 @@ export class QuotationOverallPage implements OnInit {
 
             items.push(
               [
-                { text: width + '" ( W )' + ' x ' + S_height + '" ( H )', fontSize: 8.5 },
+                { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
                 { text: this.item[i].track_sheer, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].sheer_bracket || 'X', alignment: 'center', fontSize: 8.5 },
                 { text: width + '" ( W )' + ' x ' + S_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },

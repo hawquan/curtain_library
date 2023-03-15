@@ -1,15 +1,23 @@
 <ion-header class="ion-no-border">
   <ion-toolbar style="--background: #FAF7F2">
     <div style="position: sticky; top: 0px; width: 100%;z-index: 100;">
-      <div style="width: 100%;  display: flex; align-items: center; justify-content: space-between; padding:0 10px; ">
+      <div style="width: 100%;  display: flex; align-items: center; justify-content: space-between; padding:0 6px; ">
 
-        <div style="display: flex;justify-content: center;align-items: center;">
+        <div style="width: 30%;display: flex;align-items: center;">
           <ion-icon (click)="back()" style="font-size: 18px; color: #636161; --ionicon-stroke-width: 50px"
             name="chevron-back-outline"></ion-icon>
         </div>
-        <div style="font-weight: 600;color: #000;font-size: 18px;">Task Details</div>
+        <div style="width: 35%;font-weight: 600;color: #000;font-size: 18px;display: flex;justify-content: center;">Task
+          Details</div>
 
-        <div style="width: 10px;">
+        <div *ngIf="info" style="width: 35%;display: flex;justify-content: flex-end;">
+
+          <div *ngIf="info.status && user.position == 'Sales'" (click)="changeStatus('delete')" style="color: white;background-color: tomato;font-size: 12px;font-weight: bold;
+           padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+            Void Sales</div>
+          <div *ngIf="!info.status && user.position == 'Sales'" (click)="changeStatus('active')" style="color: white;background-color: limegreen;font-size: 12px;font-weight: bold;
+           padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+            Activate Sales</div>
         </div>
 
       </div>
