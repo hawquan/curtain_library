@@ -989,6 +989,91 @@ export class TaskDetailPage implements OnInit {
     }
   }
 
+  changeStatus(x) {
+
+    if (x == 'active') {
+      let temp = {
+        no: this.sales_id,
+        status: true,
+      }
+
+      Swal.fire({
+        title: 'Activate Sales?',
+        text: 'Are you sure to activate back this sales?',
+        heightAuto: false,
+        icon: 'question',
+        showConfirmButton: true,
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Activate',
+        reverseButtons: true,
+      }).then((y) => {
+
+        if (y.isConfirmed) {
+
+          this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
+
+            Swal.fire({
+              title: 'Sales Status Updated',
+              icon: 'success',
+              heightAuto: false,
+              showConfirmButton: false,
+              showCancelButton: false,
+              timer: 2000,
+            })
+
+            this.nav.pop()
+
+          })
+
+        }
+
+      })
+    } else if (x == 'delete') {
+
+      let temp = {
+        no: this.sales_id,
+        status: false,
+      }
+
+      Swal.fire({
+        title: 'Void Sales?',
+        text: 'Are you sure to void this sales? (Can trace back at "Voided Sales" tab.)',
+        heightAuto: false,
+        icon: 'warning',
+        showConfirmButton: true,
+        showCancelButton: true,
+        cancelButtonText: 'Cancel',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Void it',
+        reverseButtons: true,
+      }).then((y) => {
+
+        if (y.isConfirmed) {
+
+          this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
+
+            Swal.fire({
+              title: 'Sales Status Updated',
+              icon: 'success',
+              heightAuto: false,
+              showConfirmButton: false,
+              showCancelButton: false,
+              timer: 2000,
+            })
+
+            this.nav.pop()
+
+          })
+
+        }
+
+      })
+
+    }
+  }
+
   isEditCancel() {
     this.isEdit = false
     this.refreshList()

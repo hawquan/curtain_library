@@ -742,7 +742,7 @@
       <div style="color: #a17635;font-size: 14px;font-weight: 500;">{{totalPrice() | currency: 'RM '}}</div>
     </div>
 
-    <ion-button (click)="quotationinfo('checkout')"
+    <ion-button *ngIf="info['status']" (click)="quotationinfo('checkout')"
       style="height: 35px;width: 40%;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 450px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;">
       Checkout
     </ion-button>
