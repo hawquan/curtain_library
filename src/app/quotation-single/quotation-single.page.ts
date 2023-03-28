@@ -28,6 +28,7 @@ export class QuotationSinglePage implements OnInit {
   fabricSheer = []
   fabricLining = []
   fabricBlind = []
+  blindTape = [] as any
   price = 0
   pass = false
   calc = [] as any
@@ -38,6 +39,12 @@ export class QuotationSinglePage implements OnInit {
     this.tracklist = this.navparam.get('tracklist')
     this.pleatlist = this.navparam.get('pleatlist')
     this.blindlist = this.navparam.get('blindlist')
+
+    this.http.get('https://curtain.vsnap.my/tapeList').subscribe(a => {
+      this.blindTape = a['data']
+      console.log(this.blindTape);
+    })
+
 
     this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
       this.fabriclist = s['data']
@@ -91,6 +98,8 @@ export class QuotationSinglePage implements OnInit {
     let pleat_sheer_id
     let belt_hook = false
     let isRomanBlind = false
+    let tape_id
+    let tape = false
 
     if (this.item.type != 'Blinds') {
 
@@ -206,6 +215,14 @@ export class QuotationSinglePage implements OnInit {
         if (this.item.fabric_blind != null && this.item.fabric_blind != '') {
           blind_id = (this.fabricBlind.filter(x => x.name == this.item.fabric_blind))[0]['id']
         }
+
+        if (this.item.pleat == 'Wooden Blind') {
+          if (this.item.blind_tape) {
+            tape_id = (this.blindTape.filter(x => x.name == this.item.blind_tape))[0]['id']
+            tape = true
+          }
+        }
+
       }
 
       // if (this.item.pleat != null && this.item.pleat != '') {
@@ -219,7 +236,7 @@ export class QuotationSinglePage implements OnInit {
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0,
       promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0,
-      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, belt_hook: belt_hook, isRomanBlind: isRomanBlind,
+      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id
 
     }
 

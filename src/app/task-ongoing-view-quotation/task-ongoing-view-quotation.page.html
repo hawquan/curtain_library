@@ -144,8 +144,8 @@
           <div *ngIf="lengthof(calc[i].curtain) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Sewing <span>{{item[i].pleat_short}} </span><span *ngIf="lengthof(calc[i].curtain) > 0">Curtain</span> <span
-                *ngIf="lengthof(calc[i].curtain) > 0 && lengthof(calc[i].lining) > 0 "> + </span>
+              Sewing <span>{{item[i].pleat_short}} </span><span *ngIf="lengthof(calc[i].curtain) > 0">Curtain</span>
+              <span *ngIf="lengthof(calc[i].curtain) > 0 && lengthof(calc[i].lining) > 0 "> + </span>
               <span *ngIf="lengthof(calc[i].lining) > 0">Lining</span> (ft)
             </div>
 
@@ -178,7 +178,8 @@
 
 
           <!-- Track -->
-          <div *ngIf="lengthof(calc[i].track) > 0" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+          <div *ngIf="lengthof(calc[i].track) > 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
               (C) {{x.track}} Track (ft)
             </div>
@@ -368,7 +369,7 @@
             <div style="width: 40%;display: flex;justify-content: flex-end;">
               <div style="width: 30%;text-align: center;">
                 <!-- {{calc[i].blind.qty}} -->
-                1
+                {{calc[i].blind.qty}}
               </div>
               <div style="width: 70%;text-align: end;">
                 {{calc[i].blind.total | currency: ' '}}<span
