@@ -36,6 +36,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
   sales_id = 0
   salesmaninfo = [] as any
   info = [] as any
+  blindTape = [] as any
   pleatlist = []
   blindlist = []
   tracklist = []
@@ -68,6 +69,11 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
       this.pleatlist = JSON.parse(a["pleatlist"])
       this.blindlist = JSON.parse(a["blindlist"])
       this.tracklist = JSON.parse(a["tracklist"])
+
+      this.http.get('https://curtain.vsnap.my/tapeList').subscribe(a => {
+        this.blindTape = a['data']
+        console.log(this.blindTape);
+      })
 
       this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
         this.fabriclist = s['data']
@@ -165,6 +171,8 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
     let pleat_sheer_id
     let belt_hook = false
     let isRomanBlind = false
+    let tape_id
+    let tape = false
 
     console.log(this.item[i]);
 
@@ -281,6 +289,14 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
         if (this.item[i].fabric_blind != null && this.item[i].fabric_blind != '') {
           blind_id = (this.fabricBlind.filter(x => x.name == this.item[i].fabric_blind))[0]['id']
         }
+
+        if (this.item[i].pleat == 'Wooden Blind') {
+          if (this.item[i].blind_tape) {
+            tape_id = (this.blindTape.filter(x => x.name == this.item[i].blind_tape))[0]['id']
+            tape = true
+          }
+        }
+
       }
 
     }
@@ -290,7 +306,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
       promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0,
-      motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost, motorized_power: this.item[i].motorized_power, belt_hook: belt_hook, isRomanBlind: isRomanBlind
+      motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost, motorized_power: this.item[i].motorized_power, belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id
     }
 
     console.log(temp);

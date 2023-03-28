@@ -165,13 +165,10 @@ export class TaskCreatorPage implements OnInit {
     if (this.item.type != 'Blinds') {
 
       if (this.item.fabric_type == 'C') {
-        console.log(this.item.fabric_type);
         this.item.fullness = this.pleatlist.find(a => a.name == this.item.pleat)['fullness']
       } else if (this.item.fabric_type == 'S') {
-        console.log(this.item.fabric_type);
         this.item.fullness_sheer = this.pleatlist.find(a => a.name == this.item.pleat_sheer)['fullness']
       } else if (this.item.fabric_type == 'CS') {
-        console.log(this.item.fabric_type);
         if (this.item.pleat) {
           this.item.fullness = this.pleatlist.find(a => a.name == this.item.pleat)['fullness']
         }
@@ -396,6 +393,8 @@ export class TaskCreatorPage implements OnInit {
   };
 
   addItem() {
+    console.log(this.item);
+    
     this.item.location = this.keyword
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
 
@@ -463,7 +462,7 @@ export class TaskCreatorPage implements OnInit {
           }
         } else if (this.item.fabric_type == 'S') {
           console.log('S1');
-          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat_sheer', 'pieces_sheer', 'sheer_bracket', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric_sheer'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat_sheer', 'pieces_sheer', 'sheer_sidehook', 'fabric_sheer'].every(a => this.item[a])) {
 
             let temp = {
               sales_id: this.sales_no,
@@ -524,7 +523,7 @@ export class TaskCreatorPage implements OnInit {
           this.item.sheer_bracket = this.item.bracket
           this.item.custom_sheer_belt = true
           this.item.sheer_belt = 'X'
-          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pleat_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket', 'sidehook', 'belt', 'touchfloor', 'sheer_bracket', 'sheer_sidehook', 'sheer_belt', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pleat_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket', 'sidehook', 'belt', 'touchfloor', 'sheer_sidehook', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
             // 'sheer_touchfloor', 'track', 'track_sheer', 
             let temp = {
               sales_id: this.sales_no,
@@ -663,7 +662,7 @@ export class TaskCreatorPage implements OnInit {
 
         } else if (this.item.fabric_type == 'S') {
           console.log('S2');
-          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat_sheer', 'pieces_sheer', 'sheer_bracket', 'sheer_hook', 'sheer_sidehook', 'sheer_belt', 'sheer_touchfloor', 'fabric_sheer'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat_sheer', 'pieces_sheer', 'sheer_sidehook', 'fabric_sheer'].every(a => this.item[a])) {
 
             let temp = {
               sales_id: this.sales_no,
@@ -726,7 +725,7 @@ export class TaskCreatorPage implements OnInit {
           this.item.custom_sheer_belt = true
           this.item.sheer_belt = 'X'
 
-          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pleat_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'sheer_bracket', 'sheer_hook', 'sheer_sidehook', 'sheer_belt', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pleat_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor',  'sheer_sidehook', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
             // 'sheer_touchfloor', 'track', 'track_sheer', 
             let temp = {
               sales_id: this.sales_no,
@@ -1053,6 +1052,8 @@ export class TaskCreatorPage implements OnInit {
     let pleat_sheer_id
     let belt_hook = false
     let isRomanBlind = false
+    let tape_id
+    let tape = false
 
     if (this.item.type != 'Blinds') {
       console.log('curtain');
@@ -1177,6 +1178,14 @@ export class TaskCreatorPage implements OnInit {
         if (this.item.fabric_blind != null && this.item.fabric_blind != '') {
           blind_id = (this.fabricBlind.filter(x => x.name == this.item.fabric_blind))[0]['id']
         }
+
+        if(this.item.pleat == 'Wooden Blind'){
+          if(this.item.blind_tape){
+            tape_id = (this.blindTape.filter(x => x.name == this.item.blind_tape))[0]['id']
+            tape = true
+          }
+        }
+        
       }
 
       // if (this.item.pleat != null && this.item.pleat != '') {
@@ -1199,7 +1208,7 @@ export class TaskCreatorPage implements OnInit {
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0,
       promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0,
-      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, belt_hook: belt_hook, isRomanBlind: isRomanBlind,
+      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id
 
     }
 

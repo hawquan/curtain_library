@@ -397,7 +397,8 @@ export class AddSalesPage implements OnInit {
         quotation_detailed: JSON.stringify([]),
         so_pdf: JSON.stringify([]),
         mo_pdf: JSON.stringify([]),
-        transport_fee: this.sales.transport_fee
+        transport_fee: this.sales.transport_fee,
+        status: true
       }
 
       console.log(temp);

@@ -145,7 +145,7 @@
           <div *ngIf="lengthof(calc[i].curtain) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Sewing <span>{{item[i].pleat_short}} </span><span *ngIf="lengthof(calc[i].curtain) > 0">Curtain</span>
+              Sewing <span>{{x.pleat_short}} </span><span *ngIf="lengthof(calc[i].curtain) > 0">Curtain</span>
               <span *ngIf="lengthof(calc[i].curtain) > 0 && lengthof(calc[i].lining) > 0 "> + </span>
               <span *ngIf="lengthof(calc[i].lining) > 0">Lining</span> (ft)
             </div>
@@ -164,7 +164,7 @@
           <div *ngIf="lengthof(calc[i].sewing_sheer) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Sewing <span>{{item[i].pleat_sheer_short}} </span> Sheer (ft)
+              Sewing <span>{{x.pleat_sheer_short}} </span> Sheer (ft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -180,7 +180,10 @@
           <!-- Track -->
           <div *ngIf="lengthof(calc[i].track) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div *ngIf="x.track == 'Super Track'">
+              (C) {{x.track}} (ft)
+            </div>
+            <div *ngIf="x.track != 'Super Track'">
               (C) {{x.track}} Track (ft)
             </div>
 
@@ -200,8 +203,11 @@
           <!-- Track Sheer -->
           <div *ngIf="lengthof(calc[i].track_sheer) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
-              (S) {{x.track_sheer}} Track (ft)
+            <div *ngIf="x.track_sheer == 'Super Track'">
+              (C) {{x.track_sheer}} (ft)
+            </div>
+            <div *ngIf="x.track_sheer != 'Super Track'">
+              (C) {{x.track_sheer}} Track (ft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -385,7 +391,7 @@
             <div style="width: 40%;display: flex;justify-content: flex-end;">
               <div style="width: 30%;text-align: center;">
                 <!-- {{calc[i].blind.qty}} -->
-                1
+                {{calc[i].blind.qty}}
               </div>
               <div style="width: 70%;text-align: end;">
                 {{calc[i].blind.total | currency: ' '}}<span
