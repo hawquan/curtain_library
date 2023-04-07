@@ -105,6 +105,11 @@ export class TaskEditorPage implements OnInit {
       console.log(this.item);
       this.keyword = this.item.location
 
+      this.http.post('https://curtain.vsnap.my/getonesales', { no: this.sales_no }).subscribe(a => {
+        this.info = a['data'][0]
+        console.log('info', this.info);
+      })
+
       this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
         this.fabriclist = s['data']
 
@@ -424,6 +429,9 @@ export class TaskEditorPage implements OnInit {
               motorized_power: null,
               motorized_sides: null,
               motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
             }
 
             if (this.item.motorized_upgrade) {
@@ -431,6 +439,9 @@ export class TaskEditorPage implements OnInit {
               temp.motorized_power = this.item.motorized_power
               temp.motorized_sides = this.item.motorized_sides
               temp.motorized_cost = this.item.motorized_cost
+              temp.motorized_choice = this.item.motorized_choice
+              temp.motorized_pieces = this.item.motorized_pieces
+              temp.motorized_lift = this.item.motorized_lift
             }
 
             console.log(temp);
@@ -481,6 +492,9 @@ export class TaskEditorPage implements OnInit {
               motorized_power: null,
               motorized_sides: null,
               motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
             }
 
             if (this.item.motorized_upgrade) {
@@ -488,6 +502,9 @@ export class TaskEditorPage implements OnInit {
               temp.motorized_power = this.item.motorized_power
               temp.motorized_sides = this.item.motorized_sides
               temp.motorized_cost = this.item.motorized_cost
+              temp.motorized_choice = this.item.motorized_choice
+              temp.motorized_pieces = this.item.motorized_pieces
+              temp.motorized_lift = this.item.motorized_lift
             }
 
             console.log(temp);
@@ -561,6 +578,9 @@ export class TaskEditorPage implements OnInit {
               motorized_power: null,
               motorized_sides: null,
               motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
             }
 
             if (this.item.motorized_upgrade) {
@@ -568,6 +588,9 @@ export class TaskEditorPage implements OnInit {
               temp.motorized_power = this.item.motorized_power
               temp.motorized_sides = this.item.motorized_sides
               temp.motorized_cost = this.item.motorized_cost
+              temp.motorized_choice = this.item.motorized_choice
+              temp.motorized_pieces = this.item.motorized_pieces
+              temp.motorized_lift = this.item.motorized_lift
             }
 
             console.log(temp);
@@ -626,6 +649,9 @@ export class TaskEditorPage implements OnInit {
               motorized_power: null,
               motorized_sides: null,
               motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
             }
 
             if (this.item.motorized_upgrade) {
@@ -633,6 +659,9 @@ export class TaskEditorPage implements OnInit {
               temp.motorized_power = this.item.motorized_power
               temp.motorized_sides = this.item.motorized_sides
               temp.motorized_cost = this.item.motorized_cost
+              temp.motorized_choice = this.item.motorized_choice
+              temp.motorized_pieces = this.item.motorized_pieces
+              temp.motorized_lift = this.item.motorized_lift
             }
 
             console.log(temp);
@@ -687,6 +716,9 @@ export class TaskEditorPage implements OnInit {
               motorized_power: null,
               motorized_sides: null,
               motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
             }
 
             if (this.item.motorized_upgrade) {
@@ -694,6 +726,9 @@ export class TaskEditorPage implements OnInit {
               temp.motorized_power = this.item.motorized_power
               temp.motorized_sides = this.item.motorized_sides
               temp.motorized_cost = this.item.motorized_cost
+              temp.motorized_choice = this.item.motorized_choice
+              temp.motorized_pieces = this.item.motorized_pieces
+              temp.motorized_lift = this.item.motorized_lift
             }
 
             console.log(temp);
@@ -712,7 +747,7 @@ export class TaskEditorPage implements OnInit {
           this.item.custom_sheer_belt = true
           this.item.sheer_belt = 'X'
 
-          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pleat_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'sheer_sidehook',  'fabric', 'fabric_sheer'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pleat_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'sheer_sidehook', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
             // 'sheer_touchfloor', 'track', 'track_sheer',
             let temp = {
               no: this.item.no,
@@ -771,6 +806,9 @@ export class TaskEditorPage implements OnInit {
               motorized_power: null,
               motorized_sides: null,
               motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
             }
 
             if (this.item.motorized_upgrade) {
@@ -778,6 +816,9 @@ export class TaskEditorPage implements OnInit {
               temp.motorized_power = this.item.motorized_power
               temp.motorized_sides = this.item.motorized_sides
               temp.motorized_cost = this.item.motorized_cost
+              temp.motorized_choice = this.item.motorized_choice
+              temp.motorized_pieces = this.item.motorized_pieces
+              temp.motorized_lift = this.item.motorized_lift
             }
 
             console.log(temp);
@@ -846,7 +887,7 @@ export class TaskEditorPage implements OnInit {
         if (['location', 'location_ref', 'width', 'height', 'type', 'rope_chain', 'pieces_blind', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
 
 
-          if ((this.item.blind_decoration && !this.item.blind_tape) || (!this.item.blind_decoration && this.item.blind_tape)) {
+          if (this.item.pleat == 'Wooden Blind' && ((this.item.blind_decoration && !this.item.blind_tape) || (!this.item.blind_decoration && this.item.blind_tape))) {
             const Toast = Swal.mixin({
               toast: true,
               position: 'top',
@@ -1325,7 +1366,7 @@ export class TaskEditorPage implements OnInit {
         pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item.pleat_sheer)[0]['id']
       }
 
-      if ((this.item.sidehook == 'Yes' && this.item.belt == 'Yes') || (this.item.sheer_sidehook == 'Yes' && this.item.sheer_belt == 'Yes')) {
+      if ((this.item.sidehook == 'Yes' && (this.item.belt != 'No' || this.item.belt)) || (this.item.sheer_sidehook == 'Yes' && (this.item.sheer_belt != 'No' || this.item.sheer_belt))) {
         belt_hook = true
       }
 
@@ -1407,7 +1448,9 @@ export class TaskEditorPage implements OnInit {
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0,
       promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0,
-      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id
+      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, motorized_choice: this.item.motorized_choice, motorized_pieces: this.item.motorized_pieces, motorized_lift: this.item.motorized_lift,
+      belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id,
+
     }
 
     console.log(temp);

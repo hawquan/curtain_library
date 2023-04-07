@@ -240,7 +240,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
         pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item[i].pleat_sheer)[0]['id']
       }
 
-      if ((this.item[i].sidehook == 'Yes' && this.item[i].belt == 'Yes') || (this.item[i].sheer_sidehook == 'Yes' && this.item[i].sheer_belt == 'Yes')) {
+      if ((this.item[i].sidehook == 'Yes' && (this.item[i].belt != 'No' || this.item[i].belt)) || (this.item[i].sheer_sidehook == 'Yes' && (this.item[i].sheer_belt != 'No' || this.item[i].sheer_belt))) {
         belt_hook = true
       }
 
@@ -306,7 +306,8 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
       promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0,
-      motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost, motorized_power: this.item[i].motorized_power, belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id
+      motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost, motorized_power: this.item[i].motorized_power, motorized_choice: this.item[i].motorized_choice, motorized_pieces: this.item[i].motorized_pieces, motorized_lift: this.item[i].motorized_lift,
+       belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id
     }
 
     console.log(temp);
@@ -1686,7 +1687,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
                   this.soInstDate = data['instdate']
                   this.soSalesName = data['sales']
                   this.soRemark = data['remark']
-                  this.pdfmakerSO()
+                  // this.pdfmakerSO()
                   // this.http.post('https://forcar.vsnap.my/changepassword', {
                   //   uid: this.user['id'],
                   //   password: data['pw1'],
@@ -1717,530 +1718,530 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
     await alert.present();
   }
 
-  pdfmakerSO() {
-    console.log(this.info);
+  // pdfmakerSO() {
+  //   console.log(this.info);
 
-    let customer_info = []
-    let today = new Date()
-    let width = null
-    let height = null
+  //   let customer_info = []
+  //   let today = new Date()
+  //   let width = null
+  //   let height = null
 
-    //Customer
-    let ci = ''
-    ci = this.info.customer_name + '\n\n\n' + this.info.customer_address + '\n\n\n' + this.info.customer_phone + '\n '
+  //   //Customer
+  //   let ci = ''
+  //   ci = this.info.customer_name + '\n\n\n' + this.info.customer_address + '\n\n\n' + this.info.customer_phone + '\n '
 
-    customer_info.push(ci)
+  //   customer_info.push(ci)
 
-    //Ref & Date & Validity & Sales
-    let ref = 'QT' + this.datepipe.transform(today, 'yyyyMMdd') + 'WI-TM'
-    let date = this.datepipe.transform(new Date(today), 'd/M/yyyy')
-    let validity = 'COD'
-    let salesphone = 'TM\n' + this.salesmaninfo.phone
+  //   //Ref & Date & Validity & Sales
+  //   let ref = 'QT' + this.datepipe.transform(today, 'yyyyMMdd') + 'WI-TM'
+  //   let date = this.datepipe.transform(new Date(today), 'd/M/yyyy')
+  //   let validity = 'COD'
+  //   let salesphone = 'TM\n' + this.salesmaninfo.phone
 
-    //SO number
-    let sonum = { text: 'SO NO : ' + this.soNumber }
+  //   //SO number
+  //   let sonum = { text: 'SO NO : ' + this.soNumber }
 
-    //SO info left
-    let soinfoleft = [
-      [{ text: 'Company Name:', border: [], bold: true, fontSize: 9 }, { text: ': ', border: [false, true, false, true], bold: true, fontSize: 9 }],
-      [{ text: 'Client Name', border: [], bold: true, fontSize: 9 }, { text: ': ' + this.info.customer_name, border: [false, true, false, true], bold: true, fontSize: 9 }],
-      [{ text: 'Phone No', border: [], bold: true, fontSize: 9 }, { text: ': ' + this.info.customer_phone, border: [false, true, false, true], bold: true, fontSize: 9 }],
-      [{ text: 'Address', border: [], bold: true, fontSize: 9 }, { text: ': ' + this.info.customer_address, border: [false, true, false, true], bold: true, fontSize: 9 }],
-      [{ text: 'Site Add', border: [], bold: true, fontSize: 9 }, { text: ': ' + this.info.customer_address, border: [false, true, false, true], bold: true, fontSize: 9 }],
-      [{ text: 'Sew By', border: [false, false, false, true], bold: true, fontSize: 9 }, { text: ': ', border: [false, true, false, true], bold: true, fontSize: 9 }],
-    ] as any
+  //   //SO info left
+  //   let soinfoleft = [
+  //     [{ text: 'Company Name:', border: [], bold: true, fontSize: 9 }, { text: ': ', border: [false, true, false, true], bold: true, fontSize: 9 }],
+  //     [{ text: 'Client Name', border: [], bold: true, fontSize: 9 }, { text: ': ' + this.info.customer_name, border: [false, true, false, true], bold: true, fontSize: 9 }],
+  //     [{ text: 'Phone No', border: [], bold: true, fontSize: 9 }, { text: ': ' + this.info.customer_phone, border: [false, true, false, true], bold: true, fontSize: 9 }],
+  //     [{ text: 'Address', border: [], bold: true, fontSize: 9 }, { text: ': ' + this.info.customer_address, border: [false, true, false, true], bold: true, fontSize: 9 }],
+  //     [{ text: 'Site Add', border: [], bold: true, fontSize: 9 }, { text: ': ' + this.info.customer_address, border: [false, true, false, true], bold: true, fontSize: 9 }],
+  //     [{ text: 'Sew By', border: [false, false, false, true], bold: true, fontSize: 9 }, { text: ': ', border: [false, true, false, true], bold: true, fontSize: 9 }],
+  //   ] as any
 
-    //SO info right
-    let soinforight = [
-      [{ text: 'QT No.', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ', border: [false, false, false, true], bold: true, fontSize: 9 }],
-      [{ text: 'Date Order', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.datepipe.transform(new Date(), 'd/M/yyyy'), border: [false, true, false, true], bold: true, fontSize: 9 }],
-      [{ text: 'Scheduled Inst Date', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.datepipe.transform(this.soInstDate, 'd/M/yyyy'), border: [false, true, false, true], bold: true, fontSize: 9 }],
-      [{ text: 'Sales P.I.C', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.soSalesName, border: [false, true, false, true], bold: true, fontSize: 9 }],
-      [{ text: 'Est. Inst Time', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ', border: [false, true, false, true], bold: true, fontSize: 9 }],
-      [{ text: 'Remarks', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.soRemark, border: [false, true, false, true], bold: true, fontSize: 9 }],
-    ] as any
+  //   //SO info right
+  //   let soinforight = [
+  //     [{ text: 'QT No.', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ', border: [false, false, false, true], bold: true, fontSize: 9 }],
+  //     [{ text: 'Date Order', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.datepipe.transform(new Date(), 'd/M/yyyy'), border: [false, true, false, true], bold: true, fontSize: 9 }],
+  //     [{ text: 'Scheduled Inst Date', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.datepipe.transform(this.soInstDate, 'd/M/yyyy'), border: [false, true, false, true], bold: true, fontSize: 9 }],
+  //     [{ text: 'Sales P.I.C', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.soSalesName, border: [false, true, false, true], bold: true, fontSize: 9 }],
+  //     [{ text: 'Est. Inst Time', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ', border: [false, true, false, true], bold: true, fontSize: 9 }],
+  //     [{ text: 'Remarks', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.soRemark, border: [false, true, false, true], bold: true, fontSize: 9 }],
+  //   ] as any
 
-    //Items
-    let items = [
-      [
-        { text: 'Installer Measurement / Area', bold: true, alignment: 'center', fontSize: 8.5 },
-        { text: 'Track', bold: true, alignment: 'center', fontSize: 8.5 },
-        { text: 'Bracket', bold: true, alignment: 'center', fontSize: 8.5 },
-        { text: 'Tailor Measurement / Area', bold: true, alignment: 'center', fontSize: 8.5 },
-        { text: 'Material Code', bold: true, alignment: 'center', fontSize: 8.5 },
-        { text: 'Fabric\nwidth', bold: true, alignment: 'center', fontSize: 8.5 },
-        { text: 'Pleat', bold: true, alignment: 'center', fontSize: 8.5 },
-        { text: 'Pcs', bold: true, alignment: 'center', fontSize: 8.5 },
-        { text: 'Tieback', bold: true, alignment: 'center', fontSize: 8.5 },
-        { text: 'Fullness', bold: true, alignment: 'center', fontSize: 8.5 },
-        { text: 'Hook\n(101,\n104)', bold: true, alignment: 'center', fontSize: 8.5 },
-        { text: 'Panel/\nMeter', bold: true, alignment: 'center', fontSize: 8.5 },
-        { text: 'Remark', bold: true, alignment: 'center', fontSize: 8.5 }
-      ],
-    ] as any
+  //   //Items
+  //   let items = [
+  //     [
+  //       { text: 'Installer Measurement / Area', bold: true, alignment: 'center', fontSize: 8.5 },
+  //       { text: 'Track', bold: true, alignment: 'center', fontSize: 8.5 },
+  //       { text: 'Bracket', bold: true, alignment: 'center', fontSize: 8.5 },
+  //       { text: 'Tailor Measurement / Area', bold: true, alignment: 'center', fontSize: 8.5 },
+  //       { text: 'Material Code', bold: true, alignment: 'center', fontSize: 8.5 },
+  //       { text: 'Fabric\nwidth', bold: true, alignment: 'center', fontSize: 8.5 },
+  //       { text: 'Pleat', bold: true, alignment: 'center', fontSize: 8.5 },
+  //       { text: 'Pcs', bold: true, alignment: 'center', fontSize: 8.5 },
+  //       { text: 'Tieback', bold: true, alignment: 'center', fontSize: 8.5 },
+  //       { text: 'Fullness', bold: true, alignment: 'center', fontSize: 8.5 },
+  //       { text: 'Hook\n(101,\n104)', bold: true, alignment: 'center', fontSize: 8.5 },
+  //       { text: 'Panel/\nMeter', bold: true, alignment: 'center', fontSize: 8.5 },
+  //       { text: 'Remark', bold: true, alignment: 'center', fontSize: 8.5 }
+  //     ],
+  //   ] as any
 
-    for (let i = 0; i < this.item.length; i++) {
+  //   for (let i = 0; i < this.item.length; i++) {
 
-      if (this.item[i].height_tech != null || this.item[i].width_tech != null) {
-        if (this.item[i].status_tech == 'Approved' && this.item[i].status_sale == 'Completed') {
-          width = this.item[i].width
-          height = this.item[i].height
-        } else {
-          width = this.item[i].width_tech
-          height = this.item[i].height_tech
-        }
+  //     if (this.item[i].height_tech != null || this.item[i].width_tech != null) {
+  //       if (this.item[i].status_tech == 'Approved' && this.item[i].status_sale == 'Completed') {
+  //         width = this.item[i].width
+  //         height = this.item[i].height
+  //       } else {
+  //         width = this.item[i].width_tech
+  //         height = this.item[i].height_tech
+  //       }
 
-      } else {
-        width = this.item[i].width
-        height = this.item[i].height
-      }
+  //     } else {
+  //       width = this.item[i].width
+  //       height = this.item[i].height
+  //     }
 
-      //ITEMS PUSH START HERE
-      items.push(
-        [
-          { text: this.item[i].location, bold: true, fontSize: 8.5, decoration: 'underline' },
-          { text: '', fontSize: 8.5 },
-          { text: '', fontSize: 8.5 },
-          { text: '', fontSize: 8.5 },
-          { text: '', fontSize: 8.5 },
-          { text: '', fontSize: 8.5 },
-          { text: '', fontSize: 8.5 },
-          { text: '', fontSize: 8.5 },
-          { text: '', fontSize: 8.5 },
-          { text: '', fontSize: 8.5 },
-          { text: '', fontSize: 8.5 },
-          { text: '', fontSize: 8.5 },
-          { text: '', fontSize: 8.5 },
-        ],
-      )
+  //     //ITEMS PUSH START HERE
+  //     items.push(
+  //       [
+  //         { text: this.item[i].location, bold: true, fontSize: 8.5, decoration: 'underline' },
+  //         { text: '', fontSize: 8.5 },
+  //         { text: '', fontSize: 8.5 },
+  //         { text: '', fontSize: 8.5 },
+  //         { text: '', fontSize: 8.5 },
+  //         { text: '', fontSize: 8.5 },
+  //         { text: '', fontSize: 8.5 },
+  //         { text: '', fontSize: 8.5 },
+  //         { text: '', fontSize: 8.5 },
+  //         { text: '', fontSize: 8.5 },
+  //         { text: '', fontSize: 8.5 },
+  //         { text: '', fontSize: 8.5 },
+  //         { text: '', fontSize: 8.5 },
+  //       ],
+  //     )
 
-      if (this.item[i].type != 'Blinds') {
-        if (this.item[i].fabric_type == 'C') {
+  //     if (this.item[i].type != 'Blinds') {
+  //       if (this.item[i].fabric_type == 'C') {
 
-          if (this.item[i].fabric != null) {
-            let fabricWidth = this.fabricCurtain.filter(a => a.name == this.item[i].fabric)[0]['size']
-            let belt
+  //         if (this.item[i].fabric != null) {
+  //           let fabricWidth = this.fabricCurtain.filter(a => a.name == this.item[i].fabric)[0]['size']
+  //           let belt
 
-            if (this.item[i].belt == 'Tieback') {
-              belt = 'Yes'
-            } else {
-              belt = 'X'
-            }
+  //           if (this.item[i].belt == 'Tieback') {
+  //             belt = 'Yes'
+  //           } else {
+  //             belt = 'X'
+  //           }
 
-            items.push(
-              [
-                { text: width + '"' + ' x ' + height + '"' + ' - Curtain', fontSize: 8.5 },
-                { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
-                { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fabric, alignment: 'center', fontSize: 8.5 },
-                { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
-                { text: belt, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].hook, alignment: 'center', fontSize: 8.5 },
-                { text: 'P', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].remark_sale, fontSize: 8.5 }
-              ],
-            )
-          }
+  //           items.push(
+  //             [
+  //               { text: width + '"' + ' x ' + height + '"' + ' - Curtain', fontSize: 8.5 },
+  //               { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
+  //               { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].fabric, alignment: 'center', fontSize: 8.5 },
+  //               { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
+  //               { text: belt, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].hook, alignment: 'center', fontSize: 8.5 },
+  //               { text: 'P', alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].remark_sale, fontSize: 8.5 }
+  //             ],
+  //           )
+  //         }
 
-          if (this.item[i].fabric_lining != null) {
-            let fabricWidth = this.fabricLining.filter(a => a.name == this.item[i].fabric_lining)[0]['size']
-            let belt
+  //         if (this.item[i].fabric_lining != null) {
+  //           let fabricWidth = this.fabricLining.filter(a => a.name == this.item[i].fabric_lining)[0]['size']
+  //           let belt
 
-            if (this.item[i].belt == 'Tieback') {
-              belt = 'Yes'
-            } else {
-              belt = 'X'
-            }
-            items.push(
-              [
-                { text: width + '"' + ' x ' + height + '"' + ' - Lining', fontSize: 8.5 },
-                { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
-                { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fabric_lining, alignment: 'center', fontSize: 8.5 },
-                { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
-                { text: belt, alignment: 'center', fontSize: 8.5 },
-                { text: '-', alignment: 'center', fontSize: 8.5 },
-                { text: '-', alignment: 'center', fontSize: 8.5 },
-                { text: 'P', alignment: 'center', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 }
-              ],
-            )
-          }
+  //           if (this.item[i].belt == 'Tieback') {
+  //             belt = 'Yes'
+  //           } else {
+  //             belt = 'X'
+  //           }
+  //           items.push(
+  //             [
+  //               { text: width + '"' + ' x ' + height + '"' + ' - Lining', fontSize: 8.5 },
+  //               { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
+  //               { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].fabric_lining, alignment: 'center', fontSize: 8.5 },
+  //               { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
+  //               { text: belt, alignment: 'center', fontSize: 8.5 },
+  //               { text: '-', alignment: 'center', fontSize: 8.5 },
+  //               { text: '-', alignment: 'center', fontSize: 8.5 },
+  //               { text: 'P', alignment: 'center', fontSize: 8.5 },
+  //               { text: '', fontSize: 8.5 }
+  //             ],
+  //           )
+  //         }
 
-          items.push(
-            [
-              { text: ' ', fontSize: 8.5 },
-              { text: ' ', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-            ],
-          )
+  //         items.push(
+  //           [
+  //             { text: ' ', fontSize: 8.5 },
+  //             { text: ' ', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //           ],
+  //         )
 
-        } else if (this.item[i].fabric_type == 'S') {
+  //       } else if (this.item[i].fabric_type == 'S') {
 
-          if (this.item[i].fabric != null) {
-            let fabricWidth = this.fabricSheer.filter(a => a.name == this.item[i].fabric)[0]['size']
-            let belt
+  //         if (this.item[i].fabric != null) {
+  //           let fabricWidth = this.fabricSheer.filter(a => a.name == this.item[i].fabric)[0]['size']
+  //           let belt
 
-            if (this.item[i].belt == 'Tieback') {
-              belt = 'Yes'
-            } else {
-              belt = 'X'
-            }
+  //           if (this.item[i].belt == 'Tieback') {
+  //             belt = 'Yes'
+  //           } else {
+  //             belt = 'X'
+  //           }
 
-            items.push(
-              [
-                { text: width + '"' + ' x ' + height + '"' + ' - Sheer', fontSize: 8.5 },
-                { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
-                { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fabric_sheer, alignment: 'center', fontSize: 8.5 },
-                { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pieces_sheer, alignment: 'center', fontSize: 8.5 },
-                { text: belt, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].hook, alignment: 'center', fontSize: 8.5 },
-                { text: 'M', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].remark_sale, fontSize: 8.5 }
-              ],
-            )
-          }
+  //           items.push(
+  //             [
+  //               { text: width + '"' + ' x ' + height + '"' + ' - Sheer', fontSize: 8.5 },
+  //               { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
+  //               { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].fabric_sheer, alignment: 'center', fontSize: 8.5 },
+  //               { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].pieces_sheer, alignment: 'center', fontSize: 8.5 },
+  //               { text: belt, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].hook, alignment: 'center', fontSize: 8.5 },
+  //               { text: 'M', alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].remark_sale, fontSize: 8.5 }
+  //             ],
+  //           )
+  //         }
 
-          items.push(
-            [
-              { text: ' ', fontSize: 8.5 },
-              { text: ' ', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-            ],
-          )
-        } else if (this.item[i].fabric_type == 'CS') {
-          if (this.item[i].fabric != null) {
-            let fabricWidth = this.fabricCurtain.filter(a => a.name == this.item[i].fabric)[0]['size']
-            let belt
+  //         items.push(
+  //           [
+  //             { text: ' ', fontSize: 8.5 },
+  //             { text: ' ', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //           ],
+  //         )
+  //       } else if (this.item[i].fabric_type == 'CS') {
+  //         if (this.item[i].fabric != null) {
+  //           let fabricWidth = this.fabricCurtain.filter(a => a.name == this.item[i].fabric)[0]['size']
+  //           let belt
 
-            if (this.item[i].belt == 'Tieback') {
-              belt = 'Yes'
-            } else {
-              belt = 'X'
-            }
+  //           if (this.item[i].belt == 'Tieback') {
+  //             belt = 'Yes'
+  //           } else {
+  //             belt = 'X'
+  //           }
 
-            items.push(
-              [
-                { text: width + '"' + ' x ' + height + '"' + ' - Curtain', fontSize: 8.5 },
-                { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
-                { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fabric, alignment: 'center', fontSize: 8.5 },
-                { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
-                { text: belt, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].hook, alignment: 'center', fontSize: 8.5 },
-                { text: 'P', alignment: 'center', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 }
-              ],
-            )
-          }
+  //           items.push(
+  //             [
+  //               { text: width + '"' + ' x ' + height + '"' + ' - Curtain', fontSize: 8.5 },
+  //               { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
+  //               { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].fabric, alignment: 'center', fontSize: 8.5 },
+  //               { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
+  //               { text: belt, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].hook, alignment: 'center', fontSize: 8.5 },
+  //               { text: 'P', alignment: 'center', fontSize: 8.5 },
+  //               { text: '', fontSize: 8.5 }
+  //             ],
+  //           )
+  //         }
 
-          if (this.item[i].fabric_lining != null) {
-            let fabricWidth = this.fabricLining.filter(a => a.name == this.item[i].fabric_lining)[0]['size']
-            let belt
+  //         if (this.item[i].fabric_lining != null) {
+  //           let fabricWidth = this.fabricLining.filter(a => a.name == this.item[i].fabric_lining)[0]['size']
+  //           let belt
 
-            if (this.item[i].belt == 'Tieback') {
-              belt = 'Yes'
-            } else {
-              belt = 'X'
-            }
-            items.push(
-              [
-                { text: width + '"' + ' x ' + height + '"' + ' - Lining', fontSize: 8.5 },
-                { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
-                { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fabric_lining, alignment: 'center', fontSize: 8.5 },
-                { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
-                { text: belt, alignment: 'center', fontSize: 8.5 },
-                { text: '-', alignment: 'center', fontSize: 8.5 },
-                { text: '-', alignment: 'center', fontSize: 8.5 },
-                { text: 'P', alignment: 'center', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 }
-              ],
-            )
-          }
+  //           if (this.item[i].belt == 'Tieback') {
+  //             belt = 'Yes'
+  //           } else {
+  //             belt = 'X'
+  //           }
+  //           items.push(
+  //             [
+  //               { text: width + '"' + ' x ' + height + '"' + ' - Lining', fontSize: 8.5 },
+  //               { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
+  //               { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].fabric_lining, alignment: 'center', fontSize: 8.5 },
+  //               { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
+  //               { text: belt, alignment: 'center', fontSize: 8.5 },
+  //               { text: '-', alignment: 'center', fontSize: 8.5 },
+  //               { text: '-', alignment: 'center', fontSize: 8.5 },
+  //               { text: 'P', alignment: 'center', fontSize: 8.5 },
+  //               { text: '', fontSize: 8.5 }
+  //             ],
+  //           )
+  //         }
 
-          if (this.item[i].fabric_blind != null) {
-            let fabricWidth = this.fabricSheer.filter(a => a.name == this.item[i].fabric_blind)[0]['size']
-            let belt
+  //         if (this.item[i].fabric_blind != null) {
+  //           let fabricWidth = this.fabricSheer.filter(a => a.name == this.item[i].fabric_blind)[0]['size']
+  //           let belt
 
-            if (this.item[i].belt == 'Tieback') {
-              belt = 'Yes'
-            } else {
-              belt = 'X'
-            }
+  //           if (this.item[i].belt == 'Tieback') {
+  //             belt = 'Yes'
+  //           } else {
+  //             belt = 'X'
+  //           }
 
-            items.push(
-              [
-                { text: width + '"' + ' x ' + height + '"' + ' - Sheer', fontSize: 8.5 },
-                { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
-                { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fabric_sheer, alignment: 'center', fontSize: 8.5 },
-                { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].pieces_sheer, alignment: 'center', fontSize: 8.5 },
-                { text: belt, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].hook, alignment: 'center', fontSize: 8.5 },
-                { text: 'M', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].remark_sale, fontSize: 8.5 }
-              ],
-            )
-          }
+  //           items.push(
+  //             [
+  //               { text: width + '"' + ' x ' + height + '"' + ' - Sheer', fontSize: 8.5 },
+  //               { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
+  //               { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].fabric_sheer, alignment: 'center', fontSize: 8.5 },
+  //               { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].pieces_sheer, alignment: 'center', fontSize: 8.5 },
+  //               { text: belt, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].hook, alignment: 'center', fontSize: 8.5 },
+  //               { text: 'M', alignment: 'center', fontSize: 8.5 },
+  //               { text: this.item[i].remark_sale, fontSize: 8.5 }
+  //             ],
+  //           )
+  //         }
 
-          items.push(
-            [
-              { text: ' ', fontSize: 8.5 },
-              { text: ' ', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-            ],
-          )
-        }
+  //         items.push(
+  //           [
+  //             { text: ' ', fontSize: 8.5 },
+  //             { text: ' ', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 },
+  //           ],
+  //         )
+  //       }
 
-      } else if (this.item[i].type == 'Blinds') {
+  //     } else if (this.item[i].type == 'Blinds') {
 
-        if (this.item[i].fabric_blind != null) {
-          let fabricWidth = this.fabricBlind.filter(a => a.name == this.item[i].fabric_blind)[0]['size']
-          let belt
+  //       if (this.item[i].fabric_blind != null) {
+  //         let fabricWidth = this.fabricBlind.filter(a => a.name == this.item[i].fabric_blind)[0]['size']
+  //         let belt
 
-          if (this.item[i].belt == 'Tieback') {
-            belt = 'Yes'
-          } else {
-            belt = 'X'
-          }
+  //         if (this.item[i].belt == 'Tieback') {
+  //           belt = 'Yes'
+  //         } else {
+  //           belt = 'X'
+  //         }
 
-          items.push(
-            [
-              { text: width + '"' + ' x ' + height + '"' + ' - Blind', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
-              { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].fabric_blind, alignment: 'center', fontSize: 8.5 },
-              { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].pieces_blind, alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: 'P', alignment: 'center', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 }
-            ],
-          )
-        }
+  //         items.push(
+  //           [
+  //             { text: width + '"' + ' x ' + height + '"' + ' - Blind', fontSize: 8.5 },
+  //             { text: '-', alignment: 'center', fontSize: 8.5 },
+  //             { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
+  //             { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
+  //             { text: this.item[i].fabric_blind, alignment: 'center', fontSize: 8.5 },
+  //             { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+  //             { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
+  //             { text: this.item[i].pieces_blind, alignment: 'center', fontSize: 8.5 },
+  //             { text: '-', alignment: 'center', fontSize: 8.5 },
+  //             { text: '-', alignment: 'center', fontSize: 8.5 },
+  //             { text: '-', alignment: 'center', fontSize: 8.5 },
+  //             { text: 'P', alignment: 'center', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 }
+  //           ],
+  //         )
+  //       }
 
-        if (this.item[i].fabric != null) {
-          let fabricWidth = this.fabricCurtain.filter(a => a.name == this.item[i].fabric)[0]['size']
-          let belt
+  //       if (this.item[i].fabric != null) {
+  //         let fabricWidth = this.fabricCurtain.filter(a => a.name == this.item[i].fabric)[0]['size']
+  //         let belt
 
-          if (this.item[i].belt == 'Tieback') {
-            belt = 'Yes'
-          } else {
-            belt = 'X'
-          }
+  //         if (this.item[i].belt == 'Tieback') {
+  //           belt = 'Yes'
+  //         } else {
+  //           belt = 'X'
+  //         }
 
-          items.push(
-            [
-              { text: width + '"' + ' x ' + height + '"' + ' - Curtain', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
-              { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].fabric, alignment: 'center', fontSize: 8.5 },
-              { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
-              { text: belt, alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: 'P', alignment: 'center', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 }
-            ],
-          )
-        }
+  //         items.push(
+  //           [
+  //             { text: width + '"' + ' x ' + height + '"' + ' - Curtain', fontSize: 8.5 },
+  //             { text: '-', alignment: 'center', fontSize: 8.5 },
+  //             { text: this.item[i].bracket, alignment: 'center', fontSize: 8.5 },
+  //             { text: width + '"' + ' x ' + height + '"', bold: true, alignment: 'center', fontSize: 8.5 },
+  //             { text: this.item[i].fabric, alignment: 'center', fontSize: 8.5 },
+  //             { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
+  //             { text: this.item[i].pleat, alignment: 'center', fontSize: 8.5 },
+  //             { text: this.item[i].pieces_curtain, alignment: 'center', fontSize: 8.5 },
+  //             { text: belt, alignment: 'center', fontSize: 8.5 },
+  //             { text: '-', alignment: 'center', fontSize: 8.5 },
+  //             { text: '-', alignment: 'center', fontSize: 8.5 },
+  //             { text: 'P', alignment: 'center', fontSize: 8.5 },
+  //             { text: '', fontSize: 8.5 }
+  //           ],
+  //         )
+  //       }
 
-        items.push(
-          [
-            { text: ' ', fontSize: 8.5 },
-            { text: ' ', fontSize: 8.5 },
-            { text: '', fontSize: 8.5 },
-            { text: '', fontSize: 8.5 },
-            { text: '', fontSize: 8.5 },
-            { text: '', fontSize: 8.5 },
-            { text: '', fontSize: 8.5 },
-            { text: '', fontSize: 8.5 },
-            { text: '', fontSize: 8.5 },
-            { text: '', fontSize: 8.5 },
-            { text: '', fontSize: 8.5 },
-            { text: '', fontSize: 8.5 },
-            { text: '', fontSize: 8.5 },
-          ],
-        )
-      }
-    }
-    console.log(items);
+  //       items.push(
+  //         [
+  //           { text: ' ', fontSize: 8.5 },
+  //           { text: ' ', fontSize: 8.5 },
+  //           { text: '', fontSize: 8.5 },
+  //           { text: '', fontSize: 8.5 },
+  //           { text: '', fontSize: 8.5 },
+  //           { text: '', fontSize: 8.5 },
+  //           { text: '', fontSize: 8.5 },
+  //           { text: '', fontSize: 8.5 },
+  //           { text: '', fontSize: 8.5 },
+  //           { text: '', fontSize: 8.5 },
+  //           { text: '', fontSize: 8.5 },
+  //           { text: '', fontSize: 8.5 },
+  //           { text: '', fontSize: 8.5 },
+  //         ],
+  //       )
+  //     }
+  //   }
+  //   console.log(items);
 
-    var dd = {
-      pageOrientation: 'landscape',
+  //   var dd = {
+  //     pageOrientation: 'landscape',
 
-      header: function (currentPage, pageCount, pageSize) {
-        // you can apply any logic and return any valid pdfmake element
+  //     header: function (currentPage, pageCount, pageSize) {
+  //       // you can apply any logic and return any valid pdfmake element
 
-        return [
-          {
-            columns: [
-              [
-                {
-                  alignment: 'left',
-                  text: 'Crystalace Deco Sdn Bhd (959240-H)',
-                  fontSize: 14,
-                  bold: true,
-                  width: '60%',
-                  margin: [20, 10, 0, 0]
-                },
-                {
-                  width: '50%',
-                  margin: [20, 0, 0, 0],
-                  table: {
-                    widths: ['30%', '70%'],
-                    body: soinfoleft
-                  },
-                },
-              ],
-              [
-                {
-                  alignment: 'right',
-                  text: sonum,
-                  fontSize: 14,
-                  bold: true,
-                  width: '30%',
-                  margin: [0, 10, 20, 0],
-                },
-                {
-                  width: '30%',
-                  margin: [20, 0, 0, 0],
-                  table: {
-                    widths: ['52%', '40%'],
-                    body: soinforight
-                  },
-                },
-                {
-                  alignment: 'right',
-                  text: 'SALES ORDER FORM',
-                  fontSize: 14,
-                  bold: true,
-                  width: '30%',
-                  margin: [0, 5, 80, 0],
-                },
-              ]
+  //       return [
+  //         {
+  //           columns: [
+  //             [
+  //               {
+  //                 alignment: 'left',
+  //                 text: 'Crystalace Deco Sdn Bhd (959240-H)',
+  //                 fontSize: 14,
+  //                 bold: true,
+  //                 width: '60%',
+  //                 margin: [20, 10, 0, 0]
+  //               },
+  //               {
+  //                 width: '50%',
+  //                 margin: [20, 0, 0, 0],
+  //                 table: {
+  //                   widths: ['30%', '70%'],
+  //                   body: soinfoleft
+  //                 },
+  //               },
+  //             ],
+  //             [
+  //               {
+  //                 alignment: 'right',
+  //                 text: sonum,
+  //                 fontSize: 14,
+  //                 bold: true,
+  //                 width: '30%',
+  //                 margin: [0, 10, 20, 0],
+  //               },
+  //               {
+  //                 width: '30%',
+  //                 margin: [20, 0, 0, 0],
+  //                 table: {
+  //                   widths: ['52%', '40%'],
+  //                   body: soinforight
+  //                 },
+  //               },
+  //               {
+  //                 alignment: 'right',
+  //                 text: 'SALES ORDER FORM',
+  //                 fontSize: 14,
+  //                 bold: true,
+  //                 width: '30%',
+  //                 margin: [0, 5, 80, 0],
+  //               },
+  //             ]
 
-            ]
-          },
-          { canvas: [{ type: 'rect', x: 170, y: 32, w: pageSize.width - 170, h: 40 }] }
-        ]
-      },
+  //           ]
+  //         },
+  //         { canvas: [{ type: 'rect', x: 170, y: 32, w: pageSize.width - 170, h: 40 }] }
+  //       ]
+  //     },
 
-      content: [
-        // 		NON_DETAILED QUOTATION START
-        {
-          width: '100%',
-          table: {
-            headerRows: 1,
-            //  dontBreakRows: true,
-            //  keepWithHeaderRows: 1,
-            widths: ['17%', '4%', '5%', '15%', '13%', '4%', '3%', '3%', '5%', '5%', '4%', '4%', '18%'],
-            body: items
-          },
-          layout: {
-            hLineWidth: function (i, node) {
-              return (i === 0 || i === node.table.body.length) ? 1 : 1;
-            },
-            hLineColor: function (i, node) {
-              return (i === 0 || i === node.table.body.length || i === 1) ? 'black' : 'white';
-            },
-          }
-        },
-        // 	    NON_DETAILED QUOTATION END
-      ],
-      styles: {
-        header: {
-          fontSize: 18,
-          bold: true,
-          margin: [0, 0, 0, 10]
-        },
-        subheader: {
-          fontSize: 16,
-          bold: true,
-          margin: [0, 10, 0, 5]
-        },
-        tableExample: {
-          margin: [0, 5, 0, 15]
-        },
-        tableHeader: {
-          bold: true,
-          fontSize: 13,
-          color: 'black'
-        }
-      },
-      defaultStyle: {
-        columnGap: 20
-      },
-      pageMargins: [20, 145, 20, 60]
+  //     content: [
+  //       // 		NON_DETAILED QUOTATION START
+  //       {
+  //         width: '100%',
+  //         table: {
+  //           headerRows: 1,
+  //           //  dontBreakRows: true,
+  //           //  keepWithHeaderRows: 1,
+  //           widths: ['17%', '4%', '5%', '15%', '13%', '4%', '3%', '3%', '5%', '5%', '4%', '4%', '18%'],
+  //           body: items
+  //         },
+  //         layout: {
+  //           hLineWidth: function (i, node) {
+  //             return (i === 0 || i === node.table.body.length) ? 1 : 1;
+  //           },
+  //           hLineColor: function (i, node) {
+  //             return (i === 0 || i === node.table.body.length || i === 1) ? 'black' : 'white';
+  //           },
+  //         }
+  //       },
+  //       // 	    NON_DETAILED QUOTATION END
+  //     ],
+  //     styles: {
+  //       header: {
+  //         fontSize: 18,
+  //         bold: true,
+  //         margin: [0, 0, 0, 10]
+  //       },
+  //       subheader: {
+  //         fontSize: 16,
+  //         bold: true,
+  //         margin: [0, 10, 0, 5]
+  //       },
+  //       tableExample: {
+  //         margin: [0, 5, 0, 15]
+  //       },
+  //       tableHeader: {
+  //         bold: true,
+  //         fontSize: 13,
+  //         color: 'black'
+  //       }
+  //     },
+  //     defaultStyle: {
+  //       columnGap: 20
+  //     },
+  //     pageMargins: [20, 145, 20, 60]
 
-    }
+  //   }
 
-    // pdfMake.createPdf(dd).open();
-    this.pdfObj = pdfMake.createPdf(dd);
-    this.downloadPdf()
+  //   // pdfMake.createPdf(dd).open();
+  //   this.pdfObj = pdfMake.createPdf(dd);
+  //   this.downloadPdf()
 
-  }
+  // }
 
   downloadPdf() {
     if (this.plt.is('cordova')) {
