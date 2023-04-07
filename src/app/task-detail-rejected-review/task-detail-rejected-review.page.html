@@ -493,7 +493,7 @@
             <div
               style="width: 50%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
               <div style="min-width: 55px;color: #999999">Sidehook </div>
-              <!-- <ion-select [(ngModel)]="item.sheer_sidehook" placeholder="Yes/No" interface="popover" mode="ios"
+              <!-- <ion-select [(ngModel)]="item.sheer_sidehook" placeholder="Y/N" interface="popover" mode="ios"
                 [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
                 style="width: calc(100% - 55px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 10px; font-weight: 500; color: #333333">
                 <ion-select-option value="Yes">Yes</ion-select-option>
@@ -527,17 +527,19 @@
       <!-- Upgrade to Motorized -->
       <div *ngIf="item.fabric_type != null && item.fabric_type != ''">
         <div
-          *ngIf="(item.pleat != 'Ripplefold' && item.pleat != 'Double Pleat') || (item.track == null && item.track_sheer == null)"
+          *ngIf="((item.pleat != 'Ripplefold' && item.pleat != 'Double Pleat') && (item.pleat_sheer != 'Ripplefold' && item.pleat_sheer != 'Double Pleat')) || (item.track == null && item.track_sheer == null)"
           style="min-width: 56px;font-weight: 500;color: #999999">Upgrade to Motorized Track Requirement:</div>
         <div *ngIf="item.track == null && item.track_sheer == null" style="margin-top: 5px;color: #a17635;">No Track
           Selected</div>
-        <div *ngIf="item.pleat != 'Ripplefold' && item.pleat != 'Double Pleat'" style="margin-top: 5px;color: #a17635;">
+        <div
+          *ngIf="item.pleat != 'Ripplefold' && item.pleat != 'Double Pleat' && item.pleat_sheer != 'Ripplefold' && item.pleat_sheer != 'Double Pleat'"
+          style="margin-top: 5px;color: #a17635;">
           Motorizable Pleat Type<br><span style="color: #bcbcbc;">- Double Pleat</span><br><span
             style="color: #bcbcbc;">- Ripplefold</span>
         </div>
 
         <div
-          *ngIf="(item.pleat == 'Ripplefold' || item.pleat == 'Double Pleat') && (item.track != null || item.track_sheer != null)">
+          *ngIf="((item.pleat == 'Ripplefold' || item.pleat == 'Double Pleat') || (item.pleat_sheer == 'Ripplefold' || item.pleat_sheer == 'Double Pleat')) && (item.track != null || item.track_sheer != null)">
 
           <div style="display: flex;justify-content: space-between;">
             <div style="min-width: 56px;font-weight: 500;color: #999999">Upgrade to Motorized Track <span
@@ -552,31 +554,17 @@
 
           <div *ngIf="item.motorized_upgrade">
 
-            <!-- Power By / Sides -->
-            <div style="width: 100%;display: flex;align-items: center;margin-top: 10px;">
-
-              <div
-                style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
-                <div style="min-width: 55px;color: #999999">Power By</div>
-                <ion-select [(ngModel)]="item.motorized_power" placeholder="Y/N" interface="popover" mode="ios"
-                  [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-                  style="width: calc(100% - 55px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 5px; font-weight: 500; color: #333333">
-                  <ion-select-option value="Battery">Battery</ion-select-option>
-                  <ion-select-option value="Power Point">Power Point</ion-select-option>
-                </ion-select>
-              </div>
-
-              <div
-                style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
-                <div style="min-width: 35px;color: #999999">Sides</div>
-                <ion-select [(ngModel)]="item.motorized_sides" placeholder="Left/Right" interface="popover" mode="ios"
-                  [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-                  style="width: calc(100% - 35px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 10px; font-weight: 500; color: #333333">
-                  <ion-select-option value="Left">Left</ion-select-option>
-                  <ion-select-option value="Right">Right</ion-select-option>
-                </ion-select>
-              </div>
-
+            <!-- Motorized Selection -->
+            <div
+              style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0 10px; display: flex; align-items: center; justify-content: space-between;margin-top: 10px;">
+              <div style="min-width: 55px;color: #999999">Motorise</div>
+              <ion-select [(ngModel)]="item.motorized_choice" placeholder="Curtain / Sheer / Both"
+                interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                style="width: 100% ;padding: 11px 10px;font-weight: 500;">
+                <ion-select-option value="Curtain">Curtain</ion-select-option>
+                <ion-select-option value="Sheer">Sheer</ion-select-option>
+                <ion-select-option value="Both">Both</ion-select-option>
+              </ion-select>
             </div>
 
             <!-- Cost -->
@@ -585,11 +573,61 @@
               <div style="min-width: 55px;color: #999999">Cost</div>
               <ion-select class="ion-no-padding" [(ngModel)]="item.motorized_cost" placeholder="Select Cost Choice"
                 interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-                style="width: 100%;padding: 11px 10px;font-size: 14px;">
-                <ion-select-option value="FOC">Free of Charge</ion-select-option>
+                style="width: 100%;padding: 11px 10px;font-weight: 500;">
                 <ion-select-option value="Add Cost">Add Cost</ion-select-option>
+                <ion-select-option value="FOC">Free of Charge</ion-select-option>
               </ion-select>
             </div>
+
+            <!-- Power By / Sides -->
+            <div style="width: 100%;display: flex;align-items: center;">
+
+              <div
+                style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+                <div style="min-width: 55px;color: #999999">Power By</div>
+                <ion-select [(ngModel)]="item.motorized_power" placeholder="Select" interface="popover" mode="ios"
+                  [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                  style="width: calc(100% - 55px) ;height: 30px;--padding-start: 10px; --padding-end: 5px; font-weight: 500; color: #333333">
+                  <ion-select-option value="Battery">Battery</ion-select-option>
+                  <ion-select-option value="Power Point">Power Point</ion-select-option>
+                </ion-select>
+              </div>
+
+              <div
+                style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+                <div style="min-width: 35px;color: #999999">Sides</div>
+                <ion-select [(ngModel)]="item.motorized_sides" placeholder="L/R" interface="popover" mode="ios"
+                  [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                  style="width: calc(100% - 35px) ;height: 30px;--padding-start: 10px; --padding-end: 10px; font-weight: 500; color: #333333">
+                  <ion-select-option value="Left">Left</ion-select-option>
+                  <ion-select-option value="Right">Right</ion-select-option>
+                </ion-select>
+              </div>
+
+            </div>
+
+            <!-- Motorized Pieces / Lift Up Down System -->
+            <div style="width: 100%;display: flex;align-items: center;">
+              <div
+                style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+                <div style="min-width: 55px;color: #999999">Pieces</div>
+                <ion-input placeholder="Eg. 2" [(ngModel)]="item.motorized_pieces" type="number"
+                  style="width: calc(100% - 35px) ;height: 30px;--padding-start: 10px; --padding-end: 10px; font-weight: 500; color: #333333">
+                </ion-input>
+              </div>
+
+              <div
+                style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+                <div style="min-width: 35px;color: #999999">Lift</div>
+                <ion-select [(ngModel)]="item.motorized_lift" placeholder="Y/N" interface="popover" mode="ios"
+                  [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                  style="width: calc(100% - 35px) ;height: 30px;--padding-start: 10px; --padding-end: 10px; font-weight: 500; color: #333333">
+                  <ion-select-option value="Yes">Yes</ion-select-option>
+                  <ion-select-option value="No">No</ion-select-option>
+                </ion-select>
+              </div>
+            </div>
+
           </div>
 
         </div>

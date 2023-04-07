@@ -115,6 +115,8 @@ export class Tab1Page implements OnInit {
         console.log(a);
 
         this.uid = a.uid
+        let temp = 123.09
+        console.log((temp.toString().split(".")[1]).toString()[1]);
 
         if (!this.platform.is('desktop') && !this.platform.is('mobileweb')) {
           this.platform.ready().then(() => {
@@ -207,7 +209,7 @@ export class Tab1Page implements OnInit {
       })
 
       this.http.post('https://curtain.vsnap.my/getrejected', { id_sales: x }).subscribe((s) => {
-        this.salesListRejected = s['data']
+        this.salesListRejected = s['data'].filter(s => s.status)
         console.log(this.salesListRejected.length, this.salesListRejected);
 
       })

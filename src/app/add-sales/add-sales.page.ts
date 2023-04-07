@@ -43,7 +43,16 @@ export class AddSalesPage implements OnInit {
   // propertyList = ['Bungalow', 'Condominium', 'Semi-D', 'Others'].sort((a: any, b: any) => (a > b ? 1 : -1))
   showSelection = false
   selectionSales = false
-
+  referenceList = [
+    { no: 1, name: 'Walk-in', short: 'WI' },
+    { no: 2, name: 'Facebook', short: 'FB' },
+    { no: 3, name: 'Text-in', short: 'TI' },
+    { no: 4, name: 'Call-in', short: 'CI' },
+    { no: 5, name: 'Instagram', short: 'IG' },
+    { no: 6, name: 'Referral', short: 'RF' },
+    { no: 7, name: 'ID', short: 'ID' },
+    { no: 8, name: 'Regular Client', short: 'RC' }
+  ]
   ngOnInit() {
     this.http.get('https://curtain.vsnap.my/staffList').subscribe(a => {
       this.staffList = a['data']
@@ -57,6 +66,7 @@ export class AddSalesPage implements OnInit {
       console.log(this.feeList);
     })
 
+    this.sales.show_promo = true
   }
 
   selectedId(x) {
@@ -398,7 +408,8 @@ export class AddSalesPage implements OnInit {
         so_pdf: JSON.stringify([]),
         mo_pdf: JSON.stringify([]),
         transport_fee: this.sales.transport_fee,
-        status: true
+        status: true,
+        show_promo: this.sales.show_promo,
       }
 
       console.log(temp);
