@@ -633,6 +633,83 @@
       </div>
 
     </div>
+
+    <!-- Promo Package -->
+    <div
+      style="margin: 10px;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;background: white;border-radius: 5px; padding: 10px; margin-bottom: 25px;">
+
+      <div style="display: flex;justify-content: space-between; margin-bottom: 15px;">
+        <div style="width: fit-content;font-weight: 500;padding-top: 10px;">
+          <div style="font-size: 15px; font-weight: 600; color: #000;border-bottom: 0.5px solid #a17635;">
+            Promo Package
+          </div>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <div style="display: flex;justify-content: space-between;font-weight: 450;font-size: 13px;">
+
+        <div style="width: 60%;font-size: 14px;">
+          Description
+        </div>
+
+        <div style="width: 40%;display: flex;justify-content: flex-end;">
+          <div style="width: 30%;text-align: center;">
+            Qty
+          </div>
+          <div style="width: 70%;text-align: center;">
+            Total (RM)
+          </div>
+        </div>
+
+      </div>
+
+      <div *ngIf="!info.rejected" style="width: 100%; font-size: 13px; font-weight: 400; color: #222222; padding: 10px 0px; margin: 10px 0px;
+       border-top: 2px dashed #a17635; border-bottom: 2px dashed #a17635;">
+
+        <!-- Empty Info -->
+        <div *ngIf="!info.package_code" style="display: flex;justify-content: space-between;align-items: center">
+          <div style="height: 1px;width: 30%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          <div style="width: 130px;font-size: 12px;color: #999;text-align: center;"> No Package Applied </div>
+          <div style="height: 1px;width: 30%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+        </div>
+
+        <!-- Package List -->
+        <div *ngIf="info.package_code" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+
+          <div style="display: flex;">
+            <!-- <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="ladder"
+              style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-right: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
+            </ion-checkbox> -->
+
+            <div style="display: flex;align-items: center;">
+              <div>{{packageApplied.code}}</div>
+              <div (click)="packageView()"
+                style="margin-left: 5px;background-color: #a17635;color: white;border-radius: 10px;font-size: 11px;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;padding: 3px 6px;">
+                View</div>
+            </div>
+          </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              1
+            </div>
+            <div style="width: 70%;text-align: end;">
+              {{packageApplied.price | currency : ' '}}
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Price -->
+      <div style="display: flex;justify-content: flex-end;">
+        <div style="font-size: 18px; font-weight: 700; color: #000;">{{packageApplied.price | currency: 'RM '}}</div>
+      </div>
+
+    </div>
+
   </div>
 </ion-content>
 
@@ -643,7 +720,14 @@
 
     <div style="padding-left: 5px;">
       <div style="width: fit-content;color: #a17635;font-size: 14px;font-weight: 500;">Total Amount :</div>
-      <div style="color: #a17635;font-size: 14px;font-weight: 500;">{{totalPrice() | currency: 'RM '}}</div>
+      <div *ngIf="!info.package_code" style="color: #a17635;font-size: 14px;font-weight: 500;">{{totalPrice() |
+        currency: 'RM '}}</div>
+      <div *ngIf="info.package_code" style="display: flex;align-items: center;">
+        <div style="text-decoration: line-through; color: #a17635;font-size: 14px;font-weight: 500;">{{totalPrice() |
+          currency: 'RM '}}</div>
+        <div style=" color: #a17635;font-size: 14px;font-weight: 500;margin-left: 3px;">
+          {{packageApplied.price | currency: 'RM '}}</div>
+      </div>
     </div>
 
     <!-- <div
@@ -755,4 +839,44 @@
     </div>
 
   </div>
+</div>
+
+<!-- Package Pop-up -->
+<div *ngIf="viewPackage" style="width: 100%; height: 100%;  display: flex; align-items: center; justify-content: center; flex-direction: column;position: absolute;top: 0; z-index: 10000;
+background-color: rgba(153, 153, 153, 0.458);padding-bottom: 20px;">
+
+  <div
+    style="width: 90%; height: 90%;max-height: 650px;max-width: 380px;background-color: white;border-radius: 10px;position: relative;">
+
+    <div style="height: 95%;">
+
+      <div
+        style="height: 24px;width: 24px;background-color: white;border-radius: 5px;display: flex;justify-content: center;align-items: center;position: absolute;right: 8px;top: 8px;">
+        <ion-icon (click)="closePackage()" style="font-size: 22px; color: #a17635;" name="close-outline"></ion-icon>
+      </div>
+
+      <div
+        [ngStyle]="packageViewed.type == 'PREMIUM' ? {'background': 'linear-gradient(28deg, rgba(255,76,77,1) 0%, rgba(255,108,90,1) 47%, rgba(255,150,107,1) 100%)'} :
+        packageViewed.type == 'STANDARD' ? {'background': 'linear-gradient(28deg, rgba(1,182,130,1) 0%, rgba(45,204,141,1) 47%, rgba(100,232,154,1) 100%)'} :
+          {'background': 'linear-gradient(28deg, rgba(0,150,238,1) 0%, rgba(0,182,238,1) 47%, rgba(0,223,238,1) 100%)'}"
+        style="padding: 20px 20px 25px 20px; display: flex;align-items: center;flex-direction: column; border-radius: 10px 10px 50% 50%;">
+        <div style="color: white;font-size: 18px; font-weight: 400;padding-bottom: 5px;">{{packageViewed.type}}</div>
+        <div style="color: white;font-size: 32px; font-weight: 700;">RM {{packageViewed.price | currency : ' ' : ' ' :
+          '1.0-0'}}
+        </div>
+      </div>
+
+      <ion-textarea readonly auto-grow="true" rows="2" placeholder="Description" [(ngModel)]="packageViewed.description"
+        style="font-size: 14px; letter-spacing: 0.5px; --padding-start: 10px; --padding-end: 10px; padding: 15px;">
+      </ion-textarea>
+      <!-- <div style="padding: 20px;">{{packageViewed.description}}</div> -->
+
+    </div>
+
+    <div
+      style="height: 5%;display: flex;justify-content: flex-end;padding-right: 15px;font-style: italic;font-size: 12px;">
+      {{packageViewed.code}}</div>
+
+  </div>
+
 </div>
