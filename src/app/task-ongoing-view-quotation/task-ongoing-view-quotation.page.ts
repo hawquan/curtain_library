@@ -47,10 +47,13 @@ export class TaskOngoingViewQuotationPage implements OnInit {
   fabricLining = []
   fabricBlind = []
   blindTape = [] as any
-
   calc = [] as any
+  packageApplied = [] as any
+  packageViewed = [] as any
+  packageName
   loading = false
   count = 0
+
 
   ladder = false
   scaftfolding = false
@@ -67,6 +70,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
   soInstTime = ''
   isCreateSo = false
   checkChangeSO = false
+  viewPackage = false
 
   ngOnInit() {
 
@@ -98,6 +102,13 @@ export class TaskOngoingViewQuotationPage implements OnInit {
         console.log(this.blindTape);
       })
 
+      if (this.info.package_code) {
+        this.http.get('https://curtain.vsnap.my/packageList').subscribe(a => {
+          this.packageApplied = a['data'].filter(a => (a.id) == (this.info.package_code))[0]
+          this.packageViewed = this.packageApplied
+        })
+      }
+
       this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
         this.fabriclist = s['data']
         this.fabricCurtain = this.fabriclist.filter(x => x.type == 'Curtain')
@@ -114,6 +125,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
         })
       })
+
 
 
       this.http.post('https://curtain.vsnap.my/getthismonthsales', { month: this.datepipe.transform(new Date(), 'MM') }).subscribe(a => {
@@ -352,7 +364,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
       promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0,
       motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost, motorized_power: this.item[i].motorized_power, motorized_choice: this.item[i].motorized_choice, motorized_pieces: this.item[i].motorized_pieces, motorized_lift: this.item[i].motorized_lift,
-       belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id
+      belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id
     }
 
     console.log(temp);
@@ -389,6 +401,14 @@ export class TaskOngoingViewQuotationPage implements OnInit {
   }
   back() {
     this.nav.pop()
+  }
+
+  packageView(){
+    this.viewPackage = true
+  }
+
+  closePackage() {
+    this.viewPackage = false
   }
 
   async choosePDF(x) {

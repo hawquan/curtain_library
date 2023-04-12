@@ -47,6 +47,10 @@ export class QuotationOverallPage implements OnInit {
   fabricBlind = []
   blindTape = [] as any
   calc = [] as any
+  packageList = [] as any
+  packageApplied = [] as any
+  packageViewed = [] as any
+  packageName
   loading = false
   count = 0
 
@@ -72,6 +76,8 @@ export class QuotationOverallPage implements OnInit {
   soInstTime = ''
   isCreateSo = false
   checkChangeSO = false
+  viewPackage = false
+
 
   ngOnInit() {
 
@@ -129,6 +135,12 @@ export class QuotationOverallPage implements OnInit {
           console.log(this.blindTape);
         })
 
+        if (this.info.package_code) {
+          this.http.get('https://curtain.vsnap.my/packageList').subscribe(a => {
+            this.packageApplied = a['data'].filter(a => (a.id) == (this.info.package_code))[0]
+            this.packageViewed = this.packageApplied
+          })
+        }
 
         this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
           this.fabriclist = s['data']
@@ -178,6 +190,124 @@ export class QuotationOverallPage implements OnInit {
 
     total += this.info.transport_fee
     return total || 0
+  }
+
+  packageView() {
+    this.http.get('https://curtain.vsnap.my/packageList').subscribe(a => {
+      this.packageList = a['data']
+
+      if (this.packageList.some(a => ((a.code)).toLowerCase() == ((this.packageName)).toLowerCase())) {
+        this.packageViewed = this.packageList.filter(a => ((a.code)).toLowerCase() == ((this.packageName)).toLowerCase())[0]
+        this.viewPackage = true
+
+        console.log(this.packageViewed);
+
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'Package code not found.',
+          icon: 'error',
+          timer: 3000,
+          heightAuto: false,
+        });
+      }
+    })
+  }
+
+  packageDelete() {
+
+    Swal.fire({
+      title: 'Delete Applied Package?',
+      text: "This will clear the applied package?",
+      icon: 'question',
+      showCancelButton: true,
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Confirm',
+      heightAuto: false,
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        this.packageApplied = [] as any
+        this.info.package_code = null
+
+        let temp = {
+          no: this.sales_id,
+          package_code: null,
+        }
+
+        this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
+
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          })
+
+          Toast.fire({
+            icon: 'success',
+            title: 'Applied Package Cleared.'
+          })
+
+        })
+
+
+
+      }
+    })
+
+  }
+
+  packageApply() {
+    this.http.get('https://curtain.vsnap.my/packageList').subscribe(a => {
+      this.packageList = a['data']
+
+      if (this.packageList.some(a => ((a.code)).toLowerCase() == ((this.packageName)).toLowerCase())) {
+        this.packageApplied = this.packageList.filter(a => ((a.code)).toLowerCase() == ((this.packageName)).toLowerCase())[0]
+        this.info.package_code = this.packageApplied.id
+
+        console.log(this.packageApplied);
+
+        let temp = {
+          no: this.sales_id,
+          package_code: this.info.package_code ? this.info.package_code : null,
+        }
+
+        this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
+
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          })
+
+          Toast.fire({
+            icon: 'success',
+            title: 'Package Applied.'
+          })
+
+        })
+
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'Package code not found.',
+          icon: 'error',
+          timer: 3000,
+          heightAuto: false,
+        });
+      }
+
+    })
+
+  }
+
+  closePackage() {
+    this.viewPackage = false
   }
 
   addCharges() {
@@ -339,6 +469,328 @@ export class QuotationOverallPage implements OnInit {
       }
     })
 
+  }
+
+  checkout() {
+
+    if (this.info['rejected'] == true) {
+      let temp = {
+        no: this.sales_id,
+        step: 3,
+        rejected: false,
+        latest_quo_id: this.quoRef,
+        need_scaftfolding: this.scaftfolding,
+        need_ladder: this.ladder,
+      }
+
+      console.log('rejected');
+
+      // Swal.fire({
+      //   title: 'Checkout?',
+      //   text: 'Checkout the sales?',
+      //   heightAuto: false,
+      //   icon: 'warning',
+      //   showConfirmButton: true,
+      //   showCancelButton: true,
+      //   cancelButtonText: 'Cancel',
+      //   cancelButtonColor: '#d33',
+      //   confirmButtonText: 'Checkout',
+      //   reverseButtons: true,
+      // }).then((y) => {
+      //   if (y.isConfirmed) {
+      this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
+        Swal.fire({
+          title: 'Checked Out Successfully',
+          icon: 'success',
+          heightAuto: false,
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 1500,
+        })
+        this.nav.navigateRoot('/tabs/tab1')
+      })
+
+      //   }
+      // })
+
+    } else {
+      let temp = {
+        no: this.sales_id,
+        latest_quo_id: this.quoRef,
+        step: 2,
+        need_scaftfolding: this.scaftfolding,
+        need_ladder: this.ladder,
+      }
+      console.log('xrejected');
+
+      // Swal.fire({
+      //   title: 'Checkout?',
+      //   text: 'Checkout the sales?',
+      //   heightAuto: false,
+      //   icon: 'warning',
+      //   showConfirmButton: true,
+      //   showCancelButton: true,
+      //   cancelButtonText: 'Cancel',
+      //   cancelButtonColor: '#d33',
+      //   confirmButtonText: 'Checkout',
+      //   reverseButtons: true,
+      // }).then((y) => {
+      //   if (y.isConfirmed) {
+      this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
+        // Swal.fire({
+        //   title: 'Checked Out Successfully',
+        //   icon: 'success',
+        //   heightAuto: false,
+        //   showConfirmButton: false,
+        //   showCancelButton: false,
+        //   timer: 1500,
+        // })
+        //   // this.nav.navigateRoot('/tabs/tab1')
+        Swal.close()
+        // this.createSo()
+        this.isCreateSo = true
+
+      })
+
+      //   }
+      // })
+    }
+
+  }
+
+  calcPrice(i) {
+    let width = 0 as any
+    let height = 0 as any
+    if (this.item[i].height_tech != null || this.item[i].width_tech != null) {
+      if (this.item[i].status_tech == 'Approved' && this.item[i].status_sale == 'Completed') {
+        width = this.item[i].width
+        height = this.item[i].height
+      } else {
+        width = this.item[i].width_tech
+        height = this.item[i].height_tech
+      }
+
+    } else {
+      width = this.item[i].width
+      height = this.item[i].height
+    }
+
+    let curtain = false
+    let curtain_id
+    let lining = false
+    let lining_id
+    let sheer = false
+    let sheer_id
+    let track = false
+    let track_id
+    let track_sheer = false
+    let track_sheer_id
+    let blind = false
+    let blind_id
+    let pleat_id
+    let pleat_sheer_id
+    let belt_hook = false
+    let isRomanBlind = false
+    let tape_id
+    let tape = false
+
+    console.log(this.item[i]);
+
+    if (this.item[i].type != 'Blinds') {
+
+      if (this.item[i].fabric != null) {
+        if (this.item[i].fabric_type == 'C' || this.item[i].fabric_type == 'CS') {
+          curtain = true
+          curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+        } else {
+          curtain = false
+        }
+      } else {
+        curtain = false
+      }
+
+      if (this.item[i].fabric_lining != null) {
+        if (this.item[i].fabric_type == 'C' || this.item[i].fabric_type == 'CS') {
+          lining = true
+          lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
+        } else {
+          lining = false
+        }
+      } else {
+        lining = false
+      }
+
+      if (this.item[i].fabric_sheer != null) {
+        if (this.item[i].fabric_type == 'S' || this.item[i].fabric_type == 'CS') {
+          sheer = true
+          sheer_id = this.fabricSheer.filter(x => x.name == this.item[i].fabric_sheer)[0]['id']
+        } else {
+          sheer = false
+        }
+      } else {
+        sheer = false
+      }
+
+      if (this.item[i].track != null) {
+        if (this.item[i].fabric_type == 'C' || this.item[i].fabric_type == 'CS') {
+          track = true
+          track_id = this.tracklist.filter(x => x.name == this.item[i].track)[0]['id']
+        } else {
+          track = false
+        }
+      } else {
+        track = false
+      }
+
+      if (this.item[i].track_sheer != null) {
+        if (this.item[i].fabric_type == 'S' || this.item[i].fabric_type == 'CS') {
+          track_sheer = true
+          track_sheer_id = this.tracklist.filter(x => x.name == this.item[i].track_sheer)[0]['id']
+        } else {
+          track_sheer = false
+        }
+      } else {
+        track_sheer = false
+      }
+
+      if (this.item[i].pleat != null && this.item[i].pleat != '') {
+        pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
+      }
+
+      if (this.item[i].pleat_sheer != null && this.item[i].pleat_sheer != '') {
+        pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item[i].pleat_sheer)[0]['id']
+      }
+
+      if ((this.item[i].sidehook == 'Yes' && (this.item[i].belt != 'No' || this.item[i].belt)) || (this.item[i].sheer_sidehook == 'Yes' && (this.item[i].sheer_belt != 'No' || this.item[i].sheer_belt))) {
+        belt_hook = true
+      }
+
+    } else {
+      if (this.item[i].pleat == 'Roman Blind') {
+        // curtain = true
+        sheer = false
+        track = false
+        track_sheer = false
+        // lining = false
+        blind = true
+        isRomanBlind = true
+        belt_hook = false
+        console.log('blindcurtain');
+
+        if (this.item[i].fabric_blind != null) {
+          blind = true
+          blind_id = this.fabricBlind.filter(x => x.name == this.item[i].fabric_blind)[0]['id']
+        }
+
+        if (this.item[i].fabric != null) {
+          curtain = true
+          curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+        } else {
+          curtain = false
+        }
+
+        if (this.item[i].fabric_lining != null) {
+          lining = true
+          lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
+        } else {
+          lining = false
+        }
+
+      } else {
+        curtain = false
+        sheer = false
+        track = false
+        track_sheer = false
+        lining = false
+        belt_hook = false
+        isRomanBlind = false
+        blind = true
+        console.log('blind');
+
+        if (this.item[i].fabric_blind != null && this.item[i].fabric_blind != '') {
+          blind_id = (this.fabricBlind.filter(x => x.name == this.item[i].fabric_blind))[0]['id']
+        }
+
+        if (this.item[i].pleat == 'Wooden Blind') {
+          if (this.item[i].blind_tape) {
+            tape_id = (this.blindTape.filter(x => x.name == this.item[i].blind_tape))[0]['id']
+            tape = true
+          }
+        }
+
+      }
+
+      // if (this.item[i].pleat != null && this.item[i].pleat != '') {
+      //   pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
+      // }
+    }
+
+    let temp = {
+      width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
+      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
+      pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
+      promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0,
+      motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost, motorized_power: this.item[i].motorized_power, motorized_choice: this.item[i].motorized_choice, motorized_pieces: this.item[i].motorized_pieces, motorized_lift: this.item[i].motorized_lift,
+      belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id
+
+    }
+
+    console.log(temp);
+
+    this.http.post('https://curtain.vsnap.my/calcPrice', temp).subscribe(a => {
+
+      this.calc.push(a['data'])
+      this.count++
+      this.dueamount(i)
+
+      if (this.calc[i].install.scaftfolding) {
+        this.scaftfolding = true
+      }
+      if (this.calc[i].install.ladder) {
+        this.ladder = true
+      }
+
+      if (this.calc.length != this.item.length) {
+        this.loop()
+      }
+      console.log(this.calc);
+
+      if (this.calc.length == this.item.length) {
+        console.log('finish');
+
+
+        // if (this.item.height > 180) {
+        //   this.item.need_scaftfolding = true
+        // } else if (this.item.height >= 156 && this.item.height <= 180) {
+        //   this.item.need_ladder = true
+        // } else {
+        //   this.item.need_scaftfolding = false
+        //   this.item.need_ladder = false
+        // }
+
+        Swal.close()
+        this.loading = true
+      }
+
+    })
+
+  }
+
+  dueamount(i) {
+    if (this.item[i].price_old != null) {
+      let temp = this.item[i].price - this.item[i].price_old
+      this.due += temp
+      console.log(this.due);
+
+    }
+  }
+
+  lengthof(x) {
+    return Object.keys(x || {}).length
+  }
+
+  back() {
+    this.nav.pop()
   }
 
   pdfmakerSO() {
@@ -1222,328 +1674,6 @@ export class QuotationOverallPage implements OnInit {
     })
   }
 
-  checkout() {
-
-    if (this.info['rejected'] == true) {
-      let temp = {
-        no: this.sales_id,
-        step: 3,
-        rejected: false,
-        latest_quo_id: this.quoRef,
-        need_scaftfolding: this.scaftfolding,
-        need_ladder: this.ladder,
-      }
-
-      console.log('rejected');
-
-      // Swal.fire({
-      //   title: 'Checkout?',
-      //   text: 'Checkout the sales?',
-      //   heightAuto: false,
-      //   icon: 'warning',
-      //   showConfirmButton: true,
-      //   showCancelButton: true,
-      //   cancelButtonText: 'Cancel',
-      //   cancelButtonColor: '#d33',
-      //   confirmButtonText: 'Checkout',
-      //   reverseButtons: true,
-      // }).then((y) => {
-      //   if (y.isConfirmed) {
-      this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
-        Swal.fire({
-          title: 'Checked Out Successfully',
-          icon: 'success',
-          heightAuto: false,
-          showConfirmButton: false,
-          showCancelButton: false,
-          timer: 1500,
-        })
-        this.nav.navigateRoot('/tabs/tab1')
-      })
-
-      //   }
-      // })
-
-    } else {
-      let temp = {
-        no: this.sales_id,
-        latest_quo_id: this.quoRef,
-        step: 2,
-        need_scaftfolding: this.scaftfolding,
-        need_ladder: this.ladder,
-      }
-      console.log('xrejected');
-
-      // Swal.fire({
-      //   title: 'Checkout?',
-      //   text: 'Checkout the sales?',
-      //   heightAuto: false,
-      //   icon: 'warning',
-      //   showConfirmButton: true,
-      //   showCancelButton: true,
-      //   cancelButtonText: 'Cancel',
-      //   cancelButtonColor: '#d33',
-      //   confirmButtonText: 'Checkout',
-      //   reverseButtons: true,
-      // }).then((y) => {
-      //   if (y.isConfirmed) {
-      this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
-        // Swal.fire({
-        //   title: 'Checked Out Successfully',
-        //   icon: 'success',
-        //   heightAuto: false,
-        //   showConfirmButton: false,
-        //   showCancelButton: false,
-        //   timer: 1500,
-        // })
-        //   // this.nav.navigateRoot('/tabs/tab1')
-        Swal.close()
-        // this.createSo()
-        this.isCreateSo = true
-
-      })
-
-      //   }
-      // })
-    }
-
-  }
-
-  calcPrice(i) {
-    let width = 0 as any
-    let height = 0 as any
-    if (this.item[i].height_tech != null || this.item[i].width_tech != null) {
-      if (this.item[i].status_tech == 'Approved' && this.item[i].status_sale == 'Completed') {
-        width = this.item[i].width
-        height = this.item[i].height
-      } else {
-        width = this.item[i].width_tech
-        height = this.item[i].height_tech
-      }
-
-    } else {
-      width = this.item[i].width
-      height = this.item[i].height
-    }
-
-    let curtain = false
-    let curtain_id
-    let lining = false
-    let lining_id
-    let sheer = false
-    let sheer_id
-    let track = false
-    let track_id
-    let track_sheer = false
-    let track_sheer_id
-    let blind = false
-    let blind_id
-    let pleat_id
-    let pleat_sheer_id
-    let belt_hook = false
-    let isRomanBlind = false
-    let tape_id
-    let tape = false
-
-    console.log(this.item[i]);
-
-    if (this.item[i].type != 'Blinds') {
-
-      if (this.item[i].fabric != null) {
-        if (this.item[i].fabric_type == 'C' || this.item[i].fabric_type == 'CS') {
-          curtain = true
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
-        } else {
-          curtain = false
-        }
-      } else {
-        curtain = false
-      }
-
-      if (this.item[i].fabric_lining != null) {
-        if (this.item[i].fabric_type == 'C' || this.item[i].fabric_type == 'CS') {
-          lining = true
-          lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
-        } else {
-          lining = false
-        }
-      } else {
-        lining = false
-      }
-
-      if (this.item[i].fabric_sheer != null) {
-        if (this.item[i].fabric_type == 'S' || this.item[i].fabric_type == 'CS') {
-          sheer = true
-          sheer_id = this.fabricSheer.filter(x => x.name == this.item[i].fabric_sheer)[0]['id']
-        } else {
-          sheer = false
-        }
-      } else {
-        sheer = false
-      }
-
-      if (this.item[i].track != null) {
-        if (this.item[i].fabric_type == 'C' || this.item[i].fabric_type == 'CS') {
-          track = true
-          track_id = this.tracklist.filter(x => x.name == this.item[i].track)[0]['id']
-        } else {
-          track = false
-        }
-      } else {
-        track = false
-      }
-
-      if (this.item[i].track_sheer != null) {
-        if (this.item[i].fabric_type == 'S' || this.item[i].fabric_type == 'CS') {
-          track_sheer = true
-          track_sheer_id = this.tracklist.filter(x => x.name == this.item[i].track_sheer)[0]['id']
-        } else {
-          track_sheer = false
-        }
-      } else {
-        track_sheer = false
-      }
-
-      if (this.item[i].pleat != null && this.item[i].pleat != '') {
-        pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
-      }
-
-      if (this.item[i].pleat_sheer != null && this.item[i].pleat_sheer != '') {
-        pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item[i].pleat_sheer)[0]['id']
-      }
-
-      if ((this.item[i].sidehook == 'Yes' && (this.item[i].belt != 'No' || this.item[i].belt)) || (this.item[i].sheer_sidehook == 'Yes' && (this.item[i].sheer_belt != 'No' || this.item[i].sheer_belt))) {
-        belt_hook = true
-      }
-
-    } else {
-      if (this.item[i].pleat == 'Roman Blind') {
-        // curtain = true
-        sheer = false
-        track = false
-        track_sheer = false
-        // lining = false
-        blind = true
-        isRomanBlind = true
-        belt_hook = false
-        console.log('blindcurtain');
-
-        if (this.item[i].fabric_blind != null) {
-          blind = true
-          blind_id = this.fabricBlind.filter(x => x.name == this.item[i].fabric_blind)[0]['id']
-        }
-
-        if (this.item[i].fabric != null) {
-          curtain = true
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
-        } else {
-          curtain = false
-        }
-
-        if (this.item[i].fabric_lining != null) {
-          lining = true
-          lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
-        } else {
-          lining = false
-        }
-
-      } else {
-        curtain = false
-        sheer = false
-        track = false
-        track_sheer = false
-        lining = false
-        belt_hook = false
-        isRomanBlind = false
-        blind = true
-        console.log('blind');
-
-        if (this.item[i].fabric_blind != null && this.item[i].fabric_blind != '') {
-          blind_id = (this.fabricBlind.filter(x => x.name == this.item[i].fabric_blind))[0]['id']
-        }
-
-        if (this.item[i].pleat == 'Wooden Blind') {
-          if (this.item[i].blind_tape) {
-            tape_id = (this.blindTape.filter(x => x.name == this.item[i].blind_tape))[0]['id']
-            tape = true
-          }
-        }
-
-      }
-
-      // if (this.item[i].pleat != null && this.item[i].pleat != '') {
-      //   pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
-      // }
-    }
-
-    let temp = {
-      width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
-      curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
-      pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
-      promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0,
-      motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost, motorized_power: this.item[i].motorized_power, motorized_choice: this.item[i].motorized_choice, motorized_pieces: this.item[i].motorized_pieces, motorized_lift: this.item[i].motorized_lift,
-      belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id
-
-    }
-
-    console.log(temp);
-
-    this.http.post('https://curtain.vsnap.my/calcPrice', temp).subscribe(a => {
-
-      this.calc.push(a['data'])
-      this.count++
-      this.dueamount(i)
-
-      if (this.calc[i].install.scaftfolding) {
-        this.scaftfolding = true
-      }
-      if (this.calc[i].install.ladder) {
-        this.ladder = true
-      }
-
-      if (this.calc.length != this.item.length) {
-        this.loop()
-      }
-      console.log(this.calc);
-
-      if (this.calc.length == this.item.length) {
-        console.log('finish');
-
-
-        // if (this.item.height > 180) {
-        //   this.item.need_scaftfolding = true
-        // } else if (this.item.height >= 156 && this.item.height <= 180) {
-        //   this.item.need_ladder = true
-        // } else {
-        //   this.item.need_scaftfolding = false
-        //   this.item.need_ladder = false
-        // }
-
-        Swal.close()
-        this.loading = true
-      }
-
-    })
-
-  }
-
-  dueamount(i) {
-    if (this.item[i].price_old != null) {
-      let temp = this.item[i].price - this.item[i].price_old
-      this.due += temp
-      console.log(this.due);
-
-    }
-  }
-
-  lengthof(x) {
-    return Object.keys(x || {}).length
-  }
-
-  back() {
-    this.nav.pop()
-  }
-
   pdfmaker(pass) {
     console.log(this.info);
 
@@ -2015,6 +2145,13 @@ export class QuotationOverallPage implements OnInit {
       total += this.item[i].price
     }
 
+    let packageWord = ''
+    let packagePrice = 0
+    if (this.info.package_code) {
+      packageWord = this.packageApplied.type + ' PACKAGE OFFER (RM)'
+      packagePrice = total - this.packageApplied.price
+    }
+
     // Playground start here
     var dd = {
       //Header
@@ -2155,10 +2292,10 @@ export class QuotationOverallPage implements OnInit {
                 { text: 'TRANSPORTATION FEES (RM)', bold: true, border: [true, false, false, true] },
                 { text: (this.info.transport_fee).toFixed(2), alignment: 'right', border: [false, false, true, true] },
               ],
-              // [
-              //   { text: 'TRANSPORTATION FEES (RM)', bold: true, border: [true, false, false, true] },
-              //   { text: '100.00', alignment: 'right', border: [false, false, true, true] },
-              // ],
+              [
+                { text: packageWord, bold: true, border: [true, false, false, true] },
+                { text: this.info.package_code ? '(-' + (packagePrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ')' : '', alignment: 'right', border: [false, false, true, true] },
+              ],
               // [
               //   { text: 'LESS DISCOUNT (RM)', bold: true, border: [true, false, false, true] },
               //   { text: '5,159.00', alignment: 'right', border: [false, false, true, true] },
@@ -2181,7 +2318,7 @@ export class QuotationOverallPage implements OnInit {
               ],
               [
                 { text: 'FINAL TOTAL (RM)', bold: true, border: [true, false, false, true] },
-                { text: ((this.totalPrice()).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), bold: true, alignment: 'right', border: [false, false, true, true] },
+                { text: (this.info.package_code ? (this.totalPrice() - packagePrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : (this.totalPrice()).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), bold: true, alignment: 'right', border: [false, false, true, true] },
               ],
             ]
           },
@@ -2919,6 +3056,14 @@ export class QuotationOverallPage implements OnInit {
       total += this.item[i].price
     }
 
+    // Package
+    let packageWord = ''
+    let packagePrice = 0
+    if (this.info.package_code) {
+      packageWord = this.packageApplied.type + ' PACKAGE OFFER (RM)'
+      packagePrice = total - this.packageApplied.price
+    }
+
     //is Curtain / Sheer / Blind
     let job = ''
     if (isCurtain && isSheer && isBlind) {
@@ -3068,6 +3213,10 @@ export class QuotationOverallPage implements OnInit {
                 { text: (this.info.transport_fee).toFixed(2), bold: true, alignment: 'right', border: [false, false, true, true] },
               ],
               [
+                { text: packageWord, bold: true, border: [true, false, false, true] },
+                { text: this.info.package_code ? '(-' + (packagePrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ')' : '', alignment: 'right', border: [false, false, true, true] },
+              ],
+              [
                 '',
                 '',
               ],
@@ -3081,7 +3230,7 @@ export class QuotationOverallPage implements OnInit {
               ],
               [
                 { text: 'FINAL TOTAL (RM)', bold: true, border: [true, false, false, true] },
-                { text: ((this.totalPrice()).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), bold: true, alignment: 'right', border: [false, false, true, true] },
+                { text: (this.info.package_code ? (this.totalPrice() - packagePrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : (this.totalPrice()).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), bold: true, alignment: 'right', border: [false, false, true, true] },
               ],
             ]
           },
