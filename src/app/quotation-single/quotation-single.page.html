@@ -141,7 +141,7 @@
         <div *ngIf="lengthof(calc.sewing_sheer) > 0"
           style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
           <div>
-            Sewing <span>{{item.pleat_short}} </span>Sheer (ft)
+            Sewing <span>{{item.pleat_sheer_short}} </span>Sheer (ft)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -216,6 +216,23 @@
             </div>
             <div *ngIf="calc.motorized.cost != 'FOC'" style="width: 70%;text-align: end;">
               {{calc.motorized.total | currency: ' '}}
+            </div>
+          </div>
+        </div>
+
+        <!-- Lift -->
+        <div *ngIf="calc.motorized.lift != 0"
+          style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+          <div>
+            Upgrade Lift System ({{calc.motorized.unit}})
+          </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              {{calc.motorized.qty}}
+            </div>
+            <div style="width: 70%;text-align: end;">
+              {{calc.motorized.lift | currency: ' '}}
             </div>
           </div>
         </div>

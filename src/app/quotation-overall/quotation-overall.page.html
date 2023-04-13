@@ -243,6 +243,23 @@
             </div>
           </div>
 
+          <!-- Lift -->
+          <div *ngIf="calc[i].motorized.lift != 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Upgrade Lift System ({{calc[i].motorized.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].motorized.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].motorized.lift | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
           <!-- Installation Motorized -->
           <div *ngIf="lengthof(calc[i].motorized) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
