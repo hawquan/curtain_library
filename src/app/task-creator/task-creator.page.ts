@@ -942,7 +942,24 @@ export class TaskCreatorPage implements OnInit {
               need_scaftfolding: this.item.need_scaftfolding,
               step: 2,
               promo_blind: this.item.promo_blind || 0,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
             }
+
+            if (this.item.pleat == 'Zebra Blind') {
+              temp.blind_tube = this.item.blind_tube
+            }
+            if (this.item.pleat == 'Roller Blind') {
+              temp.blind_spring = this.item.blind_spring
+              temp.blind_tube = this.item.blind_tube
+            }
+            if (this.item.pleat == 'Wooden Blind') {
+              temp.blind_easylift = this.item.blind_easylift
+              temp.blind_monosys = this.item.blind_monosys
+            }
+
             console.log(temp);
 
             this.createOrder(temp)
@@ -1250,7 +1267,7 @@ export class TaskCreatorPage implements OnInit {
       pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0,
       promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0,
       motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, motorized_choice: this.item.motorized_choice, motorized_pieces: this.item.motorized_pieces, motorized_lift: this.item.motorized_lift,
-      belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id
+      belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id, blind_spring: this.item.blind_spring, blind_tube: this.item.blind_tube, blind_easylift: this.item.blind_easylift, blind_monosys: this.item.blind_monosys,
 
     }
 

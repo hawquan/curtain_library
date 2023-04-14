@@ -731,7 +731,7 @@ export class QuotationOverallPage implements OnInit {
       pieces_curtain: this.item[i].pieces_curtain || 0, pieces_sheer: this.item[i].pieces_sheer || 0, pieces_blind: this.item[i].pieces_blind || 0,
       promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0,
       motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost, motorized_power: this.item[i].motorized_power, motorized_choice: this.item[i].motorized_choice, motorized_pieces: this.item[i].motorized_pieces, motorized_lift: this.item[i].motorized_lift,
-      belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id
+      belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id, blind_spring: this.item[i].blind_spring, blind_tube: this.item[i].blind_tube, blind_easylift: this.item[i].blind_easylift, blind_monosys: this.item[i].blind_monosys,
 
     }
 
@@ -1767,6 +1767,54 @@ export class QuotationOverallPage implements OnInit {
               { text: this.calc[i].blind.qty, alignment: 'center' },
               { text: ((this.calc[i].blind.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' },
               { text: ((this.calc[i].blind.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' }
+            ]
+          )
+        }
+
+        if (this.item[i].pleat == 'Roller Blind' && this.calc[i].blind_spring.total > 0) {
+          items.push(
+            [
+              'Add Spring',
+              { text: this.calc[i].blind_spring.unit, alignment: 'center' },
+              { text: this.calc[i].blind_spring.qty, alignment: 'center' },
+              { text: ((this.calc[i].blind_spring.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' },
+              { text: ((this.calc[i].blind_spring.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' }
+            ]
+          )
+        }
+
+        if ((this.item[i].pleat == 'Roller Blind' || this.item[i].pleat == 'Zebra Blind') && this.calc[i].blind_tube.total > 0) {
+          items.push(
+            [
+              'Add 2.8mm Tube',
+              { text: this.calc[i].blind_tube.unit, alignment: 'center' },
+              { text: this.calc[i].blind_tube.qty, alignment: 'center' },
+              { text: ((this.calc[i].blind_tube.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' },
+              { text: ((this.calc[i].blind_tube.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' }
+            ]
+          )
+        }
+
+        if (this.item[i].pleat == 'Wooden Blind' && this.calc[i].blind_easylift.total > 0) {
+          items.push(
+            [
+              'Easy Lift System',
+              { text: this.calc[i].blind_easylift.unit, alignment: 'center' },
+              { text: this.calc[i].blind_easylift.qty, alignment: 'center' },
+              { text: ((this.calc[i].blind_easylift.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' },
+              { text: ((this.calc[i].blind_easylift.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' }
+            ]
+          )
+        }
+
+        if (this.item[i].pleat == 'Wooden Blind' && this.calc[i].blind_monosys.total > 0) {
+          items.push(
+            [
+              'Mono System',
+              { text: this.calc[i].blind_monosys.unit, alignment: 'center' },
+              { text: this.calc[i].blind_monosys.qty, alignment: 'center' },
+              { text: ((this.calc[i].blind_monosys.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' },
+              { text: ((this.calc[i].blind_monosys.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' }
             ]
           )
         }
@@ -2971,7 +3019,7 @@ export class QuotationOverallPage implements OnInit {
               { text: 'Blind - ' + this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : ''), border: [true, false, true, false] },
               { text: 'set', alignment: 'center', border: [true, false, true, false] },
               { text: 1, alignment: 'center', border: [true, false, true, false] },
-              { text: ((this.calc[i].blind.total + this.calc[i].install.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right', border: [true, false, true, false] },
+              { text: ((this.calc[i].blind.total + this.calc[i].install.total + this.calc[i].blind_spring.total + this.calc[i].blind_tube.total + this.calc[i].blind_easylift.total + this.calc[i].blind_monosys.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right', border: [true, false, true, false] },
               // { text: ((this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right', border: [true, false, true, false] }
             ]
           )

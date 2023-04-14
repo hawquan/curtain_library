@@ -254,7 +254,7 @@
               </div>
             </div>
           </div>
-          
+
           <!-- Installation Ladder -->
           <div *ngIf="calc[i].install.ladder"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
@@ -479,6 +479,74 @@
               </div>
               <div style="width: 70%;text-align: end;">
                 {{calc[i].mechanism.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Spring -->
+          <div *ngIf="calc[i].blind_spring.total > 0 && x.pleat == 'Roller Blind'"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Add Spring (set)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].blind_spring.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].blind_spring.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Tube -->
+          <div *ngIf="calc[i].blind_tube.total > 0 && (x.pleat == 'Roller Blind' || x.pleat == 'Zebra Blind')"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Add 2.8mm Tube (set)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].blind_tube.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].blind_tube.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Easy Lift -->
+          <div *ngIf="calc[i].blind_easylift.total > 0 && x.pleat == 'Wooden Blind'"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Easy Lift System (sqft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].blind_easylift.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].blind_easylift.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Mono System -->
+          <div *ngIf="calc[i].blind_monosys.total > 0 && x.pleat == 'Wooden Blind'"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Mono System (sqft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].blind_monosys.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].blind_monosys.total | currency: ' '}}
               </div>
             </div>
           </div>
