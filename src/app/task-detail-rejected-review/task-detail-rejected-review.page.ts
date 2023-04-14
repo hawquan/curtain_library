@@ -33,16 +33,17 @@ export class TaskDetailRejectedReviewPage implements OnInit {
   fabriclist = []
   misclist = []
   bracketlist = []
+  bracketlistblind = [{ name: 'Wall' }, { name: 'Ceiling' }, { name: 'Ceiling Pelmet' }]
   hooklist = []
   hooklistadjust = []
   beltlist = []
   otherslist = []
   pieceslist = []
-
   fabricCurtain = []
   fabricSheer = []
   fabricLining = []
   fabricBlind = []
+  blindTape = []
 
   BlindsChoice = ''
 
@@ -55,6 +56,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
   price: any = 0
   hookview = true
+  hookviewsheer = true
   show = false
   showCurtain = false
   showSheer = false
@@ -64,13 +66,17 @@ export class TaskDetailRejectedReviewPage implements OnInit {
   xsheerswitch = 'Collapse'
   fabricType = ''
 
+  keyword = ''
+  areaList = ['Living Hall', 'Dining Hall', 'Master Bedroom', 'Kitchen', 'Daughter Room', 'Son Room', 'Guestroom', 'Balcony', 'Room', 'Laundry Area', 'Parent Room'
+    , 'Study Room', 'Prayer Room', 'Entertainment Hall'].sort((a: any, b: any) => (a > b ? 1 : -1))
+  showSelection = false
+
   ngOnInit() {
     this.item = this.navparam.get('item')
 
     console.log(this.item, this.pleatlist, this.blindlist, this.tracklist, this.fabriclist);
 
     this.price = this.item.price
-    this.pleatSelection()
 
 
     this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
@@ -109,6 +115,12 @@ export class TaskDetailRejectedReviewPage implements OnInit {
       console.log(this.sales_no, this.pleatlist, this.blindlist, this.position, this.tracklist, this.fabriclist);
       this.checkFabric()
     })
+    this.pleatSelection()
+
+    this.http.get('https://curtain.vsnap.my/tapeList').subscribe(a => {
+      this.blindTape = a['data']
+      console.log(this.blindTape);
+    })
 
   }
 
@@ -127,11 +139,44 @@ export class TaskDetailRejectedReviewPage implements OnInit {
   }
 
   pleatSelection() {
+    if (this.item.type != 'Blinds') {
+
+      // if (this.item.fabric_type == 'C') {
+      //   this.item.fullness = this.pleatlist.find(a => a.name == this.item.pleat)['fullness']
+
+      // } else if (this.item.fabric_type == 'S') {
+      //   this.item.fullness_sheer = this.pleatlist.find(a => a.name == this.item.pleat_sheer)['fullness']
+
+      // } else {
+      //   this.item.fullness = this.pleatlist.find(a => a.name == this.item.pleat)['fullness']
+      //   this.item.fullness_sheer = this.pleatlist.find(a => a.name == this.item.pleat_sheer)['fullness']
+      // }
+      if (this.item.fabric_type == 'C') {
+        this.item.fullness = this.pleatlist.find(a => a.name == this.item.pleat)['fullness']
+      } else if (this.item.fabric_type == 'S') {
+        this.item.fullness_sheer = this.pleatlist.find(a => a.name == this.item.pleat_sheer)['fullness']
+      } else if (this.item.fabric_type == 'CS') {
+        if (this.item.pleat) {
+          this.item.fullness = this.pleatlist.find(a => a.name == this.item.pleat)['fullness']
+        }
+        if (this.item.pleat_sheer) {
+          this.item.fullness_sheer = this.pleatlist.find(a => a.name == this.item.pleat_sheer)['fullness']
+        }
+      }
+    }
+
     if (this.item.pleat == 'Eyelet Design' || this.item.pleat == 'Ripplefold') {
       this.hookview = false
       this.item.hook = ''
     } else {
       this.hookview = true
+    }
+
+    if (this.item.pleat_sheer == 'Eyelet Design' || this.item.pleat_sheer == 'Ripplefold') {
+      this.hookviewsheer = false
+      this.item.sheer_hook = ''
+    } else {
+      this.hookviewsheer = true
     }
 
     if (this.item.pleat == 'French Pleat') {
@@ -325,6 +370,9 @@ export class TaskDetailRejectedReviewPage implements OnInit {
     let pleat_id
     let pleat_sheer_id
     let belt_hook = false
+    let isRomanBlind = false
+    let tape = false
+    let tape_id
 
     if (this.item.type != 'Blinds') {
 
@@ -397,17 +445,33 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
     } else {
       if (this.item.pleat == 'Roman Blind') {
-        curtain = true
+        // curtain = true
         sheer = false
         track = false
         track_sheer = false
-        lining = false
+        // lining = false
         blind = true
+        isRomanBlind = true
+        belt_hook = false
         console.log('blindcurtain');
 
-        if ((this.item.fabric_blind != null && this.item.fabric_blind != '') && (this.item.fabric != null && this.item.fabric != '')) {
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+        if (this.item.fabric_blind != null) {
+          blind = true
           blind_id = this.fabricBlind.filter(x => x.name == this.item.fabric_blind)[0]['id']
+        }
+
+        if (this.item.fabric != null) {
+          curtain = true
+          curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+        } else {
+          curtain = false
+        }
+
+        if (this.item.fabric_lining != null) {
+          lining = true
+          lining_id = this.fabricLining.filter(x => x.name == this.item.fabric_lining)[0]['id']
+        } else {
+          lining = false
         }
 
       } else {
@@ -416,11 +480,20 @@ export class TaskDetailRejectedReviewPage implements OnInit {
         track = false
         track_sheer = false
         lining = false
+        belt_hook = false
+        isRomanBlind = false
         blind = true
         console.log('blind');
 
         if (this.item.fabric_blind != null && this.item.fabric_blind != '') {
           blind_id = (this.fabricBlind.filter(x => x.name == this.item.fabric_blind))[0]['id']
+        }
+
+        if (this.item.pleat == 'Wooden Blind') {
+          if (this.item.blind_tape) {
+            tape_id = (this.blindTape.filter(x => x.name == this.item.blind_tape))[0]['id']
+            tape = true
+          }
         }
       }
 
@@ -442,8 +515,8 @@ export class TaskDetailRejectedReviewPage implements OnInit {
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, blind: blind, blind_id: blind_id,
       pieces_curtain: this.item.pieces_curtain || 0, pieces_sheer: this.item.pieces_sheer || 0, pieces_blind: this.item.pieces_blind || 0,
       promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0,
-      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, belt_hook: belt_hook,
-
+      motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, motorized_choice: this.item.motorized_choice, motorized_pieces: this.item.motorized_pieces, motorized_lift: this.item.motorized_lift,
+      belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id, blind_spring: this.item.blind_spring, blind_tube: this.item.blind_tube, blind_easylift: this.item.blind_easylift, blind_monosys: this.item.blind_monosys,
     }
 
     console.log(temp);
@@ -467,7 +540,7 @@ export class TaskDetailRejectedReviewPage implements OnInit {
         this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
       } else {
         if (this.item.motorized_upgrade) {
-          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['motorized']['install'] + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
+          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['motorized']['install'] + a['data']['motorized']['lift']+ a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
         } else {
           this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
         }

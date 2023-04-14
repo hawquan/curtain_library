@@ -768,8 +768,8 @@
                   style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
                 </ion-checkbox>
               </div>
-              <ion-select class="ion-no-padding" [(ngModel)]="item.sheer_sidehook" placeholder="Y/N"
-                interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+              <ion-select class="ion-no-padding" [(ngModel)]="item.sheer_sidehook" placeholder="Y/N" interface="popover"
+                mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
                 style="width: 100%;font-weight: 400; padding-right: 5px; font-weight: 500; color: #333333">
                 <ion-select-option value="Yes">Yes</ion-select-option>
                 <ion-select-option value="No">No</ion-select-option>
@@ -1026,6 +1026,16 @@
         </div>
       </div>
 
+      <!-- Blind Code -->
+      <div *ngIf="item.pleat != 'Roman Blind'"
+        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+        <div style="min-width: 70px;color: #999999;font-size: 12px;">Blind Code<br /><span
+            style="font-size: 9px;color: #c3c3c3;">(Optional)</span></div>
+        <ion-input readonly placeholder="Eg. 01" [(ngModel)]="item.code_blind"
+          style="width: 100% ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+        </ion-input>
+      </div>
+
       <!-- Curtain Fabric -->
       <div *ngIf="item.pleat == 'Roman Blind'"
         style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
@@ -1044,44 +1054,13 @@
         </div>
       </div>
 
-      <!-- Decoration -->
-      <div *ngIf="item.pleat == 'Zebra Blind'"
-        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex;  align-items: flex-start; flex-direction: column;">
-        <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
-          <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Decoration</div>
-          <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="checker.decoration"
-            style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
-          </ion-checkbox>
-        </div>
-
-        <ion-input class="ion-no-padding" readonly [(ngModel)]="item.blind_decoration"
-          style="width: calc(100% - 70px) ;height: 30px;font-size: 14px;" placeholder="Select a decoration">
-        </ion-input>
-      </div>
-
-      <div *ngIf="item.pleat == 'Roller Blind'"
-        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex;  align-items: flex-start; flex-direction: column;">
-        <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
-          <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Decoration</div>
-          <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="checker.decoration"
-            style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
-          </ion-checkbox>
-        </div>
-        <ion-input class="ion-no-padding" readonly [(ngModel)]="item.blind_decoration"
-          style="width: calc(100% - 70px) ;height: 30px;font-size: 14px;" placeholder="Select a decoration">
-        </ion-input>
-      </div>
-
-      <div *ngIf="item.pleat == 'Wooden Blind'"
-        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex;  align-items: flex-start; flex-direction: column;">
-        <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
-          <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Decoration</div>
-          <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="checker.decoration"
-            style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
-          </ion-checkbox>
-        </div>
-        <ion-input class="ion-no-padding" readonly [(ngModel)]="item.blind_decoration"
-          style="width: calc(100% - 70px) ;height: 30px;font-size: 14px;" placeholder="Select a decoration">
+      <!-- Curtain Code -->
+      <div *ngIf="item.pleat == 'Roman Blind'"
+        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+        <div style="min-width: 70px;color: #999999;font-size: 12px;">Fabric Code<br /><span
+            style="font-size: 9px;color: #c3c3c3;">(Optional)</span></div>
+        <ion-input readonly placeholder="Eg. 01" [(ngModel)]="item.code_curtain"
+          style="width: 100% ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
         </ion-input>
       </div>
 
@@ -1135,6 +1114,141 @@
           <ion-select-option value="Right">Right</ion-select-option>
         </ion-select>
 
+      </div>
+
+      <!-- Optional -->
+      <div style="color: #888888;font-weight: 600;margin: 10px 0 5px 0;">Optional</div>
+
+      <!-- Spring / Tube-->
+      <div *ngIf="item.pleat == 'Roller Blind' || item.pleat == 'Zebra Blind' "
+        style="width: 100%;display: flex;align-items: center;">
+
+        <div *ngIf="item.pleat == 'Roller Blind'"
+          style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+          <div style="min-width: 70px;color: #999999">Spring</div>
+          <ion-select [(ngModel)]="item.blind_spring" placeholder="Y/N" interface="popover" mode="ios"
+            [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+            style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 5px; font-weight: 500; color: #333333">
+            <ion-select-option value="Yes">Yes</ion-select-option>
+            <ion-select-option value="No">No</ion-select-option>
+          </ion-select>
+        </div>
+
+        <div *ngIf="item.pleat == 'Roller Blind' || item.pleat == 'Zebra Blind'"
+          style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+          <div style="min-width: 70px;color: #999999">Tube</div>
+          <ion-select [(ngModel)]="item.blind_tube" placeholder="Y/N" interface="popover" mode="ios"
+            [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+            style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 10px; font-weight: 500; color: #333333">
+            <ion-select-option value="Yes">Yes</ion-select-option>
+            <ion-select-option value="No">No</ion-select-option>
+          </ion-select>
+        </div>
+
+      </div>
+
+      <!-- Easy Lift / Mono Sys.-->
+      <div *ngIf="item.pleat == 'Wooden Blind'" style="width: 100%;display: flex;align-items: center;">
+
+        <div
+          style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+          <div style="min-width: 70px;color: #999999">Easy Lift</div>
+          <ion-select [(ngModel)]="item.blind_easylift" placeholder="Y/N" interface="popover" mode="ios"
+            [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+            style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 5px; font-weight: 500; color: #333333">
+            <ion-select-option value="Yes">Yes</ion-select-option>
+            <ion-select-option value="No">No</ion-select-option>
+          </ion-select>
+        </div>
+
+        <div
+          style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+          <div style="min-width: 70px;color: #999999">Mono Sys.</div>
+          <ion-select [(ngModel)]="item.blind_monosys" placeholder="Y/N" interface="popover" mode="ios"
+            [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+            style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 10px; font-weight: 500; color: #333333">
+            <ion-select-option value="Yes">Yes</ion-select-option>
+            <ion-select-option value="No">No</ion-select-option>
+          </ion-select>
+        </div>
+
+      </div>
+
+      <!-- Lining -->
+      <div *ngIf="item.pleat == 'Roman Blind'"
+        style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px;display: flex; align-items: center; justify-content: space-between;">
+        <div style="min-width: 70px;color: #999999">Lining </div>
+        <div style="width: 100%;display: flex;align-items: center;padding: 13px 5px 13px 10px;font-size: 14px;">
+          <ion-input class="ion-no-padding" (click)="selector('this.fabricLining', 'this.item.fabric_lining')" readonly
+            [(ngModel)]="item.fabric_lining" placeholder="Select Lining Fabric">
+          </ion-input>
+          <ion-icon *ngIf="item.fabric_lining != null && item.fabric_lining != ''" (click)="clearFabric('lining')"
+            style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
+        </div>
+      </div>
+
+      <!-- Lining Code -->
+      <div *ngIf="item.pleat == 'Roman Blind'"
+        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+        <div style="min-width: 70px;color: #999999;font-size: 12px;">Lining Code<br /><span
+            style="font-size: 9px;color: #c3c3c3;">(Optional)</span></div>
+        <ion-input placeholder="Eg. 01" [(ngModel)]="item.code_lining"
+          style="width: 100% ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+        </ion-input>
+      </div>
+
+       <!-- Decoration -->
+       <div *ngIf="item.pleat == 'Zebra Blind'"
+       style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex;  align-items: flex-start; flex-direction: column;">
+       <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
+         <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Decoration</div>
+         <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="checker.decoration"
+           style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
+         </ion-checkbox>
+       </div>
+
+       <ion-input class="ion-no-padding" readonly [(ngModel)]="item.blind_decoration"
+         style="width: calc(100% - 70px) ;height: 30px;font-size: 14px;" placeholder="Select a decoration">
+       </ion-input>
+     </div>
+
+     <div *ngIf="item.pleat == 'Roller Blind'"
+       style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex;  align-items: flex-start; flex-direction: column;">
+       <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
+         <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Decoration</div>
+         <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="checker.decoration"
+           style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
+         </ion-checkbox>
+       </div>
+       <ion-input class="ion-no-padding" readonly [(ngModel)]="item.blind_decoration"
+         style="width: calc(100% - 70px) ;height: 30px;font-size: 14px;" placeholder="Select a decoration">
+       </ion-input>
+     </div>
+
+     <div *ngIf="item.pleat == 'Wooden Blind'"
+       style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex;  align-items: flex-start; flex-direction: column;">
+       <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
+         <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Decoration</div>
+         <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="checker.decoration"
+           style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
+         </ion-checkbox>
+       </div>
+       <ion-input class="ion-no-padding" readonly [(ngModel)]="item.blind_decoration"
+         style="width: calc(100% - 70px) ;height: 30px;font-size: 14px;" placeholder="Select a decoration">
+       </ion-input>
+     </div>
+
+      <!-- Tape -->
+      <div *ngIf="item.pleat == 'Wooden Blind'"
+        style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px;display: flex; align-items: center; justify-content: space-between;">
+        <div style="min-width: 70px;color: #999999">Tape</div>
+        <div style="width: 100%;display: flex;align-items: center;padding: 13px 5px 13px 10px;font-size: 14px;">
+          <ion-input class="ion-no-padding" (click)="selector('this.blindTape', 'this.item.blind_tape')" readonly
+            [(ngModel)]="item.blind_tape" placeholder="Select Tape">
+          </ion-input>
+          <ion-icon *ngIf="item.blind_tape != null && item.blind_tape != ''" (click)="clearFabric('tape')"
+            style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
+        </div>
       </div>
 
       <!-- Hook -->

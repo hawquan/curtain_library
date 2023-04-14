@@ -1002,6 +1002,61 @@
         <!-- Optional -->
         <div style="color: #888888;font-weight: 600;margin: 10px 0 5px 0;">Optional</div>
 
+        <!-- Spring / Tube-->
+        <div *ngIf="item.pleat == 'Roller Blind' || item.pleat == 'Zebra Blind' "
+          style="width: 100%;display: flex;align-items: center;">
+
+          <div *ngIf="item.pleat == 'Roller Blind'"
+            style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+            <div style="min-width: 70px;color: #999999">Spring</div>
+            <ion-select [(ngModel)]="item.blind_spring" placeholder="Y/N" interface="popover" mode="ios"
+              [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+              style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 5px; font-weight: 500; color: #333333">
+              <ion-select-option value="Yes">Yes</ion-select-option>
+              <ion-select-option value="No">No</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div *ngIf="item.pleat == 'Roller Blind' || item.pleat == 'Zebra Blind'"
+            style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+            <div style="min-width: 70px;color: #999999">Tube</div>
+            <ion-select [(ngModel)]="item.blind_tube" placeholder="Y/N" interface="popover" mode="ios"
+              [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+              style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 10px; font-weight: 500; color: #333333">
+              <ion-select-option value="Yes">Yes</ion-select-option>
+              <ion-select-option value="No">No</ion-select-option>
+            </ion-select>
+          </div>
+
+        </div>
+
+        <!-- Easy Lift / Mono Sys.-->
+        <div *ngIf="item.pleat == 'Wooden Blind'" style="width: 100%;display: flex;align-items: center;">
+
+          <div
+            style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+            <div style="min-width: 70px;color: #999999">Easy Lift</div>
+            <ion-select [(ngModel)]="item.blind_easylift" placeholder="Y/N" interface="popover" mode="ios"
+              [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+              style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 5px; font-weight: 500; color: #333333">
+              <ion-select-option value="Yes">Yes</ion-select-option>
+              <ion-select-option value="No">No</ion-select-option>
+            </ion-select>
+          </div>
+
+          <div
+            style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+            <div style="min-width: 70px;color: #999999">Mono Sys.</div>
+            <ion-select [(ngModel)]="item.blind_monosys" placeholder="Y/N" interface="popover" mode="ios"
+              [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+              style="width: calc(100% - 70px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 10px; font-weight: 500; color: #333333">
+              <ion-select-option value="Yes">Yes</ion-select-option>
+              <ion-select-option value="No">No</ion-select-option>
+            </ion-select>
+          </div>
+
+        </div>
+
         <!-- Lining -->
         <div *ngIf="item.pleat == 'Roman Blind'"
           style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px;display: flex; align-items: center; justify-content: space-between;">

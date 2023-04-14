@@ -34,7 +34,7 @@ export class TaskDetailReviewPage implements OnInit {
   fabriclist = []
   misclist = []
   bracketlist = []
-  bracketlistblind = [{name:'Wall'}, {name:'Ceiling'}, {name:'Ceiling Pelmet'}]
+  bracketlistblind = [{ name: 'Wall' }, { name: 'Ceiling' }, { name: 'Ceiling Pelmet' }]
   hooklist = []
   hooklistadjust = []
   beltlist = []
@@ -576,8 +576,6 @@ export class TaskDetailReviewPage implements OnInit {
       } else if (this.item['type'] == 'Blinds') {
         this.item.pleat = this.BlindsChoice
 
-        this.item.price = this.price
-
         for (let i = 0; i < this.instPhoto.photos.length; i++) {
           this.item.photos.push(this.instPhoto.photos[i])
         }
@@ -586,6 +584,8 @@ export class TaskDetailReviewPage implements OnInit {
           no: this.item.no,
           height_tech: this.item.height_tech,
           width_tech: this.item.width_tech,
+          blind_decoration: this.item.blind_decoration,
+          blind_tape: this.item.blind_tape,
           bracket: this.item.bracket,
           rope_chain: this.item.rope_chain,
           // belt: this.item.belt,
@@ -595,11 +595,27 @@ export class TaskDetailReviewPage implements OnInit {
           // custom_belt: this.item.custom_belt,
           // custom_hook: this.item.custom_hook,
           // touchfloor: this.item.touchfloor,
-          price: this.item.price,
+          price: this.price,
           photos: JSON.stringify(this.item.photos),
           status_tech: 'Approved',
           step: 3,
-          remark_tech: this.item.remark_tech
+          remark_tech: this.item.remark_tech,
+          blind_spring: null,
+          blind_tube: null,
+          blind_easylift: null,
+          blind_monosys: null,
+        }
+
+        if (this.item.pleat == 'Zebra Blind') {
+          temp.blind_tube = this.item.blind_tube
+        }
+        if (this.item.pleat == 'Roller Blind') {
+          temp.blind_spring = this.item.blind_spring
+          temp.blind_tube = this.item.blind_tube
+        }
+        if (this.item.pleat == 'Wooden Blind') {
+          temp.blind_easylift = this.item.blind_easylift
+          temp.blind_monosys = this.item.blind_monosys
         }
 
         Swal.fire({
@@ -929,8 +945,6 @@ export class TaskDetailReviewPage implements OnInit {
     } else if (this.item['type'] == 'Blinds') {
       this.item.pleat = this.BlindsChoice
 
-      this.item.price = this.price
-
       for (let i = 0; i < this.instPhoto.photos.length; i++) {
         this.item.photos.push(this.instPhoto.photos[i])
       }
@@ -945,14 +959,32 @@ export class TaskDetailReviewPage implements OnInit {
         // hook: this.item.hook,
         // sidehook: this.item.sidehook,
         touchfloor: this.item.touchfloor,
+        blind_tape: this.item.blind_tape,
+        blind_decoration: this.item.blind_decoration,
         custom_bracket: this.item.custom_bracket,
         // custom_belt: this.item.custom_belt,
         // custom_hook: this.item.custom_hook,
-        price: this.item.price,
+        price: this.price,
         photos: JSON.stringify(this.item.photos),
         status_tech: 'Rejected',
         step: 1,
-        remark_tech: this.item.remark_tech
+        remark_tech: this.item.remark_tech,
+        blind_spring: null,
+        blind_tube: null,
+        blind_easylift: null,
+        blind_monosys: null,
+      }
+
+      if (this.item.pleat == 'Zebra Blind') {
+        temp.blind_tube = this.item.blind_tube
+      }
+      if (this.item.pleat == 'Roller Blind') {
+        temp.blind_spring = this.item.blind_spring
+        temp.blind_tube = this.item.blind_tube
+      }
+      if (this.item.pleat == 'Wooden Blind') {
+        temp.blind_easylift = this.item.blind_easylift
+        temp.blind_monosys = this.item.blind_monosys
       }
 
       console.log(temp);
