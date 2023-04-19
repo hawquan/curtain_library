@@ -237,7 +237,7 @@
           </div>
 
           <!-- Lift -->
-          <div *ngIf="calc[i].motorized.lift != 0"
+          <div *ngIf="lengthof(calc[i].motorized) > 0 && calc[i].motorized.lift != 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
               Upgrade Lift System ({{calc[i].motorized.unit}})
