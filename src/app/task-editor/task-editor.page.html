@@ -1085,7 +1085,7 @@
         </div>
 
         <!-- Decoration -->
-        <div *ngIf="item.pleat == 'Zebra Blind'"
+        <div *ngIf="item.pleat == 'Zebra Blind' && info.show_decoration"
           style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 80px;color: #999999">Decoration</div>
           <ion-select class="ion-no-padding" [(ngModel)]="item.blind_decoration" placeholder="Select a decoration"
@@ -1096,7 +1096,7 @@
           </ion-select>
         </div>
 
-        <div *ngIf="item.pleat == 'Roller Blind'"
+        <div *ngIf="item.pleat == 'Roller Blind' && info.show_decoration"
           style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 80px;color: #999999">Decoration</div>
           <ion-select class="ion-no-padding" [(ngModel)]="item.blind_decoration" placeholder="Select a decoration"
@@ -1107,7 +1107,7 @@
           </ion-select>
         </div>
 
-        <div *ngIf="item.pleat == 'Wooden Blind'"
+        <div *ngIf="item.pleat == 'Wooden Blind' && info.show_decoration"
           style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 80px;color: #999999">Decoration</div>
           <div style="width: 100%;display: flex;align-items: center;">

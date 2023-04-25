@@ -96,9 +96,14 @@
             style="color: red;">*
           </span></div>
         <div style="border: 1px solid #f0f1f3; border-radius: 2px; width: 70%;">
-          <ion-select [(ngModel)]="sales['transport_fee']" interface="popover" placeholder="Select One"
+          <!-- <ion-select [(ngModel)]="sales['transport_fee']" interface="popover" placeholder="Select One"
             style="font-size: 12px; letter-spacing: 0.5px; --padding-start: 10px">
             <ion-select-option *ngFor="let x of feeList; let i = index" [value]="x.price">{{x.name}}
+            </ion-select-option>
+          </ion-select> -->
+          <ion-select [(ngModel)]="sales['transport_fee_state']" interface="popover" placeholder="Select One"
+            style="font-size: 12px; letter-spacing: 0.5px; --padding-start: 10px">
+            <ion-select-option *ngFor="let x of feeList; let i = index" [value]="x.name">{{x.name}}
             </ion-select-option>
           </ion-select>
         </div>
@@ -162,11 +167,21 @@
 
       <div
         style="width: 100%; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
-        <div style="width: 20%; font-size: 11px; color: #655f59; letter-spacing: 0.5px;">Show Promo<span
+        <div style="width: 20%; font-size: 10px; color: #655f59; letter-spacing: 0.5px;">Show Promo<span
             style="color: red;">*</span></div>
         <div style=" width: 70%;">
           <ion-toggle class="ion-no-padding" checked style="padding: 6px 2px;max-height: 23px;"
             [(ngModel)]="sales['show_promo']"></ion-toggle>
+        </div>
+      </div>
+
+      <div
+        style="width: 100%; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;">
+        <div style="width: 20%; font-size: 10px; color: #655f59; letter-spacing: 0.5px;">Show Decoration<span
+            style="color: red;">*</span></div>
+        <div style=" width: 70%;">
+          <ion-toggle class="ion-no-padding" checked style="padding: 6px 2px;max-height: 23px;"
+            [(ngModel)]="sales['show_decoration']"></ion-toggle>
         </div>
       </div>
 
