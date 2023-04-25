@@ -67,6 +67,7 @@ export class AddSalesPage implements OnInit {
     })
 
     this.sales.show_promo = true
+    this.sales.show_decoration = true
   }
 
   selectedId(x) {
@@ -286,6 +287,8 @@ export class AddSalesPage implements OnInit {
 
   update() {
     this.sales.customer_property = this.keywordPro
+    this.sales.transport_fee = this.feeList.filter(a => a.name == this.sales.transport_fee_state)[0]['price']
+    console.log(this.sales);
 
     if (!this.sales['customer_name']) {
 
@@ -410,6 +413,7 @@ export class AddSalesPage implements OnInit {
         transport_fee: this.sales.transport_fee,
         status: true,
         show_promo: this.sales.show_promo,
+        show_decoration: this.sales.show_decoration,
       }
 
       console.log(temp);

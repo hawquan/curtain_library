@@ -243,8 +243,8 @@ export class TaskDetailPage implements OnInit {
       component: TaskCreatorPage,
       componentProps: {
         sales_no: this.sales_id,
-        pleatlist: this.pleatlist,
-        blindlist: this.blindlist,
+        // pleatlist: this.pleatlist,
+        // blindlist: this.blindlist,
         position: this.user['position'],
         tracklist: this.tracklist,
       }

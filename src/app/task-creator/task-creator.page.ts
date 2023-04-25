@@ -86,8 +86,8 @@ export class TaskCreatorPage implements OnInit {
 
   ngOnInit() {
     this.sales_no = this.navparam.get('sales_no')
-    this.pleatlist = this.navparam.get('pleatlist')
-    this.blindlist = this.navparam.get('blindlist')
+    // this.pleatlist = this.navparam.get('pleatlist')
+    // this.blindlist = this.navparam.get('blindlist')
     this.position = this.navparam.get('position')
     this.tracklist = this.navparam.get('tracklist')
 
@@ -95,6 +95,15 @@ export class TaskCreatorPage implements OnInit {
       this.info = a['data'][0]
       console.log('info', this.info);
     })
+
+    this.http.get('https://curtain.vsnap.my/pleatlist').subscribe((s) => {
+      this.pleatlist = s['data']
+    })
+
+    this.http.get('https://curtain.vsnap.my/blindlist').subscribe((s) => {
+      this.blindlist = s['data']
+    })
+
 
     this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
       this.misclist = s['data']
@@ -867,7 +876,7 @@ export class TaskCreatorPage implements OnInit {
             type: this.item.type,
             pleat: this.item.pleat,
             pieces_blind: this.item.pieces_blind,
-            blind_decoration: this.item.blind_decoration,
+            blind_decoration: null,
             bracket: this.item.bracket,
             rope_chain: this.item.rope_chain,
             // hook: this.item.hook,
@@ -892,6 +901,10 @@ export class TaskCreatorPage implements OnInit {
             promo_blind: this.item.promo_blind || 0,
             code_lining: this.item.code_lining,
             code_curtain: this.item.code_curtain,
+          }
+          
+          if (this.info['show_decoration']) {
+            temp.blind_decoration = this.item.blind_decoration
           }
           console.log(temp);
 
@@ -928,7 +941,7 @@ export class TaskCreatorPage implements OnInit {
               type: this.item.type,
               pleat: this.item.pleat,
               pieces_blind: this.item.pieces_blind,
-              blind_decoration: this.item.blind_decoration,
+              blind_decoration: null,
               blind_tape: this.item.blind_tape,
               bracket: this.item.bracket,
               rope_chain: this.item.rope_chain,
@@ -967,7 +980,9 @@ export class TaskCreatorPage implements OnInit {
               temp.blind_easylift = this.item.blind_easylift
               temp.blind_monosys = this.item.blind_monosys
             }
-
+            if (this.info['show_decoration']) {
+              temp.blind_decoration = this.item.blind_decoration
+            }
             console.log(temp);
 
             this.createOrder(temp)

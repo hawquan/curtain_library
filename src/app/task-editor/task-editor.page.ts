@@ -72,9 +72,23 @@ export class TaskEditorPage implements OnInit {
   snapURL
 
 
-  ngOnInit() {
+  async ngOnInit() {
 
-    this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
+    this.item = this.navparam.get('item')
+    this.sales_no = this.navparam.get('sales_no')
+    this.pleatlist = this.navparam.get('pleatlist')
+    this.blindlist = this.navparam.get('blindlist')
+    this.tracklist = this.navparam.get('tracklist')
+
+    await this.http.get('https://curtain.vsnap.my/pleatlist').subscribe((s) => {
+      this.pleatlist = s['data']
+    })
+
+    await this.http.get('https://curtain.vsnap.my/blindlist').subscribe((s) => {
+      this.blindlist = s['data']
+    })
+
+    this.http.get('https://curtain.vsnap.my/miscList').subscribe(async (s) => {
       this.misclist = s['data']
       console.log(this.misclist)
 
@@ -95,12 +109,6 @@ export class TaskEditorPage implements OnInit {
           this.pieceslist.push(this.misclist[i])
         }
       }
-
-      this.item = this.navparam.get('item')
-      this.sales_no = this.navparam.get('sales_no')
-      this.pleatlist = this.navparam.get('pleatlist')
-      this.blindlist = this.navparam.get('blindlist')
-      this.tracklist = this.navparam.get('tracklist')
 
       this.price = this.item.price
 
@@ -858,7 +866,7 @@ export class TaskEditorPage implements OnInit {
             type: this.item.type,
             pleat: this.item.pleat,
             pieces_blind: this.item.pieces_blind,
-            blind_decoration: this.item.blind_decoration,
+            blind_decoration: null,
             bracket: this.item.bracket,
             rope_chain: this.item.rope_chain,
             // hook: this.item.hook,
@@ -884,6 +892,11 @@ export class TaskEditorPage implements OnInit {
             promo_lining: this.item.promo_lining || 0,
             promo_blind: this.item.promo_blind || 0,
           }
+
+          if (this.info['show_decoration']) {
+            temp.blind_decoration = this.item.blind_decoration
+          }
+
           console.log(temp);
 
           this.updateOrder(temp)
@@ -922,7 +935,7 @@ export class TaskEditorPage implements OnInit {
               type: this.item.type,
               pleat: this.item.pleat,
               pieces_blind: this.item.pieces_blind,
-              blind_decoration: this.item.blind_decoration,
+              blind_decoration: null,
               blind_tape: this.item.blind_tape,
               bracket: this.item.bracket,
               rope_chain: this.item.rope_chain,
@@ -961,7 +974,9 @@ export class TaskEditorPage implements OnInit {
               temp.blind_easylift = this.item.blind_easylift
               temp.blind_monosys = this.item.blind_monosys
             }
-
+            if (this.info['show_decoration']) {
+              temp.blind_decoration = this.item.blind_decoration
+            }
             console.log(temp);
 
             this.updateOrder(temp)
