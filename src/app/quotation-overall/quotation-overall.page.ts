@@ -188,7 +188,7 @@ export class QuotationOverallPage implements OnInit {
       total += 200
     }
 
-    total += this.info.transport_fee
+    total += this.info.transport_fee_status ? this.info.transport_fee : 0
     return total || 0
   }
 
@@ -320,7 +320,7 @@ export class QuotationOverallPage implements OnInit {
       addCharges += 200
     }
 
-    addCharges += this.info.transport_fee
+    addCharges += this.info.transport_fee_status ? this.info.transport_fee : 0
 
     return addCharges || 0
   }
@@ -371,7 +371,7 @@ export class QuotationOverallPage implements OnInit {
 
             this.quoRef = 'QT' + this.datepipe.transform(new Date(), 'yyyyMMdd') + this.ref
             this.quoDate = this.datepipe.transform(new Date(), 'd/M/yyyy')
-            this.quoValidity = '7 Days'
+            this.quoValidity = '30 Days'
             this.quoSales = this.salesmaninfo.name
             this.quoPhone = this.salesmaninfo.phone
 
@@ -481,6 +481,7 @@ export class QuotationOverallPage implements OnInit {
         latest_quo_id: this.quoRef,
         need_scaftfolding: this.scaftfolding,
         need_ladder: this.ladder,
+        transport_fee_status: this.info.transport_fee_status,
       }
 
       console.log('rejected');
@@ -516,10 +517,11 @@ export class QuotationOverallPage implements OnInit {
     } else {
       let temp = {
         no: this.sales_id,
-        latest_quo_id: this.quoRef,
         step: 2,
+        latest_quo_id: this.quoRef,
         need_scaftfolding: this.scaftfolding,
         need_ladder: this.ladder,
+        transport_fee_status: this.info.transport_fee_status,
       }
       console.log('xrejected');
 
@@ -2347,8 +2349,8 @@ export class QuotationOverallPage implements OnInit {
                 { text: LSprice, alignment: 'right', border: [false, false, true, true] }
               ],
               [
-                { text: 'TRANSPORTATION FEES (RM)', bold: true, border: [true, false, false, true] },
-                { text: (this.info.transport_fee).toFixed(2), alignment: 'right', border: [false, false, true, true] },
+                { text: this.info.transport_fee_status ? 'TRANSPORTATION FEES (RM)' : 'SELF PICK-UP (RM)', bold: true, border: [true, false, false, true] },
+                { text: this.info.transport_fee_status ? (this.info.transport_fee).toFixed(2) : 'WAIVED', alignment: 'right', border: [false, false, true, true] },
               ],
               [
                 { text: packageWord, bold: true, border: [true, false, false, true] },
@@ -3267,8 +3269,8 @@ export class QuotationOverallPage implements OnInit {
                 { text: LSprice, alignment: 'right', border: [false, false, true, false] }
               ],
               [
-                { text: 'TRANSPORTATION FEES (RM)', bold: true, border: [true, false, false, true] },
-                { text: (this.info.transport_fee).toFixed(2), bold: true, alignment: 'right', border: [false, false, true, true] },
+                { text: this.info.transport_fee_status ? 'TRANSPORTATION FEES (RM)' : 'SELF PICK-UP (RM)', bold: true, border: [true, false, false, true] },
+                { text: this.info.transport_fee_status ? (this.info.transport_fee).toFixed(2) : 'WAIVED', bold: true, alignment: 'right', border: [false, false, true, true] },
               ],
               [
                 { text: packageWord, bold: true, border: [true, false, false, true] },

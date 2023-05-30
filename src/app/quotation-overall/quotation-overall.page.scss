@@ -2,3 +2,28 @@ ion-checkbox {
     --height: 20px;
     --width: 20px;
 }
+
+ion-toggle {
+    height: 12px;
+    width: 17px;
+    padding: 0px;
+    margin-right: 7.5px;
+
+    --background: #ddd;
+    --background-checked: #ddd;
+
+    --handle-background: #eb7769;
+    --handle-background-checked: #95c34e;
+
+    --handle-width: 10px;
+    --handle-height: 10px;
+    --handle-max-height: auto;
+    --handle-spacing: 0px;
+
+    --handle-border-radius: 8px;
+    --handle-box-shadow: none;
+
+    /* Required for iOS handle to overflow the height of the track */
+    overflow: visible;
+    contain: none;
+}

@@ -204,10 +204,10 @@
           <div *ngIf="lengthof(calc[i].track_sheer) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div *ngIf="x.track_sheer == 'Super Track'">
-              (C) {{x.track_sheer}} (ft)
+              (S) {{x.track_sheer}} (ft)
             </div>
             <div *ngIf="x.track_sheer != 'Super Track'">
-              (C) {{x.track_sheer}} Track (ft)
+              (S) {{x.track_sheer}} Track (ft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -736,18 +736,34 @@
         <!-- Transportation fee -->
         <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
 
-          <div>
-            Transportation Fee
+          <div style="display: flex; align-items: center;">
+            <!-- <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="info.transport_fee_status"
+              style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-right: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
+            </ion-checkbox> -->
+            <!-- <ion-toggle class="small-toggle" style="width: 40px; padding: 0px;"
+              [(ngModel)]="info.transport_fee_status"></ion-toggle> -->
+            <ion-toggle [(ngModel)]="info.transport_fee_status"></ion-toggle>
+
+            <div *ngIf="info.transport_fee_status">
+              Transportation Fee
+            </div>
+            <div *ngIf="!info.transport_fee_status">
+              Self Pick-Up
+            </div>
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
             <div style="width: 30%;text-align: center;">
               1
             </div>
-            <div style="width: 70%;text-align: end;">
+            <div *ngIf="info.transport_fee_status" style="width: 70%;text-align: end;">
               {{info.transport_fee | currency: ' '}}
             </div>
+            <div *ngIf="!info.transport_fee_status" style="width: 70%;text-align: end;">
+              WAIVED
+            </div>
           </div>
+
         </div>
 
       </div>
@@ -792,7 +808,7 @@
         <!-- Transportation fee -->
         <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
 
-          <div>
+          <!-- <div>
             Transportation Fee
           </div>
 
@@ -803,7 +819,37 @@
             <div style="width: 70%;text-align: end;">
               {{info.transport_fee | currency: ' '}}
             </div>
+          </div> -->
+
+          <div style="display: flex; align-items: center;">
+            <!-- <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="info.transport_fee_status"
+              style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-right: 10px;--background-checked: #a17635;--border-color-checked: #a17635">
+            </ion-checkbox> -->
+            <!-- <ion-toggle class="small-toggle" style="width: 40px; padding: 0px;"
+              [(ngModel)]="info.transport_fee_status"></ion-toggle> -->
+            <!-- <ion-toggle [(ngModel)]="info.transport_fee_status"></ion-toggle> -->
+
+            <div *ngIf="info.transport_fee_status">
+              Transportation Fee
+            </div>
+            <div *ngIf="!info.transport_fee_status">
+              Self Pick-Up
+            </div>
           </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              1
+            </div>
+            <div *ngIf="info.transport_fee_status" style="width: 70%;text-align: end;">
+              {{info.transport_fee | currency: ' '}}
+            </div>
+            <div *ngIf="!info.transport_fee_status" style="width: 70%;text-align: end;">
+              WAIVED
+            </div>
+          </div>
+
+
         </div>
 
       </div>

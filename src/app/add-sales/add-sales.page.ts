@@ -411,6 +411,8 @@ export class AddSalesPage implements OnInit {
         so_pdf: JSON.stringify([]),
         mo_pdf: JSON.stringify([]),
         transport_fee: this.sales.transport_fee,
+        transport_fee_state: this.sales.transport_fee_state,
+        transport_fee_status: true,
         status: true,
         show_promo: this.sales.show_promo,
         show_decoration: this.sales.show_decoration,
