@@ -128,7 +128,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
       total += 200
     }
 
-    total += this.info.transport_fee
+    total += this.info.transport_fee_status ? this.info.transport_fee : 0
     return total || 0
   }
 
@@ -142,7 +142,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
       addCharges += 200
     }
 
-    addCharges += this.info.transport_fee
+    addCharges += this.info.transport_fee_status ? this.info.transport_fee : 0
 
     return addCharges || 0
   }

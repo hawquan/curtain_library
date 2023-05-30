@@ -172,7 +172,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       total += 200
     }
 
-    total += this.info.transport_fee
+    total += this.info.transport_fee_status ? this.info.transport_fee : 0
     return total || 0
   }
 
@@ -186,7 +186,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       addCharges += 200
     }
 
-    addCharges += this.info.transport_fee
+    addCharges += this.info.transport_fee_status ? this.info.transport_fee : 0
 
     return addCharges || 0
   }
@@ -403,7 +403,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
     this.nav.pop()
   }
 
-  packageView(){
+  packageView() {
     this.viewPackage = true
   }
 
