@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import firebase from 'firebase';
 import { firebaseConfig } from './app.firebase.config';
-import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
+// import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 import { Market } from '@ionic-native/market/ngx';
 import { Platform } from '@ionic/angular';
 import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
@@ -19,7 +19,7 @@ export class AppComponent {
   currentPlatform = ''
 
   constructor(
-    private screenOrientation: ScreenOrientation,
+    // private screenOrientation: ScreenOrientation,
     private market: Market,
     private platform: Platform,
     private fcm: FCM,
@@ -32,7 +32,7 @@ export class AppComponent {
     // D:\Sdk\build-tools\32.0.0\zipalign -v 4 app-release.aab curtain0.0.19.aab
     firebase.initializeApp(firebaseConfig)
     this.platform.ready().then(() => {
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+      // this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
 
       if (this.platform.is('ios') && this.lengthof(this.fcm) > 0) {
         this.fcm.requestPushPermission({

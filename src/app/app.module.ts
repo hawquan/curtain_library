@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -22,7 +21,7 @@ import { SafariViewController } from '@awesome-cordova-plugins/safari-view-contr
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
-  providers: [DatePipe ,ScreenOrientation,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, File, FileOpener,Market,Camera,FCM,SafariViewController],
+  providers: [DatePipe ,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, File, FileOpener,Market,Camera,FCM,SafariViewController],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
