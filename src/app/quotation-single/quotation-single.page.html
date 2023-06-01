@@ -17,7 +17,7 @@
 
 <ion-content style="--background: #FAF7F2">
 
-  <div
+  <div *ngIf="lengthof(calc) > 0 "
     style="margin: 10px;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;background: white;border-radius: 5px; padding: 10px; margin-bottom: 15px;">
 
     <div *ngIf="item.type != 'Blinds'">
@@ -272,7 +272,7 @@
           </div>
 
           <!-- Installation Scaftfolding -->
-          <div *ngIf="calc.install.scaftfolding"
+          <!-- <div *ngIf="calc.install.scaftfolding"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
               Installation w/Scaftfolding ({{calc.install.unit}})
@@ -286,7 +286,8 @@
                 {{calc.install.scaftfolding_price | currency: ' '}}
               </div>
             </div>
-          </div>
+          </div> -->
+
         </div>
         <!-- Installation & Hang -->
         <div *ngIf="lengthof(calc.install) > 0"
@@ -336,7 +337,7 @@
       </div>
     </div>
 
-    <div *ngIf="item.type == 'Blinds' && lengthof(calc.blind) > 0 ">
+    <div *ngIf="item.type == 'Blinds'">
 
       <div style="display: flex;justify-content: space-between; margin-bottom: 15px;">
         <div style="width: fit-content;font-weight: 500;padding-top: 10px;">
@@ -574,7 +575,7 @@
           </div>
 
           <!-- Installation Scaftfolding -->
-          <div *ngIf="calc.install.scaftfolding"
+          <!-- <div *ngIf="calc.install.scaftfolding"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
               Installation w/Scaftfolding ({{calc.install.unit}})
@@ -588,7 +589,7 @@
                 {{calc.install.scaftfolding_price | currency: ' '}}
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <!-- Installation & Hang -->
