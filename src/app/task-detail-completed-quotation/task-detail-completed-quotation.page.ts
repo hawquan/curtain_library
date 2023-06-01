@@ -53,9 +53,11 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
   count = 0
 
   showadditional = false
+  viewPackage = false
   ladder = false
   scaftfolding = false
-  viewPackage = false
+  ladderDelivery = false
+  scaftfoldingDelivery = false
 
   pdfObj = null;
 
@@ -121,11 +123,14 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
       total += this.item[i].price
     }
 
-    if (this.ladder) {
+    if (this.ladderDelivery) {
       total += 100
     }
-    if (this.scaftfolding) {
+    if (this.scaftfoldingDelivery) {
       total += 200
+    }
+    if (this.scaftfolding) {
+      total += 550
     }
 
     total += this.info.transport_fee_status ? this.info.transport_fee : 0
@@ -135,11 +140,14 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
   addCharges() {
     let addCharges = 0
 
-    if (this.ladder) {
+    if (this.ladderDelivery) {
       addCharges += 100
     }
-    if (this.scaftfolding) {
+    if (this.scaftfoldingDelivery) {
       addCharges += 200
+    }
+    if (this.scaftfolding) {
+      addCharges += 550
     }
 
     addCharges += this.info.transport_fee_status ? this.info.transport_fee : 0

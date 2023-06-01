@@ -54,9 +54,10 @@ export class TaskOngoingViewQuotationPage implements OnInit {
   loading = false
   count = 0
 
-
   ladder = false
   scaftfolding = false
+  scaftfoldingDeliver = false
+  ladderDeliver = false
 
   pdfObj = null;
 
@@ -165,11 +166,14 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       total += this.item[i].price
     }
 
-    if (this.ladder) {
+    if (this.ladderDeliver) {
       total += 100
     }
-    if (this.scaftfolding) {
+    if (this.scaftfoldingDeliver) {
       total += 200
+    }
+    if (this.scaftfolding) {
+      total += 550
     }
 
     total += this.info.transport_fee_status ? this.info.transport_fee : 0
@@ -179,11 +183,14 @@ export class TaskOngoingViewQuotationPage implements OnInit {
   addCharges() {
     let addCharges = 0
 
-    if (this.ladder) {
+    if (this.ladderDeliver) {
       addCharges += 100
     }
-    if (this.scaftfolding) {
+    if (this.scaftfoldingDeliver) {
       addCharges += 200
+    }
+    if (this.scaftfolding) {
+      addCharges += 550
     }
 
     addCharges += this.info.transport_fee_status ? this.info.transport_fee : 0
