@@ -25,7 +25,7 @@ export class AppComponent {
     private fcm: FCM,
   ) {
 
-    let version = '000026' 
+    let version = '000027' 
     // ionic cordova build android --release -- -- --packageType=bundle
     // jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore curtain.jks app-release.aab curtain
     // curtain12345

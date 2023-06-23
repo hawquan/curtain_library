@@ -189,8 +189,11 @@ export class QuotationOverallPage implements OnInit {
     if (this.scaftfoldingDeliver) {
       total += 200
     }
-    if (this.scaftfolding) {
-      total +=  550
+    if (this.ladder && this.info.ladder_fee_status) {
+      total += 100
+    }
+    if (this.scaftfolding && this.info.scaftfolding_fee_status) {
+      total += 550
     }
 
     total += this.info.transport_fee_status ? this.info.transport_fee : 0
@@ -324,7 +327,10 @@ export class QuotationOverallPage implements OnInit {
     if (this.scaftfoldingDeliver) {
       addCharges += 200
     }
-    if (this.scaftfolding) {
+    if (this.ladder && this.info.ladder_fee_status) {
+      addCharges += 100
+    }
+    if (this.scaftfolding && this.info.scaftfolding_fee_status) {
       addCharges += 550
     }
 
@@ -487,8 +493,10 @@ export class QuotationOverallPage implements OnInit {
         step: 3,
         rejected: false,
         latest_quo_id: this.quoRef,
-        need_scaftfolding: this.scaftfolding,
-        need_ladder: this.ladder,
+        need_scaftfolding: this.info.scaftfolding_fee_status ? true : false,
+        need_ladder: this.info.ladder_fee_status ? true : false,
+        scaftfolding_fee_status: this.info.scaftfolding_fee_status,
+        ladder_fee_status: this.info.ladder_fee_status,
         transport_fee_status: this.info.transport_fee_status,
       }
 
@@ -527,8 +535,10 @@ export class QuotationOverallPage implements OnInit {
         no: this.sales_id,
         step: 2,
         latest_quo_id: this.quoRef,
-        need_scaftfolding: this.scaftfolding,
-        need_ladder: this.ladder,
+        need_scaftfolding: this.info.scaftfolding_fee_status ? true : false,
+        need_ladder: this.info.ladder_fee_status ? true : false,
+        scaftfolding_fee_status: this.info.scaftfolding_fee_status,
+        ladder_fee_status: this.info.ladder_fee_status,
         transport_fee_status: this.info.transport_fee_status,
       }
       console.log('xrejected');
@@ -755,9 +765,14 @@ export class QuotationOverallPage implements OnInit {
 
       if (this.calc[i].install.scaftfolding) {
         this.scaftfolding = true
+        this.info.scaftfolding_fee_status = true
+        this.scaftfoldingDeliver = true
       }
+
       if (this.calc[i].install.ladder) {
         this.ladder = true
+        this.info.ladder_fee_status = true
+        this.ladderDeliver = true
       }
 
       if (this.calc.length != this.item.length) {
@@ -2209,10 +2224,20 @@ export class QuotationOverallPage implements OnInit {
       }
     }
 
-    if (this.scaftfolding) {
-      insladderscaft = 'SCAFTFOLDING (INSTALLATION)'
-      insLSprice = '550.00'
+    if ((this.ladder && this.info.ladder_fee_status) && (this.scaftfolding && this.info.scaftfolding_fee_status)) {
+      insladderscaft = 'LADDER (INSTALLATION) + SCAFTFOLDING (INSTALLATION)'
+      insLSprice = '650.00'
+    } else {
+      if (this.ladder && this.info.ladder_fee_status) {
+        insladderscaft = 'LADDER (INSTALLATION)'
+        insLSprice = '100.00'
+      }
+      if (this.scaftfolding && this.info.scaftfolding_fee_status) {
+        insladderscaft = 'SCAFTFOLDING (INSTALLATION)'
+        insLSprice = '550.00'
+      }
     }
+
 
     //Get Before Additional Price
     let total = 0
@@ -3131,10 +3156,23 @@ export class QuotationOverallPage implements OnInit {
       }
     }
 
-    if (this.scaftfolding) {
-      insladderscaft = 'SCAFTFOLDING (INSTALLATION)'
-      insLSprice = '550.00'
+    if ((this.ladder && this.info.ladder_fee_status) && (this.scaftfolding && this.info.scaftfolding_fee_status)) {
+      insladderscaft = 'LADDER (INSTALLATION) + SCAFTFOLDING (INSTALLATION)'
+      insLSprice = '650.00'
+    } else {
+      if (this.ladder && this.info.ladder_fee_status) {
+        insladderscaft = 'LADDER (INSTALLATION)'
+        insLSprice = '100.00'
+      }
+      if (this.scaftfolding && this.info.scaftfolding_fee_status) {
+        insladderscaft = 'SCAFTFOLDING (INSTALLATION)'
+        insLSprice = '550.00'
+      }
     }
+    // if (this.scaftfolding && this.info.scaftfolding_fee_status) {
+    //   insladderscaft = 'SCAFTFOLDING (INSTALLATION)'
+    //   insLSprice = '550.00'
+    // }
 
     //Get Before Additional Price
     let total = 0
