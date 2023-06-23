@@ -256,7 +256,7 @@
           </div>
 
           <!-- Installation Ladder -->
-          <div *ngIf="calc[i].install.ladder"
+          <!-- <div *ngIf="calc[i].install.ladder"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
               Installation w/Ladder ({{calc[i].install.unit}})
@@ -270,7 +270,7 @@
                 {{calc[i].install.ladder_price | currency: ' '}}
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!-- Installation Scaftfolding -->
           <!-- <div *ngIf="calc[i].install.scaftfolding"
@@ -552,7 +552,7 @@
           </div>
 
           <!-- Installation Ladder -->
-          <div *ngIf="calc[i].install.ladder"
+          <!-- <div *ngIf="calc[i].install.ladder"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
               Installation w/Ladder ({{calc[i].install.unit}})
@@ -566,7 +566,7 @@
                 {{calc[i].install.ladder_price | currency: ' '}}
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!-- Installation Scaftfolding -->
           <!-- <div *ngIf="calc[i].install.scaftfolding"
@@ -689,6 +689,21 @@
             </div>
             <div style="width: 70%;text-align: end;">
               200.00
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="ladder" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+          <div>
+            Ladder (Installation)
+          </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              1
+            </div>
+            <div style="width: 70%;text-align: end;">
+              100.00
             </div>
           </div>
         </div>
