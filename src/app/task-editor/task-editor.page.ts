@@ -89,7 +89,7 @@ export class TaskEditorPage implements OnInit {
     })
 
     this.http.get('https://curtain.vsnap.my/miscList').subscribe(async (s) => {
-      this.misclist = s['data']
+      this.misclist = s['data'].filter(a => a.status)
       console.log(this.misclist)
 
       for (let i = 0; i < this.misclist.length; i++) {
@@ -1349,7 +1349,12 @@ export class TaskEditorPage implements OnInit {
       if (this.item.fabric != null) {
         if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
           curtain = true
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+          try {
+            curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Fabric', "curtain's fabric")
+            return
+          }
         } else {
           curtain = false
         }
@@ -1360,7 +1365,12 @@ export class TaskEditorPage implements OnInit {
       if (this.item.fabric_lining != null) {
         if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
           lining = true
-          lining_id = this.fabricLining.filter(x => x.name == this.item.fabric_lining)[0]['id']
+          try {
+            lining_id = this.fabricLining.filter(x => x.name == this.item.fabric_lining)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Lining', "lining's fabric")
+            return
+          }
         } else {
           lining = false
         }
@@ -1371,7 +1381,12 @@ export class TaskEditorPage implements OnInit {
       if (this.item.fabric_sheer != null) {
         if (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') {
           sheer = true
-          sheer_id = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['id']
+          try {
+            sheer_id = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Sheer', "sheer's fabric")
+            return
+          }
         } else {
           sheer = false
         }
@@ -1382,7 +1397,12 @@ export class TaskEditorPage implements OnInit {
       if (this.item.track != null) {
         if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
           track = true
-          track_id = this.tracklist.filter(x => x.name == this.item.track)[0]['id']
+          try {
+            track_id = this.tracklist.filter(x => x.name == this.item.track)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Track', "track")
+            return
+          }
         } else {
           track = false
         }
@@ -1393,7 +1413,12 @@ export class TaskEditorPage implements OnInit {
       if (this.item.track_sheer != null) {
         if (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') {
           track_sheer = true
-          track_sheer_id = this.tracklist.filter(x => x.name == this.item.track_sheer)[0]['id']
+          try {
+            track_sheer_id = this.tracklist.filter(x => x.name == this.item.track_sheer)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg("Sheer's Track", "sheer's track")
+            return
+          }
         } else {
           track_sheer = false
         }
@@ -1402,11 +1427,21 @@ export class TaskEditorPage implements OnInit {
       }
 
       if (this.item.pleat != null && this.item.pleat != '') {
-        pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
+        try {
+          pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
+        } catch (error) {
+          this.calcErrorMsg("Pleat", "pleat")
+          return
+        }
       }
 
       if (this.item.pleat_sheer != null && this.item.pleat_sheer != '') {
-        pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item.pleat_sheer)[0]['id']
+        try {
+          pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item.pleat_sheer)[0]['id']
+        } catch (error) {
+          this.calcErrorMsg("Sheer's Pleat", "sheer's pleat")
+          return
+        }
       }
 
       if ((this.item.sidehook == 'Yes' && (this.item.belt != 'No' || this.item.belt)) || (this.item.sheer_sidehook == 'Yes' && (this.item.sheer_belt != 'No' || this.item.sheer_belt))) {
@@ -1429,19 +1464,34 @@ export class TaskEditorPage implements OnInit {
 
         if (this.item.fabric_blind != null) {
           blind = true
-          blind_id = this.fabricBlind.filter(x => x.name == this.item.fabric_blind)[0]['id']
+          try {
+            blind_id = this.fabricBlind.filter(x => x.name == this.item.fabric_blind)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Blind', "blind's fabric")
+            return
+          }
         }
 
         if (this.item.fabric != null) {
           curtain = true
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+          try {
+            curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Fabric', "curtain's fabric")
+            return
+          }
         } else {
           curtain = false
         }
 
         if (this.item.fabric_lining != null) {
           lining = true
-          lining_id = this.fabricLining.filter(x => x.name == this.item.fabric_lining)[0]['id']
+          try {
+            lining_id = this.fabricLining.filter(x => x.name == this.item.fabric_lining)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Lining', "lining's fabric")
+            return
+          }
         } else {
           lining = false
         }
@@ -1458,13 +1508,23 @@ export class TaskEditorPage implements OnInit {
         console.log('blind');
 
         if (this.item.fabric_blind != null && this.item.fabric_blind != '') {
-          blind_id = (this.fabricBlind.filter(x => x.name == this.item.fabric_blind))[0]['id']
+          try {
+            blind_id = this.fabricBlind.filter(x => x.name == this.item.fabric_blind)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Blind', "blind's fabric")
+            return
+          }
         }
 
         if (this.item.pleat == 'Wooden Blind') {
           if (this.item.blind_tape) {
-            tape_id = (this.blindTape.filter(x => x.name == this.item.blind_tape))[0]['id']
             tape = true
+            try {
+              tape_id = (this.blindTape.filter(x => x.name == this.item.blind_tape))[0]['id']
+            } catch (error) {
+              this.calcErrorMsg('Tape', "blind's tape")
+              return
+            }
           }
         }
       }
@@ -1521,6 +1581,19 @@ export class TaskEditorPage implements OnInit {
 
     })
 
+  }
+
+  calcErrorMsg(x, y) {
+    Swal.fire({
+      title: x + ' Error',
+      // text: "Please check the curtain's fabric?",
+      html: "Please check the " + y + ", possible issues:<br>- " + x + " Availability<br>- " + x + " Name Changed<br>(Try reselect the " + y + ")",
+      heightAuto: false,
+      icon: 'error',
+      allowOutsideClick: false,
+      showConfirmButton: true,
+      showCancelButton: false,
+    })
   }
 
   numberOnlyValidation(event: any) {

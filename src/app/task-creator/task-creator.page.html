@@ -234,13 +234,17 @@
               </div>
             </div>
 
-            <ion-select *ngIf="item.custom_bracket == false" class="ion-no-padding" [(ngModel)]="item.bracket"
-              placeholder="Select Bracket" interface="popover" mode="ios"
-              [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-              style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
-              <ion-select-option *ngFor="let x of bracketlist; let i = index" [value]="x.name">{{x.name}}
-              </ion-select-option>
-            </ion-select>
+            <div style="width: 100%; display: flex; align-items: center;">
+              <ion-select *ngIf="item.custom_bracket == false" class="ion-no-padding" [(ngModel)]="item.bracket"
+                placeholder="Select Bracket" interface="popover" mode="ios"
+                [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
+                <ion-select-option *ngFor="let x of bracketlist; let i = index" [value]="x.name">{{x.name}}
+                </ion-select-option>
+              </ion-select>
+              <ion-icon *ngIf="item.bracket && !item.custom_bracket" (click)="item.bracket = null"
+                style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
+            </div>
 
             <ion-input class="ion-no-padding" *ngIf="item.custom_bracket" placeholder="Enter Bracket"
               [(ngModel)]="item.bracket"
@@ -266,13 +270,18 @@
                 </div>
               </div>
 
-              <ion-select *ngIf="!item.custom_hook" class="ion-no-padding" [(ngModel)]="item.hook"
-                placeholder="Select Hook" interface="popover" mode="ios"
-                [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-                style="width: 100%;font-size: 14px;height: 30px;padding-right: 5px;">
-                <ion-select-option *ngFor="let x of hooklist; let i = index" [value]="x.name">{{x.name}}
-                </ion-select-option>
-              </ion-select>
+              <div style="width: 100%; display: flex; align-items: center;">
+                <ion-select *ngIf="!item.custom_hook" class="ion-no-padding" [(ngModel)]="item.hook"
+                  placeholder="Select Hook" interface="popover" mode="ios"
+                  [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                  style="width: 100%;font-size: 14px;height: 30px;padding-right: 5px;">
+                  <ion-select-option *ngFor="let x of hooklist; let i = index" [value]="x.name">{{x.name}}
+                  </ion-select-option>
+                </ion-select>
+
+                <ion-icon *ngIf="item.hook && !item.custom_hook" (click)="item.hook = null"
+                  style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
+              </div>
 
               <ion-input class="ion-no-padding" *ngIf="item.custom_hook" placeholder="Enter Hook"
                 [(ngModel)]="item.hook"
@@ -295,13 +304,18 @@
                 </div>
               </div>
 
-              <ion-select *ngIf="!item.custom_hook" class="ion-no-padding" [(ngModel)]="item.hook"
-                placeholder="Select Hook" interface="popover" mode="ios"
-                [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-                style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
-                <ion-select-option *ngFor="let x of hooklistadjust; let i = index" [value]="x.name">{{x.name}}
-                </ion-select-option>
-              </ion-select>
+              <div style="width: 100%; display: flex; align-items: center;">
+                <ion-select *ngIf="!item.custom_hook" class="ion-no-padding" [(ngModel)]="item.hook"
+                  placeholder="Select Hook" interface="popover" mode="ios"
+                  [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                  style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
+                  <ion-select-option *ngFor="let x of hooklistadjust; let i = index" [value]="x.name">{{x.name}}
+                  </ion-select-option>
+                </ion-select>
+
+                <ion-icon *ngIf="item.hook && !item.custom_hook" (click)="item.hook = null"
+                  style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
+              </div>
 
               <ion-input class="ion-no-padding" *ngIf="item.custom_hook" placeholder="Enter Hook"
                 [(ngModel)]="item.hook"
@@ -327,13 +341,18 @@
               </div> -->
             </div>
 
-            <ion-select class="ion-no-padding" [(ngModel)]="item.belt" placeholder="Tieback" interface="popover"
-              mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-              style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
-              <ion-select-option value="Tieback">Tieback</ion-select-option>
-              <ion-select-option value="Velcro">Velcro</ion-select-option>
-              <ion-select-option value="No">No</ion-select-option>
-            </ion-select>
+            <div style="width: 100%; display: flex; align-items: center;">
+              <ion-select class="ion-no-padding" [(ngModel)]="item.belt" placeholder="Tieback" interface="popover"
+                mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
+                <ion-select-option value="Tieback">Tieback</ion-select-option>
+                <ion-select-option value="Velcro">Velcro</ion-select-option>
+                <ion-select-option value="No">No</ion-select-option>
+              </ion-select>
+
+              <ion-icon *ngIf="item.belt" (click)="item.belt = null" style="font-size: 16px; color: #a17635;"
+                name="close-outline"></ion-icon>
+            </div>
 
             <!-- <ion-input class="ion-no-padding" *ngIf="item.custom_belt" placeholder="Enter Belt" [(ngModel)]="item.belt"
               style="width: 100% ;--padding-top: 6.5px;--padding-bottom: 6.5px;font-size: 14px;font-weight: 500; color: #333333">
@@ -353,6 +372,8 @@
                 <ion-select-option value="Yes">Yes</ion-select-option>
                 <ion-select-option value="No">No</ion-select-option>
               </ion-select>
+              <ion-icon *ngIf="item.touchfloor" (click)="item.touchfloor = null"
+                style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
             </div>
 
             <div
@@ -364,6 +385,8 @@
                 <ion-select-option value="Yes">Yes</ion-select-option>
                 <ion-select-option value="No">No</ion-select-option>
               </ion-select>
+              <ion-icon *ngIf="item.sidehook" (click)="item.sidehook = null" style="font-size: 16px; color: #a17635;"
+                name="close-outline"></ion-icon>
             </div>
 
           </div>
@@ -515,13 +538,17 @@
               </div>
             </div>
 
-            <ion-select *ngIf="!item.custom_sheer_bracket" class="ion-no-padding" [(ngModel)]="item.sheer_bracket"
-              placeholder="Select Bracket" interface="popover" mode="ios"
-              [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-              style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
-              <ion-select-option *ngFor="let x of bracketlist; let i = index" [value]="x.name">{{x.name}}
-              </ion-select-option>
-            </ion-select>
+            <div style="width: 100%; display: flex; align-items: center;">
+              <ion-select *ngIf="!item.custom_sheer_bracket" class="ion-no-padding" [(ngModel)]="item.sheer_bracket"
+                placeholder="Select Bracket" interface="popover" mode="ios"
+                [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
+                <ion-select-option *ngFor="let x of bracketlist; let i = index" [value]="x.name">{{x.name}}
+                </ion-select-option>
+              </ion-select>
+              <ion-icon *ngIf="item.sheer_bracket && !item.custom_sheer_bracket" (click)="item.sheer_bracket = null"
+                style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
+            </div>
 
             <ion-input class="ion-no-padding" *ngIf="item.custom_sheer_bracket" placeholder="Enter Bracket"
               [(ngModel)]="item.sheer_bracket"
@@ -547,13 +574,18 @@
                 </div>
               </div>
 
-              <ion-select *ngIf="!item.custom_sheer_hook" class="ion-no-padding" [(ngModel)]="item.sheer_hook"
-                placeholder="Select Hook" interface="popover" mode="ios"
-                [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-                style="width: 100%;font-size: 14px;height: 30px;padding-right: 5px;">
-                <ion-select-option *ngFor="let x of hooklist; let i = index" [value]="x.name">{{x.name}}
-                </ion-select-option>
-              </ion-select>
+              <div style="width: 100%; display: flex; align-items: center;">
+                <ion-select *ngIf="!item.custom_sheer_hook" class="ion-no-padding" [(ngModel)]="item.sheer_hook"
+                  placeholder="Select Hook" interface="popover" mode="ios"
+                  [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                  style="width: 100%;font-size: 14px;height: 30px;padding-right: 5px;">
+                  <ion-select-option *ngFor="let x of hooklist; let i = index" [value]="x.name">{{x.name}}
+                  </ion-select-option>
+                </ion-select>
+
+                <ion-icon *ngIf="item.sheer_hook && !item.custom_sheer_hook" (click)="item.sheer_hook = null"
+                  style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
+              </div>
 
               <ion-input class="ion-no-padding" *ngIf="item.custom_sheer_hook" placeholder="Enter Hook"
                 [(ngModel)]="item.sheer_hook"
@@ -576,13 +608,17 @@
                 </div>
               </div>
 
-              <ion-select *ngIf="!item.custom_sheer_hook" class="ion-no-padding" [(ngModel)]="item.sheer_hook"
-                placeholder="Select Hook" interface="popover" mode="ios"
-                [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-                style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
-                <ion-select-option *ngFor="let x of hooklistadjust; let i = index" [value]="x.name">{{x.name}}
-                </ion-select-option>
-              </ion-select>
+              <div style="width: 100%; display: flex; align-items: center;">
+                <ion-select *ngIf="!item.custom_sheer_hook" class="ion-no-padding" [(ngModel)]="item.sheer_hook"
+                  placeholder="Select Hook" interface="popover" mode="ios"
+                  [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                  style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
+                  <ion-select-option *ngFor="let x of hooklistadjust; let i = index" [value]="x.name">{{x.name}}
+                  </ion-select-option>
+                </ion-select>
+                <ion-icon *ngIf="item.sheer_hook && !item.custom_sheer_hook" (click)="item.sheer_hook = null"
+                  style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
+              </div>
 
               <ion-input class="ion-no-padding" *ngIf="item.custom_sheer_hook" placeholder="Enter Hook"
                 [(ngModel)]="item.sheer_hook"
@@ -615,13 +651,18 @@
               <ion-select-option *ngFor="let x of beltlist; let i = index" [value]="x.name">{{x.name}}
               </ion-select-option>
             </ion-select> -->
-            <ion-select class="ion-no-padding" [(ngModel)]="item.sheer_belt" placeholder="Tieback" interface="popover"
-              mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
-              style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
-              <ion-select-option value="Tieback">Tieback</ion-select-option>
-              <ion-select-option value="Velcro">Velcro</ion-select-option>
-              <ion-select-option value="No">No</ion-select-option>
-            </ion-select>
+
+            <div style="width: 100%; display: flex; align-items: center;">
+              <ion-select class="ion-no-padding" [(ngModel)]="item.sheer_belt" placeholder="Tieback" interface="popover"
+                mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
+                <ion-select-option value="Tieback">Tieback</ion-select-option>
+                <ion-select-option value="Velcro">Velcro</ion-select-option>
+                <ion-select-option value="No">No</ion-select-option>
+              </ion-select>
+              <ion-icon *ngIf="item.sheer_belt" (click)="item.sheer_belt = null"
+                style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
+            </div>
 
             <!-- <ion-input class="ion-no-padding" *ngIf="item.custom_sheer_belt" placeholder="Enter Belt"
               [(ngModel)]="item.sheer_belt"
@@ -642,6 +683,8 @@
                 <ion-select-option value="Yes">Yes</ion-select-option>
                 <ion-select-option value="No">No</ion-select-option>
               </ion-select>
+              <ion-icon *ngIf="item.sheer_touchfloor" (click)="item.sheer_touchfloor = null"
+                style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
             </div>
 
             <div
@@ -653,6 +696,8 @@
                 <ion-select-option value="Yes">Yes</ion-select-option>
                 <ion-select-option value="No">No</ion-select-option>
               </ion-select>
+              <ion-icon *ngIf="item.sheer_sidehook" (click)="item.sheer_sidehook = null"
+                style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
             </div>
 
           </div>
@@ -748,6 +793,8 @@
                 <ion-select-option value="Sheer">Sheer</ion-select-option>
                 <ion-select-option value="Both">Both</ion-select-option>
               </ion-select>
+              <ion-icon *ngIf="item.motorized_choice" (click)="item.motorized_choice = null"
+                style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
             </div>
 
             <!-- Cost -->
@@ -760,6 +807,8 @@
                 <ion-select-option value="Add Cost">Add Cost</ion-select-option>
                 <ion-select-option value="FOC">Free of Charge</ion-select-option>
               </ion-select>
+              <ion-icon *ngIf="item.motorized_cost" (click)="item.motorized_cost = null"
+                style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
             </div>
 
             <!-- Power By / Sides -->
@@ -774,6 +823,8 @@
                   <ion-select-option value="Battery">Battery</ion-select-option>
                   <ion-select-option value="Power Point">Power Point</ion-select-option>
                 </ion-select>
+                <ion-icon *ngIf="item.motorized_power" (click)="item.motorized_power = null"
+                  style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
               </div>
 
               <div
@@ -785,6 +836,8 @@
                   <ion-select-option value="Left">Left</ion-select-option>
                   <ion-select-option value="Right">Right</ion-select-option>
                 </ion-select>
+                <ion-icon *ngIf="item.motorized_sides" (click)="item.motorized_sides = null"
+                  style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
               </div>
 
             </div>
@@ -808,6 +861,8 @@
                   <ion-select-option value="Yes">Yes</ion-select-option>
                   <ion-select-option value="No">No</ion-select-option>
                 </ion-select>
+                <ion-icon *ngIf="item.motorized_lift" (click)="item.motorized_lift = null"
+                  style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
               </div>
             </div>
 
@@ -967,13 +1022,18 @@
             </div>
           </div>
 
-          <ion-select *ngIf="!item.custom_bracket" class="ion-no-padding" [(ngModel)]="item.bracket"
+          <div style="width: 100%; display: flex; align-items: center;">
+            <ion-select *ngIf="!item.custom_bracket" class="ion-no-padding" [(ngModel)]="item.bracket"
             placeholder="Select Bracket" interface="popover" mode="ios"
             [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
             style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
             <ion-select-option *ngFor="let x of bracketlistblind; let i = index" [value]="x.name">{{x.name}}
             </ion-select-option>
           </ion-select>
+
+          <ion-icon *ngIf="item.bracket && !item.custom_bracket" (click)="item.bracket = null"
+            style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
+        </div>
 
           <ion-input class="ion-no-padding" *ngIf="item.custom_bracket" placeholder="Enter Bracket"
             [(ngModel)]="item.bracket"
@@ -990,12 +1050,17 @@
             <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">Rope/Chain</div>
           </div>
 
-          <ion-select class="ion-no-padding" [(ngModel)]="item.rope_chain" placeholder="Select L/R" interface="popover"
+          <div style="width: 100%; display: flex; align-items: center;">
+            <ion-select class="ion-no-padding" [(ngModel)]="item.rope_chain" placeholder="Select L/R" interface="popover"
             mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
             style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
             <ion-select-option value="Left">Left</ion-select-option>
             <ion-select-option value="Right">Right</ion-select-option>
           </ion-select>
+
+          <ion-icon *ngIf="item.rope_chain" (click)="item.rope_chain = null" style="font-size: 16px; color: #a17635;"
+            name="close-outline"></ion-icon>
+        </div>
 
         </div>
 
@@ -1015,6 +1080,9 @@
               <ion-select-option value="Yes">Yes</ion-select-option>
               <ion-select-option value="No">No</ion-select-option>
             </ion-select>
+
+            <ion-icon *ngIf="item.blind_spring" (click)="item.blind_spring = null"
+              style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
           </div>
 
           <div *ngIf="item.pleat == 'Roller Blind' || item.pleat == 'Zebra Blind'"
@@ -1026,6 +1094,9 @@
               <ion-select-option value="Yes">Yes</ion-select-option>
               <ion-select-option value="No">No</ion-select-option>
             </ion-select>
+
+            <ion-icon *ngIf="item.blind_tube" (click)="item.blind_tube = null" style="font-size: 16px; color: #a17635;"
+              name="close-outline"></ion-icon>
           </div>
 
         </div>
@@ -1042,6 +1113,9 @@
               <ion-select-option value="Yes">Yes</ion-select-option>
               <ion-select-option value="No">No</ion-select-option>
             </ion-select>
+
+            <ion-icon *ngIf="item.blind_easylift" (click)="item.blind_easylift = null"
+              style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
           </div>
 
           <div
@@ -1053,6 +1127,9 @@
               <ion-select-option value="Yes">Yes</ion-select-option>
               <ion-select-option value="No">No</ion-select-option>
             </ion-select>
+
+            <ion-icon *ngIf="item.blind_monosys" (click)="item.blind_monosys = null"
+              style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
           </div>
 
         </div>
@@ -1090,6 +1167,9 @@
             <ion-select-option value="V Bottom Bar">V Bottom Bar</ion-select-option>
             <ion-select-option value="U Bottom Bar">U Bottom Bar</ion-select-option>
           </ion-select>
+
+          <ion-icon *ngIf="item.blind_decoration" (click)="item.blind_decoration = null"
+            style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
         </div>
 
         <div *ngIf="item.pleat == 'Roller Blind' && info.show_decoration"
@@ -1101,6 +1181,9 @@
             <ion-select-option value="Headrail">Headrail</ion-select-option>
             <ion-select-option value="Pelmet Box">Pelmet Box</ion-select-option>
           </ion-select>
+
+          <ion-icon *ngIf="item.blind_decoration" (click)="item.blind_decoration = null"
+            style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
         </div>
 
         <div *ngIf="item.pleat == 'Wooden Blind' && info.show_decoration"

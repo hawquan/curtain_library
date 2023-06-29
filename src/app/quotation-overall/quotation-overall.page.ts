@@ -327,10 +327,10 @@ export class QuotationOverallPage implements OnInit {
     if (this.scaftfoldingDeliver) {
       addCharges += 200
     }
-    if (this.ladder && this.info.ladder_fee_status) {
+    if (this.info.ladder_fee_status) {
       addCharges += 100
     }
-    if (this.scaftfolding && this.info.scaftfolding_fee_status) {
+    if (this.info.scaftfolding_fee_status) {
       addCharges += 550
     }
 
@@ -621,7 +621,13 @@ export class QuotationOverallPage implements OnInit {
       if (this.item[i].fabric != null) {
         if (this.item[i].fabric_type == 'C' || this.item[i].fabric_type == 'CS') {
           curtain = true
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+          try {
+            curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Fabric', "curtain's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            this.back()
+            return
+          }
         } else {
           curtain = false
         }
@@ -632,7 +638,13 @@ export class QuotationOverallPage implements OnInit {
       if (this.item[i].fabric_lining != null) {
         if (this.item[i].fabric_type == 'C' || this.item[i].fabric_type == 'CS') {
           lining = true
-          lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
+          try {
+            lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Lining', "lining's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            this.back()
+            return
+          }
         } else {
           lining = false
         }
@@ -643,7 +655,13 @@ export class QuotationOverallPage implements OnInit {
       if (this.item[i].fabric_sheer != null) {
         if (this.item[i].fabric_type == 'S' || this.item[i].fabric_type == 'CS') {
           sheer = true
-          sheer_id = this.fabricSheer.filter(x => x.name == this.item[i].fabric_sheer)[0]['id']
+          try {
+            sheer_id = this.fabricSheer.filter(x => x.name == this.item[i].fabric_sheer)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Sheer', "sheer's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            this.back()
+            return
+          }
         } else {
           sheer = false
         }
@@ -654,7 +672,12 @@ export class QuotationOverallPage implements OnInit {
       if (this.item[i].track != null) {
         if (this.item[i].fabric_type == 'C' || this.item[i].fabric_type == 'CS') {
           track = true
-          track_id = this.tracklist.filter(x => x.name == this.item[i].track)[0]['id']
+          try {
+            track_id = this.tracklist.filter(x => x.name == this.item[i].track)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Track', "track", this.item[i].location + " " + this.item[i].location_ref)
+            return
+          }
         } else {
           track = false
         }
@@ -665,7 +688,12 @@ export class QuotationOverallPage implements OnInit {
       if (this.item[i].track_sheer != null) {
         if (this.item[i].fabric_type == 'S' || this.item[i].fabric_type == 'CS') {
           track_sheer = true
-          track_sheer_id = this.tracklist.filter(x => x.name == this.item[i].track_sheer)[0]['id']
+          try {
+            track_sheer_id = this.tracklist.filter(x => x.name == this.item[i].track_sheer)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg("Sheer's Track", "sheer's track", this.item[i].location + " " + this.item[i].location_ref)
+            return
+          }
         } else {
           track_sheer = false
         }
@@ -674,11 +702,21 @@ export class QuotationOverallPage implements OnInit {
       }
 
       if (this.item[i].pleat != null && this.item[i].pleat != '') {
-        pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
+        try {
+          pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
+        } catch (error) {
+          this.calcErrorMsg("Pleat", "pleat", this.item[i].location + " " + this.item[i].location_ref)
+          return
+        }
       }
 
       if (this.item[i].pleat_sheer != null && this.item[i].pleat_sheer != '') {
-        pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item[i].pleat_sheer)[0]['id']
+        try {
+          pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item[i].pleat_sheer)[0]['id']
+        } catch (error) {
+          this.calcErrorMsg("Sheer's Pleat", "sheer's pleat", this.item[i].location + " " + this.item[i].location_ref)
+          return
+        }
       }
 
       if ((this.item[i].sidehook == 'Yes' && (this.item[i].belt != 'No' || this.item[i].belt)) || (this.item[i].sheer_sidehook == 'Yes' && (this.item[i].sheer_belt != 'No' || this.item[i].sheer_belt))) {
@@ -699,19 +737,34 @@ export class QuotationOverallPage implements OnInit {
 
         if (this.item[i].fabric_blind != null) {
           blind = true
-          blind_id = this.fabricBlind.filter(x => x.name == this.item[i].fabric_blind)[0]['id']
+          try {
+            blind_id = this.fabricBlind.filter(x => x.name == this.item[i].fabric_blind)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Blind', "blind's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            return
+          }
         }
 
         if (this.item[i].fabric != null) {
           curtain = true
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+          try {
+            curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Fabric', "curtain's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            return
+          }
         } else {
           curtain = false
         }
 
         if (this.item[i].fabric_lining != null) {
           lining = true
-          lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
+          try {
+            lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Lining', "lining's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            return
+          }
         } else {
           lining = false
         }
@@ -728,13 +781,23 @@ export class QuotationOverallPage implements OnInit {
         console.log('blind');
 
         if (this.item[i].fabric_blind != null && this.item[i].fabric_blind != '') {
-          blind_id = (this.fabricBlind.filter(x => x.name == this.item[i].fabric_blind))[0]['id']
+          try {
+            blind_id = (this.fabricBlind.filter(x => x.name == this.item[i].fabric_blind))[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Blind', "blind's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            return
+          }
         }
 
         if (this.item[i].pleat == 'Wooden Blind') {
           if (this.item[i].blind_tape) {
-            tape_id = (this.blindTape.filter(x => x.name == this.item[i].blind_tape))[0]['id']
             tape = true
+            try {
+              tape_id = (this.blindTape.filter(x => x.name == this.item[i].blind_tape))[0]['id']
+            } catch (error) {
+              this.calcErrorMsg('Tape', "blind's tape", this.item[i].location + " " + this.item[i].location_ref)
+              return
+            }
           }
         }
 
@@ -799,6 +862,19 @@ export class QuotationOverallPage implements OnInit {
 
     })
 
+  }
+
+  calcErrorMsg(x, y, z) {
+    Swal.fire({
+      title: z + ' Error',
+      // text: "Please check the curtain's fabric?",
+      html: "Please check the " + y + ", possible issues:<br>- " + x + " Availability<br>- " + x + " Name Changed<br>(Try reselect the " + y + ")",
+      heightAuto: false,
+      icon: 'error',
+      allowOutsideClick: false,
+      showConfirmButton: true,
+      showCancelButton: false,
+    })
   }
 
   dueamount(i) {
@@ -1008,7 +1084,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'P', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), fontSize: 8.5 }
                 ],
               )
@@ -1026,7 +1102,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'P', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), fontSize: 8.5 }
                 ],
               )
@@ -1038,30 +1114,32 @@ export class QuotationOverallPage implements OnInit {
             let fabricWidth = this.fabricLining.filter(a => a.name == this.item[i].fabric_lining)[0]['size']
             let pleatShort = this.pleatlist.filter(a => a.name == this.item[i].pleat)[0]['name_short']
 
-            items.push(
-              [
-                { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-              ],
-            )
+            // items.push(
+            //   [
+            //     { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //   ],
+            // )
 
             items.push(
               [
-                { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                // { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
                 { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
-                { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                // { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                { text: '', bold: true, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].fabric_lining + (this.item[i].code_lining ? '-' + this.item[i].code_lining : ''), alignment: 'center', fontSize: 8.5 },
                 { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
                 { text: pleatShort, alignment: 'center', fontSize: 8.5 },
@@ -1069,7 +1147,7 @@ export class QuotationOverallPage implements OnInit {
                 { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
-                { text: 'P', alignment: 'center', fontSize: 8.5 },
+                { text: this.calc[i].lining.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 }
               ],
             )
@@ -1131,7 +1209,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'M', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), fontSize: 8.5 }
                 ],
               )
@@ -1149,7 +1227,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'M', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), fontSize: 8.5 }
                 ],
               )
@@ -1212,7 +1290,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'P', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_curtain || ''), fontSize: 8.5 }
                 ],
               )
@@ -1230,7 +1308,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'P', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_curtain || ''), fontSize: 8.5 }
                 ],
               )
@@ -1244,30 +1322,32 @@ export class QuotationOverallPage implements OnInit {
             let fabricWidth = this.fabricLining.filter(a => a.name == this.item[i].fabric_lining)[0]['size']
             let pleatShort = this.pleatlist.filter(a => a.name == this.item[i].pleat)[0]['name_short']
 
-            items.push(
-              [
-                { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-              ],
-            )
+            // items.push(
+            //   [
+            //     { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //   ],
+            // )
 
             items.push(
               [
-                { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                // { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
                 { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
-                { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                // { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                { text: '', bold: true, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].fabric_lining + (this.item[i].code_lining ? '-' + this.item[i].code_lining : ''), alignment: 'center', fontSize: 8.5 },
                 { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
                 { text: pleatShort, alignment: 'center', fontSize: 8.5 },
@@ -1275,7 +1355,7 @@ export class QuotationOverallPage implements OnInit {
                 { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
-                { text: 'P', alignment: 'center', fontSize: 8.5 },
+                { text: this.calc[i].lining.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 }
               ],
             )
@@ -1317,7 +1397,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'M', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), fontSize: 8.5 }
                 ],
               )
@@ -1335,7 +1415,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'M', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), fontSize: 8.5 }
                 ],
               )
@@ -1386,7 +1466,7 @@ export class QuotationOverallPage implements OnInit {
 
           items.push(
             [
-              { text: width + '" ( W )' + ' x ' + height + '" ( H ) ' + ' (' + rope_chain + ')', fontSize: 8.5 },
+              { text: width + '" ( W )' + ' x ' + height + '" ( H ) ' + (this.item[i].rope_chain ? ' (' + rope_chain + ')' : ''), fontSize: 8.5 },
               { text: '-', alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
               { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -1429,18 +1509,18 @@ export class QuotationOverallPage implements OnInit {
 
             items.push(
               [
-                { text: width + '" ( W )' + ' x ' + height + '" ( H ) ' + ' (' + rope_chain + ')', fontSize: 8.5 },
+                { text: width + '" ( W )' + ' x ' + height + '" ( H ) ' + (this.item[i].rope_chain ? ' (' + rope_chain + ')' : ''), fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                 { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].fabric + (this.item[i].code_curtain ? '-' + this.item[i].code_curtain : ''), alignment: 'center', fontSize: 8.5 },
-                { text: '-', alignment: 'center', fontSize: 8.5 },
+                { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].pieces_blind, alignment: 'center', fontSize: 8.5 },
                 { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
-                { text: '-', alignment: 'center', fontSize: 8.5 },
+                { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 }
               ],
             )
@@ -1452,38 +1532,40 @@ export class QuotationOverallPage implements OnInit {
           let fabricWidth = this.fabricLining.filter(a => a.name == this.item[i].fabric_lining)[0]['size']
           // let pleatShort = this.pleatlist.filter(a => a.name == this.item[i].pleat)[0]['name_short']
 
-          items.push(
-            [
-              { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-            ],
-          )
+          // items.push(
+          //   [
+          //     { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //   ],
+          // )
 
           items.push(
             [
-              { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+              // { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+              { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
               { text: '-', alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
-              { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+              // { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+              { text: '', bold: true, alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].fabric_lining + (this.item[i].code_lining ? '-' + this.item[i].code_lining : ''), alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
+              { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
               { text: '-', alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].pieces_blind, alignment: 'center', fontSize: 8.5 },
               { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
               { text: '-', alignment: 'center', fontSize: 8.5 },
               { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
+              { text: this.calc[i].lining.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
               { text: '', fontSize: 8.5 }
             ],
           )
@@ -1762,7 +1844,7 @@ export class QuotationOverallPage implements OnInit {
 
       items.push(
         [
-          { text: width + '"(w)' + ' x ' + height + '"(h)', border: [true, false, true, false] },
+          { text: width + '"(w)' + ' x ' + height + '"(h)' + (this.item[i].pleat == 'Roller Blind' ? " (" + (this.item[i].rope_chain == 'Right' ? "R" : "L") + ")" : ""), border: [true, false, true, false] },
           { text: '', alignment: 'center', border: [true, false, true, false] },
           { text: '', alignment: 'center', border: [true, false, true, false] },
           { text: '', alignment: 'right', border: [true, false, true, false] },
@@ -3492,14 +3574,14 @@ export class QuotationOverallPage implements OnInit {
         var blob = new Blob([buffer], { type: 'application/pdf' });
 
         // Save the PDF to the data Directory of our App
-        this.file.writeFile(this.file.dataDirectory, 'quotation.pdf', blob, { replace: true }).then(fileEntry => {
+        this.file.writeFile(this.file.dataDirectory, this.quoRef + '.pdf', blob, { replace: true }).then(fileEntry => {
           // Open the PDf with the correct OS tools
-          this.fileOpener.open(this.file.dataDirectory + 'quotation.pdf', 'application/pdf');
+          this.fileOpener.open(this.file.dataDirectory + this.quoRef + '.pdf', 'application/pdf');
         })
       });
     } else {
       // On a browser simply use download!
-      this.pdfObj.download();
+      this.pdfObj.download(this.quoRef + '.pdf');
     }
   }
 
@@ -3515,7 +3597,7 @@ export class QuotationOverallPage implements OnInit {
           if (x == 1) {
             console.log(this.info.quotation_detailed);
 
-            this.info.quotation_detailed.push({ name: this.datepipe.transform(new Date(), 'dd/MM/yyyy hh:mm:ss a'), link: link['imageURL'] })
+            this.info.quotation_detailed.push({ name: this.quoRef, link: link['imageURL'] })
 
             let temp = {
               no: this.sales_id,
@@ -3526,7 +3608,7 @@ export class QuotationOverallPage implements OnInit {
               this.pdfmakerClient(true)
             })
           } else if (x == 2) {
-            this.info.quotation_client.push({ name: this.datepipe.transform(new Date(), 'dd/MM/yyyy hh:mm:ss a'), link: link['imageURL'] })
+            this.info.quotation_client.push({ name: this.quoRef, link: link['imageURL'] })
 
             let temp = {
               no: this.sales_id,

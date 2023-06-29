@@ -73,7 +73,7 @@ export class TailorTaskDetailOngoingPage implements OnInit {
     }
 
     this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
-      this.misclist = s['data']
+      this.misclist = s['data'].filter(a => a.status)
       console.log(this.misclist)
 
       for (let i = 0; i < this.misclist.length; i++) {
