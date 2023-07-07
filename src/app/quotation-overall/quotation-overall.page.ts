@@ -2785,7 +2785,7 @@ export class QuotationOverallPage implements OnInit {
             ]
           )
 
-          if (this.item[i].remark_curtain) {
+          if (this.item[i].remark_curtain || this.item[i].remark_sale) {
 
             items.push(
               [
@@ -2797,15 +2797,30 @@ export class QuotationOverallPage implements OnInit {
               ]
             )
 
-            items.push(
-              [
-                { text: 'Curtain : ' + (this.item[i].remark_curtain || ''), fontSize: 8, border: [true, false, true, false] },
-                { text: '', fontSize: 8.5, border: [true, false, true, false] },
-                { text: '', alignment: 'center', border: [true, false, true, false] },
-                { text: '', border: [true, false, true, false] },
-                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
-              ]
-            )
+            if (this.item[i].remark_curtain) {
+              items.push(
+                [
+                  { text: 'Curtain : ' + (this.item[i].remark_curtain || ''), fontSize: 8, border: [true, false, true, false] },
+                  { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                  { text: '', alignment: 'center', border: [true, false, true, false] },
+                  { text: '', border: [true, false, true, false] },
+                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+                ]
+              )
+            }
+
+            if (this.item[i].remark_sale) {
+              items.push(
+                [
+                  { text: 'Overall : \n' + (this.item[i].remark_sale || ''), fontSize: 8, border: [true, false, true, false] },
+                  { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                  { text: '', alignment: 'center', border: [true, false, true, false] },
+                  { text: '', border: [true, false, true, false] },
+                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+                ]
+              )
+            }
+
           }
 
           // if (this.item[i].remark_sale) {
@@ -2908,7 +2923,7 @@ export class QuotationOverallPage implements OnInit {
             ]
           )
 
-          if (this.item[i].remark_sheer) {
+          if (this.item[i].remark_sheer || this.item[i].remark_sale) {
 
             items.push(
               [
@@ -2920,15 +2935,31 @@ export class QuotationOverallPage implements OnInit {
               ]
             )
 
-            items.push(
-              [
-                { text: 'Sheer : ' + (this.item[i].remark_sheer || ''), fontSize: 8, border: [true, false, true, false] },
-                { text: '', fontSize: 8.5, border: [true, false, true, false] },
-                { text: '', alignment: 'center', border: [true, false, true, false] },
-                { text: '', border: [true, false, true, false] },
-                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
-              ]
-            )
+            if (this.item[i].remark_sheer) {
+
+              items.push(
+                [
+                  { text: 'Sheer : ' + (this.item[i].remark_sheer || ''), fontSize: 8, border: [true, false, true, false] },
+                  { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                  { text: '', alignment: 'center', border: [true, false, true, false] },
+                  { text: '', border: [true, false, true, false] },
+                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+                ]
+              )
+            }
+
+            if (this.item[i].remark_sale) {
+              items.push(
+                [
+                  { text: 'Overall : \n' + (this.item[i].remark_sale || ''), fontSize: 8, border: [true, false, true, false] },
+                  { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                  { text: '', alignment: 'center', border: [true, false, true, false] },
+                  { text: '', border: [true, false, true, false] },
+                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+                ]
+              )
+            }
+
           }
 
           // if (this.item[i].remark_sale) {
@@ -3070,7 +3101,7 @@ export class QuotationOverallPage implements OnInit {
             ]
           )
 
-          if (this.item[i].remark_curtain || this.item[i].remark_sheer) {
+          if (this.item[i].remark_curtain || this.item[i].remark_sheer || this.item[i].remark_sale) {
             items.push(
               [
                 { text: 'Remark', border: [true, false, true, false], decoration: 'underline' },
@@ -3080,30 +3111,43 @@ export class QuotationOverallPage implements OnInit {
                 // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
               ]
             )
-          }
 
-          if (this.item[i].remark_curtain) {
-            items.push(
-              [
-                { text: 'Curtain : ' + (this.item[i].remark_curtain || ''), fontSize: 8, border: [true, false, true, false] },
-                { text: '', fontSize: 8.5, border: [true, false, true, false] },
-                { text: '', alignment: 'center', border: [true, false, true, false] },
-                { text: '', border: [true, false, true, false] },
-                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
-              ]
-            )
-          }
+            if (this.item[i].remark_curtain) {
+              items.push(
+                [
+                  { text: 'Curtain : ' + (this.item[i].remark_curtain || ''), fontSize: 8, border: [true, false, true, false] },
+                  { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                  { text: '', alignment: 'center', border: [true, false, true, false] },
+                  { text: '', border: [true, false, true, false] },
+                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+                ]
+              )
+            }
 
-          if (this.item[i].remark_sheer) {
-            items.push(
-              [
-                { text: 'Sheer : ' + (this.item[i].remark_sheer || ''), fontSize: 8, border: [true, false, true, false] },
-                { text: '', fontSize: 8.5, border: [true, false, true, false] },
-                { text: '', alignment: 'center', border: [true, false, true, false] },
-                { text: '', border: [true, false, true, false] },
-                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
-              ]
-            )
+            if (this.item[i].remark_sheer) {
+              items.push(
+                [
+                  { text: 'Sheer : ' + (this.item[i].remark_sheer || ''), fontSize: 8, border: [true, false, true, false] },
+                  { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                  { text: '', alignment: 'center', border: [true, false, true, false] },
+                  { text: '', border: [true, false, true, false] },
+                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+                ]
+              )
+            }
+
+            if (this.item[i].remark_sale) {
+              items.push(
+                [
+                  { text: 'Overall : \n' + (this.item[i].remark_sale || ''), fontSize: 8, border: [true, false, true, false] },
+                  { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                  { text: '', alignment: 'center', border: [true, false, true, false] },
+                  { text: '', border: [true, false, true, false] },
+                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+                ]
+              )
+            }
+
           }
 
           // if (this.item[i].remark_sale) {
@@ -3204,6 +3248,29 @@ export class QuotationOverallPage implements OnInit {
             { text: '', border: [true, false, true, false] }
           ]
         )
+
+        if (this.item[i].remark_sale) {
+
+          items.push(
+            [
+              { text: 'Remark', border: [true, false, true, false], decoration: 'underline' },
+              { text: '', fontSize: 8.5, border: [true, false, true, false] },
+              { text: '', alignment: 'center', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+            ]
+          )
+
+          items.push(
+            [
+              { text: 'Overall : \n' + (this.item[i].remark_sale || ''), fontSize: 8, border: [true, false, true, false] },
+              { text: '', fontSize: 8.5, border: [true, false, true, false] },
+              { text: '', alignment: 'center', border: [true, false, true, false] },
+              { text: '', border: [true, false, true, false] },
+              // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+            ]
+          )
+        }
 
         items.push(
           [
