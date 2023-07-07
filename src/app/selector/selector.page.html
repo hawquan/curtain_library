@@ -9,17 +9,21 @@
     </div>
   </div>
 
-  <div style='width:100vw;'>
+  <div *ngIf="!loading" style="display: flex; align-items: center; justify-content: center; font-size: 16px;">Loading
+    ...</div>
+
+  <div *ngIf="loading" style='width:100vw;'>
     <div style="padding: 10px;">
       <div
         style="padding: 10px; border-radius: 10px; background-color: #fafafa; display: flex; align-items: center; font-size: 14px; color: #333333;">
         <ion-icon name="search-outline" style="margin-right: 10px"></ion-icon>
-        <ion-input [(ngModel)]="keyword" class="ion-no-padding" placeholder="Seach Something"></ion-input>
+        <ion-input [(ngModel)]="keyword" (ionChange)="filter()" class="ion-no-padding"
+          placeholder="Seach Something"></ion-input>
       </div>
     </div>
 
-    <div *ngFor='let x of filter(array); let i = index' style='border-bottom:1px solid #eeeeee;width:100%;'>
-      <div *ngIf=" i > 0 && filter(array)[i].collection != filter(array)[i - 1].collection"
+    <div *ngFor='let x of array; let i = index' style='border-bottom:1px solid #eeeeee;width:100%;'>
+      <div *ngIf=" i > 0 && array[i].collection != array[i - 1].collection"
         style='font-size:14px; padding:15px; background-color: #ebd1af; color: #a17635;'>{{x.collection}}</div>
       <div *ngIf=" i == 0" style='font-size:14px; padding:15px; background-color: #ebd1af; color: #a17635;'>
         {{x.collection}}</div>

@@ -314,7 +314,7 @@ export class TaskCreatorPage implements OnInit {
 
     const modal = await this.modalcontroller.create({
       component: SelectorPage,
-      componentProps: { array: eval(x) }
+      componentProps: { array: (x == 'curtain' || x == 'sheer' || x == 'curtainsheer') ? x : eval(x) }
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
@@ -325,18 +325,9 @@ export class TaskCreatorPage implements OnInit {
 
   async selectorblind(x, y, z) {
 
-    let temp = [] as any
-
-    // if (z == 'Roman Blind') {
-    //   temp = this.fabricCurtain.concat(this.fabricBlind)
-    //   temp = temp.filter(a => a.type_category == this.item.pleat || a.type == 'Curtain')
-    // } else {
-    temp = eval(x + '.filter(a => a.type_category == this.item.pleat)')
-    // }
-
     const modal = await this.modalcontroller.create({
       component: SelectorPage,
-      componentProps: { array: eval(temp) }
+      componentProps: { array: x, category: z }
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
@@ -344,7 +335,6 @@ export class TaskCreatorPage implements OnInit {
       eval(y + '="' + data.value.name + '"')
     }
   }
-
 
   selectCustom(x) {
     if (x == 'bracket') {
@@ -902,7 +892,7 @@ export class TaskCreatorPage implements OnInit {
             code_lining: this.item.code_lining,
             code_curtain: this.item.code_curtain,
           }
-          
+
           if (this.info['show_decoration']) {
             temp.blind_decoration = this.item.blind_decoration
           }
