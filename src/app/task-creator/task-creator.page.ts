@@ -166,6 +166,10 @@ export class TaskCreatorPage implements OnInit {
     this.NonWovenWall = false
     this.PatternWall = false
     this.VinylWall = false
+    this.item.blind_easylift = null
+    this.item.blind_monosys = null
+    this.item.blind_tape = null
+    this.item.blind_decoration = null
     this.WallpaperChoice = ''
   }
 
@@ -419,6 +423,8 @@ export class TaskCreatorPage implements OnInit {
               type: this.item.type,
               pleat: this.item.pleat,
               pleat_sheer: null,
+              eyelet_curtain: this.item.eyelet_curtain,
+              eyelet_sheer: this.item.eyelet_sheer,
               fullness: this.item.fullness,
               pieces_curtain: this.item.pieces_curtain,
               bracket: this.item.bracket,
@@ -486,6 +492,8 @@ export class TaskCreatorPage implements OnInit {
               type: this.item.type,
               pleat: null,
               pleat_sheer: this.item.pleat_sheer,
+              eyelet_curtain: this.item.eyelet_curtain,
+              eyelet_sheer: this.item.eyelet_sheer,
               fullness_sheer: this.item.fullness_sheer,
               pieces_sheer: this.item.pieces_sheer,
               sheer_bracket: this.item.sheer_bracket,
@@ -494,6 +502,7 @@ export class TaskCreatorPage implements OnInit {
               sheer_touchfloor: this.item.sheer_touchfloor,
               fabric: null,
               fabric_sheer: this.item.fabric_sheer,
+              fabric_lining: null,
               code_sheer: this.item.code_sheer,
               fabric_type: this.item.fabric_type,
               custom_sheer_bracket: this.item.custom_sheer_bracket,
@@ -556,6 +565,8 @@ export class TaskCreatorPage implements OnInit {
               type: this.item.type,
               pleat: this.item.pleat,
               pleat_sheer: this.item.pleat_sheer,
+              eyelet_curtain: this.item.eyelet_curtain,
+              eyelet_sheer: this.item.eyelet_sheer,
               fullness: this.item.fullness,
               fullness_sheer: this.item.fullness_sheer,
               pieces_curtain: this.item.pieces_curtain,
@@ -637,6 +648,8 @@ export class TaskCreatorPage implements OnInit {
               type: this.item.type,
               pleat: this.item.pleat,
               pleat_sheer: null,
+              eyelet_curtain: this.item.eyelet_curtain,
+              eyelet_sheer: this.item.eyelet_sheer,
               fullness: this.item.fullness,
               pieces_curtain: this.item.pieces_curtain,
               bracket: this.item.bracket,
@@ -708,6 +721,8 @@ export class TaskCreatorPage implements OnInit {
               type: this.item.type,
               pleat: null,
               pleat_sheer: this.item.pleat_sheer,
+              eyelet_curtain: this.item.eyelet_curtain,
+              eyelet_sheer: this.item.eyelet_sheer,
               fullness_sheer: this.item.fullness_sheer,
               pieces_sheer: this.item.pieces_sheer,
               sheer_bracket: this.item.sheer_bracket,
@@ -717,6 +732,7 @@ export class TaskCreatorPage implements OnInit {
               sheer_touchfloor: this.item.sheer_touchfloor,
               fabric: null,
               fabric_sheer: this.item.fabric_sheer,
+              fabric_lining: false,
               code_sheer: this.item.code_sheer,
               fabric_type: this.item.fabric_type,
               custom_sheer_bracket: this.item.custom_sheer_bracket,
@@ -780,6 +796,8 @@ export class TaskCreatorPage implements OnInit {
               type: this.item.type,
               pleat: this.item.pleat,
               pleat_sheer: this.item.pleat_sheer,
+              eyelet_curtain: this.item.eyelet_curtain,
+              eyelet_sheer: this.item.eyelet_sheer,
               fullness: this.item.fullness,
               fullness_sheer: this.item.fullness_sheer,
               pieces_curtain: this.item.pieces_curtain,
@@ -1281,7 +1299,7 @@ export class TaskCreatorPage implements OnInit {
       promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0,
       motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, motorized_choice: this.item.motorized_choice, motorized_pieces: this.item.motorized_pieces, motorized_lift: this.item.motorized_lift,
       belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id, blind_spring: this.item.blind_spring, blind_tube: this.item.blind_tube, blind_easylift: this.item.blind_easylift, blind_monosys: this.item.blind_monosys,
-
+      eyelet_curtain: this.item.eyelet_curtain, eyelet_sheer: this.item.eyelet_sheer
     }
 
     console.log(temp);
@@ -1297,9 +1315,21 @@ export class TaskCreatorPage implements OnInit {
         if (this.item.motorized_upgrade) {
           // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['motorized']['install'] + a['data']['motorized']['lift'] + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
           this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['motorized']['install'] + a['data']['motorized']['lift']
+          if (this.item.eyelet_curtain) {
+            this.price += a['data']['curtain']['eyelet_curtain']
+          }
+          if (this.item.eyelet_sheer) {
+            this.price += a['data']['sheer']['eyelet_sheer']
+          }
         } else {
           // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
           this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook']
+          if (this.item.eyelet_curtain) {
+            this.price += a['data']['curtain']['eyelet_curtain']
+          }
+          if (this.item.eyelet_sheer) {
+            this.price += a['data']['sheer']['eyelet_sheer']
+          }
         }
         // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook']
       }

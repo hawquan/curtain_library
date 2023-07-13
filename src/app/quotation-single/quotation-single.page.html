@@ -383,7 +383,8 @@
         <div *ngIf="item.fabric_blind != null && item.pleat != 'Roman Blind'"
           style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
           <div>
-            Blind - {{item.fabric_blind}}<span *ngIf="item.code_blind">-{{item.code_blind}}</span> (sqft)
+            {{item.pleat}} - {{item.fabric_blind}}<span *ngIf="item.code_blind">-{{item.code_blind}}</span><span
+              *ngIf="item.blind_tape"> (Tape {{item.blind_tape}})</span> (sqft)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
