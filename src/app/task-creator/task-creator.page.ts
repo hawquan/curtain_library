@@ -171,6 +171,7 @@ export class TaskCreatorPage implements OnInit {
     this.item.blind_tape = null
     this.item.blind_decoration = null
     this.WallpaperChoice = ''
+
   }
 
   blindChanged() {
@@ -458,6 +459,33 @@ export class TaskCreatorPage implements OnInit {
               motorized_choice: null,
               motorized_pieces: null,
               motorized_lift: null,
+
+              // Additional
+              track_sheer: null,
+              fullness_sheer: null,
+              pieces_sheer: null,
+              sheer_bracket: null,
+              sheer_sidehook: null,
+              sheer_belt: null,
+              sheer_touchfloor: null,
+              code_sheer: null,
+              custom_sheer_bracket: null,
+              custom_sheer_belt: null,
+              remark_sheer: null,
+              promo_sheer: null || 0,
+
+              pieces_blind: null,
+              blind_decoration: null,
+              rope_chain: null,
+              promo_blind: null || 0,
+
+              blind_tape: null,
+              fabric_blind: null,
+              code_blind: null,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
             }
 
             if (this.item.motorized_upgrade) {
@@ -525,6 +553,35 @@ export class TaskCreatorPage implements OnInit {
               motorized_choice: null,
               motorized_pieces: null,
               motorized_lift: null,
+
+              // Additional
+              track: null,
+              fullness: null,
+              pieces_curtain: null,
+              bracket: null,
+              sidehook: null,
+              belt: null,
+              touchfloor: null,
+              code_lining: null,
+              code_curtain: null,
+              custom_bracket: null,
+              custom_belt: null,
+              remark_curtain: null,
+              promo_curtain: null || 0,
+              promo_lining: null || 0,
+
+              pieces_blind: null,
+              blind_decoration: null,
+              rope_chain: null,
+              promo_blind: null || 0,
+
+              blind_tape: null,
+              fabric_blind: null,
+              code_blind: null,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
             }
 
             if (this.item.motorized_upgrade) {
@@ -611,6 +668,21 @@ export class TaskCreatorPage implements OnInit {
               motorized_choice: null,
               motorized_pieces: null,
               motorized_lift: null,
+
+              // Additional
+              sheer_touchfloor: null,
+              pieces_blind: null,
+              blind_decoration: null,
+              rope_chain: null,
+              promo_blind: null || 0,
+
+              blind_tape: null,
+              fabric_blind: null,
+              code_blind: null,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
             }
 
             if (this.item.motorized_upgrade) {
@@ -685,6 +757,33 @@ export class TaskCreatorPage implements OnInit {
               motorized_choice: null,
               motorized_pieces: null,
               motorized_lift: null,
+
+              // Additional
+              track_sheer: null,
+              fullness_sheer: null,
+              pieces_sheer: null,
+              sheer_bracket: null,
+              sheer_sidehook: null,
+              sheer_belt: null,
+              sheer_touchfloor: null,
+              code_sheer: null,
+              custom_sheer_bracket: null,
+              custom_sheer_belt: null,
+              remark_sheer: null,
+              promo_sheer: null || 0,
+
+              pieces_blind: null,
+              blind_decoration: null,
+              rope_chain: null,
+              promo_blind: null || 0,
+
+              blind_tape: null,
+              fabric_blind: null,
+              code_blind: null,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
             }
 
             if (this.item.motorized_upgrade) {
@@ -756,6 +855,34 @@ export class TaskCreatorPage implements OnInit {
               motorized_choice: null,
               motorized_pieces: null,
               motorized_lift: null,
+
+              // Additional
+              track: null,
+              fullness: null,
+              pieces_curtain: null,
+              bracket: null,
+              sidehook: null,
+              belt: null,
+              touchfloor: null,
+              code_lining: null,
+              code_curtain: null,
+              custom_bracket: null,
+              custom_belt: null,
+              remark_curtain: null,
+              promo_curtain: null || 0,
+              promo_lining: null || 0,
+
+              pieces_blind: null,
+              blind_decoration: null,
+              rope_chain: null,
+              promo_blind: null || 0,
+              blind_tape: null,
+              fabric_blind: null,
+              code_blind: null,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
             }
 
             if (this.item.motorized_upgrade) {
@@ -846,6 +973,20 @@ export class TaskCreatorPage implements OnInit {
               motorized_choice: null,
               motorized_pieces: null,
               motorized_lift: null,
+
+              // Additional
+              sheer_touchfloor: null,
+              pieces_blind: null,
+              blind_decoration: null,
+              rope_chain: null,
+              promo_blind: null || 0,
+              blind_tape: null,
+              fabric_blind: null,
+              code_blind: null,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
             }
 
             if (this.item.motorized_upgrade) {
@@ -909,6 +1050,50 @@ export class TaskCreatorPage implements OnInit {
             promo_blind: this.item.promo_blind || 0,
             code_lining: this.item.code_lining,
             code_curtain: this.item.code_curtain,
+
+            // Additional
+            track: null,
+            pleat_sheer: null,
+            eyelet_curtain: null,
+            eyelet_sheer: null,
+            fullness: null,
+            pieces_curtain: null,
+            sidehook: null,
+            belt: null,
+            touchfloor: null,
+            fabric_sheer: null,
+            fabric_type: null,
+            custom_belt: null,
+            remark_curtain: null,
+            promo_curtain: null || 0,
+            motorized_upgrade: null,
+            motorized_power: null,
+            motorized_sides: null,
+            motorized_cost: null,
+            motorized_choice: null,
+            motorized_pieces: null,
+            motorized_lift: null,
+
+            track_sheer: null,
+            fullness_sheer: null,
+            pieces_sheer: null,
+            sheer_bracket: null,
+            sheer_sidehook: null,
+            sheer_belt: null,
+            sheer_touchfloor: null,
+            code_sheer: null,
+            custom_sheer_bracket: null,
+            custom_sheer_belt: null,
+            remark_sheer: null,
+            promo_sheer: null || 0,
+
+            blind_tape: null,
+            fabric_blind: null,
+            code_blind: null,
+            blind_spring: null,
+            blind_tube: null,
+            blind_easylift: null,
+            blind_monosys: null,
           }
 
           if (this.info['show_decoration']) {
@@ -975,6 +1160,48 @@ export class TaskCreatorPage implements OnInit {
               blind_tube: null,
               blind_easylift: null,
               blind_monosys: null,
+
+              // Additional
+              track: null,
+              pleat_sheer: null,
+              eyelet_curtain: null,
+              eyelet_sheer: null,
+              fullness: null,
+              pieces_curtain: null,
+              sidehook: null,
+              belt: null,
+              touchfloor: null,
+              fabric: null,
+              fabric_sheer: null,
+              fabric_lining: null,
+              code_lining: null,
+              code_curtain: null,
+              fabric_type: null,
+              custom_belt: null,
+              remark_curtain: null,
+              promo_curtain: null || 0,
+              promo_lining: null || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
+
+              track_sheer: null,
+              fullness_sheer: null,
+              pieces_sheer: null,
+              sheer_bracket: null,
+              sheer_sidehook: null,
+              sheer_belt: null,
+              sheer_touchfloor: null,
+              code_sheer: null,
+              custom_sheer_bracket: null,
+              custom_sheer_belt: null,
+              remark_sheer: null,
+              promo_sheer: null || 0,
+
             }
 
             if (this.item.pleat == 'Zebra Blind') {
@@ -1032,6 +1259,53 @@ export class TaskCreatorPage implements OnInit {
             need_scaftfolding: this.item.need_scaftfolding,
             step: 2,
             promo_blind: this.item.promo_blind || 0,
+
+            // Additional
+            track: null,
+            pleat_sheer: null,
+            eyelet_curtain: null,
+            eyelet_sheer: null,
+            fullness: null,
+            pieces_curtain: null,
+            sidehook: null,
+            belt: null,
+            touchfloor: null,
+            fabric: null,
+            fabric_sheer: null,
+            fabric_lining: null,
+            code_lining: null,
+            code_curtain: null,
+            fabric_type: null,
+            custom_belt: null,
+            remark_curtain: null,
+            promo_curtain: null || 0,
+            promo_lining: null || 0,
+            motorized_upgrade: null,
+            motorized_power: null,
+            motorized_sides: null,
+            motorized_cost: null,
+            motorized_choice: null,
+            motorized_pieces: null,
+            motorized_lift: null,
+            track_sheer: null,
+            fullness_sheer: null,
+            pieces_sheer: null,
+            sheer_bracket: null,
+            sheer_sidehook: null,
+            sheer_belt: null,
+            sheer_touchfloor: null,
+            code_sheer: null,
+            custom_sheer_bracket: null,
+            custom_sheer_belt: null,
+            remark_sheer: null,
+            promo_sheer: null || 0,
+
+            blind_decoration: null,
+            blind_tape: null,
+            blind_spring: null,
+            blind_tube: null,
+            blind_easylift: null,
+            blind_monosys: null,
           }
           console.log(temp);
 
