@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, NavController, NavParams } from '@ionic/angular';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-quotation-single',
@@ -106,7 +107,13 @@ export class QuotationSinglePage implements OnInit {
       if (this.item.fabric != null) {
         if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
           curtain = true
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+          try {
+            curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Fabric', "curtain's fabric", this.item.location + " " + this.item.location_ref)
+            this.back()
+            return
+          }
         } else {
           curtain = false
         }
@@ -117,7 +124,13 @@ export class QuotationSinglePage implements OnInit {
       if (this.item.fabric_lining != null) {
         if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
           lining = true
-          lining_id = this.fabricLining.filter(x => x.name == this.item.fabric_lining)[0]['id']
+          try {
+            lining_id = this.fabricLining.filter(x => x.name == this.item.fabric_lining)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Lining', "lining's fabric", this.item.location + " " + this.item.location_ref)
+            this.back()
+            return
+          }
         } else {
           lining = false
         }
@@ -128,7 +141,13 @@ export class QuotationSinglePage implements OnInit {
       if (this.item.fabric_sheer != null) {
         if (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') {
           sheer = true
-          sheer_id = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['id']
+          try {
+            sheer_id = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Sheer', "sheer's fabric", this.item.location + " " + this.item.location_ref)
+            this.back()
+            return
+          }
         } else {
           sheer = false
         }
@@ -139,7 +158,12 @@ export class QuotationSinglePage implements OnInit {
       if (this.item.track != null) {
         if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
           track = true
-          track_id = this.tracklist.filter(x => x.name == this.item.track)[0]['id']
+          try {
+            track_id = this.tracklist.filter(x => x.name == this.item.track)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Track', "track", this.item.location + " " + this.item.location_ref)
+            return
+          }
         } else {
           track = false
         }
@@ -150,7 +174,12 @@ export class QuotationSinglePage implements OnInit {
       if (this.item.track_sheer != null) {
         if (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') {
           track_sheer = true
-          track_sheer_id = this.tracklist.filter(x => x.name == this.item.track_sheer)[0]['id']
+          try {
+            track_sheer_id = this.tracklist.filter(x => x.name == this.item.track_sheer)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg("Sheer's Track", "sheer's track", this.item.location + " " + this.item.location_ref)
+            return
+          }
         } else {
           track_sheer = false
         }
@@ -159,17 +188,26 @@ export class QuotationSinglePage implements OnInit {
       }
 
       if (this.item.pleat != null && this.item.pleat != '') {
-        pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
+        try {
+          pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
+        } catch (error) {
+          this.calcErrorMsg("Pleat", "pleat", this.item.location + " " + this.item.location_ref)
+          return
+        }
       }
 
       if (this.item.pleat_sheer != null && this.item.pleat_sheer != '') {
-        pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item.pleat_sheer)[0]['id']
+        try {
+          pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item.pleat_sheer)[0]['id']
+        } catch (error) {
+          this.calcErrorMsg("Sheer's Pleat", "sheer's pleat", this.item.location + " " + this.item.location_ref)
+          return
+        }
       }
 
       if ((this.item.sidehook == 'Yes' && (this.item.belt != 'No' || this.item.belt)) || (this.item.sheer_sidehook == 'Yes' && (this.item.sheer_belt != 'No' || this.item.sheer_belt))) {
         belt_hook = true
       }
-      console.log(curtain_id, sheer_id, track_id, pleat_id);
 
     } else {
       if (this.item.pleat == 'Roman Blind') {
@@ -185,19 +223,34 @@ export class QuotationSinglePage implements OnInit {
 
         if (this.item.fabric_blind != null) {
           blind = true
-          blind_id = this.fabricBlind.filter(x => x.name == this.item.fabric_blind)[0]['id']
+          try {
+            blind_id = this.fabricBlind.filter(x => x.name == this.item.fabric_blind)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Blind', "blind's fabric", this.item.location + " " + this.item.location_ref)
+            return
+          }
         }
 
         if (this.item.fabric != null) {
           curtain = true
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+          try {
+            curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Fabric', "curtain's fabric", this.item.location + " " + this.item.location_ref)
+            return
+          }
         } else {
           curtain = false
         }
 
         if (this.item.fabric_lining != null) {
           lining = true
-          lining_id = this.fabricLining.filter(x => x.name == this.item.fabric_lining)[0]['id']
+          try {
+            lining_id = this.fabricLining.filter(x => x.name == this.item.fabric_lining)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Lining', "lining's fabric", this.item.location + " " + this.item.location_ref)
+            return
+          }
         } else {
           lining = false
         }
@@ -208,18 +261,29 @@ export class QuotationSinglePage implements OnInit {
         track = false
         track_sheer = false
         lining = false
+        belt_hook = false
         isRomanBlind = false
         blind = true
         console.log('blind');
 
         if (this.item.fabric_blind != null && this.item.fabric_blind != '') {
-          blind_id = (this.fabricBlind.filter(x => x.name == this.item.fabric_blind))[0]['id']
+          try {
+            blind_id = (this.fabricBlind.filter(x => x.name == this.item.fabric_blind))[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Blind', "blind's fabric", this.item.location + " " + this.item.location_ref)
+            return
+          }
         }
 
         if (this.item.pleat == 'Wooden Blind') {
           if (this.item.blind_tape) {
-            tape_id = (this.blindTape.filter(x => x.name == this.item.blind_tape))[0]['id']
             tape = true
+            try {
+              tape_id = (this.blindTape.filter(x => x.name == this.item.blind_tape))[0]['id']
+            } catch (error) {
+              this.calcErrorMsg('Tape', "blind's tape", this.item.location + " " + this.item.location_ref)
+              return
+            }
           }
         }
 
@@ -228,7 +292,6 @@ export class QuotationSinglePage implements OnInit {
       // if (this.item.pleat != null && this.item.pleat != '') {
       //   pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
       // }
-
     }
 
     let temp = {
@@ -250,10 +313,10 @@ export class QuotationSinglePage implements OnInit {
       this.calc = a['data']
 
       if (this.item.type == 'Blinds') {
-        this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) 
+        this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0)
       } else {
         if (this.item.motorized_upgrade) {
-          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['motorized']['install'] 
+          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['motorized']['install']
         } else {
           this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook']
           // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
@@ -264,6 +327,19 @@ export class QuotationSinglePage implements OnInit {
 
     })
 
+  }
+
+  calcErrorMsg(x, y, z) {
+    Swal.fire({
+      title: z + ' Error',
+      // text: "Please check the curtain's fabric?",
+      html: "Please check the " + y + ", possible issues:<br>- " + x + " Availability<br>- " + x + " Name Changed<br>(Try reselect the " + y + ")",
+      heightAuto: false,
+      icon: 'error',
+      allowOutsideClick: false,
+      showConfirmButton: true,
+      showCancelButton: false,
+    })
   }
 
   back() {

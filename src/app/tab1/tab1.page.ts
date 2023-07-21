@@ -329,7 +329,7 @@ export class Tab1Page implements OnInit {
 
     let navExtra: NavigationExtras = {
       queryParams: {
-        info: JSON.stringify(x),
+        no: JSON.stringify(x.no),
         user: JSON.stringify(this.user),
       }
     }
@@ -341,8 +341,6 @@ export class Tab1Page implements OnInit {
     let navExtra: NavigationExtras = {
       queryParams: {
         info: JSON.stringify(x),
-        pleatlist: JSON.stringify(this.pleatlist),
-        blindlist: JSON.stringify(this.blindlist),
       }
     }
     this.nav.navigateForward(['tailor-task-detail'], navExtra)
@@ -396,7 +394,7 @@ export class Tab1Page implements OnInit {
 
     let navExtra: NavigationExtras = {
       queryParams: {
-        info: JSON.stringify(x),
+        no: JSON.stringify(x.no),
         user: JSON.stringify(this.user),
       }
     }
@@ -408,7 +406,7 @@ export class Tab1Page implements OnInit {
 
     let navExtra: NavigationExtras = {
       queryParams: {
-        info: JSON.stringify(x),
+        no: JSON.stringify(x.no),
         user: JSON.stringify(this.user),
       }
     }

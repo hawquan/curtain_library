@@ -982,20 +982,87 @@ export class QuotationOverallPage implements OnInit {
       let CL_height = height
       let S_height = height
 
-      if ((this.item[i].motorized_power == 'Battery' || this.item[i].motorized_power == 'Power Point')) {
-        CL_height = height - 1.5
-      } else if (this.item[i].track == 'Ripplefold' || this.item[i].track == 'Bendable' || this.item[i].track == 'Cubicle / Hospital' || this.item[i].track == 'Silent Track' || this.item[i].track == 'Bendable / Silent Track') {
-        CL_height = height - 1.75
-      } else if (this.item[i].track == 'Super Track' || this.item[i].track == 'Curve') {
-        CL_height = height - 1.25
+      if (this.item[i].type != 'Blinds') {
+
+        // Curtain / Lining
+        if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Curtain')) {
+
+          if (this.item[i].pleat == 'Fake Double Pleat') {
+            CL_height = height - 1.5
+          } else if (this.item[i].track) {
+            if (this.item[i].track == 'Ripplefold ') {
+              CL_height = height - 1.75
+            } else if (this.item[i].track == 'Ripplefold Curve') {
+              CL_height = height - 1.75
+            }
+          }
+
+        } else {
+          if (this.item[i].track) {
+            if (this.item[i].track == 'Ripplefold') {
+              CL_height = height - 1.75
+            } else if (this.item[i].track == 'Ripplefold Curve') {
+              CL_height = height - 1.5
+            } else if (this.item[i].track == 'Cubicle / Hospital') {
+              CL_height = height - (this.item[i].bracket == 'Wall' ? 0 : 1.5)
+            } else if (this.item[i].track == 'Super Track') {
+              CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+            } else if (this.item[i].track == 'Curve') {
+              CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat == 'Fake Double Pleat') {
+              CL_height = height - 2
+            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat == 'Fake Double Pleat') {
+              CL_height = height - 2
+            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat.includes('Eyelet')) {
+              CL_height = height + 1.75
+            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat.includes('Eyelet')) {
+              CL_height = height + 1.75
+            }
+          }
+        }
+
+        // Sheer
+        if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Sheer')) {
+          if (this.item[i].pleat_sheer == 'Fake Double Pleat') {
+            S_height = height - 1.5
+          } else if (this.item[i].track) {
+            if (this.item[i].track_sheer == 'Ripplefold ') {
+              S_height = height - 1.75
+            } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
+              S_height = height - 1.75
+            }
+          }
+        } else {
+          if (this.item[i].track) {
+            if (this.item[i].track_sheer == 'Ripplefold') {
+              S_height = height - 1.75
+            } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
+              S_height = height - 1.5
+            } else if (this.item[i].track_sheer == 'Cubicle / Hospital') {
+              S_height = height - (this.item[i].sheer_bracket == 'Wall' ? 0 : 1.5)
+            } else if (this.item[i].track_sheer == 'Super Track') {
+              S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+            } else if (this.item[i].track_sheer == 'Curve') {
+              S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat_sheer == 'Fake Double Pleat') {
+              S_height = height - 2
+            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat_sheer == 'Fake Double Pleat') {
+              S_height = height - 2
+            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat_sheer.includes('Eyelet')) {
+              S_height = height + 1.75
+            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat_sheer.includes('Eyelet')) {
+              S_height = height + 1.75
+            }
+          }
+        }
       }
 
-      if ((this.item[i].motorized_power == 'Battery' || this.item[i].motorized_power == 'Power Point')) {
-        S_height = height - 1.5
-      } else if (this.item[i].track_sheer == 'Ripplefold' || this.item[i].track_sheer == 'Bendable' || this.item[i].track_sheer == 'Cubicle / Hospital' || this.item[i].track_sheer == 'Silent Track' || this.item[i].track_sheer == 'Bendable / Silent Track') {
-        S_height = height - 1.75
-      } else if (this.item[i].track_sheer == 'Super Track' || this.item[i].track_sheer == 'Curve') {
-        S_height = height - 1.25
+      let motorSides
+
+      if (this.item[i].motorized_sides == 'Left') {
+        motorSides = 'L'
+      } else if (this.item[i].motorized_sides == 'Right') {
+        motorSides = 'R'
       }
 
       //ITEMS PUSH START HERE
@@ -1071,10 +1138,10 @@ export class QuotationOverallPage implements OnInit {
               ],
             )
 
-            if (this.item[i].motorized_upgrade) {
+            if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Curtain')) {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )' + ' ( ' + motorSides + ' )', fontSize: 8.5 },
                   { text: 'Motorized ' + this.item[i].motorized_power, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -1196,10 +1263,10 @@ export class QuotationOverallPage implements OnInit {
               ],
             )
 
-            if (this.item[i].motorized_upgrade) {
+            if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Sheer')) {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )' + ' ( ' + motorSides + ' )', fontSize: 8.5 },
                   { text: 'Motorized ' + this.item[i].motorized_power, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + S_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -1277,10 +1344,10 @@ export class QuotationOverallPage implements OnInit {
               ],
             )
 
-            if (this.item[i].motorized_upgrade) {
+            if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Curtain')) {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )' + ' ( ' + motorSides + ' )', fontSize: 8.5 },
                   { text: 'Motorized ' + this.item[i].motorized_power, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -1345,10 +1412,10 @@ export class QuotationOverallPage implements OnInit {
               [
                 // { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
                 { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
-                { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
+                { text: this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Curtain') ? '-' : this.item[i].track, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                 // { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
-                { text: '', bold: true, alignment: 'center', fontSize: 8.5 },
+                { text: '-', bold: true, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].fabric_lining + (this.item[i].code_lining ? '-' + this.item[i].code_lining : ''), alignment: 'center', fontSize: 8.5 },
                 { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
                 { text: pleatShort, alignment: 'center', fontSize: 8.5 },
@@ -1384,10 +1451,10 @@ export class QuotationOverallPage implements OnInit {
               ],
             )
 
-            if (this.item[i].motorized_upgrade) {
+            if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Sheer')) {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )' + ' ( ' + motorSides + ' )', fontSize: 8.5 },
                   { text: 'Motorized ' + this.item[i].motorized_power, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + S_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -1471,7 +1538,7 @@ export class QuotationOverallPage implements OnInit {
               { text: '-', alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
               { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : ''), alignment: 'center', fontSize: 8.5 },
+              { text: this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : '') + (this.item[i].blind_tape ? ' + Tape ' + this.item[i].blind_tape : ''), alignment: 'center', fontSize: 8.5 },
               { text: '-', alignment: 'center', fontSize: 8.5 },
               { text: '-', alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].pieces_blind, alignment: 'center', fontSize: 8.5 },
@@ -1511,7 +1578,7 @@ export class QuotationOverallPage implements OnInit {
             items.push(
               [
                 { text: width + '" ( W )' + ' x ' + height + '" ( H ) ' + (this.item[i].rope_chain ? ' (' + rope_chain + ')' : ''), fontSize: 8.5 },
-                { text: '-', alignment: 'center', fontSize: 8.5 },
+                { text: 'Roman Blind', alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                 { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].fabric + (this.item[i].code_curtain ? '-' + this.item[i].code_curtain : ''), alignment: 'center', fontSize: 8.5 },

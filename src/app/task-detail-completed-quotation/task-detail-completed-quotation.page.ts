@@ -70,11 +70,15 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
 
     this.actroute.queryParams.subscribe(a => {
       this.sales_id = a['sales_id']
-      this.info = JSON.parse(a['info'])
       this.pleatlist = JSON.parse(a["pleatlist"])
       this.blindlist = JSON.parse(a["blindlist"])
       this.tracklist = JSON.parse(a["tracklist"])
 
+      this.http.post('https://curtain.vsnap.my/getonesales', { no: this.sales_id }).subscribe((s) => {
+        this.info = s['data'][0]
+        console.log(this.info);
+      })
+      
       this.http.get('https://curtain.vsnap.my/tapeList').subscribe(a => {
         this.blindTape = a['data']
         console.log(this.blindTape);
