@@ -49,7 +49,6 @@ export class TaskDetailPage implements OnInit {
   WallpaperChoice = ''
 
   info = [] as any
-  oldinfo = []
   img = []
   items = [] as any
   show = null
@@ -74,11 +73,10 @@ export class TaskDetailPage implements OnInit {
     this.actroute.queryParams.subscribe(a => {
       // console.log(a);
 
-      this.oldinfo = JSON.parse(a["info"])
-      this.sales_id = this.oldinfo['no']
+      this.sales_id =  JSON.parse(a["no"])
       this.user = JSON.parse(a["user"])
     })
-    console.log(this.oldinfo, this.sales_id, this.user);
+    console.log( this.sales_id, this.user);
 
     this.http.get('https://curtain.vsnap.my/tracklist').subscribe((s) => {
       this.tracklist = s['data']
@@ -176,9 +174,9 @@ export class TaskDetailPage implements OnInit {
     } else if (x == 'Ripple Fold') {
       this.PleatRipple = true
       this.PleatChoice = 'Ripple Fold'
-    } else if (x == 'Double Pleat') {
+    } else if (x == 'Fake Double Pleat') {
       this.PleatDouble = true
-      this.PleatChoice = 'Double Pleat'
+      this.PleatChoice = 'Fake Double Pleat'
     } else if (x == 'French Pleat') {
       this.PleatFrench = true
       this.PleatChoice = 'French Pleat'

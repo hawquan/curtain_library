@@ -101,9 +101,9 @@ export class InstallerTaskDetailPage implements OnInit {
     } else if (x == 'Ripple Fold') {
       this.HeaderRipple = true
       this.HeaderChoice = 'Ripple Fold'
-    } else if (x == 'Double Pleat') {
+    } else if (x == 'Fake Double Pleat') {
       this.HeaderDouble = true
-      this.HeaderChoice = 'Double Pleat'
+      this.HeaderChoice = 'Fake Double Pleat'
     } else if (x == 'French Pleat') {
       this.HeaderFrench = true
       this.HeaderChoice = 'French Pleat'

@@ -101,9 +101,9 @@ export class TechTaskDetailPage implements OnInit {
     } else if (x == 'Ripple Fold') {
       this.PleatRipple = true
       this.PleatChoice = 'Ripple Fold'
-    } else if (x == 'Double Pleat') {
+    } else if (x == 'Fake Double Pleat') {
       this.PleatDouble = true
-      this.PleatChoice = 'Double Pleat'
+      this.PleatChoice = 'Fake Double Pleat'
     } else if (x == 'French Pleat') {
       this.PleatFrench = true
       this.PleatChoice = 'French Pleat'

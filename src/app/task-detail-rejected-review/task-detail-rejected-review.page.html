@@ -527,19 +527,19 @@
       <!-- Upgrade to Motorized -->
       <div *ngIf="item.fabric_type != null && item.fabric_type != ''">
         <div
-          *ngIf="((item.pleat != 'Ripplefold' && item.pleat != 'Double Pleat') && (item.pleat_sheer != 'Ripplefold' && item.pleat_sheer != 'Double Pleat')) || (item.track == null && item.track_sheer == null)"
+          *ngIf="((item.pleat != 'Ripplefold' && item.pleat != 'Fake Double Pleat') && (item.pleat_sheer != 'Ripplefold' && item.pleat_sheer != 'Fake Double Pleat')) || (item.track == null && item.track_sheer == null)"
           style="min-width: 56px;font-weight: 500;color: #999999">Upgrade to Motorized Track Requirement:</div>
         <div *ngIf="item.track == null && item.track_sheer == null" style="margin-top: 5px;color: #a17635;">No Track
           Selected</div>
         <div
-          *ngIf="item.pleat != 'Ripplefold' && item.pleat != 'Double Pleat' && item.pleat_sheer != 'Ripplefold' && item.pleat_sheer != 'Double Pleat'"
+          *ngIf="item.pleat != 'Ripplefold' && item.pleat != 'Fake Double Pleat' && item.pleat_sheer != 'Ripplefold' && item.pleat_sheer != 'Fake Double Pleat'"
           style="margin-top: 5px;color: #a17635;">
-          Motorizable Pleat Type<br><span style="color: #bcbcbc;">- Double Pleat</span><br><span
+          Motorizable Pleat Type<br><span style="color: #bcbcbc;">- Fake Double Pleat</span><br><span
             style="color: #bcbcbc;">- Ripplefold</span>
         </div>
 
         <div
-          *ngIf="((item.pleat == 'Ripplefold' || item.pleat == 'Double Pleat') || (item.pleat_sheer == 'Ripplefold' || item.pleat_sheer == 'Double Pleat')) && (item.track != null || item.track_sheer != null)">
+          *ngIf="((item.pleat == 'Ripplefold' || item.pleat == 'Fake Double Pleat') || (item.pleat_sheer == 'Ripplefold' || item.pleat_sheer == 'Fake Double Pleat')) && (item.track != null || item.track_sheer != null)">
 
           <div style="display: flex;justify-content: space-between;">
             <div style="min-width: 56px;font-weight: 500;color: #999999">Upgrade to Motorized Track <span

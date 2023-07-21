@@ -66,8 +66,7 @@ export class TaskOngoingPage implements OnInit {
   ngOnInit() {
 
     this.actroute.queryParams.subscribe(a => {
-      this.info = JSON.parse(a["info"])
-      this.sales_id = this.info['no']
+      this.sales_id = JSON.parse(a["no"])
       this.user = JSON.parse(a["user"])
     })
     console.log(this.info, this.sales_id, this.user);
@@ -145,6 +144,12 @@ export class TaskOngoingPage implements OnInit {
   refreshList() {
     this.calc = []
 
+    this.http.post('https://curtain.vsnap.my/getonesales', { no: this.sales_id }).subscribe(a => {
+      this.info = a['data'][0]
+
+      console.log(this.info);
+    })
+
     this.http.post('https://curtain.vsnap.my/getorderlist', { sales_id: this.sales_id }).subscribe(a => {
       this.items = a['data']
       // for (let i = 0; i < this.items.length; i++) {
@@ -190,9 +195,9 @@ export class TaskOngoingPage implements OnInit {
     } else if (x == 'Ripple Fold') {
       this.PleatRipple = true
       this.PleatChoice = 'Ripple Fold'
-    } else if (x == 'Double Pleat') {
+    } else if (x == 'Fake Double Pleat') {
       this.PleatDouble = true
-      this.PleatChoice = 'Double Pleat'
+      this.PleatChoice = 'Fake Double Pleat'
     } else if (x == 'French Pleat') {
       this.PleatFrench = true
       this.PleatChoice = 'French Pleat'
@@ -419,7 +424,6 @@ export class TaskOngoingPage implements OnInit {
     let navExtra: NavigationExtras = {
       queryParams: {
         sales_id: this.sales_id,
-        info: JSON.stringify(this.info),
         tracklist: JSON.stringify(this.tracklist),
         pleatlist: JSON.stringify(this.pleatlist),
         blindlist: JSON.stringify(this.blindlist),

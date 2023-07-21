@@ -202,9 +202,9 @@
         <div
           style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 70px;color: #999999">Curtain </div>
-          <div style="width: 100%;display: flex;align-items: center;padding: 13px 8px 13px 10px;font-size: 14px;">
-            <ion-input class="ion-no-padding" (click)="selector('curtain', 'this.item.fabric')" readonly
-              [(ngModel)]="item.fabric" placeholder="Select Curtain Fabric">
+          <div style="width: 100%;display: flex;align-items: center;padding: 0px 8px 0px 10px;font-size: 14px;">
+            <ion-input style="height: 43px;" class="ion-no-padding" (click)="selector('curtain', 'this.item.fabric')"
+              readonly [(ngModel)]="item.fabric" placeholder="Select Curtain Fabric">
             </ion-input>
             <ion-icon *ngIf="item.fabric != null && item.fabric != ''" (click)="clearFabric('curtain')"
               style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
@@ -436,9 +436,10 @@
           <div
             style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px;display: flex; align-items: center; justify-content: space-between;">
             <div style="min-width: 70px;color: #999999">Lining </div>
-            <div style="width: 100%;display: flex;align-items: center;padding: 13px 5px 13px 10px;font-size: 14px;">
-              <ion-input class="ion-no-padding" (click)="selector('this.fabricLining', 'this.item.fabric_lining')"
-                readonly [(ngModel)]="item.fabric_lining" placeholder="Select Lining Fabric">
+            <div style="width: 100%;display: flex;align-items: center;padding: 0px 5px 0px 10px;font-size: 14px;">
+              <ion-input style="height: 43px;" class="ion-no-padding"
+                (click)="selector('this.fabricLining', 'this.item.fabric_lining')" readonly
+                [(ngModel)]="item.fabric_lining" placeholder="Select Lining Fabric">
               </ion-input>
               <ion-icon *ngIf="item.fabric_lining != null && item.fabric_lining != ''" (click)="clearFabric('lining')"
                 style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
@@ -515,9 +516,10 @@
         <div
           style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 70px;color: #999999">Sheer </div>
-          <div style="width: 100%;display: flex;align-items: center;padding: 13px 8px 13px 10px;font-size: 14px;">
-            <ion-input class="ion-no-padding" (click)="selector('sheer', 'this.item.fabric_sheer')" readonly
-              [(ngModel)]="item.fabric_sheer" placeholder="Select Sheer Fabric">
+          <div style="width: 100%;display: flex;align-items: center;padding: 0px 8px 0px 10px;font-size: 14px;">
+            <ion-input style="height: 43px;" class="ion-no-padding"
+              (click)="selector('sheer', 'this.item.fabric_sheer')" readonly [(ngModel)]="item.fabric_sheer"
+              placeholder="Select Sheer Fabric">
             </ion-input>
             <ion-icon *ngIf="item.fabric_sheer != null && item.fabric_sheer != ''" (click)="clearFabric('sheer')"
               style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
@@ -778,19 +780,19 @@
       <!-- Upgrade to Motorized -->
       <div *ngIf="item.fabric_type != null && item.fabric_type != ''">
         <div
-          *ngIf="((item.pleat != 'Ripplefold' && item.pleat != 'Double Pleat') && (item.pleat_sheer != 'Ripplefold' && item.pleat_sheer != 'Double Pleat')) || (item.track == null && item.track_sheer == null)"
+          *ngIf="((item.pleat != 'Ripplefold' && item.pleat != 'Fake Double Pleat') && (item.pleat_sheer != 'Ripplefold' && item.pleat_sheer != 'Fake Double Pleat')) || (item.track == null && item.track_sheer == null)"
           style="min-width: 56px;font-weight: 500;color: #999999">Upgrade to Motorized Track Requirement:</div>
         <div *ngIf="item.track == null && item.track_sheer == null" style="margin-top: 5px;color: #a17635;">No Track
           Selected</div>
         <div
-          *ngIf="item.pleat != 'Ripplefold' && item.pleat != 'Double Pleat' && item.pleat_sheer != 'Ripplefold' && item.pleat_sheer != 'Double Pleat'"
+          *ngIf="item.pleat != 'Ripplefold' && item.pleat != 'Fake Double Pleat' && item.pleat_sheer != 'Ripplefold' && item.pleat_sheer != 'Fake Double Pleat'"
           style="margin-top: 5px;color: #a17635;">
-          Motorizable Pleat Type<br><span style="color: #bcbcbc;">- Double Pleat</span><br><span
+          Motorizable Pleat Type<br><span style="color: #bcbcbc;">- Fake Double Pleat</span><br><span
             style="color: #bcbcbc;">- Ripplefold</span>
         </div>
 
         <div
-          *ngIf="((item.pleat == 'Ripplefold' || item.pleat == 'Double Pleat') || (item.pleat_sheer == 'Ripplefold' || item.pleat_sheer == 'Double Pleat')) && (item.track != null || item.track_sheer != null)">
+          *ngIf="((item.pleat == 'Ripplefold' || item.pleat == 'Fake Double Pleat') || (item.pleat_sheer == 'Ripplefold' || item.pleat_sheer == 'Fake Double Pleat')) && (item.track != null || item.track_sheer != null)">
 
           <div style="display: flex;justify-content: space-between;">
             <div style="min-width: 56px;font-weight: 500;color: #999999">Upgrade to Motorized Track <span
@@ -971,8 +973,9 @@
         <div *ngIf="item.pleat != 'Roman Blind'"
           style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 70px;color: #999999">Blind </div>
-          <div style="width: 100%;display: flex;align-items: center;padding: 13px 10px;font-size: 14px;">
-            <ion-input class="ion-no-padding"
+          <div
+            style="width: 100%; min-height: 43px; display: flex;align-items: center;padding: 0px 10px;font-size: 14px;">
+            <ion-input style="min-height: 43px;" class="ion-no-padding"
               (click)="selectorblind('blind', 'this.item.fabric_blind', item.pleat)" readonly
               [(ngModel)]="item.fabric_blind" placeholder="Select Blind" style="font-size: 14px;">
             </ion-input>
@@ -995,9 +998,11 @@
         <div *ngIf="item.pleat == 'Roman Blind'"
           style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px; display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 70px;color: #999999">Fabrics</div>
-          <div style="width: 100%;display: flex;align-items: center;padding: 13px 10px;font-size: 14px;">
-            <ion-input class="ion-no-padding" (click)="selector('curtainsheer', 'this.item.fabric')" readonly
-              [(ngModel)]="item.fabric" placeholder="Select Fabrics" style="font-size: 14px;">
+          <div
+            style="width: 100%; min-height: 43px;display: flex;align-items: center;padding: 0px 10px;font-size: 14px;">
+            <ion-input style="min-height: 43px;" class="ion-no-padding"
+              (click)="selector('curtainsheer', 'this.item.fabric')" readonly [(ngModel)]="item.fabric"
+              placeholder="Select Fabrics" style="font-size: 14px;">
             </ion-input>
             <ion-icon *ngIf="item.fabric != null && item.fabric != ''" (click)="clearFabric('curtain')"
               style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
@@ -1150,9 +1155,10 @@
         <div *ngIf="item.pleat == 'Roman Blind'"
           style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px;display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 70px;color: #999999">Lining </div>
-          <div style="width: 100%;display: flex;align-items: center;padding: 13px 5px 13px 10px;font-size: 14px;">
-            <ion-input class="ion-no-padding" (click)="selector('this.fabricLining', 'this.item.fabric_lining')"
-              readonly [(ngModel)]="item.fabric_lining" placeholder="Select Lining Fabric">
+          <div style="width: 100%;display: flex;align-items: center;padding: 0px 5px 0px 10px;font-size: 14px;">
+            <ion-input style="height: 43px;" class="ion-no-padding"
+              (click)="selector('this.fabricLining', 'this.item.fabric_lining')" readonly
+              [(ngModel)]="item.fabric_lining" placeholder="Select Lining Fabric">
             </ion-input>
             <ion-icon *ngIf="item.fabric_lining != null && item.fabric_lining != ''" (click)="clearFabric('lining')"
               style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>
@@ -1220,9 +1226,10 @@
         <div *ngIf="item.pleat == 'Wooden Blind'"
           style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 0px 10px;display: flex; align-items: center; justify-content: space-between;">
           <div style="min-width: 70px;color: #999999">Tape</div>
-          <div style="width: 100%;display: flex;align-items: center;padding: 13px 5px 13px 10px;font-size: 14px;">
-            <ion-input class="ion-no-padding" (click)="selector('this.blindTape', 'this.item.blind_tape')" readonly
-              [(ngModel)]="item.blind_tape" placeholder="Select Tape">
+          <div style="width: 100%;display: flex;align-items: center;padding: 0px 5px 0px 10px;font-size: 14px;">
+            <ion-input style="height: 43px;" class="ion-no-padding"
+              (click)="selector('this.blindTape', 'this.item.blind_tape')" readonly [(ngModel)]="item.blind_tape"
+              placeholder="Select Tape">
             </ion-input>
             <ion-icon *ngIf="item.blind_tape != null && item.blind_tape != ''" (click)="clearFabric('tape')"
               style="font-size: 16px; color: #a17635;" name="close-outline"></ion-icon>

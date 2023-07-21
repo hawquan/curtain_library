@@ -58,6 +58,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
   scaftfolding = false
   scaftfoldingDeliver = false
   ladderDeliver = false
+  due = 0
 
   pdfObj = null;
 
@@ -88,10 +89,14 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
     this.actroute.queryParams.subscribe(a => {
       this.sales_id = a['sales_id']
-      this.info = JSON.parse(a['info'])
       this.pleatlist = JSON.parse(a["pleatlist"])
       this.blindlist = JSON.parse(a["blindlist"])
       this.tracklist = JSON.parse(a["tracklist"])
+
+      this.http.post('https://curtain.vsnap.my/getonesales', { no: this.sales_id }).subscribe((s) => {
+        this.info = s['data'][0]
+        console.log(this.info);
+      })
 
       this.http.post('https://curtain.vsnap.my/onestaff', { id: this.info['id_sales'] }).subscribe(a => {
         this.salesmaninfo = a['data'][0]
@@ -198,9 +203,16 @@ export class TaskOngoingViewQuotationPage implements OnInit {
     return addCharges || 0
   }
 
+  dueamount(i) {
+    if (this.item[i].price_old != null) {
+      let temp = this.item[i].price - this.item[i].price_old
+      this.due += temp
+      console.log(this.due);
+
+    }
+  }
 
   calcPrice(i) {
-
     let width = 0 as any
     let height = 0 as any
     if (this.item[i].height_tech != null || this.item[i].width_tech != null) {
@@ -238,13 +250,18 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
     console.log(this.item[i]);
 
-
     if (this.item[i].type != 'Blinds') {
 
       if (this.item[i].fabric != null) {
         if (this.item[i].fabric_type == 'C' || this.item[i].fabric_type == 'CS') {
           curtain = true
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+          try {
+            curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Fabric', "curtain's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            this.back()
+            return
+          }
         } else {
           curtain = false
         }
@@ -255,7 +272,13 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       if (this.item[i].fabric_lining != null) {
         if (this.item[i].fabric_type == 'C' || this.item[i].fabric_type == 'CS') {
           lining = true
-          lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
+          try {
+            lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Lining', "lining's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            this.back()
+            return
+          }
         } else {
           lining = false
         }
@@ -266,7 +289,13 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       if (this.item[i].fabric_sheer != null) {
         if (this.item[i].fabric_type == 'S' || this.item[i].fabric_type == 'CS') {
           sheer = true
-          sheer_id = this.fabricSheer.filter(x => x.name == this.item[i].fabric_sheer)[0]['id']
+          try {
+            sheer_id = this.fabricSheer.filter(x => x.name == this.item[i].fabric_sheer)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Sheer', "sheer's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            this.back()
+            return
+          }
         } else {
           sheer = false
         }
@@ -277,7 +306,12 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       if (this.item[i].track != null) {
         if (this.item[i].fabric_type == 'C' || this.item[i].fabric_type == 'CS') {
           track = true
-          track_id = this.tracklist.filter(x => x.name == this.item[i].track)[0]['id']
+          try {
+            track_id = this.tracklist.filter(x => x.name == this.item[i].track)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Track', "track", this.item[i].location + " " + this.item[i].location_ref)
+            return
+          }
         } else {
           track = false
         }
@@ -288,7 +322,12 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       if (this.item[i].track_sheer != null) {
         if (this.item[i].fabric_type == 'S' || this.item[i].fabric_type == 'CS') {
           track_sheer = true
-          track_sheer_id = this.tracklist.filter(x => x.name == this.item[i].track_sheer)[0]['id']
+          try {
+            track_sheer_id = this.tracklist.filter(x => x.name == this.item[i].track_sheer)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg("Sheer's Track", "sheer's track", this.item[i].location + " " + this.item[i].location_ref)
+            return
+          }
         } else {
           track_sheer = false
         }
@@ -297,14 +336,24 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       }
 
       if (this.item[i].pleat != null && this.item[i].pleat != '') {
-        pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
+        try {
+          pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
+        } catch (error) {
+          this.calcErrorMsg("Pleat", "pleat", this.item[i].location + " " + this.item[i].location_ref)
+          return
+        }
       }
 
       if (this.item[i].pleat_sheer != null && this.item[i].pleat_sheer != '') {
-        pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item[i].pleat_sheer)[0]['id']
+        try {
+          pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item[i].pleat_sheer)[0]['id']
+        } catch (error) {
+          this.calcErrorMsg("Sheer's Pleat", "sheer's pleat", this.item[i].location + " " + this.item[i].location_ref)
+          return
+        }
       }
 
-      if ((this.item[i].sidehook == 'Yes' && this.item[i] != 'No') || (this.item[i].sheer_sidehook == 'Yes' && this.item[i].sheer_belt != 'No')) {
+      if ((this.item[i].sidehook == 'Yes' && (this.item[i].belt != 'No' || this.item[i].belt)) || (this.item[i].sheer_sidehook == 'Yes' && (this.item[i].sheer_belt != 'No' || this.item[i].sheer_belt))) {
         belt_hook = true
       }
 
@@ -322,19 +371,34 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
         if (this.item[i].fabric_blind != null) {
           blind = true
-          blind_id = this.fabricBlind.filter(x => x.name == this.item[i].fabric_blind)[0]['id']
+          try {
+            blind_id = this.fabricBlind.filter(x => x.name == this.item[i].fabric_blind)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Blind', "blind's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            return
+          }
         }
 
         if (this.item[i].fabric != null) {
           curtain = true
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+          try {
+            curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Fabric', "curtain's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            return
+          }
         } else {
           curtain = false
         }
 
         if (this.item[i].fabric_lining != null) {
           lining = true
-          lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
+          try {
+            lining_id = this.fabricLining.filter(x => x.name == this.item[i].fabric_lining)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Lining', "lining's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            return
+          }
         } else {
           lining = false
         }
@@ -351,18 +415,31 @@ export class TaskOngoingViewQuotationPage implements OnInit {
         console.log('blind');
 
         if (this.item[i].fabric_blind != null && this.item[i].fabric_blind != '') {
-          blind_id = (this.fabricBlind.filter(x => x.name == this.item[i].fabric_blind))[0]['id']
+          try {
+            blind_id = (this.fabricBlind.filter(x => x.name == this.item[i].fabric_blind))[0]['id']
+          } catch (error) {
+            this.calcErrorMsg('Blind', "blind's fabric", this.item[i].location + " " + this.item[i].location_ref)
+            return
+          }
         }
 
         if (this.item[i].pleat == 'Wooden Blind') {
           if (this.item[i].blind_tape) {
-            tape_id = (this.blindTape.filter(x => x.name == this.item[i].blind_tape))[0]['id']
             tape = true
+            try {
+              tape_id = (this.blindTape.filter(x => x.name == this.item[i].blind_tape))[0]['id']
+            } catch (error) {
+              this.calcErrorMsg('Tape', "blind's tape", this.item[i].location + " " + this.item[i].location_ref)
+              return
+            }
           }
         }
 
       }
 
+      // if (this.item[i].pleat != null && this.item[i].pleat != '') {
+      //   pleat_id = this.pleatlist.filter(x => x.name == this.item[i].pleat)[0]['id']
+      // }
     }
 
     let temp = {
@@ -372,21 +449,30 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       promo_curtain: this.item[i].promo_curtain || 0, promo_lining: this.item[i].promo_lining || 0, promo_sheer: this.item[i].promo_sheer || 0, promo_blind: this.item[i].promo_blind || 0,
       motorized: this.item[i].motorized_upgrade, motorized_cost: this.item[i].motorized_cost, motorized_power: this.item[i].motorized_power, motorized_choice: this.item[i].motorized_choice, motorized_pieces: this.item[i].motorized_pieces, motorized_lift: this.item[i].motorized_lift,
       belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id, blind_spring: this.item[i].blind_spring, blind_tube: this.item[i].blind_tube, blind_easylift: this.item[i].blind_easylift, blind_monosys: this.item[i].blind_monosys,
+      eyelet_curtain: this.item[i].eyelet_curtain, eyelet_sheer: this.item[i].eyelet_sheer
+
     }
 
     console.log(temp);
 
     this.http.post('https://curtain.vsnap.my/calcPrice', temp).subscribe(a => {
 
-      if (this.info.need_scaftfolding == true) {
-        this.scaftfolding = true
-      }
-      if (this.info.need_ladder == true) {
-        this.ladder = true
-      }
-
       this.calc.push(a['data'])
       this.count++
+      this.dueamount(i)
+
+      if (this.calc[i].install.scaftfolding) {
+        this.scaftfolding = true
+        this.info.scaftfolding_fee_status = true
+        this.scaftfoldingDeliver = true
+      }
+
+      if (this.calc[i].install.ladder) {
+        this.ladder = true
+        this.info.ladder_fee_status = true
+        this.ladderDeliver = true
+      }
+
       if (this.calc.length != this.item.length) {
         this.loop()
       }
@@ -395,12 +481,35 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       if (this.calc.length == this.item.length) {
         console.log('finish');
 
+
+        // if (this.item.height > 180) {
+        //   this.item.need_scaftfolding = true
+        // } else if (this.item.height >= 156 && this.item.height <= 180) {
+        //   this.item.need_ladder = true
+        // } else {
+        //   this.item.need_scaftfolding = false
+        //   this.item.need_ladder = false
+        // }
+
         Swal.close()
         this.loading = true
       }
 
     })
 
+  }
+
+  calcErrorMsg(x, y, z) {
+    Swal.fire({
+      title: z + ' Error',
+      // text: "Please check the curtain's fabric?",
+      html: "Please check the " + y + ", possible issues:<br>- " + x + " Availability<br>- " + x + " Name Changed<br>(Try reselect the " + y + ")",
+      heightAuto: false,
+      icon: 'error',
+      allowOutsideClick: false,
+      showConfirmButton: true,
+      showCancelButton: false,
+    })
   }
 
   lengthof(x) {
@@ -1391,20 +1500,86 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       let CL_height = height
       let S_height = height
 
-      if ((this.item[i].motorized_power == 'Battery' || this.item[i].motorized_power == 'Power Point')) {
-        CL_height = height - 1.5
-      } else if (this.item[i].track == 'Ripplefold' || this.item[i].track == 'Bendable' || this.item[i].track == 'Cubicle / Hospital' || this.item[i].track == 'Silent Track' || this.item[i].track == 'Bendable / Silent Track') {
-        CL_height = height - 1.75
-      } else if (this.item[i].track == 'Super Track' || this.item[i].track == 'Curve') {
-        CL_height = height - 1.25
+      if (this.item[i].type != 'Blinds') {
+
+        // Curtain / Lining
+        if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Curtain')) {
+          if (this.item[i].pleat == 'Fake Double Pleat') {
+            CL_height = height - 1.5
+          } else if (this.item[i].track) {
+            if (this.item[i].track == 'Ripplefold ') {
+              CL_height = height - 1.75
+            } else if (this.item[i].track == 'Ripplefold Curve') {
+              CL_height = height - 1.75
+            }
+          }
+
+        } else {
+          if (this.item[i].track) {
+            if (this.item[i].track == 'Ripplefold') {
+              CL_height = height - 1.75
+            } else if (this.item[i].track == 'Ripplefold Curve') {
+              CL_height = height - 1.5
+            } else if (this.item[i].track == 'Cubicle / Hospital') {
+              CL_height = height - (this.item[i].bracket == 'Wall' ? 0 : 1.5)
+            } else if (this.item[i].track == 'Super Track') {
+              CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+            } else if (this.item[i].track == 'Curve') {
+              CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat == 'Fake Double Pleat') {
+              CL_height = height - 2
+            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat == 'Fake Double Pleat') {
+              CL_height = height - 2
+            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat.includes('Eyelet')) {
+              CL_height = height + 1.75
+            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat.includes('Eyelet')) {
+              CL_height = height + 1.75
+            }
+          }
+        }
+
+        // Sheer
+        if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Sheer')) {
+          if (this.item[i].pleat_sheer == 'Fake Double Pleat') {
+            S_height = height - 1.5
+          } else if (this.item[i].track) {
+            if (this.item[i].track_sheer == 'Ripplefold ') {
+              S_height = height - 1.75
+            } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
+              S_height = height - 1.75
+            }
+          }
+        } else {
+          if (this.item[i].track_sheer) {
+            if (this.item[i].track_sheer == 'Ripplefold') {
+              S_height = height - 1.75
+            } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
+              S_height = height - 1.5
+            } else if (this.item[i].track_sheer == 'Cubicle / Hospital') {
+              S_height = height - (this.item[i].sheer_bracket == 'Wall' ? 0 : 1.5)
+            } else if (this.item[i].track_sheer == 'Super Track') {
+              S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+            } else if (this.item[i].track_sheer == 'Curve') {
+              S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+            } else if (this.item[i].track_sheer.includes('Metal Rod') && this.item[i].pleat_sheer == 'Fake Double Pleat') {
+              S_height = height - 2
+            } else if (this.item[i].track_sheer == 'Wooden Rod' && this.item[i].pleat_sheer == 'Fake Double Pleat') {
+              S_height = height - 2
+            } else if (this.item[i].track_sheer.includes('Metal Rod') && this.item[i].pleat_sheer.includes('Eyelet')) {
+              S_height = height + 1.75
+            } else if (this.item[i].track_sheer == 'Wooden Rod' && this.item[i].pleat_sheer.includes('Eyelet')) {
+              S_height = height + 1.75
+            }
+          }
+        }
       }
 
-      if ((this.item[i].motorized_power == 'Battery' || this.item[i].motorized_power == 'Power Point')) {
-        S_height = height - 1.5
-      } else if (this.item[i].track_sheer == 'Ripplefold' || this.item[i].track_sheer == 'Bendable' || this.item[i].track_sheer == 'Cubicle / Hospital' || this.item[i].track_sheer == 'Silent Track' || this.item[i].track_sheer == 'Bendable / Silent Track') {
-        S_height = height - 1.75
-      } else if (this.item[i].track_sheer == 'Super Track' || this.item[i].track_sheer == 'Curve') {
-        S_height = height - 1.25
+      let motorSides
+
+      if (this.item[i].motorized_sides == 'Left') {
+        motorSides = 'L'
+      } else if (this.item[i].motorized_sides == 'Right') {
+        motorSides = 'R'
       }
 
       //ITEMS PUSH START HERE
@@ -1430,14 +1605,18 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       let curtainBelt
       let sheerBelt
 
-      if (this.item[i].belt == 'Yes') {
-        curtainBelt = 'Yes'
+      if (this.item[i].belt == 'Tieback') {
+        curtainBelt = 'TB'
+      } else if (this.item[i].belt == 'Velcro') {
+        curtainBelt = 'VC'
       } else {
         curtainBelt = 'X'
       }
 
-      if (this.item[i].sheer_belt == 'Yes') {
-        sheerBelt = 'Yes'
+      if (this.item[i].sheer_belt == 'Tieback') {
+        sheerBelt = 'TB'
+      } else if (this.item[i].sheer_belt == 'Velcro') {
+        sheerBelt = 'VC'
       } else {
         sheerBelt = 'X'
       }
@@ -1476,10 +1655,10 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               ],
             )
 
-            if (this.item[i].motorized_upgrade) {
+            if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Curtain')) {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )' + ' ( ' + motorSides + ' )', fontSize: 8.5 },
                   { text: 'Motorized ' + this.item[i].motorized_power, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -1490,7 +1669,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                   { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'P', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), fontSize: 8.5 }
                 ],
               )
@@ -1508,7 +1687,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                   { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'P', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), fontSize: 8.5 }
                 ],
               )
@@ -1520,30 +1699,32 @@ export class TaskOngoingViewQuotationPage implements OnInit {
             let fabricWidth = this.fabricLining.filter(a => a.name == this.item[i].fabric_lining)[0]['size']
             let pleatShort = this.pleatlist.filter(a => a.name == this.item[i].pleat)[0]['name_short']
 
-            items.push(
-              [
-                { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-              ],
-            )
+            // items.push(
+            //   [
+            //     { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //   ],
+            // )
 
             items.push(
               [
-                { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                // { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
                 { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
-                { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                // { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                { text: '', bold: true, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].fabric_lining + (this.item[i].code_lining ? '-' + this.item[i].code_lining : ''), alignment: 'center', fontSize: 8.5 },
                 { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
                 { text: pleatShort, alignment: 'center', fontSize: 8.5 },
@@ -1551,7 +1732,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                 { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
-                { text: 'P', alignment: 'center', fontSize: 8.5 },
+                { text: this.calc[i].lining.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 }
               ],
             )
@@ -1599,10 +1780,10 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               ],
             )
 
-            if (this.item[i].motorized_upgrade) {
+            if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Sheer')) {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )' + ' ( ' + motorSides + ' )', fontSize: 8.5 },
                   { text: 'Motorized ' + this.item[i].motorized_power, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + S_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -1613,7 +1794,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                   { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'M', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), fontSize: 8.5 }
                 ],
               )
@@ -1631,7 +1812,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                   { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'M', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), fontSize: 8.5 }
                 ],
               )
@@ -1680,10 +1861,10 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               ],
             )
 
-            if (this.item[i].motorized_upgrade) {
+            if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Curtain')) {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )' + ' ( ' + motorSides + ' )', fontSize: 8.5 },
                   { text: 'Motorized ' + this.item[i].motorized_power, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -1694,7 +1875,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                   { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'P', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_curtain || ''), fontSize: 8.5 }
                 ],
               )
@@ -1712,7 +1893,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                   { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'P', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_curtain || ''), fontSize: 8.5 }
                 ],
               )
@@ -1726,30 +1907,32 @@ export class TaskOngoingViewQuotationPage implements OnInit {
             let fabricWidth = this.fabricLining.filter(a => a.name == this.item[i].fabric_lining)[0]['size']
             let pleatShort = this.pleatlist.filter(a => a.name == this.item[i].pleat)[0]['name_short']
 
-            items.push(
-              [
-                { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 },
-              ],
-            )
+            // items.push(
+            //   [
+            //     { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //     { text: '', fontSize: 8.5 },
+            //   ],
+            // )
 
             items.push(
               [
-                { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
-                { text: this.item[i].track, alignment: 'center', fontSize: 8.5 },
+                // { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
+                { text: this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Curtain') ? '-' : this.item[i].track, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
-                { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                // { text: width + '" ( W )' + ' x ' + CL_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+                { text: '-', bold: true, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].fabric_lining + (this.item[i].code_lining ? '-' + this.item[i].code_lining : ''), alignment: 'center', fontSize: 8.5 },
                 { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
                 { text: pleatShort, alignment: 'center', fontSize: 8.5 },
@@ -1757,7 +1940,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                 { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
-                { text: 'P', alignment: 'center', fontSize: 8.5 },
+                { text: this.calc[i].lining.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 }
               ],
             )
@@ -1785,10 +1968,10 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               ],
             )
 
-            if (this.item[i].motorized_upgrade) {
+            if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Sheer')) {
               items.push(
                 [
-                  { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+                  { text: width + '" ( W )' + ' x ' + height + '" ( H )' + ' ( ' + motorSides + ' )', fontSize: 8.5 },
                   { text: 'Motorized ' + this.item[i].motorized_power, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_bracket || 'X', alignment: 'center', fontSize: 8.5 },
                   { text: width + '" ( W )' + ' x ' + S_height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
@@ -1799,7 +1982,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                   { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'M', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), fontSize: 8.5 }
                 ],
               )
@@ -1817,7 +2000,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                   { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                   { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
-                  { text: 'M', alignment: 'center', fontSize: 8.5 },
+                  { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                   { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), fontSize: 8.5 }
                 ],
               )
@@ -1868,11 +2051,11 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
           items.push(
             [
-              { text: width + '" ( W )' + ' x ' + height + '" ( H ) ' + ' (' + rope_chain + ')', fontSize: 8.5 },
+              { text: width + '" ( W )' + ' x ' + height + '" ( H ) ' + (this.item[i].rope_chain ? ' (' + rope_chain + ')' : ''), fontSize: 8.5 },
               { text: '-', alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
               { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : ''), alignment: 'center', fontSize: 8.5 },
+              { text: this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : '') + (this.item[i].blind_tape ? ' + Tape ' + this.item[i].blind_tape : ''), alignment: 'center', fontSize: 8.5 },
               { text: '-', alignment: 'center', fontSize: 8.5 },
               { text: '-', alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].pieces_blind, alignment: 'center', fontSize: 8.5 },
@@ -1911,18 +2094,18 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
             items.push(
               [
-                { text: width + '" ( W )' + ' x ' + height + '" ( H ) ' + ' (' + rope_chain + ')', fontSize: 8.5 },
-                { text: '-', alignment: 'center', fontSize: 8.5 },
+                { text: width + '" ( W )' + ' x ' + height + '" ( H ) ' + (this.item[i].rope_chain ? ' (' + rope_chain + ')' : ''), fontSize: 8.5 },
+                { text: 'Roman Blind', alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
                 { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].fabric + (this.item[i].code_curtain ? '-' + this.item[i].code_curtain : ''), alignment: 'center', fontSize: 8.5 },
-                { text: '-', alignment: 'center', fontSize: 8.5 },
+                { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
                 { text: this.item[i].pieces_blind, alignment: 'center', fontSize: 8.5 },
                 { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
-                { text: '-', alignment: 'center', fontSize: 8.5 },
+                { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 }
               ],
             )
@@ -1934,38 +2117,40 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           let fabricWidth = this.fabricLining.filter(a => a.name == this.item[i].fabric_lining)[0]['size']
           // let pleatShort = this.pleatlist.filter(a => a.name == this.item[i].pleat)[0]['name_short']
 
-          items.push(
-            [
-              { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-              { text: '', fontSize: 8.5 },
-            ],
-          )
+          // items.push(
+          //   [
+          //     { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //     { text: '', fontSize: 8.5 },
+          //   ],
+          // )
 
           items.push(
             [
-              { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+              // { text: width + '" ( W )' + ' x ' + height + '" ( H )', fontSize: 8.5 },
+              { text: 'Lining', fontSize: 8.5, decoration: 'underline' },
               { text: '-', alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
-              { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+              // { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
+              { text: '', bold: true, alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].fabric_lining + (this.item[i].code_lining ? '-' + this.item[i].code_lining : ''), alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
+              { text: fabricWidth + '"', alignment: 'center', fontSize: 8.5 },
               { text: '-', alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].pieces_blind, alignment: 'center', fontSize: 8.5 },
               { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
               { text: '-', alignment: 'center', fontSize: 8.5 },
               { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
+              { text: this.calc[i].lining.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
               { text: '', fontSize: 8.5 }
             ],
           )
@@ -2104,6 +2289,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
     this.pdfObj = pdfMake.createPdf(dd);
     this.uploadSoPdf()
   }
+
   uploadSoPdf() {
     this.pdfObj.getBuffer((buffer) => {
       var blob = new Blob([buffer], { type: 'application/pdf' });
