@@ -994,6 +994,8 @@ export class QuotationOverallPage implements OnInit {
               CL_height = height - 1.75
             } else if (this.item[i].track == 'Ripplefold Curve') {
               CL_height = height - 1.75
+            } else if (this.item[i].track.includes('Camoor')) {
+              CL_height = height - 1.75
             }
           }
 
@@ -1017,6 +1019,8 @@ export class QuotationOverallPage implements OnInit {
               CL_height = height + 1.75
             } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat.includes('Eyelet')) {
               CL_height = height + 1.75
+            } else if (this.item[i].track.includes('Camoor')) {
+              CL_height = height - 1.5
             }
           }
         }
@@ -2281,15 +2285,17 @@ export class QuotationOverallPage implements OnInit {
           )
         }
 
-        items.push(
-          [
-            'Upgrade Lift System',
-            { text: 'set', alignment: 'center' },
-            { text: this.calc[i].motorized.qty, alignment: 'center' },
-            { text: (this.calc[i].motorized.lift_rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
-            { text: (this.calc[i].motorized.lift).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
-          ]
-        )
+        if (this.calc[i].motorized.lift != 0) {
+          items.push(
+            [
+              'Upgrade Lift System',
+              { text: 'set', alignment: 'center' },
+              { text: this.calc[i].motorized.qty, alignment: 'center' },
+              { text: (this.calc[i].motorized.lift_rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
+              { text: (this.calc[i].motorized.lift).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
+            ]
+          )
+        }
 
         items.push(
           [
