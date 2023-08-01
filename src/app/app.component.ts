@@ -25,7 +25,7 @@ export class AppComponent {
     private fcm: FCM,
   ) {
 
-    let version = '000034' 
+    let version = '000035' 
     // ionic cordova build android --release -- -- --packageType=bundle
     // jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore curtain.jks app-release.aab curtain
     // curtain12345
@@ -71,15 +71,30 @@ export class AppComponent {
                 }
               })
             } else if (this.currentPlatform == 'ios') {
+              // Swal.fire({
+              //   icon: 'warning',
+              //   title: 'New Version Available',
+              //   text: 'Please Check TestFlight or Contact Management for latest version',
+              //   heightAuto: false,
+              //   showConfirmButton: true,
+              //   showCancelButton: false,
+              //   allowOutsideClick: false,
+              //   allowEscapeKey: false,
+              // })
               Swal.fire({
                 icon: 'warning',
                 title: 'New Version Available',
-                text: 'Please Check TestFlight or Contact Management for latest version',
+                text: 'Please update your app with the link provided by Dev or Click the Update button.',
                 heightAuto: false,
                 showConfirmButton: true,
                 showCancelButton: false,
+                confirmButtonText: 'To Update',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
+              }).then((a) => {
+                if (a.isConfirmed) {
+                  window.open("https://apps.apple.com/us/app/curtain-library/id1645866855", "_system");
+                }
               })
             }
 

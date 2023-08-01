@@ -96,11 +96,12 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       this.http.post('https://curtain.vsnap.my/getonesales', { no: this.sales_id }).subscribe((s) => {
         this.info = s['data'][0]
         console.log(this.info);
-      })
 
-      this.http.post('https://curtain.vsnap.my/onestaff', { id: this.info['id_sales'] }).subscribe(a => {
-        this.salesmaninfo = a['data'][0]
-        console.log(this.salesmaninfo);
+        this.http.post('https://curtain.vsnap.my/onestaff', { id: this.info['id_sales'] }).subscribe(a => {
+          this.salesmaninfo = a['data'][0]
+          console.log(this.salesmaninfo);
+        })
+
       })
 
       this.http.get('https://curtain.vsnap.my/tapeList').subscribe(a => {
@@ -1504,12 +1505,15 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
         // Curtain / Lining
         if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Curtain')) {
+
           if (this.item[i].pleat == 'Fake Double Pleat') {
             CL_height = height - 1.5
           } else if (this.item[i].track) {
             if (this.item[i].track == 'Ripplefold ') {
               CL_height = height - 1.75
             } else if (this.item[i].track == 'Ripplefold Curve') {
+              CL_height = height - 1.75
+            } else if (this.item[i].track.includes('Camoor')) {
               CL_height = height - 1.75
             }
           }
@@ -1534,6 +1538,8 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               CL_height = height + 1.75
             } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat.includes('Eyelet')) {
               CL_height = height + 1.75
+            } else if (this.item[i].track.includes('Camoor')) {
+              CL_height = height - 1.5
             }
           }
         }
