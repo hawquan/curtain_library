@@ -25,6 +25,7 @@
     "@ionic-native/core": "^5.36.0",
     "@ionic-native/file": "^5.36.0",
     "@ionic-native/file-opener": "^5.36.0",
+    "@ionic-native/in-app-browser": "^5.36.0",
     "@ionic-native/ionic-webview": "^5.36.0",
     "@ionic-native/market": "^5.36.0",
     "@ionic/angular": "^6.0.0",
