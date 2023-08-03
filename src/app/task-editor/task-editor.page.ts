@@ -404,7 +404,7 @@ export class TaskEditorPage implements OnInit {
 
     if (this.item.fabric_type == 'S') {
       this.item.custom_sheer_hook = null
-      
+
       if (this.item.motorized_upgrade && this.item.pleat_sheer == 'Fake Double Pleat') {
         this.item.sheer_hook = '104'
       } else if (this.item.track_sheer) {
@@ -418,7 +418,7 @@ export class TaskEditorPage implements OnInit {
 
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
 
-      if (this.item.pleat == 'Eyelet Design' || this.item.pleat == 'Ripplefold') {
+      if (this.item.pleat == 'Eyelet Design' || this.item.pleat == 'Ripplefold' || this.item.pleat == 'Fake Double Pleat') {
         console.log('C1');
 
         if (this.item.fabric_type == 'C') {

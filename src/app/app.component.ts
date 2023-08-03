@@ -6,8 +6,6 @@ import { Market } from '@ionic-native/market/ngx';
 import { Platform } from '@ionic/angular';
 import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import Swal from 'sweetalert2';
-import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-root',
@@ -25,11 +23,9 @@ export class AppComponent {
     private market: Market,
     private platform: Platform,
     private fcm: FCM,
-    private safariViewController: SafariViewController,
-    private inAppBrowser: InAppBrowser
   ) {
 
-    let version = '000035'
+    let version = '000036' 
     // ionic cordova build android --release -- -- --packageType=bundle
     // jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore curtain.jks app-release.aab curtain
     // curtain12345
@@ -75,55 +71,31 @@ export class AppComponent {
                 }
               })
             } else if (this.currentPlatform == 'ios') {
-              // Swal.fire({
-              //   icon: 'warning',
-              //   title: 'New Version Available',
-              //   text: 'Please Check TestFlight or Contact Management for latest version',
-              //   heightAuto: false,
-              //   showConfirmButton: true,
-              //   showCancelButton: false,
-              //   allowOutsideClick: false,
-              //   allowEscapeKey: false,
-              // })
               Swal.fire({
                 icon: 'warning',
                 title: 'New Version Available',
-                text: 'Please update your app with the link provided by Dev or Click the Update button.',
+                text: 'Please update your app with the link provided by Dev',
                 heightAuto: false,
                 showConfirmButton: true,
                 showCancelButton: false,
-                confirmButtonText: 'To Update',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
-              }).then((a) => {
-                // if (a.isConfirmed) {
-                //   window.open("https://apps.apple.com/us/app/curtain-library/id1645866855", "_system");
-                // }
-
-                // this.safariViewController.isAvailable()
-                //   .then(async (available: boolean) => {
-                //     if (available) {
-
-                //       this.safariViewController.show({
-                //         url: "https://apps.apple.com/us/app/curtain-library/id1645866855",
-                //       })
-                //         .subscribe((result: any) => {
-                //           if (result.event === 'opened') console.log('Opened');
-                //           else if (result.event === 'loaded') console.log('Loaded');
-                //           else if (result.event === 'closed') console.log('Closed');
-                //         },
-                //           (error: any) => console.error(error)
-                //         );
-
-                //     } else {
-                //       window.open("https://apps.apple.com/us/app/curtain-library/id1645866855", '_system');
-                //       // use fallback browser, example InAppBrowser
-                //     }
-                //   }).catch(async (error) => {
-                //     window.open("https://apps.apple.com/us/app/curtain-library/id1645866855", '_system');
-                //   })
-                this.openURL()
               })
+              // Swal.fire({
+              //   icon: 'warning',
+              //   title: 'New Version Available',
+              //   text: 'Please update your app with the link provided by Dev or Click the Update button.',
+              //   heightAuto: false,
+              //   showConfirmButton: true,
+              //   showCancelButton: false,
+              //   confirmButtonText: 'To Update',
+              //   allowOutsideClick: false,
+              //   allowEscapeKey: false,
+              // }).then((a) => {
+              //   if (a.isConfirmed) {
+              //     window.open("https://apps.apple.com/us/app/curtain-library/id1645866855", "_system");
+              //   }
+              // })
             }
 
           }
@@ -141,36 +113,7 @@ export class AppComponent {
       })
     })
 
-  }
 
-  async openURL() {
-    try {
-      const url = 'https://apps.apple.com/us/app/curtain-library/id1645866855';
-      const target = '_system';
-      const options: string = 'location=yes,toolbar=yes,closebuttoncaption=Close';
-
-      const browser = this.inAppBrowser.create(url, target, options);
-
-      browser.on('loadstart').subscribe((event) => {
-        // Do something when the URL starts loading.
-      });
-
-      browser.on('loadstop').subscribe((event) => {
-        // Do something when the URL has finished loading.
-      });
-
-      browser.on('loaderror').subscribe((event) => {
-        // Handle any error that occurs while loading the URL.
-        console.error(event);
-      });
-
-      browser.on('exit').subscribe(() => {
-        // Handle when the InAppBrowser is closed.
-      });
-    } catch (error) {
-      // Handle any other errors that may occur.
-      console.error(error);
-    }
   }
 
   goMarket() {

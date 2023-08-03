@@ -438,7 +438,7 @@ export class TaskCreatorPage implements OnInit {
     
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
 
-      if (this.item.pleat == 'Eyelet Design' || this.item.pleat == 'Ripplefold') {
+      if (this.item.pleat == 'Eyelet Design' || this.item.pleat == 'Ripplefold' || this.item.pleat == 'Fake Double Pleat') {
         console.log('C1');
 
         if (this.item.fabric_type == 'C') {
