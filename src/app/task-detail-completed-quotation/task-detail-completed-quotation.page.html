@@ -351,6 +351,23 @@
             </div>
           </div>
 
+          <!-- Installation Scaftfolding  -->
+          <div *ngIf="calc[i].install.scaftfolding"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Climbing w/Scaftfolding ({{calc[i].install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.climbing_price | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
           <!-- Belt & Hook -->
           <div *ngIf="calc[i].install.belt_hook != 0"
             style="display: flex;justify-content: space-between;margin-bottom: 5px;">
@@ -645,6 +662,23 @@
               </div>
               <div style="width: 70%;text-align: end;">
                 {{calc[i].install.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Installation Scaftfolding  -->
+          <div *ngIf="calc[i].install.scaftfolding"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Climbing w/Scaftfolding ({{calc[i].install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.climbing_price | currency: ' '}}
               </div>
             </div>
           </div>

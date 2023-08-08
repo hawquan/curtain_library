@@ -408,7 +408,7 @@ export class TaskCreatorPage implements OnInit {
 
     if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
       this.item.custom_hook = null
-      this.item.custom_sheer_hook = null
+      this.item.hook = null
 
       if (this.item.motorized_upgrade && this.item.pleat == 'Fake Double Pleat') {
         this.item.hook = '104'
@@ -422,9 +422,10 @@ export class TaskCreatorPage implements OnInit {
 
     }
 
-    if (this.item.fabric_type == 'S') {
+    if (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') {
       this.item.custom_sheer_hook = null
-      
+      this.item.sheer_hook = null
+
       if (this.item.motorized_upgrade && this.item.pleat_sheer == 'Fake Double Pleat') {
         this.item.sheer_hook = '104'
       } else if (this.item.track_sheer) {
@@ -435,7 +436,7 @@ export class TaskCreatorPage implements OnInit {
         }
       }
     }
-    
+
     if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
 
       if (this.item.pleat == 'Eyelet Design' || this.item.pleat == 'Ripplefold' || this.item.pleat == 'Fake Double Pleat') {
@@ -1615,11 +1616,11 @@ export class TaskCreatorPage implements OnInit {
 
       if (this.item.type == 'Blinds') {
         // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
-        this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0)
+        this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['climbing_price']
       } else {
         if (this.item.motorized_upgrade) {
           // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['motorized']['install'] + a['data']['motorized']['lift'] + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
-          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['motorized']['install'] + a['data']['motorized']['lift']
+          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['motorized']['install'] + a['data']['motorized']['lift'] + a['data']['install']['climbing_price']
           if (this.item.eyelet_curtain) {
             this.price += a['data']['curtain']['eyelet_curtain']
           }
@@ -1628,7 +1629,7 @@ export class TaskCreatorPage implements OnInit {
           }
         } else {
           // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
-          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook']
+          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['install']['climbing_price']
           if (this.item.eyelet_curtain) {
             this.price += a['data']['curtain']['eyelet_curtain']
           }

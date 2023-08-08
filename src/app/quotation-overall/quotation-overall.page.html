@@ -359,6 +359,23 @@
             </div>
           </div>
 
+          <!-- Installation Scaftfolding  -->
+          <div *ngIf="calc[i].install.scaftfolding"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Climbing w/Scaftfolding ({{calc[i].install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.climbing_price | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
           <!-- Belt & Hook -->
           <div *ngIf="calc[i].install.belt_hook != 0"
             style="display: flex;justify-content: space-between;margin-bottom: 5px;">
@@ -658,6 +675,23 @@
             </div>
           </div>
 
+          <!-- Installation Scaftfolding  -->
+          <div *ngIf="calc[i].install.scaftfolding"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Climbing w/Scaftfolding ({{calc[i].install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.climbing_price | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
           <!-- Belt & Hook -->
           <!-- <div style="display: flex;justify-content: space-between;margin-bottom: 5px;">
             <div>
@@ -710,7 +744,7 @@
             Qty
           </div>
           <div style="width: 70%;text-align: center;">
-            Total (RM)
+            Per (RM)
           </div>
         </div>
 
@@ -720,7 +754,7 @@
        border-top: 2px dashed #a17635; border-bottom: 2px dashed #a17635;">
 
         <!-- Ladder -->
-        <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+        <!-- <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
 
           <div style="display: flex;">
             <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="ladderDeliver"
@@ -740,10 +774,10 @@
               100
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Scaftfolding -->
-        <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+        <!-- <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
 
           <div style="display: flex;">
             <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="scaftfoldingDeliver"
@@ -764,14 +798,14 @@
               200
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Ladder Installation -->
         <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
 
           <div style="display: flex; align-items: center;">
             <ion-toggle [(ngModel)]="info.ladder_fee_status"></ion-toggle>
-            <div>Ladder Fee (Installation)</div>
+            <div>Bomba Ladder</div>
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -779,7 +813,7 @@
               1
             </div>
             <div *ngIf="info.ladder_fee_status" style="width: 70%;text-align: end;">
-              100.00
+              200.00
             </div>
             <div *ngIf="!info.ladder_fee_status" style="width: 70%;text-align: end;">
               WAIVED
@@ -803,7 +837,7 @@
             </div>
           </div>
         </div> -->
-        <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+        <!-- <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
 
           <div style="display: flex; align-items: center;">
             <ion-toggle [(ngModel)]="info.scaftfolding_fee_status"></ion-toggle>
@@ -822,6 +856,32 @@
             </div>
           </div>
 
+        </div> -->
+
+        <!-- Scaftfolding Deliver/Install/Dismantle -->
+        <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+
+          <div style="display: flex; align-items: center;">
+            <ion-toggle [(ngModel)]="info.scaftfolding_fee_status"></ion-toggle>
+            <div style="max-width: 150px;">Scaftfolding (Deliver, Install, Dismantle)</div>
+          </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;align-items: center;">
+            <!-- <div style="width: 30%;text-align: center;">
+              1
+            </div> -->
+            <ion-input placeholder="Eg. 2" (ionChange)="addCharges()" [(ngModel)]="info.scaftfolding_quantity"
+              type="number" class="ion-no-padding"
+              style="width: 20%;height: 20px; padding: 2px; font-weight: 400; color: #333333; text-align: center; border: 1px solid #a17635; border-radius: 5px;">
+            </ion-input>
+            <div *ngIf="info.scaftfolding_fee_status" style="width: 70%;text-align: end;">
+              500.00
+            </div>
+            <div *ngIf="!info.scaftfolding_fee_status" style="width: 70%;text-align: end;">
+              WAIVED
+            </div>
+          </div>
+
         </div>
 
         <!-- Transportation fee -->
@@ -834,7 +894,7 @@
               Transportation Fee
             </div>
             <div *ngIf="!info.transport_fee_status">
-              Self Pick-Up
+              <span style="text-decoration: line-through">Transportation</span> Self Pick-Up
             </div>
           </div>
 

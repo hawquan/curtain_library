@@ -172,14 +172,17 @@ export class TaskOngoingViewQuotationPage implements OnInit {
       total += this.item[i].price
     }
 
-    if (this.ladderDeliver) {
-      total += 100
-    }
-    if (this.scaftfoldingDeliver) {
+    // if (this.ladderDeliver) {
+    //   total += 100
+    // }
+    // if (this.scaftfoldingDeliver) {
+    //   total += 200
+    // }
+    if (this.info.ladder_fee_status) {
       total += 200
     }
-    if (this.scaftfolding) {
-      total += 550
+    if (this.info.scaftfolding_fee_status) {
+      total += 500 * this.info.scaftfolding_quantity
     }
 
     total += this.info.transport_fee_status ? this.info.transport_fee : 0
@@ -189,14 +192,17 @@ export class TaskOngoingViewQuotationPage implements OnInit {
   addCharges() {
     let addCharges = 0
 
-    if (this.ladderDeliver) {
-      addCharges += 100
-    }
-    if (this.scaftfoldingDeliver) {
+    // if (this.ladderDeliver) {
+    //   addCharges += 100
+    // }
+    // if (this.scaftfoldingDeliver) {
+    //   addCharges += 200
+    // }
+    if (this.info.ladder_fee_status) {
       addCharges += 200
     }
-    if (this.scaftfolding) {
-      addCharges += 550
+    if (this.info.scaftfolding_fee_status) {
+      addCharges += 500 * this.info.scaftfolding_quantity
     }
 
     addCharges += this.info.transport_fee_status ? this.info.transport_fee : 0
@@ -1509,7 +1515,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           if (this.item[i].pleat == 'Fake Double Pleat') {
             CL_height = height - 1.5
           } else if (this.item[i].track) {
-            if (this.item[i].track == 'Ripplefold ') {
+            if (this.item[i].track == 'Ripplefold') {
               CL_height = height - 1.75
             } else if (this.item[i].track == 'Ripplefold Curve') {
               CL_height = height - 1.75
@@ -1549,7 +1555,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           if (this.item[i].pleat_sheer == 'Fake Double Pleat') {
             S_height = height - 1.5
           } else if (this.item[i].track) {
-            if (this.item[i].track_sheer == 'Ripplefold ') {
+            if (this.item[i].track_sheer == 'Ripplefold') {
               S_height = height - 1.75
             } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
               S_height = height - 1.75
