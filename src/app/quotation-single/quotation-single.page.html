@@ -320,20 +320,37 @@
             </div>
           </div> -->
 
-        </div>
-        <!-- Installation & Hang -->
-        <div *ngIf="lengthof(calc.install) > 0"
-          style="display: flex;justify-content: space-between;margin-bottom: 10px;">
-          <div>
-            Installation & Hang (set)
+          <!-- Installation & Hang -->
+          <div *ngIf="lengthof(calc.install) > 0"
+            style="display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation & Hang (set)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc.install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc.install.total | currency: ' '}}
+              </div>
+            </div>
           </div>
 
-          <div style="width: 40%;display: flex;justify-content: flex-end;">
-            <div style="width: 30%;text-align: center;">
-              {{calc.install.qty}}
+          <!-- Installation Scaftfolding  -->
+          <div *ngIf="calc.install.scaftfolding"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Climbing w/Scaftfolding ({{calc.install.unit}})
             </div>
-            <div style="width: 70%;text-align: end;">
-              {{calc.install.total | currency: ' '}}
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc.install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc.install.climbing_price | currency: ' '}}
+              </div>
             </div>
           </div>
         </div>
