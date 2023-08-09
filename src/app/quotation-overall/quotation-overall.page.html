@@ -88,7 +88,7 @@
           <!-- Curtain -->
           <div *ngIf="x.fabric != null" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Curtain - {{x.fabric}}<span *ngIf="x.code_curtain">-{{x.code_curtain}}</span> (m)
+              Curtain - {{x.fabric}}<span *ngIf="x.code_curtain">-{{x.code_curtain}}</span> ({{calc[i].curtain.unit}})
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -107,7 +107,7 @@
           <div *ngIf="x.fabric_lining != null"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Lining - {{x.fabric_lining}}<span *ngIf="x.code_lining">-{{x.code_lining}}</span> (m)
+              Lining - {{x.fabric_lining}}<span *ngIf="x.code_lining">-{{x.code_lining}}</span> ({{calc[i].lining.unit}})
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -126,7 +126,7 @@
           <div *ngIf="lengthof(x.fabric_sheer) > 0 "
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Sheer - {{x.fabric_sheer}}<span *ngIf="x.code_sheer">-{{x.code_sheer}}</span> (m)
+              Sheer - {{x.fabric_sheer}}<span *ngIf="x.code_sheer">-{{x.code_sheer}}</span> ({{calc[i].sheer.unit}})
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -472,7 +472,7 @@
           <div *ngIf="x.fabric != null && lengthof(calc[i].curtain) > 0 && x.pleat == 'Roman Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Roman Blind - {{x.fabric}}<span *ngIf="x.code_curtain">-{{x.code_curtain}}</span> (m)
+              Roman Blind - {{x.fabric}}<span *ngIf="x.code_curtain">-{{x.code_curtain}}</span> ({{calc[i].curtain.unit}})
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -491,7 +491,7 @@
           <div *ngIf="x.fabric_lining != null && lengthof(calc[i].lining) > 0 && x.pleat == 'Roman Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
-              Lining - {{x.fabric_lining}}<span *ngIf="x.code_lining">-{{x.code_lining}}</span> (m)
+              Lining - {{x.fabric_lining}}<span *ngIf="x.code_lining">-{{x.code_lining}}</span> ({{calc[i].lining.qty}})
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
