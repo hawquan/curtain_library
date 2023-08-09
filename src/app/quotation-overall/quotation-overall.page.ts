@@ -2584,8 +2584,8 @@ export class QuotationOverallPage implements OnInit {
                 { text: LSprice, alignment: 'right', border: [false, false, true, true] }
               ],
               [
-                { text: insladderscaft + (this.info.scaftfolding_quantity > 1 ? ' x' + this.info.scaftfolding_quantity : ''), bold: true, border: [true, false, false, true] },
-                { text: (500 * this.info.scaftfolding_quantity).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [false, false, true, true] }
+                { text: this.info.scaftfolding_fee_status ? (insladderscaft + (this.info.scaftfolding_quantity > 1 ? ' x' + this.info.scaftfolding_quantity : '')) : '', bold: true, border: [true, false, false, true] },
+                { text: this.info.scaftfolding_fee_status ? (500 * this.info.scaftfolding_quantity).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '', alignment: 'right', border: [false, false, true, true] }
               ],
               [
                 { text: this.info.transport_fee_status ? 'TRANSPORTATION FEES (RM)' : 'SELF PICK-UP (RM)', bold: true, border: [true, false, false, true] },
@@ -3596,8 +3596,8 @@ export class QuotationOverallPage implements OnInit {
                 { text: LSprice, alignment: 'right', border: [false, false, true, false] }
               ],
               [
-                { text: insladderscaft + (this.info.scaftfolding_quantity > 1 ? ' x' + this.info.scaftfolding_quantity : ''), bold: true, border: [true, false, false, true] },
-                { text: (500 * this.info.scaftfolding_quantity).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [false, false, true, true] }
+                { text: this.info.scaftfolding_fee_status ? (insladderscaft + (this.info.scaftfolding_quantity > 1 ? ' x' + this.info.scaftfolding_quantity : '')) : '', bold: true, border: [true, false, false, true] },
+                { text: this.info.scaftfolding_fee_status ? (500 * this.info.scaftfolding_quantity).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '', alignment: 'right', border: [false, false, true, true] }
               ],
               [
                 { text: this.info.transport_fee_status ? 'TRANSPORTATION FEES (RM)' : 'SELF PICK-UP (RM)', bold: true, border: [true, false, false, true] },
