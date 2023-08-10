@@ -65,7 +65,7 @@
         <div *ngIf="item.fabric != null && lengthof(calc.curtain) > 0 "
           style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
           <div>
-            Curtain - {{item.fabric}}<span *ngIf="item.code_curtain">-{{item.code_curtain}}</span> ({{calc.curtain.unit}})
+            Curtain - {{item.fabric}}<span *ngIf="item.code_curtain">-{{item.code_curtain}}</span> (m)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -84,7 +84,7 @@
         <div *ngIf="item.fabric_lining != null && lengthof(calc.lining) > 0 "
           style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
           <div>
-            Lining - {{item.fabric_lining}}<span *ngIf="item.code_lining">-{{item.code_lining}}</span> ({{calc.lining.unit}})
+            Lining - {{item.fabric_lining}}<span *ngIf="item.code_lining">-{{item.code_lining}}</span> (m)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -103,7 +103,7 @@
         <div *ngIf="lengthof(item.fabric_sheer) > 0 && lengthof(calc.sheer) > 0"
           style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
           <div>
-            Sheer - {{item.fabric_sheer}}<span *ngIf="item.code_sheer">-{{item.code_sheer}}</span> ({{calc.sheer.unit}})
+            Sheer - {{item.fabric_sheer}}<span *ngIf="item.code_sheer">-{{item.code_sheer}}</span> (m)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -453,7 +453,7 @@
         <div *ngIf="item.fabric != null && lengthof(calc.curtain) > 0 && item.pleat == 'Roman Blind'"
           style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
           <div>
-            Roman Blind - {{item.fabric}}<span *ngIf="item.code_curtain">-{{item.code_curtain}}</span> ({{calc.curtain.unit}})
+            Roman Blind - {{item.fabric}}<span *ngIf="item.code_curtain">-{{item.code_curtain}}</span> (m)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -472,7 +472,7 @@
         <div *ngIf="item.fabric_lining != null && lengthof(calc.lining) > 0 && item.pleat == 'Roman Blind'"
           style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
           <div>
-            Lining - {{item.fabric_lining}}<span *ngIf="item.code_lining">-{{item.code_lining}}</span> ({{calc.lining.unit}})
+            Lining - {{item.fabric_lining}}<span *ngIf="item.code_lining">-{{item.code_lining}}</span> (m)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -655,6 +655,23 @@
             </div>
           </div>
         </div>
+
+        <!-- Installation Scaftfolding  -->
+        <div *ngIf="calc.install.scaftfolding"
+        style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+        <div>
+          Climbing w/Scaftfolding ({{calc.install.unit}})
+        </div>
+
+        <div style="width: 40%;display: flex;justify-content: flex-end;">
+          <div style="width: 30%;text-align: center;">
+            {{calc.install.qty}}
+          </div>
+          <div style="width: 70%;text-align: end;">
+            {{calc.install.climbing_price | currency: ' '}}
+          </div>
+        </div>
+      </div>
 
         <!-- Belt & Hook -->
         <!-- <div style="display: flex;justify-content: space-between;margin-bottom: 5px;">
