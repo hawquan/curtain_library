@@ -1536,14 +1536,22 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
             } else if (this.item[i].track == 'Curve') {
               CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
-            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat == 'Fake Double Pleat') {
-              CL_height = height - 2
-            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat == 'Fake Double Pleat') {
-              CL_height = height - 2
-            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat.includes('Eyelet')) {
-              CL_height = height + 1.75
-            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat.includes('Eyelet')) {
-              CL_height = height + 1.75
+            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat) {
+              if (this.item[i].pleat == 'Fake Double Pleat') {
+                CL_height = height - 2
+              }
+            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat) {
+              if (this.item[i].pleat == 'Fake Double Pleat') {
+                CL_height = height - 2
+              }
+            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat) {
+              if (this.item[i].pleat.includes('Eyelet')) {
+                CL_height = height + 1.75
+              }
+            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat) {
+              if (this.item[i].pleat.includes('Eyelet')) {
+                CL_height = height + 1.75
+              }
             } else if (this.item[i].track.includes('Camoor')) {
               CL_height = height - 1.5
             }
@@ -1573,14 +1581,22 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
             } else if (this.item[i].track_sheer == 'Curve') {
               S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
-            } else if (this.item[i].track_sheer.includes('Metal Rod') && this.item[i].pleat_sheer == 'Fake Double Pleat') {
-              S_height = height - 2
-            } else if (this.item[i].track_sheer == 'Wooden Rod' && this.item[i].pleat_sheer == 'Fake Double Pleat') {
-              S_height = height - 2
-            } else if (this.item[i].track_sheer.includes('Metal Rod') && this.item[i].pleat_sheer.includes('Eyelet')) {
-              S_height = height + 1.75
-            } else if (this.item[i].track_sheer == 'Wooden Rod' && this.item[i].pleat_sheer.includes('Eyelet')) {
-              S_height = height + 1.75
+            } else if (this.item[i].track_sheer.includes('Metal Rod') && this.item[i].pleat_sheer) {
+              if (this.item[i].pleat_sheer == 'Fake Double Pleat') {
+                S_height = height - 2
+              }
+            } else if (this.item[i].track_sheer == 'Wooden Rod' && this.item[i].pleat_sheer) {
+              if (this.item[i].pleat_sheer == 'Fake Double Pleat') {
+                S_height = height - 2
+              }
+            } else if (this.item[i].track_sheer.includes('Metal Rod') && this.item[i].pleat_sheer) {
+              if (this.item[i].pleat_sheer.includes('Eyelet')) {
+                S_height = height + 1.75
+              }
+            } else if (this.item[i].track_sheer == 'Wooden Rod' && this.item[i].pleat_sheer) {
+              if (this.item[i].pleat_sheer.includes('Eyelet')) {
+                S_height = height + 1.75
+              }
             }
           }
         }

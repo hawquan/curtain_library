@@ -1012,14 +1012,22 @@ export class QuotationOverallPage implements OnInit {
               CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
             } else if (this.item[i].track == 'Curve') {
               CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
-            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat == 'Fake Double Pleat') {
-              CL_height = height - 2
-            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat == 'Fake Double Pleat') {
-              CL_height = height - 2
-            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat.includes('Eyelet')) {
-              CL_height = height + 1.75
-            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat.includes('Eyelet')) {
-              CL_height = height + 1.75
+            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat) {
+              if (this.item[i].pleat == 'Fake Double Pleat') {
+                CL_height = height - 2
+              }
+            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat) {
+              if (this.item[i].pleat == 'Fake Double Pleat') {
+                CL_height = height - 2
+              }
+            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat) {
+              if (this.item[i].pleat.includes('Eyelet')) {
+                CL_height = height + 1.75
+              }
+            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat) {
+              if (this.item[i].pleat.includes('Eyelet')) {
+                CL_height = height + 1.75
+              }
             } else if (this.item[i].track.includes('Camoor')) {
               CL_height = height - 1.5
             }
@@ -1030,7 +1038,7 @@ export class QuotationOverallPage implements OnInit {
         if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Sheer')) {
           if (this.item[i].pleat_sheer == 'Fake Double Pleat') {
             S_height = height - 1.5
-          } else if (this.item[i].track) {
+          } else if (this.item[i].track_sheer) {
             if (this.item[i].track_sheer == 'Ripplefold') {
               S_height = height - 1.75
             } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
@@ -1038,7 +1046,7 @@ export class QuotationOverallPage implements OnInit {
             }
           }
         } else {
-          if (this.item[i].track) {
+          if (this.item[i].track_sheer) {
             if (this.item[i].track_sheer == 'Ripplefold') {
               S_height = height - 1.75
             } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
@@ -1049,14 +1057,22 @@ export class QuotationOverallPage implements OnInit {
               S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
             } else if (this.item[i].track_sheer == 'Curve') {
               S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
-            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat_sheer == 'Fake Double Pleat') {
-              S_height = height - 2
-            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat_sheer == 'Fake Double Pleat') {
-              S_height = height - 2
-            } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat_sheer.includes('Eyelet')) {
-              S_height = height + 1.75
-            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat_sheer.includes('Eyelet')) {
-              S_height = height + 1.75
+            } else if (this.item[i].track_sheer.includes('Metal Rod') && this.item[i].pleat_sheer) {
+              if (this.item[i].pleat_sheer == 'Fake Double Pleat') {
+                S_height = height - 2
+              }
+            } else if (this.item[i].track_sheer == 'Wooden Rod' && this.item[i].pleat_sheer) {
+              if (this.item[i].pleat_sheer == 'Fake Double Pleat') {
+                S_height = height - 2
+              }
+            } else if (this.item[i].track_sheer.includes('Metal Rod') && this.item[i].pleat_sheer) {
+              if (this.item[i].pleat_sheer.includes('Eyelet')) {
+                S_height = height + 1.75
+              }
+            } else if (this.item[i].track_sheer == 'Wooden Rod' && this.item[i].pleat_sheer) {
+              if (this.item[i].pleat_sheer.includes('Eyelet')) {
+                S_height = height + 1.75
+              }
             }
           }
         }
@@ -2005,7 +2021,7 @@ export class QuotationOverallPage implements OnInit {
           items.push(
             [
               'Roman Blind - ' + this.item[i].fabric + (this.item[i].code_curtain ? '-' + this.item[i].code_curtain : ''),
-              { text: this.calc[i].curtain.unit, alignment: 'center' },
+              { text: 'm', alignment: 'center' },
               { text: this.calc[i].curtain.qty, alignment: 'center' },
               { text: (this.calc[i].curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
               { text: '(-' + this.calc[i].curtain.promo_rate + '%) ' + (this.calc[i].curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
@@ -2017,7 +2033,7 @@ export class QuotationOverallPage implements OnInit {
           items.push(
             [
               'Roman Blind - ' + this.item[i].fabric + (this.item[i].code_curtain ? '-' + this.item[i].code_curtain : ''),
-              { text: this.calc[i].curtain.unit, alignment: 'center' },
+              { text: 'm', alignment: 'center' },
               { text: this.calc[i].curtain.qty, alignment: 'center' },
               { text: (this.calc[i].curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
               { text: (this.calc[i].curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
@@ -2029,7 +2045,7 @@ export class QuotationOverallPage implements OnInit {
           items.push(
             [
               'Curtain - ' + this.item[i].fabric + (this.item[i].code_curtain ? '-' + this.item[i].code_curtain : ''),
-              { text: this.calc[i].curtain.unit, alignment: 'center' },
+              { text: 'm', alignment: 'center' },
               { text: this.calc[i].curtain.qty, alignment: 'center' },
               { text: (this.calc[i].curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
               { text: '(-' + this.calc[i].curtain.promo_rate + '%) ' + (this.calc[i].curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
@@ -2041,7 +2057,7 @@ export class QuotationOverallPage implements OnInit {
           items.push(
             [
               'Curtain - ' + this.item[i].fabric + (this.item[i].code_curtain ? '-' + this.item[i].code_curtain : ''),
-              { text: this.calc[i].curtain.unit, alignment: 'center' },
+              { text: 'm', alignment: 'center' },
               { text: this.calc[i].curtain.qty, alignment: 'center' },
               { text: (this.calc[i].curtain.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
               { text: (this.calc[i].curtain.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
@@ -2056,7 +2072,7 @@ export class QuotationOverallPage implements OnInit {
           items.push(
             [
               'Lining - ' + this.item[i].fabric_lining + (this.item[i].code_lining ? '-' + this.item[i].code_lining : ''),
-              { text: this.calc[i].lining.unit, alignment: 'center' },
+              { text: 'm', alignment: 'center' },
               { text: this.calc[i].lining.qty, alignment: 'center' },
               { text: (this.calc[i].lining.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
               { text: '(-' + this.calc[i].lining.promo_rate + '%) ' + (this.calc[i].lining.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
@@ -2067,7 +2083,7 @@ export class QuotationOverallPage implements OnInit {
           items.push(
             [
               'Lining - ' + this.item[i].fabric_lining + (this.item[i].code_lining ? '-' + this.item[i].code_lining : ''),
-              { text: this.calc[i].lining.unit, alignment: 'center' },
+              { text: 'm', alignment: 'center' },
               { text: this.calc[i].lining.qty, alignment: 'center' },
               { text: (this.calc[i].lining.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
               { text: (this.calc[i].lining.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
@@ -2082,7 +2098,7 @@ export class QuotationOverallPage implements OnInit {
           items.push(
             [
               'Sheer - ' + this.item[i].fabric_sheer + (this.item[i].code_sheer ? '-' + this.item[i].code_sheer : ''),
-              { text: this.calc[i].sheer.unit, alignment: 'center' },
+              { text: 'm', alignment: 'center' },
               { text: this.calc[i].sheer.qty, alignment: 'center' },
               { text: (this.calc[i].sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
               { text: '(-' + this.calc[i].sheer.promo_rate + '%) ' + (this.calc[i].sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
@@ -2092,7 +2108,7 @@ export class QuotationOverallPage implements OnInit {
           items.push(
             [
               'Sheer - ' + this.item[i].fabric_sheer + (this.item[i].code_sheer ? '-' + this.item[i].code_sheer : ''),
-              { text: this.calc[i].sheer.unit, alignment: 'center' },
+              { text: 'm', alignment: 'center' },
               { text: this.calc[i].sheer.qty, alignment: 'center' },
               { text: (this.calc[i].sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
               { text: (this.calc[i].sheer.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
@@ -3783,6 +3799,7 @@ export class QuotationOverallPage implements OnInit {
             let temp = {
               no: this.sales_id,
               quotation_detailed: JSON.stringify(this.info.quotation_detailed),
+              scaftfolding_quantity: this.info.scaftfolding_quantity
             }
 
             this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
@@ -3794,6 +3811,7 @@ export class QuotationOverallPage implements OnInit {
             let temp = {
               no: this.sales_id,
               quotation_client: JSON.stringify(this.info.quotation_client),
+              scaftfolding_quantity: this.info.scaftfolding_quantity
             }
 
             this.http.post('https://curtain.vsnap.my/updatesales', temp).subscribe(a => {
