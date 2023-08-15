@@ -387,8 +387,8 @@ export class TaskEditorPage implements OnInit {
     this.item.location = this.keyword
 
     if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
+      this.item.hook = null
       this.item.custom_hook = null
-      this.item.custom_sheer_hook = null
 
       if (this.item.motorized_upgrade && this.item.pleat == 'Fake Double Pleat') {
         this.item.hook = '104'
@@ -403,6 +403,7 @@ export class TaskEditorPage implements OnInit {
     }
 
     if (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') {
+      this.item.sheer_hook = null
       this.item.custom_sheer_hook = null
 
       if (this.item.motorized_upgrade && this.item.pleat_sheer == 'Fake Double Pleat') {
@@ -441,6 +442,7 @@ export class TaskEditorPage implements OnInit {
               eyelet_sheer: this.item.eyelet_sheer,
               pieces_curtain: this.item.pieces_curtain,
               bracket: this.item.bracket,
+              hook: this.item.hook,
               sidehook: this.item.sidehook,
               belt: this.item.belt,
               touchfloor: this.item.touchfloor,
@@ -538,6 +540,7 @@ export class TaskEditorPage implements OnInit {
               eyelet_sheer: this.item.eyelet_sheer,
               pieces_sheer: this.item.pieces_sheer,
               sheer_bracket: this.item.sheer_bracket,
+              sheer_hook: this.item.sheer_hook,
               sheer_sidehook: this.item.sheer_sidehook,
               sheer_belt: this.item.sheer_belt,
               sheer_touchfloor: this.item.sheer_touchfloor,
@@ -644,10 +647,12 @@ export class TaskEditorPage implements OnInit {
               pieces_curtain: this.item.pieces_curtain,
               pieces_sheer: this.item.pieces_sheer,
               bracket: this.item.bracket,
+              hook: this.item.hook,
               sidehook: this.item.sidehook,
               belt: this.item.belt,
               touchfloor: this.item.touchfloor,
               sheer_bracket: this.item.sheer_bracket,
+              sheer_hook: this.item.sheer_hook,
               sheer_sidehook: this.item.sheer_sidehook,
               sheer_belt: this.item.sheer_belt,
               // sheer_touchfloor: this.item.sheer_touchfloor,
@@ -723,7 +728,7 @@ export class TaskEditorPage implements OnInit {
       } else {
         if (this.item.fabric_type == 'C') {
           console.log('C2');
-          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pieces_curtain', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'fabric'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pieces_curtain', 'bracket', 'sidehook', 'belt', 'touchfloor', 'fabric'].every(a => this.item[a])) {
 
             let temp = {
               no: this.item.no,
@@ -928,7 +933,7 @@ export class TaskEditorPage implements OnInit {
           this.item.custom_sheer_belt = true
           this.item.sheer_belt = 'X'
 
-          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pleat_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket', 'hook', 'sidehook', 'belt', 'touchfloor', 'sheer_sidehook', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
+          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pleat_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket', 'sidehook', 'belt', 'touchfloor', 'sheer_sidehook', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
             // 'sheer_touchfloor', 'track', 'track_sheer',
             let temp = {
               no: this.item.no,
