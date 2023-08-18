@@ -106,13 +106,19 @@ export class QuotationOverallPage implements OnInit {
           console.log(this.salesmaninfo);
         })
 
-        this.http.post('https://curtain.vsnap.my/getthismonthsales', { month: this.datepipe.transform(new Date(), 'MM') }).subscribe(a => {
+        this.http.post('https://curtain.vsnap.my/getthismonthsales', { month: this.datepipe.transform(new Date(), 'MMyyyy') }).subscribe(a => {
           this.thismonthsales = a['data'].sort((a, b) => b.sales_so_id - a.sales_so_id) || []
           console.log(this.thismonthsales);
 
-          if (this.info.sales_so_id != null) {
-            this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + this.info.sales_so_id).slice(-4)
-            this.soNumDigit = this.info.sales_so_id
+          if (this.info.so_pdf != null) {
+            if ((this.info.so_pdf[this.info.so_pdf.length - 1].name).slice(2, 6) == this.datepipe.transform(new Date(), 'yyMM')) {
+              this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + this.info.sales_so_id).slice(-4)
+              this.soNumDigit = this.info.sales_so_id
+            } else {
+              this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + (this.thismonthsales[0].sales_so_id + 1)).slice(-4)
+              this.soNumDigit = (this.thismonthsales[0].sales_so_id + 1)
+            }
+
           } else {
             if (this.thismonthsales.length == 0) {
               this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + (Object.keys(a['data'] || {}).length + 1)).slice(-4)
@@ -127,6 +133,7 @@ export class QuotationOverallPage implements OnInit {
           }
 
           console.log(this.soNum);
+          console.log(this.soNumDigit);
         })
 
         this.pleatlist = JSON.parse(a["pleatlist"])
