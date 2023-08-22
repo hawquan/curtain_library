@@ -106,7 +106,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           this.thismonthsales = a['data'].sort((a, b) => b.sales_so_id - a.sales_so_id) || []
           console.log(this.thismonthsales);
 
-          if (this.info.so_pdf != null) {
+          if (this.info.so_pdf.length > 0) {
             if ((this.info.so_pdf[this.info.so_pdf.length - 1].name).slice(2, 6) == this.datepipe.transform(new Date(), 'yyMM')) {
               this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + this.info.sales_so_id).slice(-4)
               this.soNumDigit = this.info.sales_so_id
@@ -114,7 +114,6 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + (this.thismonthsales[0].sales_so_id + 1)).slice(-4)
               this.soNumDigit = (this.thismonthsales[0].sales_so_id + 1)
             }
-
           } else {
             if (this.thismonthsales.length == 0) {
               this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + (Object.keys(a['data'] || {}).length + 1)).slice(-4)

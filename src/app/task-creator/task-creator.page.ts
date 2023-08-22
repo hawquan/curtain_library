@@ -866,7 +866,7 @@ export class TaskCreatorPage implements OnInit {
               sheer_touchfloor: this.item.sheer_touchfloor,
               fabric: null,
               fabric_sheer: this.item.fabric_sheer,
-              fabric_lining: false,
+              fabric_lining: null,
               code_sheer: this.item.code_sheer,
               fabric_type: this.item.fabric_type,
               custom_sheer_bracket: this.item.custom_sheer_bracket,
