@@ -110,7 +110,7 @@ export class QuotationOverallPage implements OnInit {
           this.thismonthsales = a['data'].sort((a, b) => b.sales_so_id - a.sales_so_id) || []
           console.log(this.thismonthsales);
 
-          if (this.info.so_pdf != null) {
+          if (this.info.so_pdf.length > 0) {
             if ((this.info.so_pdf[this.info.so_pdf.length - 1].name).slice(2, 6) == this.datepipe.transform(new Date(), 'yyMM')) {
               this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + this.info.sales_so_id).slice(-4)
               this.soNumDigit = this.info.sales_so_id
