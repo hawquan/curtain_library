@@ -106,8 +106,13 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           this.thismonthsales = a['data'].sort((a, b) => b.sales_so_id - a.sales_so_id) || []
           console.log(this.thismonthsales);
 
+          let regex = /^(\d{1,2})_/;
           if (this.info.so_pdf.length > 0) {
-            if ((this.info.so_pdf[this.info.so_pdf.length - 1].name).slice(2, 6) == this.datepipe.transform(new Date(), 'yyMM')) {
+            let match = this.info.so_pdf[this.info.so_pdf.length - 1].name.match(regex);
+            let digits = match[1]
+            if (
+              digits.length == 1 ? (this.info.so_pdf[this.info.so_pdf.length - 1].name).slice(2, 6) == this.datepipe.transform(new Date(), 'yyMM') : (this.info.so_pdf[this.info.so_pdf.length - 1].name).slice(3, 7) == this.datepipe.transform(new Date(), 'yyMM')
+            ) {
               this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + this.info.sales_so_id).slice(-4)
               this.soNumDigit = this.info.sales_so_id
             } else {
