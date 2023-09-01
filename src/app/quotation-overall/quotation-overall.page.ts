@@ -1004,7 +1004,7 @@ export class QuotationOverallPage implements OnInit {
             CL_height = height - 1.5
           } else if (this.item[i].track) {
             if (this.item[i].track == 'Ripplefold') {
-              CL_height = height - 1.75
+              CL_height = height - 1.5
             } else if (this.item[i].track == 'Ripplefold Curve') {
               CL_height = height - 1.75
             } else if (this.item[i].track.includes('Camoor')) {
@@ -1017,6 +1017,8 @@ export class QuotationOverallPage implements OnInit {
             if (this.item[i].track == 'Ripplefold') {
               CL_height = height - 1.75
             } else if (this.item[i].track == 'Ripplefold Curve') {
+              CL_height = height - 1.5
+            } else if (this.item[i].track.includes('Camoor')) {
               CL_height = height - 1.5
             } else if (this.item[i].track == 'Cubicle / Hospital') {
               CL_height = height - (this.item[i].bracket == 'Wall' ? 0 : 1.5)
@@ -1040,8 +1042,6 @@ export class QuotationOverallPage implements OnInit {
               if (this.item[i].pleat.includes('Eyelet')) {
                 CL_height = height + 1.75
               }
-            } else if (this.item[i].track.includes('Camoor')) {
-              CL_height = height - 1.5
             }
           }
         }
@@ -1052,8 +1052,10 @@ export class QuotationOverallPage implements OnInit {
             S_height = height - 1.5
           } else if (this.item[i].track_sheer) {
             if (this.item[i].track_sheer == 'Ripplefold') {
-              S_height = height - 1.75
+              S_height = height - 1.5
             } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
+              S_height = height - 1.75
+            } else if (this.item[i].track_sheer.includes('Camoor')) {
               S_height = height - 1.75
             }
           }
@@ -1062,6 +1064,8 @@ export class QuotationOverallPage implements OnInit {
             if (this.item[i].track_sheer == 'Ripplefold') {
               S_height = height - 1.75
             } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
+              S_height = height - 1.5
+            } else if (this.item[i].track_sheer.includes('Camoor')) {
               S_height = height - 1.5
             } else if (this.item[i].track_sheer == 'Cubicle / Hospital') {
               S_height = height - (this.item[i].sheer_bracket == 'Wall' ? 0 : 1.5)
