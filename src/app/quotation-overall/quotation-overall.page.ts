@@ -79,7 +79,7 @@ export class QuotationOverallPage implements OnInit {
   isCreateSo = false
   checkChangeSO = false
   viewPackage = false
-
+  focMotorised = 0
 
   ngOnInit() {
 
@@ -821,6 +821,10 @@ export class QuotationOverallPage implements OnInit {
       // }
     }
 
+    if (this.item[i].motorized_cost == 'FOC') {
+      this.focMotorised++
+    }
+
     let temp = {
       width: parseFloat(width), height: parseFloat(height), curtain: curtain, lining: lining, lining_id: lining_id,
       curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, blind: blind, blind_id: blind_id,
@@ -869,6 +873,7 @@ export class QuotationOverallPage implements OnInit {
         //   this.item.need_scaftfolding = false
         //   this.item.need_ladder = false
         // }
+        console.log('FOC Motorised = ', this.focMotorised);
 
         Swal.close()
         this.loading = true
@@ -951,7 +956,8 @@ export class QuotationOverallPage implements OnInit {
       [{ text: 'Date Order', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.datepipe.transform(new Date(), 'd/M/yyyy'), border: [false, true, false, true], bold: true, fontSize: 9 }],
       [{ text: 'Scheduled Inst Date', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + (this.datepipe.transform(this.soInstDate, 'd/M/yyyy') || ''), border: [false, true, false, true], bold: true, fontSize: 9 }],
       [{ text: 'Sales P.I.C', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.salesmaninfo.name, border: [false, true, false, true], bold: true, fontSize: 9 }],
-      [{ text: 'Est. Inst Time', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.soInstTime, border: [false, true, false, true], bold: true, fontSize: 9 }],
+      [{ text: 'FOC Motorised', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.focMotorised, border: [false, true, false, true], bold: true, fontSize: 9 }],
+      // [{ text: 'Est. Inst Time', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.soInstTime, border: [false, true, false, true], bold: true, fontSize: 9 }],
       [{ text: 'Remarks', border: [], bold: true, fontSize: 9, alignment: 'right' }, { text: ': ' + this.soRemark, border: [false, true, false, true], bold: true, fontSize: 9 }],
     ] as any
 
