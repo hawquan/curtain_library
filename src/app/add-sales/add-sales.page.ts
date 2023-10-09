@@ -43,16 +43,8 @@ export class AddSalesPage implements OnInit {
   // propertyList = ['Bungalow', 'Condominium', 'Semi-D', 'Others'].sort((a: any, b: any) => (a > b ? 1 : -1))
   showSelection = false
   selectionSales = false
-  referenceList = [
-    { no: 1, name: 'Walk-in', short: 'WI' },
-    { no: 2, name: 'Facebook', short: 'FB' },
-    { no: 3, name: 'Text-in', short: 'TI' },
-    { no: 4, name: 'Call-in', short: 'CI' },
-    { no: 5, name: 'Instagram', short: 'IG' },
-    { no: 6, name: 'Referral', short: 'RF' },
-    { no: 7, name: 'ID', short: 'ID' },
-    { no: 8, name: 'Regular Client', short: 'RC' }
-  ]
+  referenceList = [] as any
+
   ngOnInit() {
     this.http.get('https://curtain.vsnap.my/staffList').subscribe(a => {
       this.staffList = a['data']
@@ -60,10 +52,15 @@ export class AddSalesPage implements OnInit {
       this.techList = Object.values(this.staffList).filter(a => a['position'] == 'Technician')
       this.saleList = Object.values(this.staffList).filter(a => a['position'] == 'Sales')
     })
-
+    
     this.http.get('https://curtain.vsnap.my/feeList').subscribe(a => {
       this.feeList = a['data']
       console.log(this.feeList);
+    })
+
+    this.http.get('https://curtain.vsnap.my/getallreference').subscribe(a => {
+      this.referenceList = a['data']
+      console.log(this.referenceList);
     })
 
     this.sales.show_promo = true
