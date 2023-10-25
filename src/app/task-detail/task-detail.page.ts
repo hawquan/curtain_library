@@ -10,6 +10,7 @@ import { TaskDetailCompletedReviewPage } from '../task-detail-completed-review/t
 import { TaskDetailCompletedPage } from '../task-detail-completed/task-detail-completed.page';
 import { TaskDetailReviewPage } from '../task-detail-review/task-detail-review.page';
 import { TaskEditorPage } from '../task-editor/task-editor.page';
+import { TaskCreatorAlacartePage } from '../task-creator-alacarte/task-creator-alacarte.page';
 
 @Component({
   selector: 'app-task-detail',
@@ -236,6 +237,7 @@ export class TaskDetailPage implements OnInit {
   }
 
   async addTask() {
+    
     const modal = await this.modal.create({
       cssClass: 'task',
       component: TaskCreatorPage,
@@ -256,6 +258,30 @@ export class TaskDetailPage implements OnInit {
       this.refreshList()
     }
   }
+
+  async aLaCarte() {
+    
+    const modal = await this.modal.create({
+      cssClass: 'task',
+      component: TaskCreatorAlacartePage,
+      componentProps: {
+        sales_no: this.sales_id,
+        // pleatlist: this.pleatlist,
+        // blindlist: this.blindlist,
+        position: this.user['position'],
+        tracklist: this.tracklist,
+      }
+    });
+
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    console.log(data)
+
+    if (data == 1) {
+      this.refreshList()
+    }
+  }
+
 
   async editTask(x) {
 

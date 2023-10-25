@@ -106,6 +106,14 @@ const routes: Routes = [
     path: 'add-sales',
     loadChildren: () => import('./add-sales/add-sales.module').then( m => m.AddSalesPageModule)
   },
+  {
+    path: 'task-creator-alacarte',
+    loadChildren: () => import('./task-creator-alacarte/task-creator-alacarte.module').then( m => m.TaskCreatorAlacartePageModule)
+  },
+  {
+    path: 'task-editor-alacarte',
+    loadChildren: () => import('./task-editor-alacarte/task-editor-alacarte.module').then( m => m.TaskEditorAlacartePageModule)
+  },
 
 ];
 @NgModule({

@@ -2153,7 +2153,8 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                 { text: '-', alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
                 { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                { text: '', fontSize: 8.5 }
+                { text: (this.item[i].remark_sale || ''), fontSize: 8.5 }
+                // { text: '', fontSize: 8.5 }
               ],
             )
           }
