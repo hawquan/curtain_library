@@ -7,7 +7,8 @@
       <ion-icon (click)="back()" style="font-size: 22px; color: #a17635;" name="close-outline"></ion-icon>
     </div>
 
-    <div style="font-weight: 500;color: #a17635;font-size: 18px;margin-left: 15px;letter-spacing: 0.5px;">Task Creation
+    <div style="font-weight: 500;color: #a17635;font-size: 18px;margin-left: 15px;letter-spacing: 0.5px;">Curtains
+      Creation
     </div>
 
   </div>
@@ -136,6 +137,7 @@
           </div>
 
         </div>
+
       </div>
 
       <!-- Sheer Pleat -->
@@ -165,6 +167,7 @@
           </div>
 
         </div>
+        
       </div>
 
       <div *ngIf="item.fabric_type != null && item.fabric_type != ''"
@@ -755,12 +758,15 @@
 
       <!-- Upgrade to Motorized -->
       <div *ngIf="item.fabric_type != null && item.fabric_type != ''">
+
         <div
           *ngIf="((item.pleat != 'Ripplefold' && item.pleat != 'Fake Double Pleat') && (item.pleat_sheer != 'Ripplefold' && item.pleat_sheer != 'Fake Double Pleat')) || (item.track == null && item.track_sheer == null)"
           style="min-width: 56px;font-weight: 500;color: #999999">Upgrade to Motorized Track Requirement: <span
             style="font-size: 10px;font-weight: 400;">(Optional)</span></div>
+
         <div *ngIf="item.track == null && item.track_sheer == null" style="margin-top: 5px;color: #a17635;">No Track
           Selected</div>
+
         <div
           *ngIf="item.pleat != 'Ripplefold' && item.pleat != 'Fake Double Pleat' && item.pleat_sheer != 'Ripplefold' && item.pleat_sheer != 'Fake Double Pleat'"
           style="margin-top: 5px;color: #a17635;">

@@ -27,3 +27,8 @@ ion-toggle {
     overflow: visible;
     contain: none;
 }
+
+::ng-deep .mycomponent-wider-popover {
+    --width: 80%;
+    --max-width: 400px;
+}

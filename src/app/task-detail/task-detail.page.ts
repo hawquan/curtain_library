@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
-import { ActionSheetController, ModalController, NavController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ModalController, NavController } from '@ionic/angular';
 import Swal from 'sweetalert2';
 import { QuotationSinglePage } from '../quotation-single/quotation-single.page';
 import { TaskCreatorPage } from '../task-creator/task-creator.page';
@@ -11,6 +11,7 @@ import { TaskDetailCompletedPage } from '../task-detail-completed/task-detail-co
 import { TaskDetailReviewPage } from '../task-detail-review/task-detail-review.page';
 import { TaskEditorPage } from '../task-editor/task-editor.page';
 import { TaskCreatorAlacartePage } from '../task-creator-alacarte/task-creator-alacarte.page';
+import { TaskEditorAlacartePage } from '../task-editor-alacarte/task-editor-alacarte.page';
 
 @Component({
   selector: 'app-task-detail',
@@ -26,6 +27,7 @@ export class TaskDetailPage implements OnInit {
     private http: HttpClient,
     private actionSheetController: ActionSheetController,
     private safariViewController: SafariViewController,
+    private alertController: AlertController
   ) { }
 
   Pleat = []
@@ -74,10 +76,11 @@ export class TaskDetailPage implements OnInit {
     this.actroute.queryParams.subscribe(a => {
       // console.log(a);
 
-      this.sales_id =  JSON.parse(a["no"])
+      this.sales_id = JSON.parse(a["no"])
       this.user = JSON.parse(a["user"])
+      console.log(this.sales_id, this.user);
+
     })
-    console.log( this.sales_id, this.user);
 
     this.http.get('https://curtain.vsnap.my/tracklist').subscribe((s) => {
       this.tracklist = s['data']
@@ -105,6 +108,7 @@ export class TaskDetailPage implements OnInit {
       this.refreshList()
 
     })
+
   }
 
   refreshList() {
@@ -237,7 +241,7 @@ export class TaskDetailPage implements OnInit {
   }
 
   async addTask() {
-    
+
     const modal = await this.modal.create({
       cssClass: 'task',
       component: TaskCreatorPage,
@@ -259,8 +263,73 @@ export class TaskDetailPage implements OnInit {
     }
   }
 
-  async aLaCarte() {
-    
+  async selectALaCarte() {
+    const alert = await this.alertController.create({
+      header: 'À La Carte',
+      cssClass: 'alacarte-alert',
+      inputs: [
+        {
+          name: 'Fabrics',
+          type: 'radio',
+          label: 'Fabrics',
+          value: '1',
+        },
+        {
+          name: 'Track',
+          type: 'radio',
+          label: 'Track',
+          value: '2',
+        },
+        {
+          name: 'Supply Accessories Only',
+          type: 'radio',
+          label: 'Supply Accessories Only',
+          value: '3',
+        },
+        {
+          name: 'Supply & Install Motor Track',
+          type: 'radio',
+          label: 'Supply & Install Motor Track',
+          value: '4',
+        },
+        {
+          name: 'Sewing Only',
+          type: 'radio',
+          label: 'Sewing Only',
+          value: '5',
+        },
+        {
+          name: 'Supply Wallpaper',
+          type: 'radio',
+          label: 'Wallpaper Only',
+          value: '6',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Canceled');
+          },
+        },
+        {
+          text: 'OK',
+          handler: (x) => {
+            // Now, you can pass the selected fruits to your modal
+            if (x) {
+              this.aLaCarte(x)
+            }
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  async aLaCarte(x) {
+
     const modal = await this.modal.create({
       cssClass: 'task',
       component: TaskCreatorAlacartePage,
@@ -268,6 +337,7 @@ export class TaskDetailPage implements OnInit {
         sales_no: this.sales_id,
         // pleatlist: this.pleatlist,
         // blindlist: this.blindlist,
+        type: x,
         position: this.user['position'],
         tracklist: this.tracklist,
       }
@@ -283,26 +353,47 @@ export class TaskDetailPage implements OnInit {
   }
 
 
-  async editTask(x) {
+  async editTask(x, y) {
+    if (x.type == 'Tailor-Made Curtains' || x.type == 'Blinds') {
 
-    const modal = await this.modal.create({
-      cssClass: 'task',
-      component: TaskEditorPage,
-      componentProps: {
-        item: x,
-        sales_no: this.sales_id,
-        pleatlist: this.pleatlist,
-        blindlist: this.blindlist,
-        tracklist: this.tracklist,
-      }
-    });
+      const modal = await this.modal.create({
+        cssClass: 'task',
+        component: TaskEditorPage,
+        componentProps: {
+          item: x,
+          sales_no: this.sales_id,
+          pleatlist: this.pleatlist,
+          blindlist: this.blindlist,
+          tracklist: this.tracklist,
+        }
+      });
 
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    if (data == 1) {
+      await modal.present();
+      const { data } = await modal.onWillDismiss();
       // x = data
       this.refreshList()
+
+    } else {
+
+      const modal = await this.modal.create({
+        cssClass: 'task',
+        component: TaskEditorAlacartePage,
+        componentProps: {
+          item: x,
+          sales_no: this.sales_id,
+          pleatlist: this.pleatlist,
+          blindlist: this.blindlist,
+          tracklist: this.tracklist,
+        }
+      });
+
+      await modal.present();
+      const { data } = await modal.onWillDismiss();
+      // x = data
+      this.refreshList()
+
     }
+
   }
 
   async reviewTask(x) {

@@ -68,6 +68,8 @@ export class SelectorPage implements OnInit {
   }
 
   done(x) {
+    console.log(x);
+
     this.modalController.dismiss({
       value: x
     });

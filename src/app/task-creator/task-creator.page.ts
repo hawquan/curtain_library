@@ -217,6 +217,8 @@ export class TaskCreatorPage implements OnInit {
         this.item.hook = ''
       }
     }
+
+    this.item.motorized_upgrade = false
   }
 
   blindsSelection(x) {
@@ -1452,6 +1454,9 @@ export class TaskCreatorPage implements OnInit {
     let isRomanBlind = false
     let tape_id
     let tape = false
+
+    this.item.eyelet_curtain = this.item.pleat && (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') ? this.item.pleat.includes('Eyelet') : false
+    this.item.eyelet_sheer = this.item.pleat_sheer && (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') ? this.item.pleat_sheer.includes('Eyelet') : false
 
     if (this.item.type != 'Blinds') {
       console.log('curtain');
