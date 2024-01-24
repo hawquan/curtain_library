@@ -83,6 +83,7 @@ export class QuotationSinglePage implements OnInit {
       height = this.item.height
     }
 
+    let alacarte = false
     let curtain = false
     let curtain_id
     let lining = false
@@ -98,11 +99,106 @@ export class QuotationSinglePage implements OnInit {
     let pleat_id
     let pleat_sheer_id
     let belt_hook = false
+    let isAccessory = false
+    let isWallpaper = false
     let isRomanBlind = false
     let tape_id
     let tape = false
 
-    if (this.item.type != 'Blinds') {
+    if (this.item.type == '1') {
+      alacarte = true
+
+      if (this.item.fabric != null) {
+        if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
+          curtain = true
+          curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+        } else {
+          curtain = false
+        }
+      } else {
+        curtain = false
+      }
+
+      if (this.item.fabric_sheer != null) {
+        if (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') {
+          sheer = true
+          sheer_id = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['id']
+        } else {
+          sheer = false
+        }
+      } else {
+        sheer = false
+      }
+
+    } else if (this.item.type == '2') {
+      alacarte = true
+
+      if (this.item.track != null) {
+        track = true
+        track_id = this.tracklist.filter(x => x.name == this.item.track)[0]['id']
+      } else {
+        track = false
+      }
+
+    } else if (this.item.type == '3') {
+      alacarte = true
+
+      if (this.item.accessories.length > 0) {
+        isAccessory = true
+
+      }
+
+    } else if (this.item.type == '4') {
+      this.item.motorized_upgrade = true
+      alacarte = true
+
+    } else if (this.item.type == '5') {
+      alacarte = true
+
+      if (this.item.track != null) {
+        if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS' || this.item.type == 2) {
+          track = true
+          track_id = this.tracklist.filter(x => x.name == this.item.track)[0]['id']
+        } else {
+          track = false
+        }
+      } else {
+        track = false
+      }
+
+      if (this.item.track_sheer != null) {
+        if (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') {
+          track_sheer = true
+          track_sheer_id = this.tracklist.filter(x => x.name == this.item.track_sheer)[0]['id']
+        } else {
+          track_sheer = false
+        }
+      } else {
+        track_sheer = false
+      }
+
+      if (this.item.pleat != null && this.item.pleat != '') {
+        curtain = true
+        pleat_id = this.pleatlist.filter(x => x.name == this.item.pleat)[0]['id']
+      }
+
+      if (this.item.pleat_sheer != null && this.item.pleat_sheer != '') {
+        sheer = true
+        pleat_sheer_id = this.pleatlist.filter(x => x.name == this.item.pleat_sheer)[0]['id']
+      }
+
+      if ((this.item.sidehook == 'Yes' && (this.item.belt != 'No' || this.item.belt)) || (this.item.sheer_sidehook == 'Yes' && (this.item.sheer_belt != 'No' || this.item.sheer_belt))) {
+        belt_hook = true
+      }
+
+    } else if (this.item.type == '6') {
+      alacarte = true
+
+      if (this.lengthof(this.item.wallpaper) > 0) {
+        isWallpaper = true
+      }
+
+    } else if (this.item.type == 'Tailor-Made Curtains') {
 
       if (this.item.fabric != null) {
         if (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') {
@@ -301,7 +397,7 @@ export class QuotationSinglePage implements OnInit {
       promo_curtain: this.item.promo_curtain || 0, promo_lining: this.item.promo_lining || 0, promo_sheer: this.item.promo_sheer || 0, promo_blind: this.item.promo_blind || 0,
       motorized: this.item.motorized_upgrade, motorized_cost: this.item.motorized_cost, motorized_power: this.item.motorized_power, motorized_choice: this.item.motorized_choice, motorized_pieces: this.item.motorized_pieces, motorized_lift: this.item.motorized_lift,
       belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id, blind_spring: this.item.blind_spring, blind_tube: this.item.blind_tube, blind_easylift: this.item.blind_easylift, blind_monosys: this.item.blind_monosys,
-      eyelet_curtain: this.item.eyelet_curtain, eyelet_sheer: this.item.eyelet_sheer
+      eyelet_curtain: this.item.eyelet_curtain, eyelet_sheer: this.item.eyelet_sheer, alacarte: alacarte, type: this.item.type, accessories: this.item.accessories, wallpaper: this.item.wallpaper, install_fee: this.item.install_fee
     }
 
     console.log(temp);

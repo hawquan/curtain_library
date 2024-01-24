@@ -213,6 +213,9 @@ export class TaskEditorPage implements OnInit {
         this.item.hook = ''
       }
     }
+
+    // this.item.motorized_upgrade = false
+
   }
 
   clearFabric(x) {
@@ -1660,8 +1663,8 @@ export class TaskEditorPage implements OnInit {
     let tape = false
     let tape_id
 
-    this.item.eyelet_curtain = this.item.pleat ? this.item.pleat.includes('Eyelet') : false
-    this.item.eyelet_sheer = this.item.pleat_sheer ? this.item.pleat_sheer.includes('Eyelet') : false
+    this.item.eyelet_curtain = this.item.pleat && (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') ? this.item.pleat.includes('Eyelet') : false
+    this.item.eyelet_sheer = this.item.pleat_sheer && (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') ? this.item.pleat_sheer.includes('Eyelet') : false
 
     if (this.item.type != 'Blinds') {
 

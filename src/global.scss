@@ -32,3 +32,8 @@ ion-popover [popover]:not(:popover-open):not(dialog[open]) {
 ion-popover .popover-viewport {
     display: contents;
 }
+
+.alacarte-alert .alert-radio-label {
+    font-size: 12px;
+    --max-width: 300px !important;
+}
