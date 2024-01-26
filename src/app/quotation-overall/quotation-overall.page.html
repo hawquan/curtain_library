@@ -1091,7 +1091,7 @@
           </div> -->
 
           <!-- Installation & Hang -->
-          <div *ngIf="x.type == '5' && x.install_fee"
+          <div *ngIf="(x.type == '2' || x.type == '5') && x.install_fee"
             style="display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
               Installation & Hang (set)

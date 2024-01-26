@@ -413,12 +413,29 @@ export class TaskCreatorPage implements OnInit {
       this.item.hook = null
 
       if (this.item.motorized_upgrade && this.item.pleat == 'Fake Double Pleat') {
+
         this.item.hook = '104'
+
+        if (this.item.fabric_type == 'CS') {
+          this.item.sheer_hook = '104'
+        }
+
       } else if (this.item.track) {
         if (this.item.track == 'Super Track' || this.item.track == 'Curve') {
           this.item.hook = this.item.bracket == 'Wall' ? '101' : this.item.bracket == 'Ceiling' ? '101' : this.item.bracket == 'Ceiling Pelmet' ? '104' : null
+
+          if (this.item.fabric_type == 'CS') {
+            this.item.sheer_hook = '104'
+          }
+
         } else if (this.item.track == 'Wooden Rod' || this.item.track.includes('Wooden Rod') || this.item.track.includes('Cubicle')) {
+
           this.item.hook = '104'
+
+          if (this.item.fabric_type == 'CS') {
+            this.item.sheer_hook = '104'
+          }
+
         }
       }
 
@@ -433,6 +450,11 @@ export class TaskCreatorPage implements OnInit {
       } else if (this.item.track_sheer) {
         if (this.item.track_sheer == 'Super Track' || this.item.track_sheer == 'Curve') {
           this.item.sheer_hook = this.item.sheer_bracket == 'Wall' ? '101' : this.item.sheer_bracket == 'Ceiling' ? '101' : this.item.sheer_bracket == 'Ceiling Pelmet' ? '104' : null
+
+          if (this.item.fabric_type == 'CS') {
+            this.item.sheer_hook = '104'
+          }
+
         } else if (this.item.track_sheer == 'Wooden Rod' || this.item.track_sheer.includes('Wooden Rod') || this.item.track_sheer.includes('Cubicle')) {
           this.item.sheer_hook = '104'
         }

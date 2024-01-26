@@ -1105,7 +1105,7 @@ export class QuotationOverallPage implements OnInit {
       let CL_height = height
       let S_height = height
 
-      if (this.item[i].type != 'Blinds') {
+      if (this.item[i].type == 'Tailor-Made Curtains') {
 
         // Curtain / Lining
         if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Curtain')) {
@@ -1199,6 +1199,81 @@ export class QuotationOverallPage implements OnInit {
               if (this.item[i].pleat_sheer.includes('Eyelet')) {
                 S_height = height + 1.75
               }
+            }
+          }
+        }
+      }
+
+      if (this.item[i].type != 'Tailor-Made Curtains' && this.item[i].type != 'Blinds') {
+
+        // Curtain / Lining
+        if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Curtain')) {
+
+          if (this.item[i].pleat == 'Fake Double Pleat') {
+            CL_height = height - 1.5
+          } else if (this.item[i].track) {
+            if (this.item[i].track == 'Ripplefold') {
+              CL_height = height - 1.5
+            } else if (this.item[i].track == 'Ripplefold Curve') {
+              CL_height = height - 1.75
+            } else if (this.item[i].track.includes('Camoor')) {
+              CL_height = height - 1.75
+            }
+          }
+
+        } else {
+          if (this.item[i].track) {
+            if (this.item[i].track == 'Ripplefold') {
+              CL_height = height - 1.75
+            } else if (this.item[i].track == 'Ripplefold Curve') {
+              CL_height = height - 1.5
+            } else if (this.item[i].track.includes('Camoor')) {
+              CL_height = height - 1.5
+            } else if (this.item[i].track == 'Cubicle / Hospital') {
+              CL_height = height - (this.item[i].bracket == 'Wall' ? 0 : 1.5)
+            } else if (this.item[i].track == 'Super Track') {
+              CL_height = height - 0.25
+            } else if (this.item[i].track == 'Curve') {
+              CL_height = height - 0.25
+            } else if (this.item[i].track.includes('Metal Rod')) {
+              CL_height = height - 2
+            } else if (this.item[i].track == 'Wooden Rod') {
+              CL_height = height - 2
+            }
+          }
+        }
+
+        // Sheer
+        if (this.item[i].motorized_upgrade && (this.item[i].motorized_choice == 'Both' || this.item[i].motorized_choice == 'Sheer')) {
+          if (this.item[i].pleat_sheer == 'Fake Double Pleat') {
+            S_height = height - 1.5
+          } else if (this.item[i].track_sheer) {
+            if (this.item[i].track_sheer == 'Ripplefold') {
+              S_height = height - 1.5
+            } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
+              S_height = height - 1.75
+            } else if (this.item[i].track_sheer.includes('Camoor')) {
+              S_height = height - 1.75
+            }
+          }
+        } else {
+          if (this.item[i].track_sheer) {
+            if (this.item[i].track_sheer == 'Ripplefold') {
+              S_height = height - 1.75
+            } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
+              S_height = height - 1.5
+            } else if (this.item[i].track_sheer.includes('Camoor')) {
+              S_height = height - 1.5
+            } else if (this.item[i].track_sheer == 'Cubicle / Hospital') {
+              S_height = height - (this.item[i].sheer_bracket == 'Wall' ? 0 : 1.5)
+            } else if (this.item[i].track_sheer == 'Super Track') {
+              S_height = height - 1.25
+            } else if (this.item[i].track_sheer == 'Curve') {
+              S_height = height - 1.25
+            } else if (this.item[i].track_sheer.includes('Metal Rod')) {
+              S_height = height - 2
+            } else if (this.item[i].track_sheer == 'Wooden Rod') {
+              S_height = height - 2
             }
           }
         }
@@ -2373,7 +2448,7 @@ export class QuotationOverallPage implements OnInit {
 
             items.push(
               [
-                { text: 'Supply-Side Wallpaper', bold: true, fontSize: 8.5, decoration: 'underline' },
+                { text: 'Supply Wallpaper', bold: true, fontSize: 8.5, decoration: 'underline' },
                 { text: '', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 },
                 { text: '', fontSize: 8.5 },
@@ -2839,7 +2914,7 @@ export class QuotationOverallPage implements OnInit {
         )
       }
 
-      if (this.item[i].type == 'Tailor-Made Curtains' || this.item[i].type == '4') {
+      if (this.item[i].type == 'Tailor-Made Curtains' || this.item[i].type == 'Blinds' || this.item[i].type == '4') {
         items.push(
           [
             { text: this.item[i].location + (this.item[i].location_ref ? ' - ' + this.item[i].location_ref : ''), border: [true, false, true, false], bold: true, decoration: 'underline' },
@@ -2851,7 +2926,7 @@ export class QuotationOverallPage implements OnInit {
         )
       }
 
-      if (this.item[i].type == 'Tailor-Made Curtains' || this.item[i].type == '5') {
+      if (this.item[i].type == 'Tailor-Made Curtains' || this.item[i].type == 'Blinds' || this.item[i].type == '5') {
         items.push(
           [
             { text: width + '"(w)' + ' x ' + height + '"(h)' + (this.item[i].pleat == 'Roller Blind' ? " (" + (this.item[i].rope_chain == 'Right' ? "R" : "L") + ")" : ""), border: [true, false, true, false] },
@@ -4270,7 +4345,7 @@ export class QuotationOverallPage implements OnInit {
               { text: 'Track - ' + this.item[i].track, border: [true, false, true, false] },
               { text: 'set', alignment: 'center', border: [true, false, true, false] },
               { text: 1, alignment: 'center', border: [true, false, true, false] },
-              { text: (this.calc[i].track.total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
+              { text: (this.calc[i].track.total + this.calc[i].install.belt_hook).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
             ]
           )
         }
