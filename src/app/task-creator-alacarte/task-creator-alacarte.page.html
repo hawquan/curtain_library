@@ -339,6 +339,19 @@
         </div> -->
       </div>
 
+      <!-- Installation & Hang Fee -->
+      <div
+        style="display: flex;justify-content: space-between; margin-top: 15px;">
+        <div style="min-width: 56px;font-weight: 500;color: #999999">Installation & Hang Fee: <span
+            style="font-size: 10px;font-weight: 400;">(Optional)</span></div>
+        <div style="display: flex;">
+          <div style="font-size: 11px;color: #888888;font-weight: 500;">Charges</div>
+          <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="item.install_fee"
+            style="min-width: 15px;min-height: 15px;width: 15px;height: 15px;margin-left: 5px;--background-checked: #a17635;--border-color-checked: #a17635">
+          </ion-checkbox>
+        </div>
+      </div>
+
       <!-- Remark -->
       <div style="margin-top: 25px;color: #888888;font-weight: 600;">
         <div style="min-width: 56px;font-weight: 500;color: #999999">Remark :</div>
@@ -1224,8 +1237,7 @@
       </div>
 
       <!-- Step 2 -->
-      <div 
-        style="color: #888888;font-weight: 600;margin-bottom: 5px;margin-top: 20px;">Step 2</div>
+      <div style="color: #888888;font-weight: 600;margin-bottom: 5px;margin-top: 20px;">Step 2</div>
 
       <!-- Width/Height -->
       <div style="width: 100%;display: flex;align-items: center;">
