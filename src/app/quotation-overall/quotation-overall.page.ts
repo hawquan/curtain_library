@@ -561,6 +561,15 @@ export class QuotationOverallPage implements OnInit {
         scaftfolding_fee_status: this.info.scaftfolding_fee_status,
         ladder_fee_status: this.info.ladder_fee_status,
         transport_fee_status: this.info.transport_fee_status,
+        package_code: this.info.package_code ? this.info.package_code : null,
+
+      }
+
+      if(this.info.package_addon){
+        temp['package_selection'] = this.info.package_selection
+        temp['package_location'] = this.info.package_location
+        temp['package_remark'] = this.info.package_remark
+        temp['package_addon'] = this.info.package_addon
       }
       console.log('xrejected');
 
@@ -2186,7 +2195,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                    { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
+                    { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
@@ -2265,7 +2274,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
-                    { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
+                    { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
@@ -2283,7 +2292,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
-                    { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
+                    { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
@@ -2342,7 +2351,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                    { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
+                    { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: (this.item[i].remark_curtain || ''), fontSize: 8.5 }
                   ],
                 )
@@ -2360,7 +2369,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: curtainBelt, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
-                    { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
+                    { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: (this.item[i].remark_curtain || ''), fontSize: 8.5 }
                   ],
                 )
@@ -2401,7 +2410,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
-                    { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
+                    { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
@@ -2419,7 +2428,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: sheerBelt, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
-                    { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
+                    { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
