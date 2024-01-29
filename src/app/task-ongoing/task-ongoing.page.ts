@@ -8,6 +8,7 @@ import { QuotationSinglePage } from '../quotation-single/quotation-single.page';
 import { TaskCreatorPage } from '../task-creator/task-creator.page';
 import { TaskEditorPage } from '../task-editor/task-editor.page';
 import { TaskOngoingViewDetailsPage } from '../task-ongoing-view-details/task-ongoing-view-details.page';
+import { TaskOngoingViewAlacartePage } from '../task-ongoing-view-alacarte/task-ongoing-view-alacarte.page';
 
 @Component({
   selector: 'app-task-ongoing',
@@ -257,26 +258,46 @@ export class TaskOngoingPage implements OnInit {
   }
 
   async ongoingViewDetails(x) {
+    if (x.type == 'Tailor-Made Curtains' || x.type == 'Blinds') {
+      const modal = await this.modal.create({
+        cssClass: 'task',
+        component: TaskOngoingViewDetailsPage,
+        componentProps: {
+          item: x,
+          sales_no: this.sales_id,
+          pleatlist: this.pleatlist,
+          blindlist: this.blindlist,
+          position: this.user['position'],
+        }
+      });
 
-    const modal = await this.modal.create({
-      cssClass: 'task',
-      component: TaskOngoingViewDetailsPage,
-      componentProps: {
-        item: x,
-        sales_no: this.sales_id,
-        pleatlist: this.pleatlist,
-        blindlist: this.blindlist,
-        position: this.user['position'],
+      await modal.present();
+      const { data } = await modal.onWillDismiss();
+      console.log(data)
+
+      if (data != null) {
+        // x = data
+        this.refreshList()
       }
-    });
+    } else {
 
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    console.log(data)
+      const modal = await this.modal.create({
+        cssClass: 'task',
+        component: TaskOngoingViewAlacartePage,
+        componentProps: {
+          item: x,
+          sales_no: this.sales_id,
+          pleatlist: this.pleatlist,
+          blindlist: this.blindlist,
+          tracklist: this.tracklist,
+        }
+      });
 
-    if (data != null) {
+      await modal.present();
+      const { data } = await modal.onWillDismiss();
       // x = data
       this.refreshList()
+
     }
   }
 

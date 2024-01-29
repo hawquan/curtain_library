@@ -1,6 +1,6 @@
 {
   "name": "curtain_library",
-  "version": "0.0.52",
+  "version": "0.0.53",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -65,7 +65,7 @@
     "@typescript-eslint/parser": "5.3.0",
     "cordova-android": "^11.0.0",
     "cordova-ios": "^6.3.0",
-    "cordova-plugin-camera": "^6.0.0",
+    "cordova-plugin-camera": "^7.0.0",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-fcm-with-dependecy-updated": "github:marutifh/cordova-plugin-fcm-with-dependecy-updated",
     "cordova-plugin-file": "^7.0.0",
@@ -107,9 +107,7 @@
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
       "cordova-plugin-market": {},
-      "cordova-plugin-camera": {
-        "ANDROIDX_CORE_VERSION": "1.6.+"
-      },
+      "cordova-plugin-camera": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-androidx-adapter": {},
       "cordova-plugin-fcm-with-dependecy-updated": {

@@ -114,6 +114,10 @@ const routes: Routes = [
     path: 'task-editor-alacarte',
     loadChildren: () => import('./task-editor-alacarte/task-editor-alacarte.module').then( m => m.TaskEditorAlacartePageModule)
   },
+  {
+    path: 'task-ongoing-view-alacarte',
+    loadChildren: () => import('./task-ongoing-view-alacarte/task-ongoing-view-alacarte.module').then( m => m.TaskOngoingViewAlacartePageModule)
+  },
 
 ];
 @NgModule({

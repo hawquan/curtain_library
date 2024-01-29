@@ -41,7 +41,7 @@
     <div *ngFor="let x of item; let i = index"
       style="margin: 10px;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;background: white;border-radius: 5px; padding: 10px; margin-bottom: 15px;">
 
-      <div *ngIf="x.type != 'Blinds'">
+      <div *ngIf="x.type == 'Tailor-Made Curtains'">
 
         <div style="display: flex;justify-content: space-between; margin-bottom: 15px;">
           <div style="width: fit-content;font-weight: 500;padding-top: 10px;">
@@ -710,6 +710,434 @@
               '}}</span></div>
         </div>
       </div>
+
+      <!-- A La Carte -->
+      <div *ngIf="x.type == '1' || x.type == '2' || x.type == '3' || x.type == '4' || x.type == '5' || x.type == '6'">
+
+        <div style="display: flex;justify-content: space-between; margin-bottom: 15px;">
+          <div style="width: fit-content;font-weight: 500;padding-top: 10px;">
+            <div style="font-size: 15px; font-weight: 600; color: #000;border-bottom: 0.5px solid #a17635;">
+              <span *ngIf="x.type == '1'">A La Carte - Supply Curtain Only</span>
+              <span *ngIf="x.type == '2'">A La Carte - Supply Track Only</span>
+              <span *ngIf="x.type == '3'">A La Carte - Supply Accessories Only</span>
+              <span *ngIf="x.type == '4'">A La Carte - Supply & Install Motor Track</span>
+              <span *ngIf="x.type == '5'">A La Carte - Sewing <span *ngIf="x.track || x.track_sheer">& Track</span><span
+                  *ngIf="!x.track && !x.track_sheer">Only</span></span>
+              <span *ngIf="x.type == '6'">A La Carte - Supply Wallpaper Only</span>
+            </div>
+            <span *ngIf="x.type == '4'"
+              style="font-size: 15px; font-weight: 600; color: #000;border-bottom: 0.5px solid #a17635;">{{x.location}}<span
+                *ngIf="x.location_ref"> - {{x.location_ref}}</span></span>
+          </div>
+          <div style=" font-size: 10px; color: #888;">No.{{x.no}}</div>
+        </div>
+
+        <div style="display: flex;justify-content: space-between;font-weight: 450;font-size: 13px;">
+
+          <div style="width: 60%;font-size: 14px;">
+            Description
+          </div>
+
+          <div style="width: 40%;display: flex;justify-content: flex-end;">
+            <div style="width: 30%;text-align: center;">
+              Qty
+            </div>
+            <div style="width: 70%;text-align: center;">
+              Total (RM)
+            </div>
+          </div>
+
+        </div>
+
+        <div style="width: 100%; font-size: 13px; font-weight: 400; color: #222222; padding: 10px 0px; margin: 10px 0px;
+       border-top: 2px dashed #a17635; border-bottom: 2px dashed #a17635;">
+
+          <!-- Width & Height -->
+          <div *ngIf="x.type == '2'" style="display: flex;justify-content: space-between; margin-bottom: 10px;">
+            <div *ngIf="x.width_tech != null" style="font-size: 13px; font-weight: 400; color: #999;">
+              {{x.width_tech}}"(w)
+            </div>
+            <div *ngIf="x.width_tech == null" style="font-size: 13px; font-weight: 400; color: #999;">
+              {{x.width}}"(w)
+            </div>
+          </div>
+
+          <!-- Width & Height -->
+          <div *ngIf="x.type == '5'" style="display: flex;justify-content: space-between; margin-bottom: 10px;">
+            <div *ngIf="x.height_tech != null || x.width_tech != null"
+              style="font-size: 13px; font-weight: 400; color: #999;">
+              {{x.width_tech}}" x {{x.height_tech}}"
+            </div>
+            <div *ngIf="x.height_tech == null && x.width_tech == null"
+              style="font-size: 13px; font-weight: 400; color: #999;">
+              {{x.width}}" x {{x.height}}"
+            </div>
+          </div>
+
+          <!-- Curtain -->
+          <div *ngIf="x.fabric != null && x.type == '1'"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+
+            <div>
+              Curtain - {{x.fabric}}<span *ngIf="x.code_curtain">-{{x.code_curtain}}</span> (m)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].curtain.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].curtain.total | currency: ' '}}
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Lining -->
+          <!-- <div *ngIf="x.fabric_lining != null"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Lining - {{x.fabric_lining}}<span *ngIf="x.code_lining">-{{x.code_lining}}</span> (m)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].lining.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].lining.total | currency: ' '}}<span
+                  *ngIf="calc[i].lining.promo_rate != 0 && calc[i].lining.promo_rate != null">
+                  (-{{calc[i].lining.promo_rate}}%)</span>
+              </div>
+            </div>
+          </div> -->
+
+          <!-- Sheer -->
+          <div *ngIf="lengthof(x.fabric_sheer) > 0 && x.type == '1'"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Sheer - {{x.fabric_sheer}}<span *ngIf="x.code_sheer">-{{x.code_sheer}}</span> (m)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].sheer.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].sheer.total | currency: ' '}}<span
+                  *ngIf="calc[i].sheer.promo_rate != 0 && calc[i].sheer.promo_rate != null">
+                  (-{{calc[i].sheer.promo_rate}}%)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sewing Curtain + Lining -->
+          <div *ngIf="lengthof(calc[i].sewing_curtain) > 0 && x.type == '5'"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Sewing <span>{{x.pleat_short}} </span> Curtain (ft)
+              <!-- <span *ngIf="lengthof(calc[i].curtain) > 0 && lengthof(calc[i].lining) > 0 "> + </span>
+              <span *ngIf="lengthof(calc[i].lining) > 0">Lining</span> (ft) -->
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].sewing_curtain.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].sewing_curtain.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Sewing Sheer -->
+          <div *ngIf="lengthof(calc[i].sewing_sheer) > 0 && x.type == '5'"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Sewing <span>{{x.pleat_sheer_short}} </span> Sheer (ft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].sewing_sheer.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].sewing_sheer.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Curtain Eyelet -->
+          <div *ngIf="x.eyelet_curtain" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Curtain Eyelet Ring (ft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.eyelet_curtain / calc[i].install.eyelet_rate}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.eyelet_curtain | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Sheer Eyelet -->
+          <div *ngIf="x.eyelet_sheer" style="display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Sheer Eyelet Ring (ft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.eyelet_sheer / calc[i].install.eyelet_rate}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.eyelet_sheer | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Accessories -->
+          <div *ngIf="x.accessories.length > 0 && x.type == '3'">
+
+            <div *ngFor=" let y of x.accessories; let j=index"
+              style="display: flex;justify-content: space-between;margin-bottom: 10px;">
+
+              <div>
+                {{calc[i].accessories.products[j].acce_title}} (pcs)
+              </div>
+
+              <div style="width: 40%;display: flex;justify-content: flex-end;">
+                <div style="width: 30%;text-align: center;">
+                  {{calc[i].accessories.products[j].acce_quantity}}
+                </div>
+                <div style="width: 70%;text-align: end;">
+                  {{calc[i].accessories.products[j].acce_total | currency: ' '}}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Wallpaper -->
+          <div *ngIf="lengthof(x.wallpaper) > 0"
+            style="display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              {{calc[i].wallpaper.products.name}} ({{calc[i].wallpaper.products.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].wallpaper.products.quantity}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].wallpaper.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Track -->
+          <div *ngIf="lengthof(calc[i].track) > 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div *ngIf="x.track == 'Super Track'">
+              (C) {{x.track}} (ft)
+            </div>
+            <div *ngIf="x.track != 'Super Track'">
+              (C) {{x.track}} Track (ft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].track.qty}}
+              </div>
+              <div *ngIf="calc[i].track.total > 0" style="width: 70%;text-align: end;">
+                {{calc[i].track.total | currency: ' '}}
+              </div>
+              <div *ngIf="calc[i].track.total <= 0" style="width: 70%;text-align: end;">
+                WAIVED
+              </div>
+            </div>
+          </div>
+
+          <!-- Track Sheer -->
+          <div *ngIf="lengthof(calc[i].track_sheer) > 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div *ngIf="x.track_sheer == 'Super Track'">
+              (S) {{x.track_sheer}} (ft)
+            </div>
+            <div *ngIf="x.track_sheer != 'Super Track'">
+              (S) {{x.track_sheer}} Track (ft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].track_sheer.qty}}
+              </div>
+              <div *ngIf="calc[i].track_sheer.total > 0" style="width: 70%;text-align: end;">
+                {{calc[i].track_sheer.total | currency: ' '}}
+              </div>
+              <div *ngIf="calc[i].track_sheer.total <= 0" style="width: 70%;text-align: end;">
+                WAIVED
+              </div>
+            </div>
+          </div>
+
+          <!-- Motorized -->
+          <div *ngIf="lengthof(calc[i].motorized) > 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div *ngIf="x.type == '4'">
+              Motorized Track ({{calc[i].motorized.unit}})
+            </div>
+            <div *ngIf="x.type != '4'">
+              Upgrade Motorized Track ({{calc[i].motorized.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].motorized.qty}}
+              </div>
+              <div *ngIf="calc[i].motorized.cost == 'FOC'" style="width: 70%;text-align: end;">
+                FOC
+              </div>
+              <div *ngIf="calc[i].motorized.cost != 'FOC'" style="width: 70%;text-align: end;">
+                {{calc[i].motorized.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Lift -->
+          <div *ngIf="lengthof(calc[i].motorized) > 0 && calc[i].motorized.lift != 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Upgrade Lift System ({{calc[i].motorized.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].motorized.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].motorized.lift | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Installation Motorized -->
+          <div *ngIf="lengthof(calc[i].motorized) > 0"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation Motorized Track ({{calc[i].motorized.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].motorized.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].motorized.install | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Installation Ladder -->
+          <!-- <div *ngIf="calc[i].install.ladder"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation w/Ladder ({{calc[i].install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.ladder_price | currency: ' '}}
+              </div>
+            </div>
+          </div> -->
+
+          <!-- Installation Scaftfolding -->
+          <!-- <div *ngIf="calc[i].install.scaftfolding"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation w/Scaftfolding ({{calc[i].install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.scaftfolding_price | currency: ' '}}
+              </div>
+            </div>
+          </div> -->
+
+          <!-- Installation & Hang -->
+          <div *ngIf="(x.type == '2' || x.type == '5') && x.install_fee"
+            style="display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Installation & Hang (set)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.total | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Installation Scaftfolding  -->
+          <div *ngIf="calc[i].install.scaftfolding"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div>
+              Climbing w/Scaftfolding ({{calc[i].install.unit}})
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].install.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.climbing_price | currency: ' '}}
+              </div>
+            </div>
+          </div>
+
+          <!-- Belt & Hook -->
+          <div *ngIf="calc[i].install.belt_hook != 0"
+            style="display: flex;justify-content: space-between;margin-bottom: 5px;">
+            <div>
+              Belt & Hook (set)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                1
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].install.belt_hook | currency: ' '}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Price -->
+        <div style="display: flex;justify-content: flex-end;">
+          <div *ngIf="x.price_old == null" style="font-size: 18px; font-weight: 700; color: #000;">
+            RM {{x.price | currency: ' '}}</div>
+          <div *ngIf="x.price_old != null" style="font-size: 18px; font-weight: 700; color: #000;">
+            RM {{x.price | currency: ' '}} <span style="text-decoration: line-through;">{{x.price_old | currency: '
+              '}}</span></div>
+        </div>
+      </div>
+
     </div>
 
     <!-- Additional Charges -->
