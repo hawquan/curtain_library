@@ -1378,7 +1378,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
               } else {
@@ -1396,7 +1396,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
               }
@@ -1503,7 +1503,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
               } else {
@@ -1521,7 +1521,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
               }
@@ -1691,7 +1691,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
               } else {
@@ -1709,7 +1709,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
               }
@@ -1777,7 +1777,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: 'x', alignment: 'center', fontSize: 8.5 },
-                    { text: this.item[i].pieces_curtain + 'm\n' + ((this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '')), bold: true, fontSize: 8.5 }
+                    { text: this.item[i].pieces_curtain + 'm\n' + ((this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '')) + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
 
@@ -1840,7 +1840,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: 'x', alignment: 'center', fontSize: 8.5 },
-                    { text: this.item[i].pieces_sheer + 'm\n' + (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: this.item[i].pieces_sheer + 'm\n' + (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
 
@@ -1903,7 +1903,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: 'x', alignment: 'center', fontSize: 8.5 },
-                    { text: this.item[i].pieces_curtain + 'm\n' + ((this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '')), bold: true, fontSize: 8.5 }
+                    { text: this.item[i].pieces_curtain + 'm\n' + ((this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '')) + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
 
@@ -1927,7 +1927,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: 'x', alignment: 'center', fontSize: 8.5 },
                     { text: 'x', alignment: 'center', fontSize: 8.5 },
-                    { text: this.item[i].pieces_sheer + 'm\n' + (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: this.item[i].pieces_sheer + 'm\n' + (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
 
@@ -1988,7 +1988,7 @@ export class QuotationOverallPage implements OnInit {
                 { text: 'x', alignment: 'center', fontSize: 8.5 },
                 { text: 'x', alignment: 'center', fontSize: 8.5 },
                 { text: 'x', alignment: 'center', fontSize: 8.5 },
-                { text: '1 pcs\n' + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                { text: '1 pcs\n' + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
               ],
             )
 
@@ -2047,7 +2047,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: 'x', alignment: 'center', fontSize: 8.5 },
                   { text: 'x', alignment: 'center', fontSize: 8.5 },
                   { text: 'x', alignment: 'center', fontSize: 8.5 },
-                  { text: temp.acce_quantity + ' pairs' + ((this.item[i].remark_sale && (j == this.item[i].accessories.length - 1)) ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                  { text: temp.acce_quantity + ' pairs' + ((this.item[i].remark_sale && (j == this.item[i].accessories.length - 1)) ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                 ],
               )
 
@@ -2105,7 +2105,7 @@ export class QuotationOverallPage implements OnInit {
                 { text: 'x', alignment: 'center', fontSize: 8.5 },
                 { text: 'x', alignment: 'center', fontSize: 8.5 },
                 { text: 'x', alignment: 'center', fontSize: 8.5 },
-                { text: this.item[i].motorized_pieces + ' pcs' + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                { text: this.item[i].motorized_pieces + ' pcs' + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
               ],
             )
 
@@ -2187,7 +2187,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
               } else {
@@ -2205,7 +2205,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: 'P/M', alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
               }
@@ -2266,7 +2266,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
               } else {
@@ -2284,7 +2284,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
               }
@@ -2402,7 +2402,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
               } else {
@@ -2420,7 +2420,7 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                   ],
                 )
               }
@@ -2479,7 +2479,7 @@ export class QuotationOverallPage implements OnInit {
                 { text: 'x', alignment: 'center', fontSize: 8.5 },
                 { text: 'x', alignment: 'center', fontSize: 8.5 },
                 { text: 'x', alignment: 'center', fontSize: 8.5 },
-                { text: temp.quantity + ' ' + temp.unit + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : ''), bold: true, fontSize: 8.5 }
+                { text: temp.quantity + ' ' + temp.unit + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
               ],
             )
 
@@ -3755,6 +3755,10 @@ export class QuotationOverallPage implements OnInit {
               [
                 { text: packageWord, bold: true, border: [true, false, false, true] },
                 { text: this.info.package_code ? '(-' + (packagePrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ')' : '', alignment: 'right', border: [false, false, true, true] },
+              ],
+              [
+                { text: this.info.package_code ? this.packageApplied.description : '', fontSize: 8, border: [true, false, false, true] },
+                { text: '', alignment: 'right', border: [false, false, true, true] },
               ],
               [
                 { text: this.info.package_addon ? 'TOP UP UPGRADE (RM)' : '', bold: true, border: [true, false, false, true] },
@@ -5661,6 +5665,10 @@ export class QuotationOverallPage implements OnInit {
               [
                 { text: packageWord, bold: true, border: [true, false, false, true] },
                 { text: this.info.package_code ? '(-' + (packagePrice).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ')' : '', alignment: 'right', border: [false, false, true, true] },
+              ],
+              [
+                { text: this.info.package_code ? this.packageApplied.description : '', fontSize: 8, border: [true, false, false, true] },
+                { text: '', alignment: 'right', border: [false, false, true, true] },
               ],
               [
                 { text: this.info.package_addon ? 'TOP UP UPGRADE (RM)' : '', bold: true, border: [true, false, false, true] },
