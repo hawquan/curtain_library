@@ -48,6 +48,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
   fabricBlind = []
   blindTape = [] as any
   calc = [] as any
+  packageList = [] as any
   packageApplied = [] as any
   packageViewed = [] as any
   packageName
@@ -137,19 +138,21 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           console.log(this.soNumDigit);
         })
 
+        if (this.info.package_code) {
+          this.http.get('https://curtain.vsnap.my/packageList').subscribe(a => {
+            this.packageApplied = a['data'].filter(a => (a.id) == (this.info.package_code))[0]
+            console.log(this.packageApplied);
+
+            this.packageViewed = this.packageApplied
+          })
+        }
+
       })
 
       this.http.get('https://curtain.vsnap.my/tapeList').subscribe(a => {
         this.blindTape = a['data']
         console.log(this.blindTape);
       })
-
-      if (this.info.package_code) {
-        this.http.get('https://curtain.vsnap.my/packageList').subscribe(a => {
-          this.packageApplied = a['data'].filter(a => (a.id) == (this.info.package_code))[0]
-          this.packageViewed = this.packageApplied
-        })
-      }
 
       this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
         this.fabriclist = s['data']
@@ -536,7 +539,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           }
         }
 
-        if (this.item[i].pleat == 'Wooden Blind') {
+        if (this.item[i].pleat == 'Wooden Blind' || this.item.pleat == 'Venetian Blinds') {
           if (this.item[i].blind_tape) {
             tape = true
             try {
@@ -633,12 +636,31 @@ export class TaskOngoingViewQuotationPage implements OnInit {
   lengthof(x) {
     return Object.keys(x || {}).length
   }
+
   back() {
     this.nav.pop()
   }
 
   packageView() {
-    this.viewPackage = true
+    this.http.get('https://curtain.vsnap.my/packageList').subscribe(a => {
+      this.packageList = a['data']
+
+      if (this.packageList.some(a => ((a.code)).toLowerCase() == ((this.packageApplied.code)).toLowerCase())) {
+        this.packageViewed = this.packageList.filter(a => ((a.code)).toLowerCase() == ((this.packageApplied.code)).toLowerCase())[0]
+        this.viewPackage = true
+
+        console.log(this.packageViewed);
+
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'Package code not found.',
+          icon: 'error',
+          timer: 3000,
+          heightAuto: false,
+        });
+      }
+    })
   }
 
   closePackage() {
@@ -3233,17 +3255,17 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           items.push(
             [
               { text: width + '" ( W )' + ' x ' + height + '" ( H ) ' + (this.item[i].rope_chain ? ' (' + rope_chain + ')' : ''), fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
+              { text: this.item[i].bracket || 'x', alignment: 'center', fontSize: 8.5 },
               { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : '') + (this.item[i].blind_tape ? ' + Tape ' + this.item[i].blind_tape : '') + (this.item[i].blind_easylift ? ' + Easy Lift System' : ''), alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
+              { text: this.item[i].fabric_blind + (this.item[i].code_blind ? 'x' + this.item[i].code_blind : '') + (this.item[i].blind_tape ? ' + ' + (this.item[i].blind_tape.includes('Tape') ? '' : 'Tape ') + this.item[i].blind_tape : '') + (this.item[i].blind_easylift ? ' + Easy Lift System' : ''), alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].pieces_blind, alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
               { text: (this.item[i].remark_sale || ''), bold: true, fontSize: 8.5 }
             ],
           )
@@ -3554,6 +3576,29 @@ export class TaskOngoingViewQuotationPage implements OnInit {
         res(reader.result);
       };
     });
+  }
+
+  checkTape(x) {
+
+    if (x.includes('Tape')) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  checkAddOn() {
+    let x = this.item.filter(a => a.no == this.info.package_location)[0]
+    // console.log(x);
+
+    return x.type == 1 ? 'Fabric Only ' + '( No.' + x.no + ' )' :
+      x.type == 2 ? 'Track Only ' + '( No.' + x.no + ' )' :
+        x.type == 3 ? 'Accessories Only ' + '( No.' + x.no + ' )' :
+          x.type == 4 ? 'Motor Track Only ' + '( No.' + x.no + ' )' :
+            x.type == 5 ? 'Sewing Only ' + '( No.' + x.no + ' )' :
+              x.type == 6 ? 'Wallpaper Only ' + '( No.' + x.no + ' )' :
+                x.location + ' ' + x.location_ref
+
   }
 
 }

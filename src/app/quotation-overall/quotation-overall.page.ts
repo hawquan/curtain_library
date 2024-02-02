@@ -915,7 +915,7 @@ export class QuotationOverallPage implements OnInit {
           }
         }
 
-        if (this.item[i].pleat == 'Wooden Blind') {
+        if (this.item[i].pleat == 'Wooden Blind' || this.item[i].pleat == 'Venetian Blinds') {
           if (this.item[i].blind_tape) {
             tape = true
             try {
@@ -2540,17 +2540,17 @@ export class QuotationOverallPage implements OnInit {
           items.push(
             [
               { text: width + '" ( W )' + ' x ' + height + '" ( H ) ' + (this.item[i].rope_chain ? ' (' + rope_chain + ')' : ''), fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].bracket || 'X', alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
+              { text: this.item[i].bracket || 'x', alignment: 'center', fontSize: 8.5 },
               { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : '') + (this.item[i].blind_tape ? ' + Tape ' + this.item[i].blind_tape : '') + (this.item[i].blind_easylift ? ' + Easy Lift System' : ''), alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
+              { text: this.item[i].fabric_blind + (this.item[i].code_blind ? 'x' + this.item[i].code_blind : '') + (this.item[i].blind_tape ? ' + ' + (this.item[i].blind_tape.includes('Tape') ? '' : 'Tape ') + this.item[i].blind_tape : '') + (this.item[i].blind_easylift ? ' + Easy Lift System' : ''), alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].pieces_blind, alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
-              { text: '-', alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
+              { text: 'x', alignment: 'center', fontSize: 8.5 },
               { text: (this.item[i].remark_sale || ''), bold: true, fontSize: 8.5 }
             ],
           )
@@ -2954,7 +2954,7 @@ export class QuotationOverallPage implements OnInit {
         if (this.calc[i].blind.promo_rate != 0 && this.calc[i].blind.promo_rate != null) {
           items.push(
             [
-              this.item[i].pleat + ' - ' + this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : '') + (this.item[i].blind_tape && this.item[i].pleat == 'Wooden Blind' ? ' (Tape ' + this.item[i].blind_tape + ')' : ''),
+              this.item[i].pleat + ' - ' + this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : '') + (this.item[i].blind_tape && (this.item[i].pleat == 'Wooden Blind' || this.item[i].pleat == 'Venetian Blinds') ? (this.item[i].blind_tape.includes('Tape') ? ' (' : ' (Tape ') + this.item[i].blind_tape + ')' : ''),
               { text: this.calc[i].blind.unit, alignment: 'center' },
               { text: this.calc[i].blind.qty, alignment: 'center' },
               { text: ((this.calc[i].blind.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' },
@@ -2964,7 +2964,7 @@ export class QuotationOverallPage implements OnInit {
         } else {
           items.push(
             [
-              this.item[i].pleat + ' - ' + this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : '') + (this.item[i].blind_tape && this.item[i].pleat == 'Wooden Blind' ? ' (Tape ' + this.item[i].blind_tape + ')' : ''),
+              this.item[i].pleat + ' - ' + this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : '') + (this.item[i].blind_tape && (this.item[i].pleat == 'Wooden Blind' || this.item[i].pleat == 'Venetian Blinds') ? (this.item[i].blind_tape.includes('Tape') ? ' (' : ' (Tape ') + this.item[i].blind_tape + ')' : ''),
               { text: this.calc[i].blind.unit, alignment: 'center' },
               { text: this.calc[i].blind.qty, alignment: 'center' },
               { text: ((this.calc[i].blind.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right' },
@@ -5282,7 +5282,7 @@ export class QuotationOverallPage implements OnInit {
         if (this.item[i].pleat != 'Roman Blind') {
           items.push(
             [
-              { text: this.item[i].pleat + ' - ' + this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : '') + (this.item[i].blind_tape && this.item[i].pleat == 'Wooden Blind' ? ' (Tape ' + this.item[i].blind_tape + ')' : ''), border: [true, false, true, false] },
+              { text: this.item[i].pleat + ' - ' + this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : '') + (this.item[i].blind_tape && (this.item[i].pleat == 'Wooden Blind' || this.item[i].pleat == 'Venetian Blinds') ? (this.item[i].blind_tape.includes('Tape') ? ' (' : ' (Tape ') + this.item[i].blind_tape + ')' : ''), border: [true, false, true, false] },
               { text: 'set', alignment: 'center', border: [true, false, true, false] },
               { text: this.item[i].pieces_blind, alignment: 'center', border: [true, false, true, false] },
               { text: ((this.calc[i].blind.total + this.calc[i].install.total + this.calc[i].blind_spring.total + this.calc[i].blind_tube.total + this.calc[i].blind_easylift.total + this.calc[i].blind_monosys.total + this.calc[i]['install']['climbing_price']).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), alignment: 'right', border: [true, false, true, false] },
@@ -5911,6 +5911,15 @@ export class QuotationOverallPage implements OnInit {
         res(reader.result);
       };
     });
+  }
+
+  checkTape(x){
+
+    if(x.includes('Tape')){
+      return true
+    } else {
+      return false
+    }
   }
 
 }
