@@ -586,7 +586,7 @@ export class TaskEditorAlacartePage implements OnInit {
       if (this.item.track_sheer == 'Super Track' || this.item.track_sheer == 'Curve') {
         this.item.sheer_hook = this.item.sheer_bracket == 'Wall' ? '101' : this.item.sheer_bracket == 'Ceiling' ? '101' : this.item.sheer_bracket == 'Ceiling Pelmet' ? '104' : null
 
-        if(this.item.fabric_type == 'CS'){
+        if (this.item.fabric_type == 'CS') {
           this.item.sheer_hook = '104'
         }
 
@@ -610,11 +610,13 @@ export class TaskEditorAlacartePage implements OnInit {
         fabric: isCurtain ? this.item.fabric : null,
         code_curtain: isCurtain ? this.item.code_curtain : null,
         remark_curtain: isCurtain ? this.item.remark_curtain : null,
+        promo_curtain: this.item.promo_curtain || 0,
         // Sheer
         pieces_sheer: isSheer ? this.item.pieces_sheer : null,
         fabric_sheer: isSheer ? this.item.fabric_sheer : null,
         code_sheer: isSheer ? this.item.code_sheer : null,
         remark_sheer: isSheer ? this.item.remark_sheer : null,
+        promo_sheer: this.item.promo_sheer || 0,
         // Other
         fabric_type: this.item.fabric_type,
         price: this.price,
@@ -1389,6 +1391,16 @@ export class TaskEditorAlacartePage implements OnInit {
       this.item.wallpaper.name = data.value.name
       this.item.wallpaper.price = data.value.price
       this.item.wallpaper.unit = data.value.unit
+    }
+  }
+
+  numberOnlyValidation(event: any) {
+    const pattern = /^(\d+(?:,\d{1,2})?).*/;
+    let inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
     }
   }
 

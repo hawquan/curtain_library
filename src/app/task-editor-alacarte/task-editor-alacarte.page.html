@@ -127,7 +127,7 @@
 
           <!-- Curtain Remark -->
           <div
-            style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0 10px; display: flex; justify-content: space-between; align-items: center;  margin-bottom: 10px;">
+            style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 0 10px; display: flex; justify-content: space-between; align-items: center;">
             <div style="min-width: 70px; color: #999999; ">Curtain Remark<br /><span
                 style="font-size: 9px;color: #c3c3c3;">(Optional)</span></div>
             <ion-textarea auto-grow="true" class="ion-no-padding" class="ion-no-margin"
@@ -135,6 +135,18 @@
               style="min-height: 30px;height: auto;font-weight: 500;--padding-top: 10px;--padding-start: 10px;--padding-end: 10px;--padding-bottom: 0px;color: #333333">
             </ion-textarea>
           </div>
+
+          <!-- Discount Curtain -->
+          <div *ngIf="info.show_promo"
+            style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+            <div style="min-width: 70px;color: yellowgreen">Curtain Promo<br /><span
+                style="font-size: 9px;color: #c3c3c3;">(Optional)</span></div>
+            <ion-input placeholder="Enter (0 ~ 20)" [(ngModel)]="item.promo_curtain" type="number"
+              (keypress)="numberOnlyValidation($event)"
+              style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+            </ion-input>
+          </div>
+          <div *ngIf="item.promo_curtain > 20" style="color: red;">Amount Exceeded</div>
 
           <!-- Lining -->
           <!-- <div style="color: #888888;font-weight: 600;margin: 10px 0 5px 0;">Lining</div> -->
@@ -215,6 +227,20 @@
               row="1" [(ngModel)]="item.remark_sheer"
               style="min-height: 30px;height: auto;font-weight: 500;--padding-top: 10px;--padding-start: 10px;--padding-end: 10px;--padding-bottom: 0px;color: #333333">
             </ion-textarea>
+          </div>
+
+          <!-- Discount Sheer -->
+          <div *ngIf="info.show_promo" style="width: 100%;margin-bottom: 10px;">
+            <div
+              style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+              <div style="min-width: 70px;color: yellowgreen">Sheer Promo<br /><span
+                  style="font-size: 9px;color: #c3c3c3;">(Optional)</span></div>
+              <ion-input placeholder="Enter (0 ~ 20)" [(ngModel)]="item.promo_sheer" type="number"
+                (keypress)="numberOnlyValidation($event)"
+                style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+              </ion-input>
+            </div>
+            <div *ngIf="item.promo_sheer > 20" style="color: red;">Amount Exceeded</div>
           </div>
 
         </div>
