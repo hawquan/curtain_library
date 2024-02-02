@@ -565,7 +565,7 @@ export class QuotationOverallPage implements OnInit {
 
       }
 
-      if(this.info.package_addon){
+      if (this.info.package_addon) {
         temp['package_selection'] = this.info.package_selection
         temp['package_location'] = this.info.package_location
         temp['package_remark'] = this.info.package_remark
@@ -3808,6 +3808,14 @@ export class QuotationOverallPage implements OnInit {
                 { text: 'FINAL TOTAL (RM)', bold: true, border: [true, false, false, true] },
                 { text: (this.info.package_code ? (this.totalPrice() - packagePrice + (this.info.package_addon ? this.packageApplied.add_price : 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : (this.totalPrice()).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), bold: true, alignment: 'right', border: [false, false, true, true] },
               ],
+              [
+                '',
+                '',
+              ],
+              [
+                '',
+                '',
+              ],
             ]
           },
           layout: {
@@ -3825,16 +3833,16 @@ export class QuotationOverallPage implements OnInit {
             },
           }
         },
-        {
-          width: '100%',
-          table: {
-            widths: ['100%'],
-            body: [
-              [{ text: 'Price above is estimation.', fontSize: 9, border: [true, false, true, false] }],
-              [{ text: 'Final price will be adjusted according to actual site measurement and material selection', fontSize: 9, border: [true, false, true, true] }],
-            ]
-          }
-        },
+        // {
+        //   width: '100%',
+        //   table: {
+        //     widths: ['100%'],
+        //     body: [
+        //       [{ text: 'Price above is estimation.', fontSize: 9, border: [true, false, true, false] }],
+        //       [{ text: 'Final price will be adjusted according to actual site measurement and material selection', fontSize: 9, border: [true, false, true, true] }],
+        //     ]
+        //   }
+        // },
         {
           width: '100%',
           table: {
@@ -5699,6 +5707,14 @@ export class QuotationOverallPage implements OnInit {
                 { text: 'FINAL TOTAL (RM)', bold: true, border: [true, false, false, true] },
                 { text: (this.info.package_code ? (this.totalPrice() - packagePrice + (this.info.package_addon ? this.packageApplied.add_price : 0)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : (this.totalPrice()).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })), bold: true, alignment: 'right', border: [false, false, true, true] },
               ],
+              [
+                '',
+                '',
+              ],
+              [
+                '',
+                '',
+              ],
             ]
           },
           layout: {
@@ -5716,16 +5732,16 @@ export class QuotationOverallPage implements OnInit {
             },
           }
         },
-        {
-          width: '100%',
-          table: {
-            widths: ['100%'],
-            body: [
-              [{ text: 'Price above is estimation.', fontSize: 9, border: [true, false, true, false] }],
-              [{ text: 'Final price willbe adjusted according to actual site measurement and material selection', fontSize: 9, border: [true, false, true, true] }],
-            ]
-          }
-        },
+        // {
+        //   width: '100%',
+        //   table: {
+        //     widths: ['100%'],
+        //     body: [
+        //       [{ text: 'Price above is estimation.', fontSize: 9, border: [true, false, true, false] }],
+        //       [{ text: 'Final price willbe adjusted according to actual site measurement and material selection', fontSize: 9, border: [true, false, true, true] }],
+        //     ]
+        //   }
+        // },
         {
           width: '100%',
           table: {

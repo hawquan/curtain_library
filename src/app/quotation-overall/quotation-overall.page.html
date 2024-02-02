@@ -801,7 +801,9 @@
                 {{calc[i].curtain.qty}}
               </div>
               <div style="width: 70%;text-align: end;">
-                {{calc[i].curtain.total | currency: ' '}}
+                {{calc[i].curtain.total | currency: ' '}}<span
+                *ngIf="calc[i].curtain.promo_rate != 0 && calc[i].curtain.promo_rate != null">
+                (-{{calc[i].curtain.promo_rate}}%)</span>
               </div>
             </div>
 
