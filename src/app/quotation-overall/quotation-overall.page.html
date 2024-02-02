@@ -90,7 +90,7 @@
           <!-- Curtain -->
           <div *ngIf="x.fabric != null" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
 
-            <div>
+            <div style="width: 60%;">
               Curtain - {{x.fabric}}<span *ngIf="x.code_curtain">-{{x.code_curtain}}</span> (m)
             </div>
 
@@ -110,7 +110,7 @@
           <!-- Lining -->
           <div *ngIf="x.fabric_lining != null"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Lining - {{x.fabric_lining}}<span *ngIf="x.code_lining">-{{x.code_lining}}</span> (m)
             </div>
 
@@ -129,7 +129,7 @@
           <!-- Sheer -->
           <div *ngIf="lengthof(x.fabric_sheer) > 0 "
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Sheer - {{x.fabric_sheer}}<span *ngIf="x.code_sheer">-{{x.code_sheer}}</span> (m)
             </div>
 
@@ -148,7 +148,7 @@
           <!-- Sewing Curtain + Lining -->
           <div *ngIf="lengthof(calc[i].curtain) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Sewing <span>{{x.pleat_short}} </span><span *ngIf="lengthof(calc[i].curtain) > 0">Curtain</span>
               <span *ngIf="lengthof(calc[i].curtain) > 0 && lengthof(calc[i].lining) > 0 "> + </span>
               <span *ngIf="lengthof(calc[i].lining) > 0">Lining</span> (ft)
@@ -167,7 +167,7 @@
           <!-- Sewing Sheer -->
           <div *ngIf="lengthof(calc[i].sewing_sheer) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Sewing <span>{{x.pleat_sheer_short}} </span> Sheer (ft)
             </div>
 
@@ -183,7 +183,7 @@
 
           <!-- Curtain Eyelet -->
           <div *ngIf="x.eyelet_curtain" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Curtain Eyelet Ring (ft)
             </div>
 
@@ -199,7 +199,7 @@
 
           <!-- Sheer Eyelet -->
           <div *ngIf="x.eyelet_sheer" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Sheer Eyelet Ring (ft)
             </div>
 
@@ -216,10 +216,10 @@
           <!-- Track -->
           <div *ngIf="lengthof(calc[i].track) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div *ngIf="x.track == 'Super Track'">
+            <div *ngIf="x.track == 'Super Track'" style="width: 60%;">
               (C) {{x.track}} (ft)
             </div>
-            <div *ngIf="x.track != 'Super Track'">
+            <div *ngIf="x.track != 'Super Track'" style="width: 60%;">
               (C) {{x.track}} Track (ft)
             </div>
 
@@ -239,10 +239,10 @@
           <!-- Track Sheer -->
           <div *ngIf="lengthof(calc[i].track_sheer) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div *ngIf="x.track_sheer == 'Super Track'">
+            <div *ngIf="x.track_sheer == 'Super Track'" style="width: 60%;">
               (S) {{x.track_sheer}} (ft)
             </div>
-            <div *ngIf="x.track_sheer != 'Super Track'">
+            <div *ngIf="x.track_sheer != 'Super Track'" style="width: 60%;">
               (S) {{x.track_sheer}} Track (ft)
             </div>
 
@@ -262,7 +262,7 @@
           <!-- Motorized -->
           <div *ngIf="lengthof(calc[i].motorized) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Upgrade Motorized Track ({{calc[i].motorized.unit}})
             </div>
 
@@ -282,7 +282,7 @@
           <!-- Lift -->
           <div *ngIf="lengthof(calc[i].motorized) > 0 && calc[i].motorized.lift != 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Upgrade Lift System ({{calc[i].motorized.unit}})
             </div>
 
@@ -299,7 +299,7 @@
           <!-- Installation Motorized -->
           <div *ngIf="lengthof(calc[i].motorized) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Installation Motorized Track ({{calc[i].motorized.unit}})
             </div>
 
@@ -316,7 +316,7 @@
           <!-- Installation Ladder -->
           <!-- <div *ngIf="calc[i].install.ladder"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Installation w/Ladder ({{calc[i].install.unit}})
             </div>
 
@@ -333,7 +333,7 @@
           <!-- Installation Scaftfolding -->
           <!-- <div *ngIf="calc[i].install.scaftfolding"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Installation w/Scaftfolding ({{calc[i].install.unit}})
             </div>
 
@@ -349,7 +349,7 @@
 
           <!-- Installation & Hang -->
           <div style="display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Installation & Hang (set)
             </div>
 
@@ -366,7 +366,7 @@
           <!-- Installation Scaftfolding  -->
           <div *ngIf="calc[i].install.scaftfolding"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Climbing w/Scaftfolding ({{calc[i].install.unit}})
             </div>
 
@@ -455,9 +455,12 @@
           <!-- Blind -->
           <div *ngIf="x.fabric_blind != null && x.pleat != 'Roman Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               {{x.pleat}} - {{x.fabric_blind}}<span *ngIf="x.code_blind">-{{x.code_blind}}</span><span
-                *ngIf="x.blind_tape"> (Tape {{x.blind_tape}})</span> (sqft)
+                *ngIf="x.blind_tape">
+                <span *ngIf="checkTape(x.blind_tape)"> (</span>
+                <span *ngIf="!checkTape(x.blind_tape)"> (Tape </span>{{x.blind_tape}})</span>
+              (sqft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -476,7 +479,7 @@
           <!-- Curtain -->
           <div *ngIf="x.fabric != null && lengthof(calc[i].curtain) > 0 && x.pleat == 'Roman Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Roman Blind - {{x.fabric}}<span *ngIf="x.code_curtain">-{{x.code_curtain}}</span> (m)
             </div>
 
@@ -495,7 +498,7 @@
           <!-- Lining -->
           <div *ngIf="x.fabric_lining != null && lengthof(calc[i].lining) > 0 && x.pleat == 'Roman Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Lining - {{x.fabric_lining}}<span *ngIf="x.code_lining">-{{x.code_lining}}</span> (m)
             </div>
 
@@ -514,7 +517,7 @@
           <!-- Sewing Curtain -->
           <div *ngIf="lengthof(calc[i].curtain) > 0 && x.pleat == 'Roman Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Sewing for Roman Blind (ft)
             </div>
 
@@ -531,7 +534,7 @@
           <!-- Sewing Lining -->
           <div *ngIf="lengthof(calc[i].lining) > 0 && x.pleat == 'Roman Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Sewing for Lining (ft)
             </div>
 
@@ -548,7 +551,7 @@
           <!-- Mechanism -->
           <div *ngIf="lengthof(calc[i].mechanism) > 0 && x.pleat == 'Roman Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Mechanism (ft)
             </div>
 
@@ -565,7 +568,7 @@
           <!-- Spring -->
           <div *ngIf="calc[i].blind_spring.total > 0 && x.pleat == 'Roller Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Add Spring (set)
             </div>
 
@@ -582,7 +585,7 @@
           <!-- Tube -->
           <div *ngIf="calc[i].blind_tube.total > 0 && (x.pleat == 'Roller Blind' || x.pleat == 'Zebra Blind')"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Add 2.8mm Tube (set)
             </div>
 
@@ -599,7 +602,7 @@
           <!-- Easy Lift -->
           <div *ngIf="calc[i].blind_easylift.total > 0 && x.pleat == 'Wooden Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Easy Lift System (sqft)
             </div>
 
@@ -616,7 +619,7 @@
           <!-- Mono System -->
           <div *ngIf="calc[i].blind_monosys.total > 0 && x.pleat == 'Wooden Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Mono System (sqft)
             </div>
 
@@ -633,7 +636,7 @@
           <!-- Installation Ladder -->
           <!-- <div *ngIf="calc[i].install.ladder"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Installation w/Ladder ({{calc[i].install.unit}})
             </div>
 
@@ -650,7 +653,7 @@
           <!-- Installation Scaftfolding -->
           <!-- <div *ngIf="calc[i].install.scaftfolding"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Installation w/Scaftfolding ({{calc[i].install.unit}})
             </div>
 
@@ -666,7 +669,7 @@
 
           <!-- Installation & Hang -->
           <div style="display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Installation (set)
             </div>
 
@@ -683,7 +686,7 @@
           <!-- Installation Scaftfolding  -->
           <div *ngIf="calc[i].install.scaftfolding"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Climbing w/Scaftfolding ({{calc[i].install.unit}})
             </div>
 
@@ -792,7 +795,7 @@
           <div *ngIf="x.fabric != null && x.type == '1'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
 
-            <div>
+            <div style="width: 60%;">
               Curtain - {{x.fabric}}<span *ngIf="x.code_curtain">-{{x.code_curtain}}</span> (m)
             </div>
 
@@ -802,8 +805,8 @@
               </div>
               <div style="width: 70%;text-align: end;">
                 {{calc[i].curtain.total | currency: ' '}}<span
-                *ngIf="calc[i].curtain.promo_rate != 0 && calc[i].curtain.promo_rate != null">
-                (-{{calc[i].curtain.promo_rate}}%)</span>
+                  *ngIf="calc[i].curtain.promo_rate != 0 && calc[i].curtain.promo_rate != null">
+                  (-{{calc[i].curtain.promo_rate}}%)</span>
               </div>
             </div>
 
@@ -812,7 +815,7 @@
           <!-- Lining -->
           <!-- <div *ngIf="x.fabric_lining != null"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Lining - {{x.fabric_lining}}<span *ngIf="x.code_lining">-{{x.code_lining}}</span> (m)
             </div>
 
@@ -831,7 +834,7 @@
           <!-- Sheer -->
           <div *ngIf="lengthof(x.fabric_sheer) > 0 && x.type == '1'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Sheer - {{x.fabric_sheer}}<span *ngIf="x.code_sheer">-{{x.code_sheer}}</span> (m)
             </div>
 
@@ -850,7 +853,7 @@
           <!-- Sewing Curtain + Lining -->
           <div *ngIf="lengthof(calc[i].sewing_curtain) > 0 && x.type == '5'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Sewing <span>{{x.pleat_short}} </span> Curtain (ft)
               <!-- <span *ngIf="lengthof(calc[i].curtain) > 0 && lengthof(calc[i].lining) > 0 "> + </span>
               <span *ngIf="lengthof(calc[i].lining) > 0">Lining</span> (ft) -->
@@ -869,7 +872,7 @@
           <!-- Sewing Sheer -->
           <div *ngIf="lengthof(calc[i].sewing_sheer) > 0 && x.type == '5'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Sewing <span>{{x.pleat_sheer_short}} </span> Sheer (ft)
             </div>
 
@@ -885,7 +888,7 @@
 
           <!-- Curtain Eyelet -->
           <div *ngIf="x.eyelet_curtain" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Curtain Eyelet Ring (ft)
             </div>
 
@@ -901,7 +904,7 @@
 
           <!-- Sheer Eyelet -->
           <div *ngIf="x.eyelet_sheer" style="display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Sheer Eyelet Ring (ft)
             </div>
 
@@ -921,7 +924,7 @@
             <div *ngFor=" let y of x.accessories; let j=index"
               style="display: flex;justify-content: space-between;margin-bottom: 10px;">
 
-              <div>
+              <div style="width: 60%;">
                 {{calc[i].accessories.products[j].acce_title}} (pcs)
               </div>
 
@@ -941,7 +944,7 @@
           <!-- Wallpaper -->
           <div *ngIf="lengthof(x.wallpaper) > 0"
             style="display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               {{calc[i].wallpaper.products.name}} ({{calc[i].wallpaper.products.unit}})
             </div>
 
@@ -958,10 +961,10 @@
           <!-- Track -->
           <div *ngIf="lengthof(calc[i].track) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div *ngIf="x.track == 'Super Track'">
+            <div *ngIf="x.track == 'Super Track'" style="width: 60%;">
               (C) {{x.track}} (ft)
             </div>
-            <div *ngIf="x.track != 'Super Track'">
+            <div *ngIf="x.track != 'Super Track'" style="width: 60%;">
               (C) {{x.track}} Track (ft)
             </div>
 
@@ -981,10 +984,10 @@
           <!-- Track Sheer -->
           <div *ngIf="lengthof(calc[i].track_sheer) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div *ngIf="x.track_sheer == 'Super Track'">
+            <div *ngIf="x.track_sheer == 'Super Track'" style="width: 60%;">
               (S) {{x.track_sheer}} (ft)
             </div>
-            <div *ngIf="x.track_sheer != 'Super Track'">
+            <div *ngIf="x.track_sheer != 'Super Track'" style="width: 60%;">
               (S) {{x.track_sheer}} Track (ft)
             </div>
 
@@ -1004,10 +1007,10 @@
           <!-- Motorized -->
           <div *ngIf="lengthof(calc[i].motorized) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div *ngIf="x.type == '4'">
+            <div *ngIf="x.type == '4'" style="width: 60%;">
               Motorized Track ({{calc[i].motorized.unit}})
             </div>
-            <div *ngIf="x.type != '4'">
+            <div *ngIf="x.type != '4'" style="width: 60%;">
               Upgrade Motorized Track ({{calc[i].motorized.unit}})
             </div>
 
@@ -1027,7 +1030,7 @@
           <!-- Lift -->
           <div *ngIf="lengthof(calc[i].motorized) > 0 && calc[i].motorized.lift != 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Upgrade Lift System ({{calc[i].motorized.unit}})
             </div>
 
@@ -1044,7 +1047,7 @@
           <!-- Installation Motorized -->
           <div *ngIf="lengthof(calc[i].motorized) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Installation Motorized Track ({{calc[i].motorized.unit}})
             </div>
 
@@ -1061,7 +1064,7 @@
           <!-- Installation Ladder -->
           <!-- <div *ngIf="calc[i].install.ladder"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Installation w/Ladder ({{calc[i].install.unit}})
             </div>
 
@@ -1078,7 +1081,7 @@
           <!-- Installation Scaftfolding -->
           <!-- <div *ngIf="calc[i].install.scaftfolding"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Installation w/Scaftfolding ({{calc[i].install.unit}})
             </div>
 
@@ -1095,7 +1098,7 @@
           <!-- Installation & Hang -->
           <div *ngIf="(x.type == '2' || x.type == '5') && x.install_fee"
             style="display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Installation & Hang (set)
             </div>
 
@@ -1112,7 +1115,7 @@
           <!-- Installation Scaftfolding  -->
           <div *ngIf="calc[i].install.scaftfolding"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div style="width: 60%;">
               Climbing w/Scaftfolding ({{calc[i].install.unit}})
             </div>
 
@@ -1129,7 +1132,7 @@
           <!-- Belt & Hook -->
           <div *ngIf="calc[i].install.belt_hook != 0"
             style="display: flex;justify-content: space-between;margin-bottom: 5px;">
-            <div>
+            <div style="width: 60%;">
               Belt & Hook (set)
             </div>
 
@@ -1296,9 +1299,9 @@
         <!-- Scaftfolding Deliver/Install/Dismantle -->
         <div style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
 
-          <div style="display: flex; align-items: center;">
+          <div style="width: 60%; display: flex; align-items: center;">
             <ion-toggle [(ngModel)]="info.scaftfolding_fee_status"></ion-toggle>
-            <div style="max-width: 150px;">Scaftfolding (Deliver, Install, Dismantle)</div>
+            <div>Scaftfolding (Deliver, Install, Dismantle)</div>
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;align-items: center;">
@@ -1540,7 +1543,7 @@
         <div *ngIf="info.package_code" style="margin-bottom: 10px;">
           <div *ngIf="packageApplied.add_status" style=" display: flex;justify-content: space-between;">
 
-            <div style="display: flex; align-items: center;">
+            <div style="width: 60%; display: flex; align-items: center;">
               <ion-toggle [(ngModel)]="info.package_addon"></ion-toggle>
               <div style="font-size: 10px;">{{packageApplied.add_name}}</div>
             </div>

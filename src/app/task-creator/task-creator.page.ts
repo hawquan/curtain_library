@@ -339,7 +339,7 @@ export class TaskCreatorPage implements OnInit {
     await modal.present();
     const { data } = await modal.onWillDismiss();
     if (data) {
-      eval(y + '="' + data.value.name + '"')
+      eval(y + `='` + data.value.name + `'`)
     }
   }
 
@@ -1167,7 +1167,7 @@ export class TaskCreatorPage implements OnInit {
           console.log('error empty')
           this.errorEmpty()
         }
-      } else if (this.item.pleat == 'Zebra Blind' || this.item.pleat == 'Roller Blind' || this.item.pleat == 'Wooden Blind') {
+      } else if (this.item.pleat == 'Zebra Blind' || this.item.pleat == 'Roller Blind' || this.item.pleat == 'Wooden Blind' || this.item.pleat == 'Venetian Blinds') {
         if (['location', 'location_ref', 'width', 'height', 'type', 'rope_chain', 'pieces_blind', 'fabric_blind', 'bracket'].every(a => this.item[a])) {
 
           if (this.item.pleat == 'Wooden Blind' && ((this.item.blind_decoration && !this.item.blind_tape) || (!this.item.blind_decoration && this.item.blind_tape))) {
@@ -1604,7 +1604,7 @@ export class TaskCreatorPage implements OnInit {
           blind_id = (this.fabricBlind.filter(x => x.name == this.item.fabric_blind))[0]['id']
         }
 
-        if (this.item.pleat == 'Wooden Blind') {
+        if (this.item.pleat == 'Wooden Blind' || this.item.pleat == 'Venetian Blinds') {
           if (this.item.blind_tape) {
             tape_id = (this.blindTape.filter(x => x.name == this.item.blind_tape))[0]['id']
             tape = true

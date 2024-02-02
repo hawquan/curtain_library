@@ -442,10 +442,32 @@
           </div>
 
           <!-- Blind -->
-          <div *ngIf="x.fabric_blind != null && x.pleat != 'Roman Blind'"
+          <!-- <div *ngIf="x.fabric_blind != null && x.pleat != 'Roman Blind'"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div>
               Blind - {{x.fabric_blind}}<span *ngIf="x.code_blind">-{{x.code_blind}}</span> (sqft)
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                {{calc[i].blind.qty}}
+              </div>
+              <div style="width: 70%;text-align: end;">
+                {{calc[i].blind.total | currency: ' '}}<span
+                  *ngIf="calc[i].blind.promo_rate != 0 && calc[i].blind.promo_rate != null">
+                  (-{{calc[i].blind.promo_rate}}%)</span>
+              </div>
+            </div>
+          </div> -->
+          <!-- Blind -->
+          <div *ngIf="x.fabric_blind != null && x.pleat != 'Roman Blind'"
+            style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
+            <div style="width: 60%;">
+              {{x.pleat}} - {{x.fabric_blind}}<span *ngIf="x.code_blind">-{{x.code_blind}}</span><span
+                *ngIf="x.blind_tape">
+                <span *ngIf="checkTape(x.blind_tape)"> (</span>
+                <span *ngIf="!checkTape(x.blind_tape)"> (Tape </span>{{x.blind_tape}})</span>
+              (sqft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -1333,13 +1355,40 @@
     <div
       style="margin: 10px;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;background: white;border-radius: 5px; padding: 10px; margin-bottom: 25px;">
 
-      <div style="display: flex;justify-content: space-between; margin-bottom: 15px;">
+      <div style="display: flex;justify-content: space-between;">
         <div style="width: fit-content;font-weight: 500;padding-top: 10px;">
           <div style="font-size: 15px; font-weight: 600; color: #000;border-bottom: 0.5px solid #a17635;">
             Promo Package
           </div>
         </div>
       </div>
+
+      <!-- Packages Code / Apply -->
+      <!-- <div *ngIf="!info.rejected"
+        style="display: flex;padding: 10px 0 ;align-items: center; justify-content: space-between;margin-bottom: 15px;">
+
+        <div
+          style="width: 40%; background: white;border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <ion-input placeholder="Enter Package Code" [(ngModel)]="packageName" class="ion-no-padding"
+            style="width: calc(100% - 30px); height: 20px;font-weight: 400;--padding-end: 10px; font-size: 12px; color: #333333">
+          </ion-input>
+        </div>
+
+        <div style="width: 145px;display: flex;align-items: center;">
+
+          <ion-button (click)="packageView()" style="height: 28px;width: 100%;--background: #a17635;--border-radius: 100px;font-weight: 450px;font-size: 12px;
+            letter-spacing: 0.7px;color: white;--background-activated: ;">
+            View
+          </ion-button>
+
+          <ion-button (click)="packageApply()" style="height: 28px;width: 100%;--background: #a17635;--border-radius: 100px;font-weight: 450px;font-size: 12px;
+            letter-spacing: 0.7px;color: white;--background-activated: ;padding-left: 5px;">
+            Apply
+          </ion-button>
+
+        </div>
+
+      </div> -->
 
       <!-- Title -->
       <div style="display: flex;justify-content: space-between;font-weight: 450;font-size: 13px;">
@@ -1379,8 +1428,8 @@
 
             <div style="display: flex;align-items: center;">
               <div>{{packageApplied.code}}</div>
-              <div (click)="packageView()"
-                style="margin-left: 5px;background-color: #a17635;color: white;border-radius: 10px;font-size: 11px;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;padding: 3px 6px;">
+              <div *ngIf="!info.rejected" (click)="packageView()"
+                style="margin-left: 5px;background-color: tomato;color: white;border-radius: 10px;font-size: 11px;box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px;padding: 3px 6px;">
                 View</div>
             </div>
           </div>
@@ -1396,11 +1445,78 @@
 
         </div>
 
+        <!-- Ladder Installation -->
+        <div *ngIf="info.package_code && info.package_addon" style="margin-bottom: 10px;">
+          <div *ngIf="packageApplied.add_status" style=" display: flex;justify-content: space-between;">
+
+            <div style="width: 60%; display: flex; align-items: center;">
+              <!-- <ion-toggle [(ngModel)]="info.package_addon"></ion-toggle> -->
+              <div style="font-size: 11px;">{{packageApplied.add_name}}</div>
+            </div>
+
+            <div style="width: 40%;display: flex;justify-content: flex-end;">
+              <div style="width: 30%;text-align: center;">
+                1
+              </div>
+              <div *ngIf="packageApplied.add_price > 0" style="width: 70%;text-align: end;">
+                {{packageApplied.add_price | currency : ' '}}
+              </div>
+              <div *ngIf="packageApplied.add_price == 0" style="width: 70%;text-align: end;">
+                WAIVED
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Upgrade Location -->
+          <div *ngIf="info.package_addon"
+            style="display: flex;justify-content: space-between; border: 1px solid #e0e0e0; margin: 3px 0;">
+            <!-- <ion-select class="ion-no-padding" [(ngModel)]="info.package_location" placeholder="Select a location"
+              interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+              style="width: 100%;padding: 11px 10px 11px 5px;font-size: 10px;">
+              <ion-select-option *ngFor="let x of item; let i = index" [value]="x.no">
+                {{ x.type == 1 ? 'Fabric Only ' + '( No.' + x.no + ' )' :
+                x.type == 2 ? 'Track Only ' + '( No.' + x.no + ' )' :
+                x.type == 3 ? 'Accessories Only ' + '( No.' + x.no + ' )' :
+                x.type == 4 ? 'Motor Track Only ' + '( No.' + x.no + ' )' :
+                x.type == 5 ? 'Sewing Only ' + '( No.' + x.no + ' )' :
+                x.type == 6 ? 'Wallpaper Only ' + '( No.' + x.no + ' )' :
+                x.location + ' ' + x.location_ref }}
+              </ion-select-option>
+            </ion-select> -->
+            <div style="padding: 10px; font-size: 11px;">{{checkAddOn()}}</div>
+          </div>
+
+          <!-- Upgrade Addon -->
+          <div *ngIf="info.package_addon"
+            style="display: flex;justify-content: space-between; border: 1px solid #e0e0e0; margin: 3px 0;">
+            <!-- <ion-select class="ion-no-padding" [(ngModel)]="info.package_selection" placeholder="Select Curtain/Sheer"
+              interface="popover" mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+              style="width: 100%;padding: 11px 10px 11px 5px;font-size: 10px;">
+              <ion-select-option value="Curtain">Curtain</ion-select-option>
+              <ion-select-option value="Sheer">Sheer</ion-select-option>
+            </ion-select> -->
+            <div style="padding:10px; font-size: 11px;">{{info.package_selection}}</div>
+          </div>
+
+          <!-- Upgrade Remark -->
+          <div *ngIf="info.package_addon"
+            style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; justify-content: space-between;">
+            <ion-textarea auto-grow="true" class="ion-no-padding" class="ion-no-margin" placeholder="Enter Remark"
+              row="1" [(ngModel)]="info.package_remark" readonly
+              style="min-height: 30px; height: auto; --padding-start: 0px; --padding-top: 5px; --padding-end: 0px; --padding-bottom: 0px; font-weight: 500; color: #333333; font-size: 11px;">
+              <!-- --padding-top: 10px;--padding-end: 10px; -->
+            </ion-textarea>
+          </div>
+
+        </div>
+
       </div>
 
       <!-- Price -->
       <div style="display: flex;justify-content: flex-end;">
-        <div style="font-size: 18px; font-weight: 700; color: #000;">{{packageApplied.price | currency: 'RM '}}</div>
+        <div style="font-size: 18px; font-weight: 700; color: #000;">{{packageApplied.price + (info.package_addon ?
+          packageApplied.add_price : 0) | currency: 'RM '}}</div>
       </div>
 
     </div>
@@ -1421,7 +1537,7 @@
         <div style="text-decoration: line-through; color: #a17635;font-size: 14px;font-weight: 500;">{{totalPrice() |
           currency: 'RM '}}</div>
         <div style=" color: #a17635;font-size: 14px;font-weight: 500;margin-left: 3px;">
-          {{packageApplied.price + addCharges() | currency: 'RM '}}</div>
+          {{packageApplied.price + (info.package_addon ? packageApplied.add_price : 0) | currency: 'RM '}}</div>
       </div>
     </div>
 
