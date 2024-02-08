@@ -404,7 +404,7 @@ export class TaskEditorPage implements OnInit {
         if (this.item.track == 'Super Track' || this.item.track == 'Curve') {
           this.item.hook = this.item.bracket == 'Wall' ? '101' : this.item.bracket == 'Ceiling' ? '101' : this.item.bracket == 'Ceiling Pelmet' ? '104' : null
 
-          if(this.item.fabric_type == 'CS'){
+          if (this.item.fabric_type == 'CS') {
             this.item.sheer_hook = '104'
           }
 
@@ -430,10 +430,10 @@ export class TaskEditorPage implements OnInit {
         if (this.item.track_sheer == 'Super Track' || this.item.track_sheer == 'Curve') {
           this.item.sheer_hook = this.item.sheer_bracket == 'Wall' ? '101' : this.item.sheer_bracket == 'Ceiling' ? '101' : this.item.sheer_bracket == 'Ceiling Pelmet' ? '104' : null
 
-          if(this.item.fabric_type == 'CS'){
+          if (this.item.fabric_type == 'CS') {
             this.item.sheer_hook = '104'
           }
-          
+
         } else if (this.item.track_sheer == 'Wooden Rod' || this.item.track_sheer.includes('Wooden Rod') || this.item.track_sheer.includes('Cubicle')) {
           this.item.sheer_hook = '104'
         }
@@ -1685,6 +1685,25 @@ export class TaskEditorPage implements OnInit {
 
     this.item.eyelet_curtain = this.item.pleat && (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS') ? this.item.pleat.includes('Eyelet') : false
     this.item.eyelet_sheer = this.item.pleat_sheer && (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') ? this.item.pleat_sheer.includes('Eyelet') : false
+
+    if (this.item.motorized_upgrade) {
+      if (!this.item.motorized_choice || !this.item.motorized_cost || !this.item.motorized_power || !this.item.motorized_sides || !this.item.motorized_pieces) {
+        // this.item.motorized_upgrade = false
+        // console.log('upgrade false');
+
+        Swal.fire({
+          title: 'Motorised Not Completed',
+          text: "Please select all required motorise upgrade before continuing or un-tick it",
+          heightAuto: false,
+          icon: 'error',
+          allowOutsideClick: false,
+          showConfirmButton: true,
+          showCancelButton: false,
+        })
+
+        return
+      }
+    }
 
     if (this.item.type != 'Blinds') {
 
