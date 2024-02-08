@@ -373,6 +373,25 @@ export class TaskCreatorAlacartePage implements OnInit {
     let tape_id
     let tape = false
 
+    if (this.item.motorized_upgrade) {
+      if (!this.item.motorized_choice || !this.item.motorized_cost || !this.item.motorized_power || !this.item.motorized_sides || !this.item.motorized_pieces) {
+        // this.item.motorized_upgrade = false
+        // console.log('upgrade false');
+
+        Swal.fire({
+          title: 'Motorised Not Completed',
+          text: "Please select all required motorise upgrade before continuing or un-tick it",
+          heightAuto: false,
+          icon: 'error',
+          allowOutsideClick: false,
+          showConfirmButton: true,
+          showCancelButton: false,
+        })
+
+        return
+      }
+    }
+
     if (this.item.type == 1) {
 
       if (this.item.fabric != null) {
