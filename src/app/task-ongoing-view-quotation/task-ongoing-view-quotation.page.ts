@@ -2771,7 +2771,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                   { text: 'x', alignment: 'center', fontSize: 8.5 },
                   { text: 'x', alignment: 'center', fontSize: 8.5 },
                   { text: 'x', alignment: 'center', fontSize: 8.5 },
-                  { text: temp.acce_quantity + ' pairs' + ((this.item[i].remark_sale && (j == this.item[i].accessories.length - 1)) ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
+                  { text: temp.acce_quantity + ' pcs' + ((this.item[i].remark_sale && (j == this.item[i].accessories.length - 1)) ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                 ],
               )
 
