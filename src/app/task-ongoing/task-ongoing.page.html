@@ -799,7 +799,13 @@
               <div style="font-size: 12px; color: #636161; font-weight: 500;">Pleat Type
               </div>
               <div style="display: flex;align-items: center;margin-top: 5px;">
-                <ion-input [(ngModel)]="x.pleat" readonly
+                <ion-input *ngIf="x.pleat && x.pleat_sheer" [(ngModel)]="x.pleat" readonly
+                  style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
+                </ion-input>
+                <ion-input *ngIf="x.pleat && !x.pleat_sheer" [(ngModel)]="x.pleat" readonly
+                  style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
+                </ion-input>
+                <ion-input *ngIf="!x.pleat && x.pleat_sheer" [(ngModel)]="x.pleat_sheer" readonly
                   style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
                 </ion-input>
               </div>

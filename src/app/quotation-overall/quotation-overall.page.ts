@@ -711,6 +711,8 @@ export class QuotationOverallPage implements OnInit {
       }
 
       if (this.item[i].track_sheer != null) {
+        console.log(this.item[i]);
+
         if (this.item[i].fabric_type == 'S' || this.item[i].fabric_type == 'CS') {
           track_sheer = true
           track_sheer_id = this.tracklist.filter(x => x.name == this.item[i].track_sheer)[0]['id']
@@ -2056,7 +2058,7 @@ export class QuotationOverallPage implements OnInit {
                   { text: 'x', alignment: 'center', fontSize: 8.5 },
                   { text: 'x', alignment: 'center', fontSize: 8.5 },
                   { text: 'x', alignment: 'center', fontSize: 8.5 },
-                  { text: temp.acce_quantity + ' pairs' + ((this.item[i].remark_sale && (j == this.item[i].accessories.length - 1)) ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
+                  { text: temp.acce_quantity + ' pcs' + ((this.item[i].remark_sale && (j == this.item[i].accessories.length - 1)) ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
                 ],
               )
 
@@ -2543,7 +2545,7 @@ export class QuotationOverallPage implements OnInit {
               { text: 'x', alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].bracket || 'x', alignment: 'center', fontSize: 8.5 },
               { text: width + '" ( W )' + ' x ' + height + '" ( H )', bold: true, alignment: 'center', fontSize: 8.5 },
-              { text: this.item[i].fabric_blind + (this.item[i].code_blind ? 'x' + this.item[i].code_blind : '') + (this.item[i].blind_tape ? ' + ' + (this.item[i].blind_tape.includes('Tape') ? '' : 'Tape ') + this.item[i].blind_tape : '') + (this.item[i].blind_easylift ? ' + Easy Lift System' : ''), alignment: 'center', fontSize: 8.5 },
+              { text: this.item[i].fabric_blind + (this.item[i].code_blind ? '-' + this.item[i].code_blind : '') + (this.item[i].blind_tape ? ' + ' + (this.item[i].blind_tape.includes('Tape') ? '' : 'Tape ') + this.item[i].blind_tape : '') + (this.item[i].blind_easylift ? ' + Easy Lift System' : ''), alignment: 'center', fontSize: 8.5 },
               { text: 'x', alignment: 'center', fontSize: 8.5 },
               { text: 'x', alignment: 'center', fontSize: 8.5 },
               { text: this.item[i].pieces_blind, alignment: 'center', fontSize: 8.5 },
@@ -5913,9 +5915,9 @@ export class QuotationOverallPage implements OnInit {
     });
   }
 
-  checkTape(x){
+  checkTape(x) {
 
-    if(x.includes('Tape')){
+    if (x.includes('Tape')) {
       return true
     } else {
       return false
