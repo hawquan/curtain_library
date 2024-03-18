@@ -110,13 +110,17 @@ export class QuotationOverallPage implements OnInit {
           this.thismonthsales = a['data'].sort((a, b) => b.sales_so_id - a.sales_so_id) || []
           console.log(this.thismonthsales);
 
-          let regex = /^(\d{1,2})_/;
-          if (this.info.so_pdf.length > 0) {
+          if (this.thismonthsales.length > 0 && this.info.so_pdf.length > 0) {
+            let regex = /^(\d{1,2})_/;
             let match = this.info.so_pdf[this.info.so_pdf.length - 1].name.match(regex);
-            let digits = match[1]
-            if (
-              digits.length == 1 ? (this.info.so_pdf[this.info.so_pdf.length - 1].name).slice(2, 6) == this.datepipe.transform(new Date(), 'yyMM') : (this.info.so_pdf[this.info.so_pdf.length - 1].name).slice(3, 7) == this.datepipe.transform(new Date(), 'yyMM')
-            ) {
+            let digits = match[1];
+
+            let startIndex = digits.length + 1; // Start index for the substring
+            let endIndex = startIndex + 4; // End index for the substring (exclusive)
+
+            let extractedString1 = this.info.so_pdf[this.info.so_pdf.length - 1].name.slice(startIndex, endIndex);
+
+            if (extractedString1 == this.datepipe.transform(new Date(), 'yyMM')) {
               this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + this.info.sales_so_id).slice(-4)
               this.soNumDigit = this.info.sales_so_id
             } else {
@@ -127,11 +131,9 @@ export class QuotationOverallPage implements OnInit {
           } else {
             if (this.thismonthsales.length == 0) {
               this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + (Object.keys(a['data'] || {}).length + 1)).slice(-4)
-              // this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + (Object.keys(a['data'] || {}).length + 1)).slice(-4)
               this.soNumDigit = (Object.keys(a['data'] || {}).length + 1)
             } else {
               this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + (this.thismonthsales[0].sales_so_id + 1)).slice(-4)
-              // this.soNum = this.datepipe.transform(new Date(), 'yyMM') + '-' + ("000" + (Object.keys(a['data'] || {}).length + 1)).slice(-4)
               this.soNumDigit = (this.thismonthsales[0].sales_so_id + 1)
             }
 
