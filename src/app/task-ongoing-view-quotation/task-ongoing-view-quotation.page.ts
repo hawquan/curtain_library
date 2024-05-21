@@ -104,7 +104,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           console.log(this.salesmaninfo);
         })
 
-        this.http.post('https://curtain.vsnap.my/getthismonthsales', { month: this.datepipe.transform(new Date(), 'MMyyyy') }).subscribe(a => {
+        this.http.post('https://curtain.vsnap.my/getthismonthsales2', { month: this.datepipe.transform(new Date(), 'MMyyyy') }).subscribe(a => {
           this.thismonthsales = a['data'].sort((a, b) => b.sales_so_id - a.sales_so_id) || []
           console.log(this.thismonthsales);
 
@@ -769,6 +769,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
   }
 
   confirmation() {
+    console.log(this.customSoNum);
 
     if (this.info.customer_nric == '' || this.info.customer_nric == null) {
 
@@ -3515,7 +3516,8 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               no: this.info.no,
               so_pdf: JSON.stringify(this.info.so_pdf),
               sales_so_id: this.soNumDigit,
-              customer_nric: this.info.customer_nric
+              customer_nric: this.info.customer_nric,
+              latest_so_num: this.datepipe.transform(new Date(), 'MMyyyy')
             }
           } else {
             temp = {
@@ -3523,7 +3525,8 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               so_pdf: JSON.stringify(this.info.so_pdf),
               sales_confirmed_date: new Date().getTime(),
               sales_so_id: this.soNumDigit,
-              customer_nric: this.info.customer_nric
+              customer_nric: this.info.customer_nric,
+              latest_so_num: this.datepipe.transform(new Date(), 'MMyyyy')
             }
           }
 
