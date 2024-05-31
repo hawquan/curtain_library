@@ -1,0 +1,29 @@
+// .add_button{
+//     background-color: #ffffff;
+//     color: #e2caac;
+// }
+
+.add_button{
+    background-color: #bc8a3f;
+    color: #ffffff;
+    border: 1px solid #e2caac; 
+}
+
+.add_button:hover{
+    background-color: #d9bd98;
+    color: #ffffff;
+    border: 1px solid #d9bd98; 
+}
+
+.cancel_button{
+    border: 1px solid #e2caac;
+    background-color: #ffffff;
+    color: #e2caac;
+}
+
+.cancel_button:hover{
+    border: 1px solid tomato;
+    background-color: tomato;
+    color: #ffffff;
+
+}

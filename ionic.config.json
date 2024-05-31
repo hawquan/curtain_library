@@ -1,0 +1,7 @@
+{
+  "name": "curtain_library",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

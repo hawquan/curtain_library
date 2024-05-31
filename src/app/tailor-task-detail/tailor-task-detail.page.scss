@@ -1,0 +1,30 @@
+* {
+  font-size: 13px;
+}
+
+.selected {
+  border: 5px solid #a17635;
+  border-radius: 5px;
+
+}
+
+::ng-deep .mycomponent-wider-popover {
+  --width: 80%;
+  --max-width: 400px;
+}
+
+ion-radio {
+  --color-checked: #a17635;
+  opacity: 1 !important;
+
+}
+
+ion-button {
+  text-transform: none;
+}
+
+
+ion-select {
+  opacity: 1 !important;
+
+}

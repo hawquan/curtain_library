@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "746007769242",
+    "firebase_url": "https://curtain-library-default-rtdb.firebaseio.com",
+    "project_id": "curtain-library",
+    "storage_bucket": "curtain-library.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746007769242:android:bb612c5c291bd75871ef23",
+        "android_client_info": {
+          "package_name": "com.curtain_library.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746007769242-ps7ec871igrkmo3r67m0sovsfcu2jovc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0ehFFSRw1HG1n-19eq5jt13nQJ3Cys7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746007769242-ps7ec871igrkmo3r67m0sovsfcu2jovc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746007769242:android:3430e9c70272a90671ef23",
+        "android_client_info": {
+          "package_name": "com.curtainlibrary.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746007769242-ps7ec871igrkmo3r67m0sovsfcu2jovc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0ehFFSRw1HG1n-19eq5jt13nQJ3Cys7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746007769242-ps7ec871igrkmo3r67m0sovsfcu2jovc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

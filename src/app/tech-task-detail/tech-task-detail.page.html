@@ -1,0 +1,397 @@
+<ion-content>
+
+  <div style="height: 90px; width: 100%; display: flex; padding: 20px 15px 15px 15px;background: #323232;">
+    <div
+      style="height: 24px;width: 24px;background: #636161;border-radius: 5px;display: flex;justify-content: center;align-items: center;">
+      <ion-icon (click)="back()" style="font-size: 18px; color: white;" name="chevron-back-outline"></ion-icon>
+    </div>
+
+    <div style="font-weight: 700;color: white;font-size: 20px;margin-left: 15px;letter-spacing: 0.5px;">Task Details
+    </div>
+
+  </div>
+
+  <div
+    style="border-radius: 15px;background: white;padding: 15px; margin: -25px 15px 5px 15px;box-shadow: 0 3px 5px #c2c2c2">
+
+    <div style="margin-bottom: 5px;display: flex;">
+      <div style="font-weight: 700;">Client :</div>
+      <div style="font-weight: 400;padding-left: 10px;">{{info.client}}</div>
+    </div>
+
+    <div style="margin-bottom: 5px;display: flex;">
+      <div style="min-width: 56px;font-weight: 700;">Address :</div>
+      <div style="font-weight: 400;padding-left: 10px;">{{info.address}}</div>
+    </div>
+
+    <div style="margin-bottom: 5px;display: flex;">
+      <div style="font-weight: 700;">Contact :</div>
+      <div style="font-weight: 400;padding-left: 10px;">{{info.contact}}</div>
+    </div>
+
+    <div style="margin-bottom: 5px;display: flex;">
+      <div style="font-weight: 700;">House Type :</div>
+      <div style="font-weight: 400;padding-left: 10px;">{{info.house_type}}</div>
+    </div>
+
+  </div>
+
+  <div style="margin: 15px;">
+
+    <div style="width: 100%;height: 1px;background: #a17635;border-radius: 20px;margin-bottom: 5px;"></div>
+
+    <div style="height: 100%;display: flex;flex-direction: column;justify-content: space-between;">
+
+      <div style="width: 100%;display: flex;align-items: center;">
+
+        <div style="width: 100%;margin: 10px 10px 0 0">
+          <div style="width: 100%;min-width: 60px;font-weight: 700;">Width :</div>
+          <div style="display: flex;align-items: center;margin-top: 5px;">
+            <ion-input readonly type="number" placeholder="Enter Width" [(ngModel)]="item.width"
+              style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 2px solid #a17635;">
+            </ion-input>
+            <div style="margin-left: 5px;">inch</div>
+          </div>
+        </div>
+
+        <div style="width: 100%;margin: 10px 0 0 10px">
+          <div style="width: 100%;min-width: 60px;font-weight: 700;">Height :</div>
+          <div style="display: flex;align-items: center;margin-top: 5px;">
+            <ion-input readonly type="number" placeholder="Enter Height" [(ngModel)]="item.height"
+              style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 2px solid #a17635;">
+            </ion-input>
+            <div style="margin-left: 5px;">inch</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin: 15px 0 5px 0px">
+        <div style="min-width: 56px;font-weight: 700;">Product Type :</div>
+        <!-- <ion-select class="ion-no-padding" [(ngModel)]="item['type']" placeholder="Select a product type" dis
+          interface="popover" md="ios" (ionChange)="typeChanged()"
+          [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="width: 100%;height: 30px; margin-right: 10px;font-size: 14px;
+          padding: 0 10px;margin-top: 5px; border-radius: 5px;border: 2px solid #a17635;background: white;">
+          <ion-select-option value="Tailor-Made Curtains">Tailor-Made Curtains</ion-select-option>
+          <ion-select-option value="Motorised Curtains">Motorised Curtains</ion-select-option>
+          <ion-select-option value="Blinds">Blinds</ion-select-option>
+          <ion-select-option value="Wallpaper">Wallpaper</ion-select-option>
+        </ion-select> -->
+        <ion-input readonly [(ngModel)]="item['type']"
+          style="width: 100%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 5px;border: 2px solid #a17635;">
+        </ion-input>
+      </div>
+
+      <div *ngIf="item['type'] == 'Tailor-Made Curtains' || item['type'] == 'Motorised Curtains'">
+
+        <div style="display: flex;margin: 15px 15px 5px 0;">
+          <div style="font-weight: 700;">Pleats Type :</div>
+          <div style="font-weight: 450; margin-left: 15px;">{{PleatChoice}}</div>
+        </div>
+
+        <!-- <div style="margin: 10px 0px;padding: 0 15px 10px 0;display: flex;overflow-x: auto;">
+
+          <div [ngClass]="PleatSingle ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/curtains/single-pleat.png" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+          font-size: 15px;font-weight: 600;">
+                Single Pleat
+              </div>
+            </div>
+          </div>
+
+          <div [ngClass]="PleatRipple ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/curtains/ripple-fold.png" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+            font-size: 15px;font-weight: 600;">
+                Ripple Fold
+              </div>
+            </div>
+          </div>
+
+          <div [ngClass]="PleatDouble ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/curtains/double-pleat.png" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+            font-size: 15px;font-weight: 600;">
+                Fake Double Pleat
+              </div>
+            </div>
+          </div>
+
+          <div [ngClass]="PleatFrench ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/curtains/french-pleat.png" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+                  font-size: 15px;font-weight: 600;">
+                French Pleat
+              </div>
+            </div>
+          </div>
+
+          <div [ngClass]="PleatEyelet ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/curtains/eyelet.png" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+            font-size: 15px;font-weight: 600;">
+                Eyelet
+              </div>
+            </div>
+          </div>
+
+        </div> -->
+
+        <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+          src="assets/icon/curtains/single-pleat.png" alt="">
+
+        <div style="margin: 20px 15px 0 0;">
+          <div style="min-width: 56px;font-weight: 700;">Fabric Type :</div>
+          <ion-input readonly [(ngModel)]="item.fabric" placeholder="Enter Fabric Type" style="max-width: 50%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+          border-radius: 5px;border: 2px solid #a17635;margin-top: 5px;">
+          </ion-input>
+        </div>
+
+        <div style="margin: 20px 15px 0 0;">
+          <div style="min-width: 56px;font-weight: 700;">Colours :</div>
+          <ion-input readonly [(ngModel)]="item.colours" placeholder="Enter Colours Code" style="max-width: 50%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+          border-radius: 5px;border: 2px solid #a17635;margin-top: 5px;">
+          </ion-input>
+        </div>
+
+        <div style="margin: 20px 15px 0 0;margin-bottom: 50px;">
+          <div style="min-width: 56px;font-weight: 700;">Patterns :</div>
+          <ion-input readonly [(ngModel)]="item.patterns" placeholder="Enter Patterns Code" style="max-width: 50%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+          border-radius: 5px;border: 2px solid #a17635;margin-top: 5px;">
+          </ion-input>
+        </div>
+
+      </div>
+
+      <div *ngIf="item['type'] == 'Blinds' ">
+
+        <div style="display: flex;margin: 15px 15px 5px 0;">
+          <div style="font-weight: 700;">Pleats Type :</div>
+          <div style="font-weight: 450; margin-left: 15px;">{{blindsChoice}}</div>
+        </div>
+
+        <!-- <div style="margin: 10px 0px;padding: 0 15px 10px 0;display: flex;overflow-x: auto;">
+          <div (click)="blindsSelection('Roman Blinds')" [ngClass]="RomanBlinds ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/blinds/roman-blinds.jpg" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+          font-size: 15px;font-weight: 600;">
+                Roman Blinds
+              </div>
+            </div>
+          </div>
+          <div [ngClass]="RollerBlinds ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/blinds/roller-blinds.jpg" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+            font-size: 15px;font-weight: 600;">
+                Roller Blinds
+              </div>
+            </div>
+          </div>
+          <div [ngClass]="ZebraBlinds ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/blinds/zebra-blinds.jpg" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+            font-size: 15px;font-weight: 600;">
+                Zebra Blinds
+              </div>
+            </div>
+          </div>
+          <div [ngClass]="WoodenBlinds ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/blinds/wooden-blinds.jpg" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+            font-size: 15px;font-weight: 600;">
+                Wooden Blinds
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+          src="assets/icon/curtains/single-pleat.png" alt="">
+
+        <div style="margin: 20px 15px 0 0;">
+          <div style="min-width: 56px;font-weight: 700;">Styles :</div>
+          <ion-input readonly [(ngModel)]="item.styles" placeholder="Enter Styles Code" style="max-width: 50%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+            border-radius: 5px;border: 2px solid #a17635;margin-top: 5px;">
+          </ion-input>
+        </div>
+
+        <div style="margin: 20px 15px 0 0;">
+          <div style="min-width: 56px;font-weight: 700;">Patterns :</div>
+          <ion-input readonly [(ngModel)]="item.patterns" placeholder="Enter Patterns Code" style="max-width: 50%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+            border-radius: 5px;border: 2px solid #a17635;margin-top: 5px;">
+          </ion-input>
+        </div>
+
+        <div style="margin: 20px 15px 0 0;margin-bottom: 50px;">
+          <div style="min-width: 56px;font-weight: 700;">Textures :</div>
+          <ion-input readonly [(ngModel)]="item.textures" placeholder="Enter Textures Code" style="max-width: 50%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+            border-radius: 5px;border: 2px solid #a17635;margin-top: 5px;">
+          </ion-input>
+        </div>
+
+      </div>
+
+      <div *ngIf="item['type'] == 'Wallpaper' ">
+
+        <div style="display: flex;margin: 15px 15px 5px 0;">
+          <div style="font-weight: 700;">WallerPaper Type :</div>
+          <div style="font-weight: 450; margin-left: 15px;">{{WallpaperChoice}}</div>
+        </div>
+
+        <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+          src="assets/icon/curtains/single-pleat.png" alt="">
+        <!-- <div style="margin: 10px 0px;padding: 0 15px 10px 0;display: flex;overflow-x: auto;">
+
+          <div [ngClass]="PlainWall ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/wallpaper/plain-wallpaper.jpg" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+          font-size: 15px;font-weight: 600;">
+                Plain
+              </div>
+            </div>
+          </div>
+
+          <div [ngClass]="FabricWall ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/wallpaper/fabric-wallpaper.jpg" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+            font-size: 15px;font-weight: 600;">
+                Fabric
+              </div>
+            </div>
+          </div>
+
+          <div [ngClass]="NonWovenWall ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/wallpaper/non-woven-wallpaper.jpg" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+            font-size: 15px;font-weight: 600;">
+                Non-Woven
+              </div>
+            </div>
+          </div>
+
+          <div [ngClass]="PatternWall ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/wallpaper/pattern-wallpaper.jpg" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+            font-size: 15px;font-weight: 600;">
+                Patterned
+              </div>
+            </div>
+          </div>
+
+          <div [ngClass]="VinylWall ? 'selected' :'' "
+            style="margin-right: 15px;">
+            <img style="width: 120px;height: 120px;max-width: 120px;max-height: 120px;padding-bottom: 3px;"
+              src="assets/icon/wallpaper/vinyl-wallpaper.jpg" alt="">
+            <div
+              style="height: 35px;width: 120px;margin-top: -42px;border-radius: 0 0 5px 5px;display: flex;align-items: center;justify-content: center;">
+              <div style="height: 33px;width: 100%;background: #606060a8;text-align: center;color: white;position: relative;
+            font-size: 15px;font-weight: 600;">
+                Vinyl
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <div style="margin: 20px 15px 0 0;">
+          <div style="min-width: 56px;font-weight: 700;">Colours :</div>
+          <ion-input readonly [(ngModel)]="item.colours" placeholder="Enter Colours Code" style="max-width: 50%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+            border-radius: 5px;border: 2px solid #a17635;margin-top: 5px;">
+          </ion-input>
+        </div>
+
+        <div style="margin: 20px 15px 0 0;">
+          <div style="min-width: 56px;font-weight: 700;">Prints :</div>
+          <ion-input readonly [(ngModel)]="item.prints" placeholder="Enter Prints Code" style="max-width: 50%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+            border-radius: 5px;border: 2px solid #a17635;margin-top: 5px;">
+          </ion-input>
+        </div>
+
+        <div style="margin: 20px 15px 0 0;margin-bottom: 50px;">
+          <div style="min-width: 56px;font-weight: 700;">Textures :</div>
+          <ion-input readonly [(ngModel)]="item.textures" placeholder="Enter Prints Code" style="max-width: 50%;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+            border-radius: 5px;border: 2px solid #a17635;margin-top: 5px;">
+          </ion-input>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>
+
+<ion-footer>
+
+  <div
+    style="height: 50px; width: 100%; display: flex; align-items: center; padding: 15px;justify-content: center;background: #323232;">
+
+    <div style="width: 100%;display: flex;justify-content: space-evenly;align-items: center;">
+
+      <ion-button (click)="reject()" style="width: 40%;height: 35px;--background: #a17635;margin: 15px 0;font-size: 0.7rem;
+        --border-radius: 100px;border-radius: 100px;font-weight: 350px;letter-spacing: 0.7px;--background-activated: ">
+        Reject & Adjust
+      </ion-button>
+
+      <ion-button (click)="approve()" style="width: 40%;height: 35px;--background: #a17635;margin: 15px 0;font-size: 0.7rem;
+        --border-radius: 100px;border-radius: 100px;font-weight: 350px;letter-spacing: 0.7px;--background-activated: ">
+        Approve
+      </ion-button>
+
+    </div>
+
+  </div>
+
+</ion-footer>

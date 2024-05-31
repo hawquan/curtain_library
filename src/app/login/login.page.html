@@ -1,0 +1,132 @@
+<ion-content>
+
+  <div
+    style="height: 100vh;width: 100vw; background-image: url(assets/icon/login_bg.png); background-position: center; background-repeat: no-repeat; background-size: cover; background-attachment: fixed; position: relative; ">
+  </div>
+
+  <div
+    style="width: 100%;  height: 100% ;position: absolute; top: 0; left: 0; right: 0; padding: 20px; display: flex; align-items: center; justify-content: center; ">
+    <div style="width: 100%; max-width: 450px; padding: 20px; -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); 
+    box-shadow: inset 0 0 0 200px rgba(255,255,255,0.08); border-radius: 10px; background-color: #ffffffbb;">
+      <div style="display: flex;align-items: center;justify-content: center; margin: 20px 0;">
+        <img style="width: 50%;" src="assets/icon/logo.png" alt="">
+      </div>
+
+      <!-- <div style="width: 100%; display: flex;align-items: center;justify-content: center;padding: 0 20px;">
+
+        <div style="width: 100%;display: flex;background-color: rgba(188, 188, 188, 0.18);border-radius: 20px;">
+          <div (click)="selectTab('l')" style="width: 49%;text-align: center;">
+            <div [ngClass]="status == 'l'? 'selected' : 'selectedx'">Login</div>
+          </div>
+
+          <div (click)="selectTab('r')" style="width: 49%;text-align: center;;">
+            <div [ngClass]="status == 'r'? 'selected' : 'selectedx'">Register</div>
+          </div>
+        </div>
+
+      </div> -->
+
+      <!-- Login Field -->
+      <div *ngIf="status == 'l'" style="padding: 20px; width: 100%; ">
+
+        <div style="display: flex; align-items: center;justify-content: center; width: 100%; ">
+          <ion-item lines="none" class="ion-no-padding"
+            style="--background:none; width: 100%; max-width: 400px; border: 1px solid #d9bd98 ; border-radius: 30px; -webkit-padding-start: 10px; --padding-start: 10px;">
+            <ion-icon style="color: #A17635; font-size: 16px;" name="mail-outline"></ion-icon>
+            <ion-input [(ngModel)]="user.email" style="font-size: 14px;margin: 5px;color: #A17635;"
+              class="ion-no-padding" type="text" placeholder="Email">
+            </ion-input>
+          </ion-item>
+        </div>
+
+        <div style="margin-top: 15px; display: flex; align-items: center;justify-content: center; width: 100%; ">
+          <ion-item lines="none" class="ion-no-padding"
+            style="--background:none; width: 100%; max-width: 400px; border: 1px solid #d9bd98 ; border-radius: 30px; -webkit-padding-start: 10px; --padding-start: 10px;">
+            <ion-icon style="color: #A17635; font-size: 16px;" name="lock-closed-outline"></ion-icon>
+            <ion-input (keyup.enter)="loginUser(user)" [(ngModel)]="user.password"
+              style="font-size: 14px;margin: 5px;color:#A17635; " class="ion-no-padding"
+              [type]="show ? 'text' : 'password'" placeholder="Password">
+            </ion-input>
+            <ion-icon (click)="show = !show" style="color: #A17635; font-size: 16px;"
+              [name]="(show ? 'eye' : 'eye-off') + '-outline'"></ion-icon>
+          </ion-item>
+        </div>
+
+        <!-- Login Button -->
+        <div
+          style="width: 100%; height: 48px; display: flex;align-items: center;justify-content: center;margin-top: 15px;">
+          <div (click)="loginUser(user)" style="border-radius: 30px; padding: 10px 20px; width: 100%; max-width: 400px;
+            background: linear-gradient(90deg, rgba(222,178,120,1) 0%, rgba(179,114,66,1) 100%); font-size:14px; border-top: 1px solid #ffbea8;
+            color: white; font-weight: 600;  text-align: center;  box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
+            Log in
+          </div>
+        </div>
+
+        <!-- <div (click)="tab2()"
+          style="border-radius: 50px; border: 1px solid #A17635; color: #A17635; text-align: center; padding: 10px 0; font-size: 14px; margin-top: 5px;">
+          Continue As Guest
+        </div> -->
+
+      </div>
+
+      <!-- Register Field -->
+      <div *ngIf="status == 'r'" style="padding: 20px; width: 100%; ">
+
+        <div style="display: flex; align-items: center;justify-content: center; width: 100%;">
+          <ion-item lines="none" class="ion-no-padding"
+            style="--background:none; width: 100%; max-width: 400px; border: 1px solid #d9bd98 ; border-radius: 30px; -webkit-padding-start: 10px; --padding-start: 10px;">
+            <ion-icon style="color: #A17635; font-size: 16px;" name="person-outline"></ion-icon>
+            <ion-input [(ngModel)]="register.name" style="font-size: 14px;margin: 5px;color: #A17635;"
+              class="ion-no-padding" type="text" placeholder="Name">
+            </ion-input>
+          </ion-item>
+        </div>
+
+        <div style="display: flex; align-items: center;justify-content: center; width: 100%; margin-top: 15px;">
+          <ion-item lines="none" class="ion-no-padding"
+            style="--background:none; width: 100%; max-width: 400px; border: 1px solid #d9bd98 ; border-radius: 30px; -webkit-padding-start: 10px; --padding-start: 10px;">
+            <ion-icon style="color: #A17635; font-size: 16px;" name="mail-outline"></ion-icon>
+            <ion-input [(ngModel)]="register.email" style="font-size: 14px;margin: 5px;color: #A17635;"
+              class="ion-no-padding" type="text" placeholder="Email">
+            </ion-input>
+          </ion-item>
+        </div>
+
+        <div style="display: flex; align-items: center;justify-content: center; width: 100%;margin-top: 15px; ">
+          <ion-item lines="none" class="ion-no-padding"
+            style="--background:none; width: 100%; max-width: 400px; border: 1px solid #d9bd98 ; border-radius: 30px; -webkit-padding-start: 10px; --padding-start: 10px;">
+            <ion-icon style="color: #A17635; font-size: 16px;" name="call-outline"></ion-icon>
+            <ion-input [(ngModel)]="register.phone" style="font-size: 14px;margin: 5px;color: #A17635;"
+              class="ion-no-padding" type="text" placeholder="Phone Number">
+            </ion-input>
+          </ion-item>
+        </div>
+
+        <div style="margin-top: 15px; display: flex; align-items: center;justify-content: center; width: 100%; ">
+          <ion-item lines="none" class="ion-no-padding"
+            style="--background:none; width: 100%; max-width: 400px; border: 1px solid #d9bd98 ; border-radius: 30px; -webkit-padding-start: 10px; --padding-start: 10px;">
+            <ion-icon style="color: #A17635; font-size: 16px;" name="lock-closed-outline"></ion-icon>
+            <ion-input (keyup.enter)="loginUser(user)" [(ngModel)]="register.password"
+              style="font-size: 14px;margin: 5px;color:#A17635; " class="ion-no-padding"
+              [type]="show ? 'text' : 'password'" placeholder="Password">
+            </ion-input>
+            <ion-icon (click)="show = !show" style="color: #A17635; font-size: 16px;"
+              [name]="(show ? 'eye' : 'eye-off') + '-outline'"></ion-icon>
+          </ion-item>
+        </div>
+
+        <!-- Register Button -->
+        <div
+          style="width: 100%; height: 48px; display: flex;align-items: center;justify-content: center;margin-top: 15px;">
+          <div (click)="registerUser()" style="border-radius: 30px; padding: 10px 20px; width: 100%; max-width: 400px;
+            background: linear-gradient(90deg, rgba(222,178,120,1) 0%, rgba(179,114,66,1) 100%); font-size:14px; border-top: 1px solid #ffbea8;
+            color: white; font-weight: 600;  text-align: center;  box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">Register
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</ion-content>
