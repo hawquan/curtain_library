@@ -3270,7 +3270,7 @@ export class QuotationOverallPage implements OnInit {
 
           items.push(
             [
-              { text: 'Accessory - ' + this.calc[i].accessories.products[j].acce_title, border: [true, false, true, false] },
+              { text: this.calc[i].accessories.products[j].acce_title + ' ( ' + this.calc[i].accessories.products[j].acce_selected['name'] + ' )', border: [true, false, true, false] },
               { text: 'pcs', alignment: 'center', border: [true, false, true, false] },
               { text: this.calc[i].accessories.products[j].acce_quantity, alignment: 'center', border: [true, false, true, false] },
               { text: (parseInt(this.calc[i].accessories.products[j].acce_selected.price)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
@@ -4453,7 +4453,7 @@ export class QuotationOverallPage implements OnInit {
 
           items.push(
             [
-              { text: 'Accessory - ' + this.calc[i].accessories.products[j].acce_title, border: [true, false, true, false] },
+              { text: this.calc[i].accessories.products[j].acce_title + ' ( ' + this.calc[i].accessories.products[j].acce_selected['name'] + ' )', border: [true, false, true, false] },
               { text: 'pcs', alignment: 'center', border: [true, false, true, false] },
               { text: this.calc[i].accessories.products[j].acce_quantity, alignment: 'center', border: [true, false, true, false] },
               { text: (this.calc[i].accessories.products[j].acce_total).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] },
