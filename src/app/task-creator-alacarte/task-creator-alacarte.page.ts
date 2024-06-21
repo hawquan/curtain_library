@@ -262,9 +262,36 @@ export class TaskCreatorAlacartePage implements OnInit {
 
     console.log('item', this.item);
 
-    if (this.item.type == 1) {
+    if (this.item.type == 1 && (this.item.fabric_type == 'C' || this.item.fabric_type == 'CS')) {
 
-      if (['type', 'pieces_curtain', 'fabric'].every(a => this.item[a])) {
+      if (this.item.fabric_type == 'C') {
+        if (['type', 'pieces_curtain', 'fabric'].every(a => this.item[a])) {
+          this.calcPrice(x)
+        } else {
+          console.log('error empty')
+          this.errorEmpty()
+
+        }
+      } else if (this.item.fabric_type == 'S') {
+        if (['type', 'pieces_sheer', 'fabric_sheer'].every(a => this.item[a])) {
+          this.calcPrice(x)
+        } else {
+          console.log('error empty')
+          this.errorEmpty()
+
+        }
+      } else if (this.item.fabric_type == 'CS') {
+        if (['type', 'pieces_curtain', 'pieces_sheer', 'fabric', 'fabric_sheer'].every(a => this.item[a])) {
+          this.calcPrice(x)
+        } else {
+          console.log('error empty')
+          this.errorEmpty()
+        }
+      }
+
+    } else if (this.item.type == 1 && (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS')) {
+
+      if (['type', 'pieces_sheer', 'fabric_sheer'].every(a => this.item[a])) {
         this.calcPrice(x)
       } else {
         console.log('error empty')
