@@ -363,10 +363,25 @@
           </ion-input>
         </div> -->
       </div>
+      
+      <!-- Hook Fee -->
+      <div
+        style="border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between">
+        <div style="min-width: 70px;color: #999999">Hook<span
+            style="font-size: 10px;font-weight: 400;"><br />(Optional)</span></div>
+        <ion-select [(ngModel)]="item.sidehook" placeholder="Yes / No" interface="popover" mode="ios"
+          [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+          style="width: calc(100% - 55px) ;height: 30px;font-weight: 400;--padding-start: 10px; --padding-end: 10px; font-weight: 500; color: #333333">
+          <ion-select-option value="Yes">Yes</ion-select-option>
+          <ion-select-option value="No">No</ion-select-option>
+        </ion-select>
+        <ion-icon *ngIf="item.sidehook" (click)="item.sidehook = null" style="font-size: 16px; color: #a17635;"
+          name="close-outline"></ion-icon>
+      </div>
 
-      <!-- Installation & Hang Fee -->
+      <!-- Installation Fee -->
       <div style="display: flex;justify-content: space-between; margin-top: 15px;">
-        <div style="min-width: 56px;font-weight: 500;color: #999999">Installation & Hang Fee: <span
+        <div style="min-width: 56px;font-weight: 500;color: #999999">Installation Fee: <span
             style="font-size: 10px;font-weight: 400;">(Optional)</span></div>
         <div style="display: flex;">
           <div style="font-size: 11px;color: #888888;font-weight: 500;">Charges</div>
@@ -375,6 +390,8 @@
           </ion-checkbox>
         </div>
       </div>
+
+      
 
       <!-- Remark -->
       <div style="margin-top: 25px;color: #888888;font-weight: 600;">

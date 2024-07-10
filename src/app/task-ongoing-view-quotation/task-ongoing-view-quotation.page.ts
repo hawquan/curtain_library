@@ -1842,9 +1842,9 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           if (this.item[i].pleat == 'Fake Double Pleat') {
             CL_height = height - 1.5
           } else if (this.item[i].track) {
-            if (this.item[i].track == 'Ripplefold') {
+            if (this.item[i].track == 'Ripplefold' || this.item[i].track.includes('Existing Ripplefold')) {
               CL_height = height - 1.5
-            } else if (this.item[i].track == 'Ripplefold Curve') {
+            } else if (this.item[i].track == 'Ripplefold Curve' || this.item[i].track.includes('Existing R/F Curve')) {
               CL_height = height - 1.75
             } else if (this.item[i].track.includes('Camoor')) {
               CL_height = height - 1.75
@@ -1853,23 +1853,23 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
         } else {
           if (this.item[i].track) {
-            if (this.item[i].track == 'Ripplefold') {
+            if (this.item[i].track == 'Ripplefold' || this.item[i].track.includes('Existing Ripplefold')) {
               CL_height = height - 1.75
-            } else if (this.item[i].track == 'Ripplefold Curve') {
+            } else if (this.item[i].track == 'Ripplefold Curve' || this.item[i].track.includes('Existing R/F Curve')) {
               CL_height = height - 1.5
             } else if (this.item[i].track.includes('Camoor')) {
               CL_height = height - 1.5
             } else if (this.item[i].track == 'Cubicle / Hospital') {
               CL_height = height - (this.item[i].bracket == 'Wall' ? 0 : 1.5)
-            } else if (this.item[i].track == 'Super Track') {
+            } else if (this.item[i].track == 'Super Track' || this.item[i].track.includes('Existing Super Track')) {
               CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
-            } else if (this.item[i].track == 'Curve') {
+            } else if (this.item[i].track == 'Curve' || this.item[i].track.includes('Existing Curve')) {
               CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
             } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat) {
               if (this.item[i].pleat == 'Fake Double Pleat') {
                 CL_height = height - 2
               }
-            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat) {
+            } else if ((this.item[i].track == 'Wooden Rod' || this.item[i].track.includes('Existing Wooden Rod')) && this.item[i].pleat) {
               if (this.item[i].pleat == 'Fake Double Pleat') {
                 CL_height = height - 2
               }
@@ -1877,7 +1877,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               if (this.item[i].pleat.includes('Eyelet')) {
                 CL_height = height + 1.75
               }
-            } else if (this.item[i].track == 'Wooden Rod' && this.item[i].pleat) {
+            } else if ((this.item[i].track == 'Wooden Rod' || this.item[i].track.includes('Existing Wooden Rod')) && this.item[i].pleat) {
               if (this.item[i].pleat.includes('Eyelet')) {
                 CL_height = height + 1.75
               }
@@ -1890,9 +1890,9 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           if (this.item[i].pleat_sheer == 'Fake Double Pleat') {
             S_height = height - 1.5
           } else if (this.item[i].track_sheer) {
-            if (this.item[i].track_sheer == 'Ripplefold') {
+            if (this.item[i].track_sheer == 'Ripplefold' || this.item[i].track_sheer.includes('Existing Ripplefold')) {
               S_height = height - 1.5
-            } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
+            } else if (this.item[i].track_sheer == 'Ripplefold Curve' || this.item[i].track_sheer.includes('Existing R/F Curve')) {
               S_height = height - 1.75
             } else if (this.item[i].track_sheer.includes('Camoor')) {
               S_height = height - 1.75
@@ -1900,23 +1900,31 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           }
         } else {
           if (this.item[i].track_sheer) {
-            if (this.item[i].track_sheer == 'Ripplefold') {
+            if (this.item[i].track_sheer == 'Ripplefold' || this.item[i].track_sheer.includes('Existing Ripplefold')) {
               S_height = height - 1.75
-            } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
+            } else if (this.item[i].track_sheer == 'Ripplefold Curve' || this.item[i].track_sheer.includes('Existing R/F Curve')) {
               S_height = height - 1.5
             } else if (this.item[i].track_sheer.includes('Camoor')) {
               S_height = height - 1.5
             } else if (this.item[i].track_sheer == 'Cubicle / Hospital') {
               S_height = height - (this.item[i].sheer_bracket == 'Wall' ? 0 : 1.5)
-            } else if (this.item[i].track_sheer == 'Super Track') {
-              S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
-            } else if (this.item[i].track_sheer == 'Curve') {
-              S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+            } else if (this.item[i].track_sheer == 'Super Track' || this.item[i].track_sheer.includes('Existing Super Track')) {
+              if (this.item[i].fabric_type == 'CS') {
+                S_height = height - 1.25
+              } else {
+                S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+              }
+            } else if (this.item[i].track_sheer == 'Curve' || this.item[i].track_sheer.includes('Existing Curve')) {
+              if (this.item[i].fabric_type == 'CS') {
+                S_height = height - 1.25
+              } else {
+                S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+              }
             } else if (this.item[i].track_sheer.includes('Metal Rod') && this.item[i].pleat_sheer) {
               if (this.item[i].pleat_sheer == 'Fake Double Pleat') {
                 S_height = height - 2
               }
-            } else if (this.item[i].track_sheer == 'Wooden Rod' && this.item[i].pleat_sheer) {
+            } else if ((this.item[i].track_sheer == 'Wooden Rod' || this.item[i].track.includes('Existing Wooden Rod')) && this.item[i].pleat_sheer) {
               if (this.item[i].pleat_sheer == 'Fake Double Pleat') {
                 S_height = height - 2
               }
@@ -1924,7 +1932,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               if (this.item[i].pleat_sheer.includes('Eyelet')) {
                 S_height = height + 1.75
               }
-            } else if (this.item[i].track_sheer == 'Wooden Rod' && this.item[i].pleat_sheer) {
+            } else if ((this.item[i].track_sheer == 'Wooden Rod' || this.item[i].track.includes('Existing Wooden Rod')) && this.item[i].pleat_sheer) {
               if (this.item[i].pleat_sheer.includes('Eyelet')) {
                 S_height = height + 1.75
               }
@@ -1941,9 +1949,9 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           if (this.item[i].pleat == 'Fake Double Pleat') {
             CL_height = height - 1.5
           } else if (this.item[i].track) {
-            if (this.item[i].track == 'Ripplefold') {
+            if (this.item[i].track == 'Ripplefold' || this.item[i].track.includes('Existing Ripplefold')) {
               CL_height = height - 1.5
-            } else if (this.item[i].track == 'Ripplefold Curve') {
+            } else if (this.item[i].track == 'Ripplefold Curve' || this.item[i].track.includes('Existing R/F Curve')) {
               CL_height = height - 1.75
             } else if (this.item[i].track.includes('Camoor')) {
               CL_height = height - 1.75
@@ -1952,21 +1960,21 @@ export class TaskOngoingViewQuotationPage implements OnInit {
 
         } else {
           if (this.item[i].track) {
-            if (this.item[i].track == 'Ripplefold') {
+            if (this.item[i].track == 'Ripplefold' || this.item[i].track.includes('Existing Ripplefold')) {
               CL_height = height - 1.75
-            } else if (this.item[i].track == 'Ripplefold Curve') {
+            } else if (this.item[i].track == 'Ripplefold Curve' || this.item[i].track.includes('Existing R/F Curve')) {
               CL_height = height - 1.5
             } else if (this.item[i].track.includes('Camoor')) {
               CL_height = height - 1.5
             } else if (this.item[i].track == 'Cubicle / Hospital') {
               CL_height = height - (this.item[i].bracket == 'Wall' ? 0 : 1.5)
-            } else if (this.item[i].track == 'Super Track') {
+            } else if (this.item[i].track == 'Super Track' || this.item[i].track.includes('Existing Super Track')) {
               CL_height = height - 0.25
-            } else if (this.item[i].track == 'Curve') {
+            } else if (this.item[i].track == 'Curve' || this.item[i].track.includes('Existing Curve')) {
               CL_height = height - 0.25
             } else if (this.item[i].track.includes('Metal Rod')) {
               CL_height = height - 2
-            } else if (this.item[i].track == 'Wooden Rod') {
+            } else if (this.item[i].track == 'Wooden Rod' || this.item[i].track.includes('Existing Wooden Rod')) {
               CL_height = height - 2
             }
           }
@@ -1977,9 +1985,9 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           if (this.item[i].pleat_sheer == 'Fake Double Pleat') {
             S_height = height - 1.5
           } else if (this.item[i].track_sheer) {
-            if (this.item[i].track_sheer == 'Ripplefold') {
+            if (this.item[i].track_sheer == 'Ripplefold' || this.item[i].track_sheer.includes('Existing Ripplefold')) {
               S_height = height - 1.5
-            } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
+            } else if (this.item[i].track_sheer == 'Ripplefold Curve' || this.item[i].track_sheer.includes('Existing R/F Curve')) {
               S_height = height - 1.75
             } else if (this.item[i].track_sheer.includes('Camoor')) {
               S_height = height - 1.75
@@ -1987,21 +1995,21 @@ export class TaskOngoingViewQuotationPage implements OnInit {
           }
         } else {
           if (this.item[i].track_sheer) {
-            if (this.item[i].track_sheer == 'Ripplefold') {
+            if (this.item[i].track_sheer == 'Ripplefold' || this.item[i].track_sheer.includes('Existing Ripplefold')) {
               S_height = height - 1.75
-            } else if (this.item[i].track_sheer == 'Ripplefold Curve') {
+            } else if (this.item[i].track_sheer == 'Ripplefold Curve' || this.item[i].track_sheer.includes('Existing R/F Curve')) {
               S_height = height - 1.5
             } else if (this.item[i].track_sheer.includes('Camoor')) {
               S_height = height - 1.5
             } else if (this.item[i].track_sheer == 'Cubicle / Hospital') {
               S_height = height - (this.item[i].sheer_bracket == 'Wall' ? 0 : 1.5)
-            } else if (this.item[i].track_sheer == 'Super Track') {
+            } else if (this.item[i].track_sheer == 'Super Track' || this.item[i].track_sheer.includes('Existing Super Track')) {
               S_height = height - 1.25
-            } else if (this.item[i].track_sheer == 'Curve') {
+            } else if (this.item[i].track_sheer == 'Curve' || this.item[i].track_sheer.includes('Existing Curve')) {
               S_height = height - 1.25
             } else if (this.item[i].track_sheer.includes('Metal Rod')) {
               S_height = height - 2
-            } else if (this.item[i].track_sheer == 'Wooden Rod') {
+            } else if (this.item[i].track_sheer == 'Wooden Rod' || this.item[i].track_sheer.includes('Existing Wooden Rod')) {
               S_height = height - 2
             }
           }

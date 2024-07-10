@@ -465,6 +465,12 @@ export class TaskEditorAlacartePage implements OnInit {
         track = false
       }
 
+      if (this.item.sidehook == 'Yes') {
+        belt_hook = true
+      } else {
+        belt_hook = false
+      }
+
     } else if (this.item.type == 3) {
 
       if (this.item.accessories.length > 0) {
@@ -684,6 +690,7 @@ export class TaskEditorAlacartePage implements OnInit {
         width: this.item.width,
         track: this.item.track,
         type: this.item.type,
+        sidehook: this.item.sidehook,
         bracket: this.item.bracket,
         custom_bracket: this.item.custom_bracket,
         price: this.price,
