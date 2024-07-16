@@ -216,10 +216,10 @@
           <!-- Track -->
           <div *ngIf="lengthof(calc[i].track) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div *ngIf="x.track == 'Super Track'" style="width: 60%;">
+            <div *ngIf="x.track == 'Super Track' || x.track == 'Existing Super Track '" style="width: 60%;">
               (C) {{x.track}} (ft)
             </div>
-            <div *ngIf="x.track != 'Super Track'" style="width: 60%;">
+            <div *ngIf="x.track != 'Super Track' && x.track != 'Existing Super Track '" style="width: 60%;">
               (C) {{x.track}} Track (ft)
             </div>
 
@@ -239,10 +239,10 @@
           <!-- Track Sheer -->
           <div *ngIf="lengthof(calc[i].track_sheer) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div *ngIf="x.track_sheer == 'Super Track'" style="width: 60%;">
+            <div *ngIf="x.track_sheer == 'Super Track' || x.track_sheer == 'Existing Super Track '" style="width: 60%;">
               (S) {{x.track_sheer}} (ft)
             </div>
-            <div *ngIf="x.track_sheer != 'Super Track'" style="width: 60%;">
+            <div *ngIf="x.track_sheer != 'Super Track' && x.track_sheer != 'Existing Super Track '" style="width: 60%;">
               (S) {{x.track_sheer}} Track (ft)
             </div>
 
@@ -925,7 +925,8 @@
               style="display: flex;justify-content: space-between;margin-bottom: 10px;">
 
               <div style="width: 60%;">
-                {{calc[i].accessories.products[j].acce_title}} - {{this.calc[i].accessories.products[j].acce_selected['name']}} (pcs)
+                {{calc[i].accessories.products[j].acce_title}} -
+                {{this.calc[i].accessories.products[j].acce_selected['name']}} (pcs)
               </div>
 
               <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -961,10 +962,10 @@
           <!-- Track -->
           <div *ngIf="lengthof(calc[i].track) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div *ngIf="x.track == 'Super Track'" style="width: 60%;">
+            <div *ngIf="x.track == 'Super Track' || x.track == 'Existing Super Track '" style="width: 60%;">
               (C) {{x.track}} (ft)
             </div>
-            <div *ngIf="x.track != 'Super Track'" style="width: 60%;">
+            <div *ngIf="x.track != 'Super Track' && x.track != 'Existing Super Track '" style="width: 60%;">
               (C) {{x.track}} Track (ft)
             </div>
 
@@ -984,10 +985,10 @@
           <!-- Track Sheer -->
           <div *ngIf="lengthof(calc[i].track_sheer) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div *ngIf="x.track_sheer == 'Super Track'" style="width: 60%;">
+            <div *ngIf="x.track_sheer == 'Super Track' || x.track_sheer == 'Existing Super Track '" style="width: 60%;">
               (S) {{x.track_sheer}} (ft)
             </div>
-            <div *ngIf="x.track_sheer != 'Super Track'" style="width: 60%;">
+            <div *ngIf="x.track_sheer != 'Super Track' && x.track_sheer != 'Existing Super Track '" style="width: 60%;">
               (S) {{x.track_sheer}} Track (ft)
             </div>
 

@@ -211,7 +211,10 @@
           <!-- Track -->
           <div *ngIf="lengthof(calc[i].track) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div *ngIf="x.track == 'Super Track' || x.track == 'Existing Super Track '">
+              (C) {{x.track}} (ft)
+            </div>
+            <div *ngIf="x.track != 'Super Track' && x.track != 'Existing Super Track '">
               (C) {{x.track}} Track (ft)
             </div>
 
@@ -228,11 +231,13 @@
             </div>
           </div>
 
-
           <!-- Track Sheer -->
           <div *ngIf="lengthof(calc[i].track_sheer) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div>
+            <div *ngIf="x.track_sheer == 'Super Track' || x.track_sheer == 'Existing Super Track '">
+              (S) {{x.track_sheer}} (ft)
+            </div>
+            <div *ngIf="x.track_sheer != 'Super Track' && x.track_sheer != 'Existing Super Track '">
               (S) {{x.track_sheer}} Track (ft)
             </div>
 
@@ -964,10 +969,10 @@
           <!-- Track -->
           <div *ngIf="lengthof(calc[i].track) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div *ngIf="x.track == 'Super Track'">
+            <div *ngIf="x.track == 'Super Track' || x.track == 'Existing Super Track '">
               (C) {{x.track}} (ft)
             </div>
-            <div *ngIf="x.track != 'Super Track'">
+            <div *ngIf="x.track != 'Super Track' && x.track != 'Existing Super Track '">
               (C) {{x.track}} Track (ft)
             </div>
 
@@ -987,10 +992,10 @@
           <!-- Track Sheer -->
           <div *ngIf="lengthof(calc[i].track_sheer) > 0"
             style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
-            <div *ngIf="x.track_sheer == 'Super Track'">
+            <div *ngIf="x.track_sheer == 'Super Track' || x.track_sheer == 'Existing Super Track '">
               (S) {{x.track_sheer}} (ft)
             </div>
-            <div *ngIf="x.track_sheer != 'Super Track'">
+            <div *ngIf="x.track_sheer != 'Super Track' && x.track_sheer != 'Existing Super Track '">
               (S) {{x.track_sheer}} Track (ft)
             </div>
 

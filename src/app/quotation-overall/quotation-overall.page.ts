@@ -1326,9 +1326,17 @@ export class QuotationOverallPage implements OnInit {
             } else if (this.item[i].track == 'Cubicle / Hospital') {
               CL_height = height - (this.item[i].bracket == 'Wall' ? 0 : 1.5)
             } else if (this.item[i].track == 'Super Track' || this.item[i].track.includes('Existing Super Track')) {
-              CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+              if (this.item[i].fabric_type == 'CS') {
+                CL_height = height - 0.25
+              } else {
+                CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+              }
             } else if (this.item[i].track == 'Curve' || this.item[i].track.includes('Existing Curve')) {
-              CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+              if (this.item[i].fabric_type == 'CS') {
+                CL_height = height - 0.25
+              } else {
+                CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+              }
             } else if (this.item[i].track.includes('Metal Rod') && this.item[i].pleat) {
               if (this.item[i].pleat == 'Fake Double Pleat') {
                 CL_height = height - 2
@@ -1433,9 +1441,17 @@ export class QuotationOverallPage implements OnInit {
             } else if (this.item[i].track == 'Cubicle / Hospital') {
               CL_height = height - (this.item[i].bracket == 'Wall' ? 0 : 1.5)
             } else if (this.item[i].track == 'Super Track' || this.item[i].track.includes('Existing Super Track')) {
-              CL_height = height - 0.25
+               if (this.item[i].fabric_type == 'CS') {
+                CL_height = height - 0.25
+              } else {
+                CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+              }
             } else if (this.item[i].track == 'Curve' || this.item[i].track.includes('Existing Curve')) {
-              CL_height = height - 0.25
+              if (this.item[i].fabric_type == 'CS') {
+                CL_height = height - 0.25
+              } else {
+                CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+              }
             } else if (this.item[i].track.includes('Metal Rod')) {
               CL_height = height - 2
             } else if (this.item[i].track == 'Wooden Rod' || this.item[i].track.includes('Existing Wooden Rod')) {
@@ -1468,9 +1484,17 @@ export class QuotationOverallPage implements OnInit {
             } else if (this.item[i].track_sheer == 'Cubicle / Hospital') {
               S_height = height - (this.item[i].sheer_bracket == 'Wall' ? 0 : 1.5)
             } else if (this.item[i].track_sheer == 'Super Track' || this.item[i].track_sheer.includes('Existing Super Track')) {
-              S_height = height - 1.25
+              if (this.item[i].fabric_type == 'CS') {
+                S_height = height - 1.25
+              } else {
+                S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+              }
             } else if (this.item[i].track_sheer == 'Curve' || this.item[i].track_sheer.includes('Existing Curve')) {
-              S_height = height - 1.25
+              if (this.item[i].fabric_type == 'CS') {
+                S_height = height - 1.25
+              } else {
+                S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
+              }
             } else if (this.item[i].track_sheer.includes('Metal Rod')) {
               S_height = height - 2
             } else if (this.item[i].track_sheer == 'Wooden Rod' || this.item[i].track_sheer.includes('Existing Wooden Rod')) {
@@ -3707,7 +3731,7 @@ export class QuotationOverallPage implements OnInit {
           ]
         )
 
-      } 
+      }
 
       if (this.calc[i].install.scaftfolding) {
         items.push(
@@ -3721,8 +3745,8 @@ export class QuotationOverallPage implements OnInit {
         )
       }
 
-      if (this.item[i].type != 'Blinds' && this.calc[i].install.belt_hook != 0 ) {
-        if(this.item[i].type == '2'){
+      if (this.item[i].type != 'Blinds' && this.calc[i].install.belt_hook != 0) {
+        if (this.item[i].type == '2') {
           items.push(
             [
               'Hook',
@@ -3743,7 +3767,7 @@ export class QuotationOverallPage implements OnInit {
             ]
           )
         }
-      
+
       }
 
       items.push(
