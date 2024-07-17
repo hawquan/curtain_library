@@ -405,12 +405,6 @@ export class TaskCreatorPage implements OnInit {
 
   addItem() {
     console.log(this.item);
-    this.item.track.includes('Existing Ripplefold')
-    this.item.track.includes('Existing R/F Curve')
-    this.item.track.includes('Existing Super Track')
-    this.item.track.includes('Existing Curve')
-    this.item.track.includes('Existing Wooden Rod')
-    this.item.track.includes('Metal Rod')
 
     this.item.location = this.keyword
 
