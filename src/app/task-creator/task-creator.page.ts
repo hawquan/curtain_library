@@ -1194,7 +1194,7 @@ export class TaskCreatorPage implements OnInit {
               pleat: this.item.pleat,
               pieces_blind: this.item.pieces_blind,
               blind_decoration: null,
-              blind_tape: this.item.blind_tape,
+              blind_tape: null,
               bracket: this.item.bracket,
               rope_chain: this.item.rope_chain,
               // hook: this.item.hook,
@@ -1273,6 +1273,9 @@ export class TaskCreatorPage implements OnInit {
             if (this.item.pleat == 'Wooden Blind') {
               temp.blind_easylift = this.item.blind_easylift
               temp.blind_monosys = this.item.blind_monosys
+            }
+            if (this.item.pleat == 'Wooden Blind' || this.item.pleat == 'Venetian Blinds') {
+              temp.blind_tape = this.item.blind_tape
             }
             if (this.info['show_decoration']) {
               temp.blind_decoration = this.item.blind_decoration

@@ -1326,13 +1326,13 @@ export class QuotationOverallPage implements OnInit {
             } else if (this.item[i].track == 'Cubicle / Hospital') {
               CL_height = height - (this.item[i].bracket == 'Wall' ? 0 : 1.5)
             } else if (this.item[i].track == 'Super Track' || this.item[i].track.includes('Existing Super Track')) {
-              if (this.item[i].fabric_type == 'CS') {
+              if (this.item[i].fabric_type == 'CS' && this.item[i].bracket != 'Ceiling Pelmet') {
                 CL_height = height - 0.25
               } else {
                 CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
               }
             } else if (this.item[i].track == 'Curve' || this.item[i].track.includes('Existing Curve')) {
-              if (this.item[i].fabric_type == 'CS') {
+              if (this.item[i].fabric_type == 'CS' && this.item[i].bracket != 'Ceiling Pelmet') {
                 CL_height = height - 0.25
               } else {
                 CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
@@ -1381,13 +1381,13 @@ export class QuotationOverallPage implements OnInit {
             } else if (this.item[i].track_sheer == 'Cubicle / Hospital') {
               S_height = height - (this.item[i].sheer_bracket == 'Wall' ? 0 : 1.5)
             } else if (this.item[i].track_sheer == 'Super Track' || this.item[i].track_sheer.includes('Existing Super Track')) {
-              if (this.item[i].fabric_type == 'CS') {
+              if (this.item[i].fabric_type == 'CS' && this.item[i].sheer_bracket != 'Ceiling Pelmet') {
                 S_height = height - 1.25
               } else {
                 S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
               }
             } else if (this.item[i].track_sheer == 'Curve' || this.item[i].track_sheer.includes('Existing Curve')) {
-              if (this.item[i].fabric_type == 'CS') {
+              if (this.item[i].fabric_type == 'CS' && this.item[i].sheer_bracket != 'Ceiling Pelmet') {
                 S_height = height - 1.25
               } else {
                 S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
@@ -1441,13 +1441,13 @@ export class QuotationOverallPage implements OnInit {
             } else if (this.item[i].track == 'Cubicle / Hospital') {
               CL_height = height - (this.item[i].bracket == 'Wall' ? 0 : 1.5)
             } else if (this.item[i].track == 'Super Track' || this.item[i].track.includes('Existing Super Track')) {
-               if (this.item[i].fabric_type == 'CS') {
+               if (this.item[i].fabric_type == 'CS' && this.item[i].bracket != 'Ceiling Pelmet') {
                 CL_height = height - 0.25
               } else {
                 CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
               }
             } else if (this.item[i].track == 'Curve' || this.item[i].track.includes('Existing Curve')) {
-              if (this.item[i].fabric_type == 'CS') {
+              if (this.item[i].fabric_type == 'CS' && this.item[i].bracket != 'Ceiling Pelmet') {
                 CL_height = height - 0.25
               } else {
                 CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
@@ -1484,13 +1484,13 @@ export class QuotationOverallPage implements OnInit {
             } else if (this.item[i].track_sheer == 'Cubicle / Hospital') {
               S_height = height - (this.item[i].sheer_bracket == 'Wall' ? 0 : 1.5)
             } else if (this.item[i].track_sheer == 'Super Track' || this.item[i].track_sheer.includes('Existing Super Track')) {
-              if (this.item[i].fabric_type == 'CS') {
+              if (this.item[i].fabric_type == 'CS' && this.item[i].sheer_bracket != 'Ceiling Pelmet') {
                 S_height = height - 1.25
               } else {
                 S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
               }
             } else if (this.item[i].track_sheer == 'Curve' || this.item[i].track_sheer.includes('Existing Curve')) {
-              if (this.item[i].fabric_type == 'CS') {
+              if (this.item[i].fabric_type == 'CS' && this.item[i].sheer_bracket != 'Ceiling Pelmet') {
                 S_height = height - 1.25
               } else {
                 S_height = height - (this.item[i].sheer_bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
