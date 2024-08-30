@@ -1441,7 +1441,7 @@ export class QuotationOverallPage implements OnInit {
             } else if (this.item[i].track == 'Cubicle / Hospital') {
               CL_height = height - (this.item[i].bracket == 'Wall' ? 0 : 1.5)
             } else if (this.item[i].track == 'Super Track' || this.item[i].track.includes('Existing Super Track')) {
-               if (this.item[i].fabric_type == 'CS' && this.item[i].bracket != 'Ceiling Pelmet') {
+              if (this.item[i].fabric_type == 'CS' && this.item[i].bracket != 'Ceiling Pelmet') {
                 CL_height = height - 0.25
               } else {
                 CL_height = height - (this.item[i].bracket == 'Ceiling Pelmet' ? 1.25 : 0.25)
@@ -2767,7 +2767,7 @@ export class QuotationOverallPage implements OnInit {
               { text: 'x', alignment: 'center', fontSize: 8.5 },
               { text: 'x', alignment: 'center', fontSize: 8.5 },
               { text: 'x', alignment: 'center', fontSize: 8.5 },
-              { text: (this.item[i].remark_sale || ''), bold: true, fontSize: 8.5 }
+              { text: (this.item[i].remark_sale || '') + (this.item[i].pleat == 'Roller Blind' ? (this.item[i].blind_spring == 'Yes' ? (this.item[i].remark_sale ? '\n' : '') + 'Add Spring' : '') : '') + (this.item[i].pleat == 'Roller Blind' ? (this.item[i].blind_tube == 'Yes' ? (this.item[i].blind_spring == 'Yes' ? '\n' : '') + 'Add Tube' : '') : ''), bold: true, fontSize: 8.5 }
             ],
           )
 
@@ -4334,7 +4334,9 @@ export class QuotationOverallPage implements OnInit {
             if (this.item[i].remark_curtain) {
               items.push(
                 [
-                  { text: 'Curtain : ' + (this.item[i].remark_curtain || ''), fontSize: 8, border: [true, false, true, false] },
+                  {
+                    text: 'Curtain : ' + (this.item[i].remark_curtain || ''), fontSize: 8, border: [true, false, true, false]
+                  },
                   { text: '', fontSize: 8.5, border: [true, false, true, false] },
                   { text: '', alignment: 'center', border: [true, false, true, false] },
                   { text: '', border: [true, false, true, false] },
@@ -5134,17 +5136,17 @@ export class QuotationOverallPage implements OnInit {
               ]
             )
 
-            if (this.item[i].remark_curtain) {
-              items.push(
-                [
-                  { text: 'Curtain : ' + (this.item[i].remark_curtain || ''), fontSize: 8, border: [true, false, true, false] },
-                  { text: '', fontSize: 8.5, border: [true, false, true, false] },
-                  { text: '', alignment: 'center', border: [true, false, true, false] },
-                  { text: '', border: [true, false, true, false] },
-                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
-                ]
-              )
-            }
+            // if (this.item[i].remark_curtain || this.item[i].pleat_short || this.item[i].track) {
+            items.push(
+              [
+                { text: 'Curtain : ' + (this.item[i].remark_curtain || '') + (' ( ' + width + '"(w) x ' + height + '"(h), ' + ((this.item[i].pleat_short + (this.item[i].track || this.calc[i].install.belt_hook != 0 ? ', ' : '')) || '') + (this.item[i].track ? this.item[i].track + (this.item[i].track == 'Super Track' ? '' : ' Track') + (this.calc[i].install.belt_hook != 0 ? ', ' : '') : '') + (this.calc[i].install.belt_hook != 0 ? 'Belt & Hook' : '') + ' )'), fontSize: 8, border: [true, false, true, false] },
+                { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                { text: '', alignment: 'center', border: [true, false, true, false] },
+                { text: '', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+            // }
 
             if (this.item[i].remark_sale) {
               items.push(
@@ -5272,18 +5274,18 @@ export class QuotationOverallPage implements OnInit {
               ]
             )
 
-            if (this.item[i].remark_sheer) {
+            // if (this.item[i].remark_sheer || this.item[i].pleat_sheer_short || this.item[i].track_sheer) {
 
-              items.push(
-                [
-                  { text: 'Sheer : ' + (this.item[i].remark_sheer || ''), fontSize: 8, border: [true, false, true, false] },
-                  { text: '', fontSize: 8.5, border: [true, false, true, false] },
-                  { text: '', alignment: 'center', border: [true, false, true, false] },
-                  { text: '', border: [true, false, true, false] },
-                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
-                ]
-              )
-            }
+            items.push(
+              [
+                { text: 'Sheer : ' + (this.item[i].remark_sheer || '') + (' ( ' + width + '"(w) x ' + height + '"(h), ' + ((this.item[i].pleat_sheer_short + (this.item[i].track_sheer || this.calc[i].install.belt_hook != 0 ? ', ' : '')) || '') + (this.item[i].track_sheer ? this.item[i].track_sheer + (this.item[i].track_sheer == 'Super Track' ? '' : ' Track') + (this.calc[i].install.belt_hook != 0 ? ', ' : '') : '') + (this.calc[i].install.belt_hook != 0 ? 'Belt & Hook' : '') + ' )'), fontSize: 8, border: [true, false, true, false] },
+                { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                { text: '', alignment: 'center', border: [true, false, true, false] },
+                { text: '', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+            // }
 
             if (this.item[i].remark_sale) {
               items.push(
@@ -5449,29 +5451,29 @@ export class QuotationOverallPage implements OnInit {
               ]
             )
 
-            if (this.item[i].remark_curtain) {
-              items.push(
-                [
-                  { text: 'Curtain : ' + (this.item[i].remark_curtain || ''), fontSize: 8, border: [true, false, true, false] },
-                  { text: '', fontSize: 8.5, border: [true, false, true, false] },
-                  { text: '', alignment: 'center', border: [true, false, true, false] },
-                  { text: '', border: [true, false, true, false] },
-                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
-                ]
-              )
-            }
+            // if (this.item[i].remark_curtain || this.item[i].pleat_short || this.item[i].track) {
+            items.push(
+              [
+                { text: 'Curtain : ' + (this.item[i].remark_curtain || '') + (' ( ' + width + '"(w) x ' + height + '"(h), ' + ((this.item[i].pleat_short + (this.item[i].track || this.calc[i].install.belt_hook != 0 ? ', ' : '')) || '') + (this.item[i].track ? (this.item[i].track + (this.item[i].track == 'Super Track' ? '' : ' Track')) + (this.calc[i].install.belt_hook != 0 ? ', ' : '') : '') + (this.calc[i].install.belt_hook != 0 ? 'Belt & Hook' : '') + ' )'), fontSize: 8, border: [true, false, true, false] },
+                { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                { text: '', alignment: 'center', border: [true, false, true, false] },
+                { text: '', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+            // }
 
-            if (this.item[i].remark_sheer) {
-              items.push(
-                [
-                  { text: 'Sheer : ' + (this.item[i].remark_sheer || ''), fontSize: 8, border: [true, false, true, false] },
-                  { text: '', fontSize: 8.5, border: [true, false, true, false] },
-                  { text: '', alignment: 'center', border: [true, false, true, false] },
-                  { text: '', border: [true, false, true, false] },
-                  // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
-                ]
-              )
-            }
+            // if (this.item[i].remark_sheer || this.item[i].pleat_sheer_short || this.item[i].track_sheer) {
+            items.push(
+              [
+                { text: 'Sheer : ' + (this.item[i].remark_sheer || '') + (' ( ' + width + '"(w) x ' + height + '"(h), ' + ((this.item[i].pleat_sheer_short + (this.item[i].track_sheer ? ', ' : '')) || '') + (this.item[i].track_sheer ? this.item[i].track_sheer + (this.item[i].track_sheer == 'Super Track' ? '' : ' Track') : '') + ' )'), fontSize: 8, border: [true, false, true, false] },
+                { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                { text: '', alignment: 'center', border: [true, false, true, false] },
+                { text: '', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+            // }
 
             if (this.item[i].remark_sale) {
               items.push(
@@ -5586,7 +5588,7 @@ export class QuotationOverallPage implements OnInit {
           ]
         )
 
-        if (this.item[i].remark_sale) {
+        if (this.item[i].remark_sale || this.item[i].blind_spring || this.item[i].blind_tube) {
 
           items.push(
             [
@@ -5600,13 +5602,27 @@ export class QuotationOverallPage implements OnInit {
 
           items.push(
             [
-              { text: 'Overall : \n' + (this.item[i].remark_sale || ''), fontSize: 8, border: [true, false, true, false] },
+              { text: 'Blind : ' + (this.item[i].remark_curtain || '') + (' ( ' + width + '"(w) x ' + height + '"(h), ' + (this.item[i].blind_spring ? 'Add Spring' + (this.item[i].blind_tube ? ', ' : '') : '') + (this.item[i].blind_tube ? 'Add Tube' : '') + ' )'), fontSize: 8, border: [true, false, true, false] },
               { text: '', fontSize: 8.5, border: [true, false, true, false] },
               { text: '', alignment: 'center', border: [true, false, true, false] },
               { text: '', border: [true, false, true, false] },
               // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
             ]
           )
+
+          if (this.item[i].remark_sale) {
+
+            items.push(
+              [
+                { text: 'Overall : \n' + (this.item[i].remark_sale || ''), fontSize: 8, border: [true, false, true, false] },
+                { text: '', fontSize: 8.5, border: [true, false, true, false] },
+                { text: '', alignment: 'center', border: [true, false, true, false] },
+                { text: '', border: [true, false, true, false] },
+                // { text: (this.item[i].price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right', border: [true, false, true, false] }
+              ]
+            )
+          }
+
         }
 
         items.push(

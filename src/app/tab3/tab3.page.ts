@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
-import { NavController,Platform } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import firebase from 'firebase';
 import Swal from 'sweetalert2';
@@ -19,7 +19,7 @@ export class Tab3Page {
     private actRoute: ActivatedRoute,
     private fcm: FCM,
     private platform: Platform,
-    ) { }
+  ) { }
 
   user = [] as any
   uid = ""
@@ -53,8 +53,16 @@ export class Tab3Page {
 
   refresh() {
     this.http.post('https://curtain.vsnap.my/onestaff', { id: this.uid }).subscribe((s) => {
-      this.user = s['data'][0]
-      console.log(this.user);
+      if (s['data'].length > 0) {
+        this.user = s['data'][0]
+        console.log(this.user);
+      } else {
+        this.http.post('https://curtain.vsnap.my/oneadmin', { id: this.uid }).subscribe((s) => {
+          this.user = s['data'][0]
+          console.log(this.user);
+        })
+      }
+
     })
   }
 
@@ -81,12 +89,12 @@ export class Tab3Page {
 
         if (!this.platform.is('desktop') && !this.platform.is('mobileweb')) {
           // this.platform.ready().then(() => {
-            // this.fcm.unsubscribeFromTopic(this.uid).then(() => {
-              firebase.auth().signOut();
-            // })
+          // this.fcm.unsubscribeFromTopic(this.uid).then(() => {
+          firebase.auth().signOut();
           // })
-          
-        } else if(this.platform.is('desktop') || this.platform.is('mobileweb')){
+          // })
+
+        } else if (this.platform.is('desktop') || this.platform.is('mobileweb')) {
           firebase.auth().signOut();
 
         } else {

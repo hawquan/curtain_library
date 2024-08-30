@@ -52,7 +52,7 @@ export class AddSalesPage implements OnInit {
       this.techList = Object.values(this.staffList).filter(a => a['position'] == 'Technician')
       this.saleList = Object.values(this.staffList).filter(a => a['position'] == 'Sales')
     })
-    
+
     this.http.get('https://curtain.vsnap.my/feeList').subscribe(a => {
       this.feeList = a['data']
       console.log(this.feeList);
@@ -487,7 +487,9 @@ export class AddSalesPage implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Confirm!'
+      confirmButtonText: 'Confirm!',
+      heightAuto: false,
+      reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
 

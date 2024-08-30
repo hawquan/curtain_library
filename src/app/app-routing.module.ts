@@ -118,6 +118,18 @@ const routes: Routes = [
     path: 'task-ongoing-view-alacarte',
     loadChildren: () => import('./task-ongoing-view-alacarte/task-ongoing-view-alacarte.module').then( m => m.TaskOngoingViewAlacartePageModule)
   },
+  {
+    path: 'po-detail',
+    loadChildren: () => import('./po-detail/po-detail.module').then( m => m.PoDetailPageModule)
+  },
+  {
+    path: 'po-detail-update',
+    loadChildren: () => import('./po-detail-update/po-detail-update.module').then( m => m.PoDetailUpdatePageModule)
+  },
+  {
+    path: 'signature',
+    loadChildren: () => import('./signature/signature.module').then( m => m.SignaturePageModule)
+  },
 
 ];
 @NgModule({

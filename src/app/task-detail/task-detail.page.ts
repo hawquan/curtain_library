@@ -352,7 +352,6 @@ export class TaskDetailPage implements OnInit {
     }
   }
 
-
   async editTask(x, y) {
     if (x.type == 'Tailor-Made Curtains' || x.type == 'Blinds') {
 

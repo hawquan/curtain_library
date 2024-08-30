@@ -1,0 +1,277 @@
+<ion-header style="--background: #FAF7F2">
+
+  <div style="height: 50px; width: 100%; display: flex;align-items: center; padding: 0 15px;background-color: #ebd1af;">
+
+    <div
+      style="height: 24px;width: 24px;background-color: white;border-radius: 5px;display: flex;justify-content: center;align-items: center;">
+      <ion-icon (click)="back()" style="font-size: 22px; color: #a17635;" name="close-outline"></ion-icon>
+    </div>
+
+    <div style="font-weight: 500;color: #a17635;font-size: 18px;margin-left: 15px;letter-spacing: 0.5px;">Update Order
+    </div>
+
+  </div>
+
+</ion-header>
+
+<ion-content style="--background: #FAF7F2">
+
+  <div *ngIf="loading" style="padding: 10px;">
+
+    <div>
+
+      <!-- Step 1 -->
+      <div style="color: #888888;font-weight: 600;margin-bottom: 10px;margin-top: 15px;">Product Details</div>
+
+      <!-- Area -->
+      <div
+        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; ">
+        <div style="min-width: 70px; color: #999999">Product</div>
+        <div style="height: 30px; display: flex; align-items: center;">
+          <span *ngIf="fabric == 'curtain'">{{product[target].fabric}} {{product[target].code_curtain}} <span
+              *ngIf="product[target].pleat == 'Roman Blind'"> (Roman Blind)</span></span>
+          <span *ngIf="fabric == 'lining'">{{product[target].fabric_lining}} {{product[target].code_lining}} <span
+              *ngIf="product[target].pleat == 'Roman Blind'"> (Roman Blind)</span></span>
+          <span *ngIf="fabric == 'sheer'">{{product[target].fabric_sheer}} {{product[target].code_sheer}}</span>
+          <span *ngIf="fabric == 'blind'">{{product[target].fabric_blind}} {{product[target].code_blind}}
+            <span
+              *ngIf="(product[target].pleat == 'Wooden Blind' || product[target].pleat == 'Venetian Blinds') && product[target].blind_tape">
+              &nbsp;+ Tape {{product[target].blind_tape}}
+            </span>
+          </span>
+          <span *ngIf="fabric == 'mechanism'">Roman Track w/ Mechanism</span>
+        </div>
+      </div>
+
+      <!-- Width/Height -->
+      <div *ngIf="fabric == 'blind' || fabric == 'mechanism'" style="width: 100%;display: flex;align-items: center;">
+        <div
+          style="width: 50%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 70px; color: #999999">Width</div>
+          <div style="width: calc(100% - 70px); height: 30px; display: flex; align-items: center;">
+            {{product[target].width}}
+          </div>
+        </div>
+
+        <div
+          style="width: 50%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 70px; color: #999999">Height</div>
+          <div style="width: calc(100% - 70px); height: 30px; display: flex; align-items: center;">
+            {{product[target].height}}
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Bracket -->
+      <div *ngIf="fabric == 'mechanism'"
+        style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; ">
+
+        <div style="min-width: 70px; color: #999999; font-size: 11px">Bracket</div>
+
+        <div style="height: 30px; display: flex; align-items: center;">{{product[target].bracket}}</div>
+
+      </div>
+
+      <!-- Rope/Chain -->
+      <div *ngIf="fabric=='mechanism'"
+        style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; ">
+
+        <div style=" min-width: 70px; color: #999999; font-size: 11px">Rope/Chain</div>
+
+        <div style="height: 30px; display: flex; align-items: center;">{{product[target].rope_chain}}</div>
+
+      </div>
+
+      <!-- Roman Tube -->
+      <div *ngIf="fabric=='mechanism'"
+        style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; ">
+
+        <div style=" min-width: 70px; color: #999999; font-size: 11px">Roman Tube</div>
+
+        <div style="height: 30px; display: flex; align-items: center;">{{product[target].po_roman_tube}}</div>
+
+      </div>
+
+
+      <!-- Step 2 -->
+      <div style=" color: #888888;font-weight: 600;margin-bottom: 10px;margin-top: 15px;">Ordered Amount</div>
+
+      <!-- Quantity / Stock -->
+      <div style="width: 100%;display: flex;align-items: center;">
+        <div
+          style="width: 50%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 70px; color: #999999">Ordered</div>
+          <div style="width: calc(100% - 70px); height: 30px; display: flex; align-items: center;">
+            <span *ngIf="fabric == 'curtain'">{{product[target].po_curtain_qty}}</span>
+            <span *ngIf="fabric == 'lining'">{{product[target].po_lining_qty}}</span>
+            <span *ngIf="fabric == 'sheer'">{{product[target].po_sheer_qty}}</span>
+            <span *ngIf="fabric == 'blind'">{{product[target].po_blind_qty}}</span>
+            <span *ngIf="fabric == 'mechanism'">{{product[target].po_mechanism_qty}}</span>
+          </div>
+        </div>
+
+        <div
+          style="width: 50%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 70px; color: #999999">Stock</div>
+          <div style="width: calc(100% - 70px); height: 30px; display: flex; align-items: center;">
+            {{product[target].po_stock_qty || 0}}
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Total -->
+      <div
+        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; ">
+        <div style="min-width: 70px; color: #999999">Total</div>
+        <div style="height: 30px; display: flex; align-items: center;">
+          <span *ngIf="fabric == 'curtain'">{{product[target].po_curtain_qty + product[target].po_stock_qty}}</span>
+          <span *ngIf="fabric == 'lining'">{{product[target].po_lining_qty + product[target].po_stock_qty}}</span>
+          <span *ngIf="fabric == 'sheer'">{{product[target].po_sheer_qty + product[target].po_stock_qty}}</span>
+          <span *ngIf="fabric == 'blind'">{{product[target].po_blind_qty + product[target].po_stock_qty}}</span>
+          <span *ngIf="fabric == 'mechanism'">{{product[target].po_mechanism_qty +
+            product[target].po_stock_qty}}</span>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div style="color: #888888;font-weight: 600; margin-top: 15px;">Update Status</div>
+
+      <!-- Update / Reject -->
+      <ion-radio-group [(ngModel)]="product[target].po_status"
+        style="max-width: 300px; display: flex; flex-wrap: wrap;">
+
+        <div style="width: 100%; height: 35px; display: flex; align-items: center; ">
+
+          <div style="display: flex; align-items: center; ">
+            <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
+              value="1"></ion-radio>
+            <ion-label style="font-size: 0.75rem; padding-left: 5px;">Update Order</ion-label>
+          </div>
+
+          <div style="display: flex; align-items: center; margin-left: 20px;">
+            <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
+              value="2"></ion-radio>
+            <ion-label style="font-size: 0.75rem; padding-left: 5px;">Reject Order</ion-label>
+          </div>
+
+        </div>
+
+      </ion-radio-group>
+
+      <!-- Update List -->
+      <div *ngIf="product[target].po_status == '1'" style="display: flex; flex-wrap: wrap; ">
+        <div *ngFor="let x of updateList" (click)="poStatus(x)"
+          [ngStyle]="{'color': product[target].po_status_no == x.no ? 'white' : 'black', 'background-color' : product[target].po_status_no == x.no ? '#a17635' : 'white'}"
+          style="box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px; border-radius: 5px; padding: 5px 7px; margin-right: 5px; margin-bottom: 5px; display: flex; align-items: center;">
+          <div>{{x.name}}</div>
+          <ion-icon *ngIf="product[target].po_status_no == x.no" name="checkmark-outline"
+            style="font-size: 16px; color: white; margin-left: 5px;"></ion-icon>
+        </div>
+      </div>
+
+      <!-- Reject List -->
+      <div *ngIf="product[target].po_status == '2'" style="display: flex; flex-wrap: wrap; ">
+        <div *ngFor="let x of rejectList" (click)="poStatus(x)"
+          [ngStyle]="{'color': product[target].po_status_no == x.no ? 'white' : 'black', 'background-color' : product[target].po_status_no == x.no ? '#a17635' : 'white'}"
+          style="box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px; border-radius: 5px; padding: 5px 7px; margin-right: 5px; margin-bottom: 5px; display: flex; align-items: center;">
+          <div>{{x.name}}</div>
+          <ion-icon *ngIf="product[target].po_status_no == x.no" name="checkmark-outline"
+            style="font-size: 16px; color: white; margin-left: 5px;"></ion-icon>
+        </div>
+      </div>
+
+      <!-- Signature -->
+      <div style="display: flex;align-items: center; margin-top: 15px;">
+        <!-- <ion-icon name="caret-forward-outline" style="color: #a17635; font-size: 16px;"></ion-icon> -->
+        <div style="color: #888888; font-weight: 600;">Your Signature : <span
+            style="font-size: 12px;color: #8080808d;">(Click Box to Sign)</span></div>
+      </div>
+      <div style="width: 60%; max-width: 200px; display: flex; justify-content: center; margin-bottom: 10px;">
+        <div style="width: 90%;" (click)="customersign()">
+
+          <div style="margin: 10px 0; box-shadow: 0 0 6px 0 #DDDDDD; background: white;">
+            <img src="{{product[target]['po_signature']}}" style="width: 100%; min-height: 80px; " />
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Picture -->
+      <div style="margin-top: 15px;color: #888888;font-weight: 600;">Upload Images : <span
+          style="font-size: 12px;color: #8080808d;">(Click image to view)</span></div>
+      <div
+        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));height: 100%; margin: 10px 0 50px 0;  ">
+        <div style="display: flex;justify-content: center;padding: 5px 5px 5px 10px;">
+          <div (click)="opencamera()"
+            style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;
+            display: flex;align-items: center;justify-content: center;background-color: gray; box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
+            <ion-icon style="width: 100%; font-size: 15px; color: #ffffff;" name="camera"></ion-icon>
+          </div>
+        </div>
+
+        <div *ngFor="let x of product[target].img; let i = index"
+          style="height: 100%;padding: 5px;display: flex;justify-content: center;">
+
+          <img (click)="openPic(x)"
+            style="border-radius: 5px; height: 100px;min-width: 100px;max-width: 100px; object-fit: cover;"
+            src="{{x || ''}}" alt="">
+
+          <div
+            style="height: 15px;width: 15px;background-color: white;border-radius: 100px;margin-left: -20px;margin-top: 5px;display: flex;justify-content: center;align-items: center;">
+            <ion-icon (click)="deletePic(i)" style="font-size: 13px; color: #a17635;" name="close-outline"></ion-icon>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</ion-content>
+
+<ion-footer>
+
+  <div
+    style="background: #ebd1af; display: flex;padding: 10px 15px;align-items: center;justify-content: space-between;">
+
+    <div style="padding-left: 5px;">
+      <!-- <div style="width: 105px;color: #a17635;font-size: 14px;font-weight: 500;">Current Status :</div>
+      <div style="color: #a17635;font-size: 14px;font-weight: 500;">{{}}</div> -->
+    </div>
+
+    <div
+      style="display: flex; align-items: center; justify-content: flex-end; padding: 0 0 0 15px; background: #ebd1af">
+
+      <!-- <ion-button (click)="reject()"
+        style="height: 35px;width: 50%;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 350px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;">
+        Reject
+      </ion-button> -->
+
+      <ion-button (click)="updateOrder()"
+        style="height: 35px; min-width: 120px; width: 50%; max-width: 150px;--background: white;--border-radius: 100px;font-weight: 350px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;">
+        Update Order
+      </ion-button>
+
+    </div>
+
+  </div>
+
+</ion-footer>
+
+<div *ngIf="pic != ''"
+  style="position: fixed;top: 0; left: 0;z-index: 1000; background: rgba(0, 0, 0, 0.50);display: flex;flex-direction: column;justify-content: center;align-items: center;width: 100%; height: 100%;">
+
+
+  <img style="max-height: 70%;" src="{{pic}}">
+
+  <div
+    style="height: 24px;width: 24px;background-color: white;border-radius: 5px;display: flex;justify-content: flex-end;align-items: center;margin-top: 20px;">
+    <ion-icon (click)="closePic()" style="font-size: 22px; color: #a17635;" name="close-outline"></ion-icon>
+  </div>
+</div>

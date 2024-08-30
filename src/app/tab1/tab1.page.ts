@@ -48,6 +48,7 @@ export class Tab1Page implements OnInit {
   salesListRejected = []
   salesListVoid = []
   tailorList = []
+  poList = []
 
   pendingListTailor = [{
     height: 100,
@@ -179,52 +180,59 @@ export class Tab1Page implements OnInit {
 
   refresher(x) {
     this.http.post('https://curtain.vsnap.my/onestaff', { id: this.uid }).subscribe((s) => {
-      this.user = s['data'][0]
-      console.log(this.user);
 
-      this.http.get('https://curtain.vsnap.my/pleatlist').subscribe((s) => {
-        this.pleatlist = s['data']
-        console.log(this.pleatlist)
-      })
+      if (s['data'].length > 0) {
 
-      this.http.get('https://curtain.vsnap.my/blindlist').subscribe((s) => {
-        this.blindlist = s['data']
-        console.log(this.blindlist)
-      })
+        this.user = s['data'][0]
+        console.log(this.user);
 
-      this.http.post('https://curtain.vsnap.my/getsaleslist', { id_sales: x, id_tech: x, id_tail: x, id_inst: x }).subscribe((s) => {
-        this.salesList = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
-        this.salesListOngoing = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
-        this.salesListCompleted = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
-        this.salesListVoid = s['data'].filter(a => !a.status).sort((a, b) => a.no - b.no)
-        this.sortSalesP = true
-        this.sortSalesO = true
-        this.sortSalesC = true
-        this.sortSalesV = true
-        this.filterPendingList()
-        this.filterOnGoingList()
-        this.filterCompletedList()
-        console.log(this.salesList, this.salesListOngoing, this.salesListCompleted, this.salesListVoid);
+        this.http.get('https://curtain.vsnap.my/pleatlist').subscribe((s) => {
+          this.pleatlist = s['data']
+          console.log(this.pleatlist)
+        })
 
-      })
+        this.http.get('https://curtain.vsnap.my/blindlist').subscribe((s) => {
+          this.blindlist = s['data']
+          console.log(this.blindlist)
+        })
 
-      this.http.post('https://curtain.vsnap.my/getrejected', { id_sales: x }).subscribe((s) => {
-        this.salesListRejected = s['data'].filter(s => s.status)
-        console.log(this.salesListRejected.length, this.salesListRejected);
+        this.http.post('https://curtain.vsnap.my/getsaleslist', { id_sales: x, id_tech: x, id_tail: x, id_inst: x }).subscribe((s) => {
+          this.salesList = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+          this.salesListOngoing = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+          this.salesListCompleted = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+          this.salesListVoid = s['data'].filter(a => !a.status).sort((a, b) => a.no - b.no)
+          this.sortSalesP = true
+          this.sortSalesO = true
+          this.sortSalesC = true
+          this.sortSalesV = true
+          this.filterPendingList()
+          this.filterOnGoingList()
+          this.filterCompletedList()
+          console.log(this.salesList, this.salesListOngoing, this.salesListCompleted, this.salesListVoid);
 
-      })
+        })
+
+        this.http.post('https://curtain.vsnap.my/getrejected', { id_sales: x }).subscribe((s) => {
+          this.salesListRejected = s['data'].filter(s => s.status)
+          console.log(this.salesListRejected.length, this.salesListRejected);
+
+        })
+      } else {
+
+        this.http.post('https://curtain.vsnap.my/oneadmin', { id: this.uid }).subscribe((s) => {
+          this.user = s['data'][0]
+          console.log(this.user);
+        })
+
+        this.http.get('https://curtain.vsnap.my/getallpurchase').subscribe((s) => {
+          this.poList = s['data']
+          console.log(this.poList);
+        })
+
+      }
 
     })
-    // if (this.user.position == "Sales" || this.user.position == "Technician" || this.user.position == "Installer") {
 
-
-
-    // } else if (this.user.position == "Tailor") {
-    //   this.http.post('https://curtain.vsnap.my/getorderlist2', { id_tail: x }).subscribe((s) => {
-    //     this.tailorList = s['data']
-    //     console.log(this.tailorList);
-    //   })
-    // }
   }
 
   filterPendingList() {
@@ -334,6 +342,10 @@ export class Tab1Page implements OnInit {
       }
     }
     this.nav.navigateForward(['task-detail'], navExtra)
+  }
+
+  toDetailPo(x) {
+    this.nav.navigateForward('po-detail?sales_id=' + x.sales_id)
   }
 
   toTailorDetail(x, i) {

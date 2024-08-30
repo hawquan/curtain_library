@@ -46,25 +46,62 @@ export class LoginPage implements OnInit {
         this.http.post('https://curtain.vsnap.my/onestaff', { id: a.uid }).subscribe((s) => {
           console.log(s);
 
-          if (s['data'][0].status) {
-            Swal.fire({
-              title: 'Logged in successfully.',
-              icon: 'success',
-              heightAuto: false,
-              showConfirmButton: false,
-              timer: 1000
-            })
-            this.nav.navigateRoot('tabs/tab1', { animationDirection: 'forward' })
+          if (s['data'].length > 0) {
+            if (s['data'][0].status) {
+              Swal.fire({
+                title: 'Logged in successfully.',
+                icon: 'success',
+                heightAuto: false,
+                showConfirmButton: false,
+                timer: 1000
+              })
+              this.nav.navigateRoot('tabs/tab1', { animationDirection: 'forward' })
+            } else {
+              firebase.auth().signOut();
+              Swal.fire({
+                title: 'Error',
+                text: "This user is deactivated or doesn't exist, please contact admin for more information.",
+                icon: 'error',
+                heightAuto: false,
+                showConfirmButton: true,
+              })
+            }
           } else {
-            firebase.auth().signOut();
-            Swal.fire({
-              title: 'Error',
-              text: "This user is deactivated or doesn't exist, please contact admin for more information.",
-              icon: 'error',
-              heightAuto: false,
-              showConfirmButton: true,
+            this.http.post('https://curtain.vsnap.my/oneadmin', { id: a.uid }).subscribe((s) => {
+              console.log(s);
+
+              if (s['data'][0].status) {
+                Swal.fire({
+                  title: 'Logged in successfully.',
+                  icon: 'success',
+                  heightAuto: false,
+                  showConfirmButton: false,
+                  timer: 1000
+                })
+                this.nav.navigateRoot('tabs/tab1', { animationDirection: 'forward' })
+              } else {
+                firebase.auth().signOut();
+                Swal.fire({
+                  title: 'Error',
+                  text: "This user is deactivated or doesn't exist, please contact admin for more information.",
+                  icon: 'error',
+                  heightAuto: false,
+                  showConfirmButton: true,
+                })
+              }
+
+            }, e => {
+              Swal.fire({
+                title: 'Error',
+                text: "Please check your internet connection!",
+                icon: 'error',
+                heightAuto: false,
+                showConfirmButton: false,
+                timer: 2000
+              })
             })
           }
+
         }, e => {
           Swal.fire({
             title: 'Error',

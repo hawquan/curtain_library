@@ -1,0 +1,330 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar style="--background: #FAF7F2">
+    <div style="position: sticky; top: 0px; width: 100%;z-index: 100;">
+      <div *ngIf="loading" style="width: 100%;  display: flex; align-items: center; padding:0 6px; ">
+
+        <div style="width: 10%;display: flex;align-items: center;">
+          <ion-icon (click)="back()" style="font-size: 18px; color: #636161; --ionicon-stroke-width: 50px"
+            name="chevron-back-outline"></ion-icon>
+        </div>
+        <div style="width: 90%; font-weight: 600; color: #000; font-size: 14px; ">{{poData.customer_name}}</div>
+
+      </div>
+    </div>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--background: #FAF7F2">
+
+  <div *ngIf="loading">
+
+    <div style="width: 100%; padding: 10px; background-color: #ebd1af; ">
+      <div style="color: #a17635; font-weight: 600; font-size: 12px;">Purchase Order</div>
+    </div>
+
+
+    <div style="width: 100%;padding: 10px;">
+
+      <!-- Curtain -->
+      <div *ngIf="poData.po_curtain.length > 0"
+        style="width: 100%; padding:10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: white; margin-bottom: 10px;">
+
+        <div style="font-size: 13px; font-weight: 600; color: #000;">Curtain</div>
+
+        <div style="width: 100%; height: 1px; background-color: #a17635; margin: 5px 0;"></div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+
+          <div *ngFor="let x of groupedCurtainItems; let i = index"
+            style="border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: #FAF7F2; position: relative; display: flex; flex-direction: column;">
+
+            <div (click)="updateOrder('curtain',i)" style="display: flex; flex-direction: column; flex-grow: 1;">
+
+              <!-- Description -->
+              <div
+                style="padding: 10px 10px 0 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+
+                <div style="font-weight: 600; color: #000;">{{x.fabric}} {{x.code_curtain}}
+                  <span *ngIf="x.pleat == 'Roman Blind'"> (Roman Blind)</span>
+                </div>
+
+                <!-- Pushes the following content to the bottom -->
+                <div>
+                  <div style="display: flex; flex-direction: column; align-items: end; margin-top: 10px;">
+                    <div>
+                      <span style="font-size: 10px;">x</span>{{x.po_order_total}}<span *ngIf="x.po_stock_qty"></span>
+                    </div>
+                    <div>
+                      {{x.po_date ? (x.po_date | date: 'dd MMM yyyy') : '-'}}
+                    </div>
+                    <div [ngStyle]="{'color': x.po_status_no == 1 ? '#46b846' : '#f58c0a' }">{{x.po_status_text}}</div>
+                  </div>
+
+                  <!-- View / Update -->
+                  <div style="width: 100%; padding: 5px 0; border-top: 1px solid #eeeeee; margin-top: 5px;">
+                    <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                      <div style="font-size: 12px; font-weight: 500; color: #888888;">View / Update</div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Pop-Up -->
+            <div *ngIf="!x.po_order_status"
+              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #b8b8b8ba; backdrop-filter: blur(1px); display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+              <div style="color: #fff; font-size: 16px; font-weight: bold;">
+                Order Not Placed
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <!-- Lining -->
+      <div *ngIf="poData.po_lining.length > 0"
+        style="width: 100%; padding:10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: white; margin-bottom: 10px;">
+
+        <div style="font-size: 13px; font-weight: 600; color: #000;">Lining</div>
+
+        <div style="width: 100%; height: 1px; background-color: #a17635; margin: 5px 0;"></div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+
+          <div *ngFor="let x of groupedLiningItems; let i = index" style="border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: #FAF7F2; position: relative; 
+             display: flex; flex-direction: column; justify-content: space-between;">
+
+            <div (click)="updateOrder('lining',i)" style="display: flex; flex-direction: column; flex-grow: 1;">
+
+              <!-- Description -->
+              <div
+                style="padding: 10px 10px 0 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+
+                <div style=" font-weight: 600; color: #000;">{{x.fabric_lining}} {{x.code_lining}} <span
+                    *ngIf="x.pleat == 'Roman Blind'"> (Roman Blind)</span></div>
+
+                <div>
+
+                  <div style="display: flex; flex-direction: column; align-items: end; margin-top: 10px;">
+                    <div><span style="font-size: 10px;">x</span>{{x.po_order_total}}<span *ngIf="x.po_stock_qty"></span>
+                    </div>
+                    <div>{{x.po_date ? (x.po_date | date: 'dd MMM yyyy') : '-'}}</div>
+                    <div [ngStyle]="{'color': x.po_status_no == 1 ? '#46b846' : '#f58c0a' }">{{x.po_status_text}}</div>
+                  </div>
+
+                  <!-- View / Update -->
+                  <div style="width: 100%; padding: 5px 0; border-top: 1px solid #eeeeee; margin-top: 5px;">
+                    <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                      <div style="font-size: 12px; font-weight: 500; color: #888888;">View / Update</div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Pop-Up -->
+            <div *ngIf="!x.po_order_status" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #b8b8b8ba; backdrop-filter: blur(1px);
+               display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+              <div style="color: #fff; font-size: 16px; font-weight: bold;">
+                Order Not Placed
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Sheer -->
+      <div *ngIf="poData.po_sheer.length > 0"
+        style="width: 100%; padding:10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: white; margin-bottom: 10px;">
+
+        <div style="font-size: 13px; font-weight: 600; color: #000;">Sheer</div>
+
+        <div style="width: 100%; height: 1px; background-color: #a17635; margin: 5px 0;"></div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+
+          <div *ngFor="let x of groupedSheerItems let i = index" style="border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: #FAF7F2; position: relative; 
+            display: flex; flex-direction: column; justify-content: space-between;">
+
+            <div (click)="updateOrder('sheer',i)" style="display: flex; flex-direction: column; flex-grow: 1;">
+
+              <!-- Description -->
+              <div
+                style="padding: 10px 10px 5px 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+
+                <div style="font-weight: 600; color: #000;">{{x.fabric_sheer}} {{x.code_sheer}}</div>
+
+                <div>
+
+                  <div style="display: flex; flex-direction: column; align-items: end; margin-top: 10px;">
+                    <div><span style="font-size: 10px;">x</span>{{x.po_order_total}}<span *ngIf="x.po_stock_qty"></span>
+                    </div>
+                    <div>{{x.po_date ? (x.po_date | date: 'dd MMM yyyy') : '-'}}</div>
+                    <div [ngStyle]="{'color': x.po_status_no == 1 ? '#46b846' : '#f58c0a' }">{{x.po_status_text}}</div>
+                  </div>
+
+                  <!-- View / Update -->
+                  <div style="width: 100%; padding: 5px 0; border-top: 1px solid #eeeeee; margin-top: 5px;">
+                    <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                      <div style="font-size: 12px; font-weight: 500; color: #888888;">View / Update</div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Pop-Up -->
+            <div *ngIf="!x.po_order_status" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #b8b8b8ba; backdrop-filter: blur(1px);
+              display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+              <div style="color: #fff; font-size: 16px; font-weight: bold;">
+                Order Not Placed
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Blind -->
+      <div *ngIf="poData.po_blind.length > 0"
+        style="width: 100%; padding:10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: white; margin-bottom: 10px;">
+
+        <div style="font-size: 13px; font-weight: 600; color: #000;">Blind</div>
+
+        <div style="width: 100%; height: 1px; background-color: #a17635; margin: 5px 0;"></div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+
+          <div *ngFor="let x of groupedBlind let i = index" style="border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: #FAF7F2; position: relative; 
+            display: flex; flex-direction: column; justify-content: space-between;">
+
+            <div (click)="updateOrder('blind',i)" style="display: flex; flex-direction: column; flex-grow: 1;">
+
+              <!-- Description -->
+              <div
+                style="padding: 10px 10px 5px 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+
+                <div style="font-weight: 600; color: #000;">{{x.fabric_blind}} {{x.code_blind}}
+                  <span *ngIf="(x.pleat == 'Wooden Blind' || x.pleat == 'Venetian Blinds') && x.blind_tape">&nbsp;+ Tape
+                    {{x.blind_tape}}</span>
+                </div>
+
+                <div>
+
+                  <div style="display: flex; flex-direction: column; align-items: end; margin-top: 10px;">
+                    <div><span style="font-size: 10px;">x</span>{{x.po_order_total}}<span *ngIf="x.po_stock_qty"></span>
+                    </div>
+                    <div>{{x.po_date ? (x.po_date | date: 'dd MMM yyyy') : '-'}}</div>
+                    <div [ngStyle]="{'color': x.po_status_no == 1 ? '#46b846' : '#f58c0a' }">{{x.po_status_text}}</div>
+                  </div>
+
+                  <!-- View / Update -->
+                  <div style="width: 100%; padding: 5px 0; border-top: 1px solid #eeeeee; margin-top: 5px;">
+                    <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                      <div style="font-size: 12px; font-weight: 500; color: #888888;">View / Update</div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Pop-Up -->
+            <div *ngIf="!x.po_order_status" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #b8b8b8ba; backdrop-filter: blur(1px);
+              display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+              <div style="color: #fff; font-size: 16px; font-weight: bold;">
+                Order Not Placed
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Mechanism -->
+      <div *ngIf="poData.po_mechanism.length > 0"
+        style="width: 100%; padding:10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: white; margin-bottom: 10px;">
+
+        <div style="font-size: 13px; font-weight: 600; color: #000;">Mechanism</div>
+
+        <div style="width: 100%; height: 1px; background-color: #a17635; margin: 5px 0;"></div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+
+          <div *ngFor="let x of groupedMechanismItems let i = index" style="border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: #FAF7F2; position: relative; 
+            display: flex; flex-direction: column; justify-content: space-between;">
+
+            <div (click)="updateOrder('mechanism',i)" style="display: flex; flex-direction: column; flex-grow: 1;">
+
+              <!-- Description -->
+              <div
+                style="padding: 10px 10px 5px 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+
+                <div style="font-weight: 600; color: #000;">
+                  {{x.width}}" x {{x.height}}" ( <span *ngIf="x.rope_chain == 'Left'">L</span><span
+                    *ngIf="x.rope_chain == 'Right'">R</span>/{{x.bracket}} )
+                  <span><br />Roman Tube x{{x.po_roman_tube}}</span>
+                </div>
+
+                <div>
+
+                  <div style="display: flex; flex-direction: column; align-items: end; margin-top: 10px;">
+                    <div><span style="font-size: 10px;">x</span>{{x.po_order_total}}<span *ngIf="x.po_stock_qty"></span>
+                    </div>
+                    <div>{{x.po_date ? (x.po_date | date: 'dd MMM yyyy') : '-'}}</div>
+                    <div [ngStyle]="{'color': x.po_status_no == 1 ? '#46b846' : '#f58c0a' }">{{x.po_status_text}}</div>
+                  </div>
+
+                  <!-- View / Update -->
+                  <div style="width: 100%; padding: 5px 0; border-top: 1px solid #eeeeee; margin-top: 5px;">
+                    <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                      <div style="font-size: 12px; font-weight: 500; color: #888888;">View / Update</div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Pop-Up -->
+            <div *ngIf="!x.po_order_status" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #b8b8b8ba; backdrop-filter: blur(1px);
+              display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+              <div style="color: #fff; font-size: 16px; font-weight: bold;">
+                Order Not Placed
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>

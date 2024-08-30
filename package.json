@@ -1,6 +1,6 @@
 {
   "name": "curtain_library",
-  "version": "0.0.65",
+  "version": "0.0.67",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -13,15 +13,16 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "~13.2.2",
-    "@angular/core": "~13.2.2",
-    "@angular/forms": "~13.2.2",
-    "@angular/platform-browser": "~13.2.2",
-    "@angular/platform-browser-dynamic": "~13.2.2",
-    "@angular/router": "~13.2.2",
+    "@angular/common": "^15.0.0",
+    "@angular/core": "^15.0.0",
+    "@angular/forms": "^15.0.0",
+    "@angular/platform-browser": "^15.0.0",
+    "@angular/platform-browser-dynamic": "^15.0.0",
+    "@angular/router": "^15.0.0",
     "@awesome-cordova-plugins/camera": "^6.3.0",
     "@awesome-cordova-plugins/core": "^6.3.0",
     "@awesome-cordova-plugins/safari-view-controller": "^6.2.0",
+    "@ionic-native/camera": "^5.36.0",
     "@ionic-native/core": "^5.36.0",
     "@ionic-native/file": "^5.36.0",
     "@ionic-native/file-opener": "^5.36.0",
@@ -29,7 +30,7 @@
     "@ionic-native/ionic-webview": "^5.36.0",
     "@ionic-native/market": "^5.36.0",
     "@ionic/angular": "^6.0.0",
-    "@ionic/cordova-builders": "^6.1.0",
+    "@ionic/cordova-builders": "^7.0.0",
     "cordova-browser": "6.0.0",
     "cordova-plugin-androidx": "^3.0.0",
     "cordova-plugin-androidx-adapter": "^1.1.3",
@@ -43,27 +44,28 @@
     "jetifier": "^2.0.0",
     "pdfmake": "^0.2.5",
     "rxjs": "~6.6.0",
+    "signature_pad": "^4.1.6",
     "sweetalert2": "^11.4.17",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~13.2.3",
-    "@angular-eslint/builder": "~13.0.1",
-    "@angular-eslint/eslint-plugin": "~13.0.1",
-    "@angular-eslint/eslint-plugin-template": "~13.0.1",
-    "@angular-eslint/template-parser": "~13.0.1",
-    "@angular/cli": "~13.2.3",
-    "@angular/compiler": "~13.2.2",
-    "@angular/compiler-cli": "~13.2.2",
-    "@angular/language-service": "~13.2.2",
-    "@ionic/angular-toolkit": "^6.0.0",
+    "@angular-devkit/build-angular": "^15.0.0",
+    "@angular-eslint/builder": "~14.0.0",
+    "@angular-eslint/eslint-plugin": "~14.0.0",
+    "@angular-eslint/eslint-plugin-template": "~14.0.0",
+    "@angular-eslint/template-parser": "~14.0.0",
+    "@angular/cli": "^15.0.0",
+    "@angular/compiler": "^15.0.0",
+    "@angular/compiler-cli": "^15.0.0",
+    "@angular/language-service": "^15.0.0",
+    "@ionic/angular-toolkit": "^7.0.0",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "5.3.0",
     "@typescript-eslint/parser": "5.3.0",
-    "cordova-android": "^11.0.0",
+    "cordova-android": "^13.0.0",
     "cordova-ios": "^6.3.0",
     "cordova-plugin-camera": "^7.0.0",
     "cordova-plugin-device": "2.0.2",
@@ -90,7 +92,7 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
-    "typescript": "~4.4.4"
+    "typescript": "~4.8.4"
   },
   "description": "An Ionic project",
   "cordova": {
@@ -122,8 +124,8 @@
     },
     "platforms": [
       "browser",
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

@@ -23,12 +23,9 @@
 
       </div>
 
-      <img *ngIf="!user['photo']"
+      <img
         style="min-height: 70px;min-width: 70px;max-height: 60px;max-width: 60px;object-fit: cover;border-radius: 50px;border: 2px solid white;"
-        src="https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg">
-      <img *ngIf="user['photo']"
-        style="min-height: 70px;min-width: 70px;max-height: 60px;max-width: 60px;object-fit: cover;border-radius: 50px;border: 2px solid white;"
-        src="{{user['photo']}}">
+        src="{{user['photo'] || 'https://t4.ftcdn.net/jpg/03/46/93/61/360_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg'}}">
       <!-- <div style="display: flex;color: white;">
         <ion-icon style="font-size:20px" name="log-out-outline"></ion-icon>
         Logout
@@ -60,7 +57,7 @@
       </div>
     </div>
 
-    <div style="margin-left: 5px;margin-top: 20px;font-size: 10px;color: dimgrey;">Ver 1.4.0</div>
+    <div style="margin-left: 5px;margin-top: 20px;font-size: 10px;color: dimgrey;">Ver 1.4.1</div>
 
   </div>
 

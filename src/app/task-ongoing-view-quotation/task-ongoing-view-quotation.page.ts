@@ -3303,7 +3303,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
               { text: 'x', alignment: 'center', fontSize: 8.5 },
               { text: 'x', alignment: 'center', fontSize: 8.5 },
               { text: 'x', alignment: 'center', fontSize: 8.5 },
-              { text: (this.item[i].remark_sale || ''), bold: true, fontSize: 8.5 }
+              { text: (this.item[i].remark_sale || '') + (this.item[i].pleat == 'Roller Blind' ? (this.item[i].blind_spring == 'Yes' ? (this.item[i].remark_sale ? '\n' : '') + 'Add Spring' : '') : '') + (this.item[i].pleat == 'Roller Blind' ? (this.item[i].blind_tube == 'Yes' ? (this.item[i].blind_spring == 'Yes' ? '\n' : '') + 'Add Tube' : '') : ''), bold: true, fontSize: 8.5 }
             ],
           )
 
@@ -3346,7 +3346,7 @@ export class TaskOngoingViewQuotationPage implements OnInit {
                 { text: '-', alignment: 'center', fontSize: 8.5 },
                 { text: '-', alignment: 'center', fontSize: 8.5 },
                 { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                { text: (this.item[i].remark_sale || ''), bold: true, fontSize: 8.5 }
+                { text: (this.item[i].remark_sale || '') + (this.item[i].remark_sale ? '\n' : '') + (this.calc[i].curtain.tube > 0 ? 'Roman Tube x' + this.calc[i].curtain.tube : ''), bold: true, fontSize: 8.5 }
                 // { text: '', fontSize: 8.5 }
               ],
             )
