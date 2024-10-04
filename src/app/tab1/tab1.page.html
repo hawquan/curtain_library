@@ -1303,8 +1303,8 @@
 
         <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff;">
           <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
-            <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">{{filterPendingList('tailor').length}}
-            </div>
+            <!-- <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">{{filterPendingList('tailor').length}}</div> -->
+            <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;"></div>
             <div style="font-size: 12px; ">Appointments</div>
           </div>
         </div>
@@ -1312,7 +1312,8 @@
 
       <div
         style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 10px;">
-        <div style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('tailor').length}})</div>
+        <!-- <div style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('tailor').length}})</div> -->
+        <div style="font-weight: 600; color: #000000;">Appointments </div>
         <div (click)="refresher(uid)" style="display: flex;align-items: center;">
           <ion-icon style="color: #a17635;margin-right: 5px;" name="refresh-outline"></ion-icon>
           <div style="color: #a17635;font-size: 12px;display: flex;align-items: center;">Refresh List</div>
@@ -1322,11 +1323,11 @@
       <div style="width: 100%; display: flex;align-items: center;">
 
         <div (click)="selectTab('p')" style="width: 33.3%;text-align: center;">
-          <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Pending</div>
+          <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Order Assigned</div>
         </div>
 
         <div (click)="selectTab('o')" style="width: 33.3%;text-align: center;;">
-          <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">On-Going</div>
+          <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">Your Order</div>
         </div>
 
         <div (click)="selectTab('c')" style="width: 33.3%;text-align: center;;">
@@ -1337,18 +1338,27 @@
 
       <div *ngIf="status == 'p'" style="width: 100%; margin: 15px 0;">
 
-        <div *ngIf="filterPendingList('tailor').length == 0"
+        <div *ngIf="salesList.length == 0"
           style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;">List is Empty </div>
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div *ngFor="let x of filterPendingList('tailor'); let i = index;" (click)="toDetail(x,i)"
+        <div *ngFor="let x of salesList; let i = index;"
           style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
 
           <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
-            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+              <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+              <div *ngIf="x.log_action != 'Order Rejected'"
+                style="font-size: 11px; font-weight: 600; color: #f58c0a; margin-bottom: 5px;">{{x.log_action}}
+              </div>
+              <div *ngIf="x.log_action == 'Order Rejected'"
+                style="font-size: 11px; font-weight: 600; color: tomato; margin-bottom: 5px;">
+                {{x.log_action}}
+              </div>
+            </div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
               <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
@@ -1363,14 +1373,26 @@
               </div>
               <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
             </div>
+          </div>
 
-            <div
-              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+          <div (click)="toDetail(x,i)"
+            style="width: 100%; display: flex; align-items: center; justify-content: center; padding: 10px 0; border-top: 1px solid #eeeeee; margin-top: 5px;">
+            <div style="font-size: 12px; font-weight: 500; color: #888888;">View Order</div>
+          </div>
 
-              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
-                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
-              </div>
+          <div
+            style="width: 100%; display: flex; align-items: center; justify-content: space-between;border-top: 1px solid #eeeeee;">
 
+            <div (click)="tailorAction(x, 'reject')"
+              style="width: 47.5%; display: flex; align-items: center; justify-content: center; padding: 10px 0; ">
+              <div style="font-size: 12px; font-weight: 500; color: tomato;">Reject</div>
+            </div>
+            <div style="width: 5%; display: flex; align-items: center; justify-content: center;">
+              <div style="width: 1px; height: 34px; background-color: #eeeeee;"></div>
+            </div>
+            <div (click)="tailorAction(x, 'accept')"
+              style="width: 47.5%; display: flex; align-items: center; justify-content: center; padding: 10px 0; ">
+              <div style="font-size: 12px; font-weight: 500; color: rgb(12, 199, 12);">Accept</div>
             </div>
 
           </div>
@@ -1380,19 +1402,27 @@
 
       <div *ngIf="status == 'o'" style="width: 100%; margin: 15px 0;">
 
-        <div *ngIf="filterOnGoingList('tailor').length == 0"
+        <div *ngIf="salesListOngoing.length == 0"
           style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;">List is Empty </div>
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div *ngFor="let x of filterOnGoingList('tailor'); let i = index;" (click)="toOngoing(x,i)"
+        <div *ngFor="let x of salesListOngoing; let i = index;" (click)="toDetail(x,i)"
           style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
 
           <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
-            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
-
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+              <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+              <div *ngIf="x.log_action != 'Order Rejected'"
+                style="font-size: 11px; font-weight: 600; color: #f58c0a; margin-bottom: 5px;">{{x.log_action}}
+              </div>
+              <div *ngIf="x.log_action == 'Order Rejected'"
+                style="font-size: 11px; font-weight: 600; color: tomato; margin-bottom: 5px;">
+                {{x.log_action}}
+              </div>
+            </div>
             <div style="width: 100%; display: flex; align-items: flex-start;">
               <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
                 Contact:
@@ -1512,7 +1542,7 @@
         <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff;">
           <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
             <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">
-              {{filterPendingList('installer').length}}
+
             </div>
             <div style="font-size: 12px; ">Appointments</div>
           </div>
@@ -1521,7 +1551,7 @@
 
       <div
         style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 10px;">
-        <div style="font-weight: 600; color: #000000;">Appointments ({{filterPendingList('installer').length}})</div>
+        <div style="font-weight: 600; color: #000000;">Appointments </div>
         <div (click)="refresher(uid)" style="display: flex;align-items: center;">
           <ion-icon style="color: #a17635;margin-right: 5px;" name="refresh-outline"></ion-icon>
           <div style="color: #a17635;font-size: 12px;display: flex;align-items: center;">Refresh List</div>
@@ -1530,15 +1560,15 @@
 
       <div style="width: 100%; display: flex;align-items: center;">
 
-        <div (click)="selectTab('p')" style="width: 50%;text-align: center;">
-          <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Pending</div>
+        <div (click)="selectTab('p')" style="width: 33.3%;text-align: center;">
+          <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Order Assigned</div>
         </div>
 
-        <!-- <div (click)="selectTab('o')" style="width: 33%;text-align: center;;">
-          <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">On-Going</div>
-        </div> -->
+        <div (click)="selectTab('o')" style="width: 33.3%;text-align: center;;">
+          <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">Your Order</div>
+        </div>
 
-        <div (click)="selectTab('c')" style="width: 50%;text-align: center;;">
+        <div (click)="selectTab('c')" style="width: 33.3%;text-align: center;;">
           <div [ngClass]="status == 'c'? 'selected' : 'selectedx'">Completed</div>
         </div>
 
@@ -1546,77 +1576,122 @@
 
       <div *ngIf="status == 'p'" style="width: 100%; margin: 15px 0;">
 
-        <div *ngIf="filterPendingList('installer').length == 0"
+        <div *ngIf="salesList.length == 0"
           style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;">List is Empty </div>
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div *ngFor="let x of filterPendingList('installer'); let i = index;" (click)="toDetail(x,i)"
-          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
+        <div *ngFor="let x of salesList; let i = index;"
+          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
 
           <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
-            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+              <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+              <div *ngIf="x.log_action2 != 'Order Rejected'"
+                style="font-size: 11px; font-weight: 600; color: #f58c0a; margin-bottom: 5px;">{{x.log_action2}}
+              </div>
+              <div *ngIf="x.log_action2 == 'Order Rejected'"
+                style="font-size: 11px; font-weight: 600; color: red; margin-bottom: 5px;">
+                {{x.log_action2}}
+              </div>
+            </div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-bottom: 5px;">
                 Contact:
               </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_phone}}</div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">&nbsp;{{x.customer_phone}}</div>
             </div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-bottom: 5px;">
                 Address:
               </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">&nbsp;{{x.customer_address}}</div>
             </div>
 
-            <div
-              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
-
-              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
-                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+            <div style="width: 100%; display: flex; align-items: flex-start; margin-top: 5px;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-bottom: 5px;">
+                Schedule:
               </div>
-
+              <div style="font-weight: 500; color: #999999; font-size:12px;">
+                <div *ngFor="let y of x.install_schedule">&nbsp;{{y | date: 'dd MMM yyyy hh:mm a'}}</div>
+              </div>
             </div>
 
           </div>
 
-          <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
-          font-size: 12px;padding: 3px 5px;">Navigate</div>
+          <div (click)="toDetail(x,i)"
+            style="width: 100%; display: flex; align-items: center; justify-content: center; padding: 10px 0; border-top: 1px solid #eeeeee; margin-top: 5px;">
+            <div style="font-size: 12px; font-weight: 500; color: #888888;">View Order</div>
+          </div>
+
+          <div
+            style="width: 100%; display: flex; align-items: center; justify-content: space-between;border-top: 1px solid #eeeeee;">
+
+            <div (click)="installerAction(x, 'reject')"
+              style="width: 47.5%; display: flex; align-items: center; justify-content: center; padding: 10px 0; ">
+              <div style="font-size: 12px; font-weight: 500; color: tomato;">Reject</div>
+            </div>
+            <div style="width: 5%; display: flex; align-items: center; justify-content: center;">
+              <div style="width: 1px; height: 34px; background-color: #eeeeee;"></div>
+            </div>
+            <div (click)="installerAction(x, 'accept')"
+              style="width: 47.5%; display: flex; align-items: center; justify-content: center; padding: 10px 0; ">
+              <div style="font-size: 12px; font-weight: 500; color: rgb(12, 199, 12);">Accept</div>
+            </div>
+
+          </div>
 
         </div>
       </div>
 
-      <!-- <div *ngIf="status == 'o'" style="width: 100%; margin: 15px 0;">
+      <div *ngIf="status == 'o'" style="width: 100%; margin: 15px 0;">
 
-        <div *ngIf="filterOnGoingList('installer').length == 0"
+        <div *ngIf="salesListOngoing.length == 0"
           style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;">List is Empty </div>
           <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
         </div>
 
-        <div *ngFor="let x of filterOnGoingList('installer'); let i = index;" (click)="toOngoing(x,i)"
+        <div *ngFor="let x of salesListOngoing; let i = index;" (click)="toDetail(x,i)"
           style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
 
           <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
-            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
-
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+              <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+              <div *ngIf="x.log_action2 != 'Order Rejected'"
+                style="font-size: 11px; font-weight: 600; color: #f58c0a; margin-bottom: 5px;">{{x.log_action2}}
+              </div>
+              <div *ngIf="x.log_action2 == 'Order Rejected'"
+                style="font-size: 11px; font-weight: 600; color: red; margin-bottom: 5px;">
+                {{x.log_action2}}
+              </div>
+            </div>
             <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-bottom: 5px;">
                 Contact:
               </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_phone}}</div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">&nbsp;{{x.customer_phone}}</div>
             </div>
 
             <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+              <div style="font-weight: 500; color: #999999; font-size:12px; margin-bottom: 5px;">
                 Address:
               </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">&nbsp;{{x.customer_address}}</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: flex-start; margin-top: 5px;">
+              <div style="font-weight: 500; color: #999999; font-size:12px;  margin-bottom: 5px;">
+                Schedule:
+              </div>
+              <div style="font-weight: 500; color: #999999; font-size:12px;">
+                <div *ngFor="let y of x.install_schedule">&nbsp;{{y | date: 'dd MMM yyyy hh:mm a'}}</div>
+              </div>
             </div>
 
             <div
@@ -1631,7 +1706,35 @@
           </div>
         </div>
 
-      </div> -->
+        <!-- <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+          <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.client}}</div>
+
+          <div style="width: 100%; display: flex; align-items: flex-start;">
+            <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+              Contact:
+            </div>
+            <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.contact}}</div>
+          </div>
+
+          <div style="width: 100%; display: flex; align-items: flex-start;">
+            <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+              Address:
+            </div>
+            <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.address}}</div>
+          </div>
+
+          <div
+            style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+            <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+              <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+            </div>
+
+          </div>
+
+        </div> -->
+
+      </div>
 
       <div *ngIf="status == 'c'" style="width: 100%; margin: 15px 0;">
 
@@ -1967,7 +2070,7 @@
                         {{y.width}}" x {{y.height}}" ( <span *ngIf="y.rope_chain == 'Left'">L</span><span
                           *ngIf="y.rope_chain == 'Right'">R</span>/{{y.bracket}} )<span><br />Roman Tube
                           x{{y.po_roman_tube}}</span>
-                        </span>
+                      </span>
                     </div>
                     <div style="width: 20%; padding: 2px; border-left: 0.5px solid #999999; border-bottom: 0.5px solid #999999;
                        display: flex; align-items: center; justify-content: center;">

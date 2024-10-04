@@ -12,6 +12,8 @@ import { TaskDetailReviewPage } from '../task-detail-review/task-detail-review.p
 import { TaskEditorPage } from '../task-editor/task-editor.page';
 import { TaskCreatorAlacartePage } from '../task-creator-alacarte/task-creator-alacarte.page';
 import { TaskEditorAlacartePage } from '../task-editor-alacarte/task-editor-alacarte.page';
+import { TaskOngoingViewDetailsPage } from '../task-ongoing-view-details/task-ongoing-view-details.page';
+import { TaskOngoingViewAlacartePage } from '../task-ongoing-view-alacarte/task-ongoing-view-alacarte.page';
 
 @Component({
   selector: 'app-task-detail',
@@ -395,6 +397,70 @@ export class TaskDetailPage implements OnInit {
 
   }
 
+  checkTailorAction(x) {
+    if (this.info.log_action == 'Completed') {
+      this.reviewTaskCompleted(x)
+    } else if (this.info.log_action == 'Order Accepted') {
+      this.reviewTask(x)
+    } else if (this.info.log_action != 'Order Accepted') {
+      this.reviewTailor(x)
+    }
+  }
+
+  checkInstallerAction(x) {
+    if (this.info.log_action2 == 'Completed') {
+      this.reviewTaskCompleted(x)
+    } else if (this.info.log_action2 == 'Order Accepted') {
+      this.reviewTask(x)
+    } else if (this.info.log_action2 != 'Order Accepted') {
+      this.reviewTailor(x)
+    }
+  }
+
+  async reviewTailor(x) {
+    if (x.type == 'Tailor-Made Curtains' || x.type == 'Blinds') {
+      const modal = await this.modal.create({
+        cssClass: 'task',
+        component: TaskOngoingViewDetailsPage,
+        componentProps: {
+          item: x,
+          sales_no: this.sales_id,
+          pleatlist: this.pleatlist,
+          blindlist: this.blindlist,
+          position: this.user['position'],
+        }
+      });
+
+      await modal.present();
+      const { data } = await modal.onWillDismiss();
+      console.log(data)
+
+      if (data != null) {
+        // x = data
+        this.refreshList()
+      }
+    } else {
+
+      const modal = await this.modal.create({
+        cssClass: 'task',
+        component: TaskOngoingViewAlacartePage,
+        componentProps: {
+          item: x,
+          sales_no: this.sales_id,
+          pleatlist: this.pleatlist,
+          blindlist: this.blindlist,
+          tracklist: this.tracklist,
+        }
+      });
+
+      await modal.present();
+      const { data } = await modal.onWillDismiss();
+      // x = data
+      this.refreshList()
+
+    }
+  }
+
   async reviewTask(x) {
 
     const modal = await this.modal.create({
@@ -644,12 +710,39 @@ export class TaskDetailPage implements OnInit {
 
   }
 
+  downloadSO() {
+    console.log(this.info.so_pdf[this.info.so_pdf.length - 1]);
+
+    this.safariViewController.isAvailable()
+      .then(async (available: boolean) => {
+        if (available) {
+
+          this.safariViewController.show({
+            url: this.info.so_pdf[this.info.so_pdf.length - 1].link,
+          })
+            .subscribe((result: any) => {
+              if (result.event === 'opened') console.log('Opened');
+              else if (result.event === 'loaded') console.log('Loaded');
+              else if (result.event === 'closed') console.log('Closed');
+            },
+              (error: any) => console.error(error)
+            );
+
+        } else {
+          window.open(this.info.so_pdf[this.info.so_pdf.length - 1].link, '_system');
+          // use fallback browser, example InAppBrowser
+        }
+      }).catch(async (error) => {
+        window.open(this.info.so_pdf[this.info.so_pdf.length - 1].link, '_system');
+      })
+  }
+
   completeTailor() {
     let pass = false
     console.log(this.items.length);
 
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].status_tail != 'Completed') {
+      if (this.items[i].tailor_status_no != '1') {
         pass = false
         break
       } else {
@@ -660,7 +753,7 @@ export class TaskDetailPage implements OnInit {
     if (pass) {
 
       Swal.fire({
-        title: 'Complete Task?',
+        title: 'Complete Order?',
         text: 'Submit completion of tailoring process?',
         heightAuto: false,
         icon: 'question',

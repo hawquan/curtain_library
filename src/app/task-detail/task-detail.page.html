@@ -1030,11 +1030,11 @@
 
   <div *ngIf="user.position == 'Tailor'" style="width: 100vw;">
 
-    <div style="width: 100%; padding: 10px; background-color: #ebd1af; ">
+    <!-- <div style="width: 100%; padding: 10px; background-color: #ebd1af; ">
       <div style="color: #a17635; font-weight: 600; font-size: 12px;"> Client Details</div>
-    </div>
+    </div> -->
 
-    <div style="width: 100%; padding:10px">
+    <!-- <div style="width: 100%; padding:10px">
       <div style="margin-bottom: 5px;display: flex; align-items: center; width: 100%;">
         <div style="font-weight: 700; width: 25%;">Name :</div>
         <div style="font-weight: 400; width: 70%;">{{info.customer_name}}</div>
@@ -1060,138 +1060,88 @@
         <div style="font-weight: 400; width: 70%;">{{info.customer_address}}</div>
       </div>
 
-    </div>
+    </div> -->
 
-    <div style="width: 100%; padding: 10px; background-color: #ebd1af; ">
-      <div style="color: #a17635; font-weight: 600; font-size: 12px;"> Product Details</div>
+    <div
+      style="width: 100%; padding: 10px; background-color: #ebd1af; display: flex; align-items: center; justify-content: space-between; ">
+      <div style="color: #a17635; font-weight: 600; font-size: 13px;"> Product Details</div>
     </div>
 
     <div style="width: 100%;padding: 10px;">
 
-      <div *ngFor="let x of items; let i = index"
-        style="width: 100%; padding:10px; border-radius: 5px;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;background: white;margin-bottom: 10px;">
-        <div (click)="show != i ? show = i : show = null"
-          style="width: 100%;display: flex;justify-content: space-between;">
-          <div style="font-size: 14px;">{{x.location}}</div>
+      <div
+        style="width: 100%; padding:10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: white; margin-bottom: 10px;">
 
-          <div style="display: flex;">
-            <div style="margin-right: 8px;"></div>
-            <div *ngIf="x.status_tail != 'Completed' && x.status_tech != 'Rejected'"
-              style="margin-right: 15px;color: #e8ac1e;">
-              Task Ready
-            </div>
-            <div *ngIf="x.status_tech == 'Rejected'" style="margin-right: 15px;color: red;">
-              Measuring still in process.
-            </div>
-            <div *ngIf="x.status_tail == 'Completed'" style="margin-right: 15px;color: green;">
-              Task {{x.status_tail}}
-            </div>
-            <ion-icon [ngStyle]="{'transform': show == i ? 'rotate(180deg)' : ''}" name="chevron-down-outline">
-            </ion-icon>
-          </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
 
-        </div>
+          <div *ngFor="let x of items; let i = index"
+            style="border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: #FAF7F2; position: relative; display: flex; flex-direction: column;">
 
-        <div [ngClass]="show == i ? 'show' : 'hide'"
-          style="width: 100%;display: flex;flex-direction: column; align-items: center;">
+            <div (click)="checkTailorAction(x)" style="display: flex; flex-direction: column; flex-grow: 1;">
 
-          <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;padding-top: 10px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Width (inch)
-            </div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
+              <!-- Description -->
               <div
-                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;padding: 7px 10px;border-radius: 2px;">
-                {{x.width_tech || x.width}}
-              </div>
-            </div>
-          </div>
+                style="padding: 10px 10px 0 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
 
-          <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Height (inch)</div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <div
-                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;padding: 7px 10px;border-radius: 2px;">
-                {{x.height_tech || x.height}}
-              </div>
-            </div>
-          </div>
+                <div style="font-weight: 600; color: #000;">
+                  <div *ngIf="x.type == 'Tailor-Made Curtains' || x.type == 'Blinds'" style="font-size: 14px;">
+                    {{x.location}} {{x.location_ref || ''}}</div>
+                  <div *ngIf="x.type == '1'" style="font-size: 14px;">A La Carte - Supply Fabrics Only</div>
+                  <div *ngIf="x.type == '2'" style="font-size: 14px;">A La Carte - Supply Track Only</div>
+                  <div *ngIf="x.type == '3'" style="font-size: 14px;">A La Carte - Supply Accessories Only</div>
+                  <div *ngIf="x.type == '4'" style="font-size: 14px;">A La Carte - Supply & Install Motor Track</div>
+                  <div *ngIf="x.type == '5'" style="font-size: 14px;">A La Carte - Sewing Only</div>
+                  <div *ngIf="x.type == '6'" style="font-size: 14px;">A La Carte - Supply Wallpaper Only</div>
 
+                </div>
 
-          <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Product Type
-            </div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <ion-input [(ngModel)]="x.type" readonly
-                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
-              </ion-input>
-            </div>
-          </div>
+                <!-- Pushes the following content to the bottom -->
+                <div>
 
-          <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Pleat Type
-            </div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <ion-input [(ngModel)]="x.pleat" readonly
-                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
-              </ion-input>
-            </div>
-          </div>
+                  <!-- Schedule Date -->
+                  <div style="display: flex; flex-direction: column; align-items: end; margin-top: 10px;">
+                    <div *ngIf="x.type == 'Tailor-Made Curtains' || x.type == 'Blinds'">{{x.type}}</div>
+                    <div *ngIf="x.type == '1'">Fabrics Only</div>
+                    <div *ngIf="x.type == '2'">Track Only</div>
+                    <div *ngIf="x.type == '3'">Accessories Only</div>
+                    <div *ngIf="x.type == '4'">Supply & Install Motor Track</div>
+                    <div *ngIf="x.type == '5'">Sewing Only</div>
+                    <div *ngIf="x.type == '6'">Wallpaper Only</div>
+                    <div *ngIf="x.tailor_schedule" style="color: green;">
+                      {{x.tailor_schedule | date: 'dd MMM yyyy'}}
+                    </div>
+                    <div *ngIf="!x.tailor_schedule" style="color: tomato;">
+                      Not Scheduled
+                    </div>
+                    <div [ngStyle]="{'color': x.tailor_status_no == 1 ? '#46b846' : '#f58c0a' }">
+                      {{x.tailor_status_text}}
+                    </div>
+                  </div>
 
-          <div *ngIf="x['type'] == 'Wallpaper'"
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Pleat Type <span
-                style="color: red;">*</span>
-            </div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <ion-select class="ion-no-padding" [(ngModel)]="x['pleat']" placeholder="Select a pleat type"
-                interface="popover" md="ios" (ionChange)="typeChanged()"
-                [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="height: 30px; margin-right: 10px;font-size: 13px;
-             padding: 0 10px; border-radius: 2px;background: #eeeeee;" disabled>
-                <ion-select-option value="Plain">Plain</ion-select-option>
-                <ion-select-option value="Fabric">Fabric</ion-select-option>
-                <ion-select-option value="Non-Woven">Non-Woven</ion-select-option>
-                <ion-select-option value="Patterned">Patterned</ion-select-option>
-                <ion-select-option value="Vinyl">Vinyl</ion-select-option>
-              </ion-select>
-            </div>
-          </div>
+                  <!-- View / Update -->
+                  <div style="width: 100%; padding: 5px 0; border-top: 1px solid #eeeeee; margin-top: 5px; ">
+                    <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                      <div style="font-size: 12px; font-weight: 500; color: #888888;">View / Update</div>
+                    </div>
+                  </div>
 
-          <!-- <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                </div>
 
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Item Price</div>
-
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <ion-input [(ngModel)]="'RM ' + x.price" readonly
-                style="background-color: #eeeeee;width: 140px;  height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
-              </ion-input>
-            </div>
-
-          </div> -->
-
-          <div style="width: 100%;display: flex;justify-content: space-between;align-items: center;margin: 5px 0;">
-
-            <div style="display: flex;align-items: center;justify-content: center;">
-              <div *ngIf="x.status_tail!= 'Completed'" (click)="reviewTask(x)"
-                style="text-align: center; font-weight: 600; font-size: 12px;letter-spacing: 0.7px;color: green;">
-                Review
               </div>
 
-              <div *ngIf="x.status_tail == 'Completed'" (click)="reviewTaskCompleted(x)"
-                style="text-align: center; font-weight: 600; font-size: 12px;letter-spacing: 0.7px;color: green;">
-                Review
-              </div>
+            </div>
 
+            <!-- Pop-Up -->
+            <div *ngIf="!x.tailor_schedule_status" (click)="checkTailorAction(x)"
+              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #b8b8b8ba; backdrop-filter: blur(1px); display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+              <div style="color: #fff; font-size: 16px; font-weight: bold;">
+                Not Scheduled
+              </div>
             </div>
 
           </div>
 
         </div>
-
       </div>
 
       <div
@@ -1237,144 +1187,95 @@
         <div style="font-weight: 400; width: 70%;">{{info.customer_address}}</div>
       </div>
 
-      <div style="width: 100%;display: flex;align-items: center;">
-        <div style="font-weight: 700; width: 25%;"></div>
-        <div (click)="presentActionSheet()" style="width: fit-content;color: #a17635;background-color: #ebd1af; border-radius: 5px;
-        font-weight: 450px;font-size: 13px;letter-spacing: 0.7px;padding: 5px 10px;">Navigate</div>
+      <div style="margin-bottom: 5px;display: flex; align-items: flex-start; width: 100%;">
+        <div style="font-weight: 700; width: 25%;">Schedule :</div>
+        <div style="font-weight: 400; width: 70%;">
+          <div *ngFor="let x of info.install_schedule;">{{x | date: 'dd MMM yyyy hh:mm a'}}</div>
+        </div>
       </div>
 
     </div>
 
-    <div style="width: 100%; padding: 10px; background-color: #ebd1af; ">
-      <div style="color: #a17635; font-weight: 600; font-size: 12px;"> Product Details</div>
+    <div
+      style="width: 100%; padding: 10px; background-color: #ebd1af; display: flex; align-items: center; justify-content: space-between; ">
+      <div style="color: #a17635; font-weight: 600; font-size: 13px;"> Product Details</div>
     </div>
 
     <div style="width: 100%;padding: 10px;">
 
-      <div *ngFor="let x of items; let i = index"
-        style="width: 100%; padding:10px; border-radius: 5px;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;background: white;margin-bottom: 10px;">
-        <div (click)="show != i ? show = i : show = null"
-          style="width: 100%;display: flex;justify-content: space-between;">
-          <div style="font-size: 14px;">{{x.location}}</div>
+      <div
+        style="width: 100%; padding:10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: white; margin-bottom: 10px;">
 
-          <div style="display: flex;">
-            <div style="margin-right: 8px;"></div>
-            <div *ngIf="x.status_tail != 'Completed'" style="margin-right: 15px;color: red;">
-              Curtains Not Ready
-            </div>
-            <div *ngIf="x.status_tail == 'Completed' && x.status_inst == null"
-              style="margin-right: 15px;color: #e8ac1e;">
-              Ready for Installation
-            </div>
-            <div *ngIf="x.status_inst == 'Completed'" style="margin-right: 15px;color: green;">
-              Task {{x.status_inst}}
-            </div>
-            <ion-icon [ngStyle]="{'transform': show == i ? 'rotate(180deg)' : ''}" name="chevron-down-outline">
-            </ion-icon>
-          </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
 
-        </div>
+          <div *ngFor="let x of items; let i = index"
+            style="border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: #FAF7F2; position: relative; display: flex; flex-direction: column;">
 
-        <div [ngClass]="show == i ? 'show' : 'hide'"
-          style="width: 100%;display: flex;flex-direction: column; align-items: center;">
+            <div (click)="checkInstallerAction(x)" style="display: flex; flex-direction: column; flex-grow: 1;">
 
-          <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;padding-top: 10px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Width (inch)
-            </div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
+              <!-- Description -->
               <div
-                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;padding: 7px 10px;border-radius: 2px;">
-                {{x.width_tech || x.width}}
-              </div>
-            </div>
-          </div>
+                style="padding: 10px 10px 0 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
 
-          <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Height (inch)</div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <div
-                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;padding: 7px 10px;border-radius: 2px;">
-                {{x.height_tech || x.height}}
-              </div>
-            </div>
-          </div>
+                <div style="font-weight: 600; color: #000;">
+                  <div *ngIf="x.type == 'Tailor-Made Curtains' || x.type == 'Blinds'" style="font-size: 14px;">
+                    {{x.location}} {{x.location_ref || ''}}</div>
+                  <div *ngIf="x.type == '1'" style="font-size: 14px;">A La Carte - Supply Fabrics Only</div>
+                  <div *ngIf="x.type == '2'" style="font-size: 14px;">A La Carte - Supply Track Only</div>
+                  <div *ngIf="x.type == '3'" style="font-size: 14px;">A La Carte - Supply Accessories Only</div>
+                  <div *ngIf="x.type == '4'" style="font-size: 14px;">A La Carte - Supply & Install Motor Track</div>
+                  <div *ngIf="x.type == '5'" style="font-size: 14px;">A La Carte - Sewing Only</div>
+                  <div *ngIf="x.type == '6'" style="font-size: 14px;">A La Carte - Supply Wallpaper Only</div>
 
+                </div>
 
-          <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Product Type
-            </div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <ion-input [(ngModel)]="x.type" readonly
-                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
-              </ion-input>
-            </div>
-          </div>
+                <!-- Pushes the following content to the bottom -->
+                <div>
 
-          <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Pleat Type
-            </div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <ion-input [(ngModel)]="x.pleat" readonly
-                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
-              </ion-input>
-            </div>
-          </div>
+                  <!-- Schedule Date -->
+                  <div style="display: flex; flex-direction: column; align-items: end; margin-top: 10px;">
+                    <div *ngIf="x.type == 'Tailor-Made Curtains' || x.type == 'Blinds'">{{x.type}}</div>
+                    <div *ngIf="x.type == '1'">Fabrics Only</div>
+                    <div *ngIf="x.type == '2'">Track Only</div>
+                    <div *ngIf="x.type == '3'">Accessories Only</div>
+                    <div *ngIf="x.type == '4'">Supply & Install Motor Track</div>
+                    <div *ngIf="x.type == '5'">Sewing Only</div>
+                    <div *ngIf="x.type == '6'">Wallpaper Only</div>
+                    <!-- <div *ngIf="x.tailor_schedule" style="color: green;">
+                      {{x.tailor_schedule | date: 'dd MMM yyyy'}}
+                    </div>
+                    <div *ngIf="!x.tailor_schedule" style="color: tomato;">
+                      Not Scheduled
+                    </div> -->
+                    <div [ngStyle]="{'color': x.installer_status_no == 1 ? '#46b846' : '#f58c0a' }">
+                      {{x.installer_status_text}}
+                    </div>
+                  </div>
 
-          <div *ngIf="x['type'] == 'Wallpaper'"
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Pleat Type <span
-                style="color: red;">*</span>
-            </div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <ion-select class="ion-no-padding" [(ngModel)]="x['pleat']" placeholder="Select a pleat type"
-                interface="popover" md="ios" (ionChange)="typeChanged()"
-                [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="height: 30px; margin-right: 10px;font-size: 13px;
-             padding: 0 10px; border-radius: 2px;background: #eeeeee;" disabled>
-                <ion-select-option value="Plain">Plain</ion-select-option>
-                <ion-select-option value="Fabric">Fabric</ion-select-option>
-                <ion-select-option value="Non-Woven">Non-Woven</ion-select-option>
-                <ion-select-option value="Patterned">Patterned</ion-select-option>
-                <ion-select-option value="Vinyl">Vinyl</ion-select-option>
-              </ion-select>
-            </div>
-          </div>
+                  <!-- View / Update -->
+                  <div style="width: 100%; padding: 5px 0; border-top: 1px solid #eeeeee; margin-top: 5px; ">
+                    <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                      <div style="font-size: 12px; font-weight: 500; color: #888888;">View / Update</div>
+                    </div>
+                  </div>
 
-          <!-- <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+                </div>
 
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Item Price</div>
-
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <ion-input [(ngModel)]="'RM ' + x.price" readonly
-                style="background-color: #eeeeee;width: 140px;  height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
-              </ion-input>
-            </div>
-
-          </div> -->
-
-          <div style="width: 100%;display: flex;justify-content: space-between;align-items: center;margin: 5px 0;">
-
-            <div style="display: flex;align-items: center;justify-content: center;">
-              <div *ngIf="x.status_inst != 'Completed'" (click)="reviewTask(x)"
-                style="text-align: center; font-weight: 600; font-size: 12px;letter-spacing: 0.7px;color: green;">
-                Review
-              </div>
-
-              <div *ngIf="x.status_inst == 'Completed'" (click)="reviewTaskCompleted(x)"
-                style="text-align: center; font-weight: 600; font-size: 12px;letter-spacing: 0.7px;color: green;">
-                Review
               </div>
 
             </div>
+
+            <!-- Pop-Up -->
+            <!-- <div *ngIf="!x.tailor_schedule_status" (click)="checkInstallerAction(x)"
+              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #b8b8b8ba; backdrop-filter: blur(1px); display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+              <div style="color: #fff; font-size: 16px; font-weight: bold;">
+                Not Scheduled
+              </div>
+            </div> -->
 
           </div>
 
         </div>
-
       </div>
 
       <div
@@ -1460,10 +1361,17 @@
       <div style="color: #a17635;font-size: 14px;font-weight: 500;">{{totalPrice() | currency: 'RM '}}</div> -->
     </div>
 
-    <ion-button *ngIf="items.length > 0" (click)="completeTailor()"
-      style="height: 35px;width: 40%;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 450px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;text-transform: none">
-      Complete
-    </ion-button>
+    <div style="display: flex; align-items: center;">
+      <ion-button *ngIf="items.length > 0" (click)="downloadSO()" style="height: 35px; width: 140px; --background: white; --border-radius: 100px; font-weight: 450px; font-size: 12px;
+      letter-spacing: 0.7px; color: #a17635; --background-activated: ; padding-left: 5px; text-transform: none">
+        Download SO
+      </ion-button>
+
+      <ion-button *ngIf="items.length > 0" (click)="completeTailor()"
+        style="height: 35px; width: 140px;--background: white;--border-radius: 100px;font-weight: 450px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;text-transform: none">
+        Complete
+      </ion-button>
+    </div>
 
   </div>
 
@@ -1490,10 +1398,18 @@
 
     </div> -->
 
-    <ion-button *ngIf="items.length > 0" (click)="completeInstaller()"
-      style="height: 35px;width: 40%;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 450px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;text-transform: none">
-      Proceed
-    </ion-button>
+    <div style="display: flex; align-items: center;">
+      <ion-button *ngIf="items.length > 0" (click)="downloadSO()" style="height: 35px; width: 140px; --background: white; --border-radius: 100px; font-weight: 450px; font-size: 12px;
+      letter-spacing: 0.7px; color: #a17635; --background-activated: ; padding-left: 5px; text-transform: none">
+        Download SO
+      </ion-button>
+
+      <ion-button *ngIf="items.length > 0" (click)="completeInstaller()"
+        style="height: 35px;width: 140px;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 450px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;text-transform: none">
+        Proceed
+      </ion-button>
+    </div>
+
 
   </div>
 

@@ -66,6 +66,9 @@ export class TaskDetailReviewPage implements OnInit {
 
   checker = [] as any
 
+  updateList
+  rejectList
+
   ngOnInit() {
     this.item = this.navparam.get('item')
     this.position = this.navparam.get('position')
@@ -75,6 +78,28 @@ export class TaskDetailReviewPage implements OnInit {
 
     this.price = this.item.price
     this.pleatSelection()
+
+    if (this.position == 'Tailor') {
+      this.http.get('https://curtain.vsnap.my/getalltailorstatus').subscribe(s => {
+
+        this.updateList = s['data'].filter(a => a.type == 'update')
+        this.rejectList = s['data'].filter(a => a.type == 'reject')
+
+        console.log(this.updateList, this.rejectList);
+
+      })
+    } else if (this.position == 'Installer') {
+      this.http.get('https://curtain.vsnap.my/getallinstallerstatus').subscribe(s => {
+
+        this.updateList = s['data'].filter(a => a.type == 'update')
+        this.rejectList = s['data'].filter(a => a.type == 'reject')
+
+        console.log(this.updateList, this.rejectList);
+
+      })
+    }
+
+
 
     this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
       this.misclist = s['data'].filter(a => a.status)
@@ -730,14 +755,22 @@ export class TaskDetailReviewPage implements OnInit {
     }
   }
 
+  tailorStatus(x) {
+    this.item.tailor_status_no = x.no
+    this.item.tailor_status_text = x.name
+  }
+
+  installerStatus(x) {
+    this.item.installer_status_no = x.id
+    this.item.installer_status_text = x.name
+  }
+
   updateTailor() {
     console.log(this.item);
 
-    this.item.price = this.price
-
     Swal.fire({
       title: 'Update Task',
-      text: 'Mark this task as Completed?',
+      // text: 'Mark this task as Completed?',
       icon: 'question',
       heightAuto: false,
       showConfirmButton: true,
@@ -750,13 +783,16 @@ export class TaskDetailReviewPage implements OnInit {
       if (y.isConfirmed) {
 
         for (let i = 0; i < this.instPhoto.photos.length; i++) {
-          this.item.photos.push(this.instPhoto.photos[i])
+          this.item.photos_tailor.push(this.instPhoto.photos[i])
         }
 
         let temp = {
           no: this.item.no,
-          photos: JSON.stringify(this.item.photos),
-          status_tail: 'Completed',
+          photos_tailor: JSON.stringify(this.item.photos_tailor),
+          // status_tail: 'Completed',
+          tailor_status: this.item.tailor_status,
+          tailor_status_no: this.item.tailor_status_no,
+          tailor_status_text: this.item.tailor_status_text,
           step: 4,
           remark_tail: this.item.remark_tail
         }
@@ -766,102 +802,52 @@ export class TaskDetailReviewPage implements OnInit {
         this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
           this.model.dismiss(1)
         })
+
       }
     })
 
   }
 
   updateInstaller() {
-    if (this.item['type'] == 'Tailor-Made Curtains' || this.item['type'] == 'Motorised Curtains') {
-      console.log(this.item);
+    console.log(this.item);
 
-      this.item.price = this.price
+    Swal.fire({
+      title: 'Update Task',
+      // text: 'Mark this task as Completed?',
+      icon: 'question',
+      heightAuto: false,
+      showConfirmButton: true,
+      showCancelButton: true,
+      reverseButtons: true,
+      confirmButtonText: 'Completed',
+      cancelButtonText: 'Cancel',
+      cancelButtonColor: '#d33',
+    }).then((y) => {
+      if (y.isConfirmed) {
 
-      Swal.fire({
-        title: 'Update Task',
-        text: 'Mark this task as Completed?',
-        icon: 'question',
-        heightAuto: false,
-        showConfirmButton: true,
-        showCancelButton: true,
-        reverseButtons: true,
-        confirmButtonText: 'Completed',
-        cancelButtonText: 'Cancel',
-        cancelButtonColor: '#d33',
-      }).then((y) => {
-        if (y.isConfirmed) {
-
-          for (let i = 0; i < this.instPhoto.photos.length; i++) {
-            this.item.photos.push(this.instPhoto.photos[i])
-          }
-
-          let temp = {
-            no: this.item.no,
-            photos: JSON.stringify(this.item.photos),
-            status_inst: 'Completed',
-            step: 5,
-            remark_inst: this.item.remark_inst
-          }
-
-          console.log(temp);
-
-          this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
-            this.model.dismiss(1)
-          })
+        for (let i = 0; i < this.instPhoto.photos.length; i++) {
+          this.item.photos_installer.push(this.instPhoto.photos[i])
         }
-      })
 
-    } else if (this.item['type'] == 'Blinds') {
-      this.item.pleat = this.BlindsChoice
-
-      console.log(this.item);
-
-      console.log('pass2');
-      this.item.price = this.price
-
-      Swal.fire({
-        title: 'Update Task',
-        text: 'Mark this task as Completed?',
-        icon: 'success',
-        heightAuto: false,
-        showConfirmButton: true,
-        showCancelButton: true,
-        reverseButtons: true,
-        confirmButtonText: 'Completed',
-        cancelButtonText: 'Cancel',
-        cancelButtonColor: '#d33',
-      }).then((y) => {
-        if (y.isConfirmed) {
-
-          for (let i = 0; i < this.instPhoto.photos.length; i++) {
-            this.item.photos.push(this.instPhoto.photos[i])
-          }
-
-          let temp = {
-            no: this.item.no,
-            photos: JSON.stringify(this.item.photos),
-            status_inst: 'Completed',
-            step: 5,
-            remark_inst: this.item.remark_inst
-          }
-
-          console.log(temp);
-          this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
-            this.model.dismiss(1)
-          })
+        let temp = {
+          no: this.item.no,
+          photos_installer: JSON.stringify(this.item.photos_installer),
+          // status_tail: 'Completed',
+          installer_status: this.item.installer_status,
+          installer_status_no: this.item.installer_status_no,
+          installer_status_text: this.item.installer_status_text,
+          step: 4,
+          remark_inst: this.item.remark_inst
         }
-      })
 
-    } else {
-      this.item.pleat = this.WallpaperChoice
+        console.log(temp);
 
-      console.log(this.item);
+        this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
+          this.model.dismiss(1)
+        })
 
-      console.log('pass2');
-      this.item.price = this.price
-      this.model.dismiss(this.item)
-
-    }
+      }
+    })
 
   }
 
@@ -1056,32 +1042,17 @@ export class TaskDetailReviewPage implements OnInit {
   }
 
   deletePic(x) {
-
-    // Swal.fire({
-    //   title: 'Remove photo',
-    //   text: 'Are your sure to remove the photo, action are irreversible?',
-    //   icon: 'error',
-    //   showCancelButton: true,
-    //   showConfirmButton: true,
-    //   reverseButtons: true,
-    //   cancelButtonText: 'Cancel',
-    //   confirmButtonText: 'Yes, Remove.',
-    //   heightAuto: false,
-    // }).then((y) => {
-    // if (y.isConfirmed) {
     this.instPhoto.photos.splice(x, 1)
     console.log(this.instPhoto.photos);
-    // }
-    // })
-
   }
 
   opencamera() {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 55,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
     }
 
     this.camera.getPicture(options).then((imageData) => {
@@ -1108,7 +1079,17 @@ export class TaskDetailReviewPage implements OnInit {
   instPhoto = { photos: [] as any } as any;
 
   fileChange(event, name, maxsize) {
-    if (event.target.files && event.target.files[0] && event.target.files[0].size < (10485768)) {
+    if (event.target.files && event.target.files[0]) {
+
+      Swal.fire({
+        title: 'processing...',
+        icon: 'info',
+        heightAuto: false,
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        timer: 2000
+      })
+
       // this.imagectype = event.target.files[0].type;
       // EXIF.getData(event.target.files[0], () => {
       // console.log(event.target.files[0]);
@@ -1118,24 +1099,24 @@ export class TaskDetailReviewPage implements OnInit {
       const ctx = can.getContext('2d');
       const thisImage = new Image;
 
-      const maxW = maxsize;
-      const maxH = maxsize;
+      // const maxW = maxsize;
+      // const maxH = maxsize;
       thisImage.onload = (a) => {
         // console.log(a);
         const iw = thisImage.width;
         const ih = thisImage.height;
-        const scale = Math.min((maxW / iw), (maxH / ih));
-        const iwScaled = iw * scale;
-        const ihScaled = ih * scale;
-        can.width = iwScaled;
-        can.height = ihScaled;
+        // const scale = Math.min((maxW / iw), (maxH / ih));
+        // const iwScaled = iw * scale;
+        // const ihScaled = ih * scale;
+        can.width = iw;
+        can.height = ih;
         ctx.save();
         // const width = can.width; const styleWidth = can.style.width;
         // const height = can.height; const styleHeight = can.style.height;
         // console.log(event.target.files[0]);
-        ctx.drawImage(thisImage, 0, 0, iwScaled, ihScaled);
-        ctx.restore();
-        this.imagec = can.toDataURL();
+        ctx.drawImage(thisImage, 0, 0, iw, ih);
+        let quality = 0.85; // Start with high quality
+        this.imagec = can.toDataURL('image/jpeg', quality);
         // const imgggg = this.imagec.replace(';base64,', 'thisisathingtoreplace;');
         // const imgarr = imgggg.split('thisisathingtoreplace;');
         // this.base64img = imgarr[1];

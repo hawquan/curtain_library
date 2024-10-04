@@ -196,21 +196,66 @@ export class Tab1Page implements OnInit {
           console.log(this.blindlist)
         })
 
-        this.http.post('https://curtain.vsnap.my/getsaleslist', { id_sales: x, id_tech: x, id_tail: x, id_inst: x }).subscribe((s) => {
-          this.salesList = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
-          this.salesListOngoing = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
-          this.salesListCompleted = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
-          this.salesListVoid = s['data'].filter(a => !a.status).sort((a, b) => a.no - b.no)
-          this.sortSalesP = true
-          this.sortSalesO = true
-          this.sortSalesC = true
-          this.sortSalesV = true
-          this.filterPendingList()
-          this.filterOnGoingList()
-          this.filterCompletedList()
-          console.log(this.salesList, this.salesListOngoing, this.salesListCompleted, this.salesListVoid);
+        if (this.user.position == 'Sales' || this.user.position == 'Technician') {
 
-        })
+          this.http.post('https://curtain.vsnap.my/getsaleslist', { id_sales: x, id_tech: x, id_tail: x, id_inst: x }).subscribe((s) => {
+            console.log(s);
+
+            this.salesList = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+            this.salesListOngoing = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+            this.salesListCompleted = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+            this.salesListVoid = s['data'].filter(a => !a.status).sort((a, b) => a.no - b.no)
+            this.sortSalesP = true
+            this.sortSalesO = true
+            this.sortSalesC = true
+            this.sortSalesV = true
+            this.filterPendingList()
+            this.filterOnGoingList()
+            this.filterCompletedList()
+            console.log(this.salesList, this.salesListOngoing, this.salesListCompleted, this.salesListVoid);
+
+          })
+        } else if (this.user.position == 'Tailor') {
+
+          this.http.post('https://curtain.vsnap.my/gettailorsaleslist', { id_tail: x }).subscribe((s) => {
+            console.log(s);
+
+            this.salesList = s['data'].filter(a => a.status && (a.log_action?.includes('Pending Accept') || a.log_action?.includes('Rejected'))).sort((a, b) => a.no - b.no)
+            this.salesListOngoing = s['data'].filter(a => a.status && a.log_action && !a.log_action?.includes('Pending Accept') && !a.log_action?.includes('Rejected')).sort((a, b) => a.no - b.no)
+            this.salesListCompleted = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+            // this.salesListVoid = s['data'].filter(a => !a.status).sort((a, b) => a.no - b.no)
+            this.sortSalesP = true
+            this.sortSalesO = true
+            this.sortSalesC = true
+            // this.sortSalesV = true
+            // this.filterPendingList()
+            // this.filterOnGoingList()
+            // this.filterCompletedList()
+            console.log(this.salesList, this.salesListOngoing, this.salesListCompleted, this.salesListVoid);
+
+          })
+
+        } else if (this.user.position == 'Installer') {
+
+          this.http.post('https://curtain.vsnap.my/getinstallersaleslist', { id_inst: x }).subscribe((s) => {
+            console.log(s);
+
+            this.salesList = s['data'].filter(a => a.status && (a.log_action2?.includes('Pending Accept') || a.log_action2?.includes('Rejected'))).sort((a, b) => a.no - b.no)
+            this.salesListOngoing = s['data'].filter(a => a.status && a.log_action2 && !a.log_action2?.includes('Pending Accept') && !a.log_action2?.includes('Rejected')).sort((a, b) => a.no - b.no)
+            this.salesListCompleted = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+            // this.salesListVoid = s['data'].filter(a => !a.status).sort((a, b) => a.no - b.no)
+            this.sortSalesP = true
+            this.sortSalesO = true
+            this.sortSalesC = true
+            // this.sortSalesV = true
+            // this.filterPendingList()
+            // this.filterOnGoingList()
+            // this.filterCompletedList()
+            console.log(this.salesList, this.salesListOngoing, this.salesListCompleted, this.salesListVoid);
+
+          })
+
+        }
 
         this.http.post('https://curtain.vsnap.my/getrejected', { id_sales: x }).subscribe((s) => {
           this.salesListRejected = s['data'].filter(s => s.status)
@@ -575,6 +620,242 @@ export class Tab1Page implements OnInit {
       buttons: actionLinks
     });
     await actionSheet.present();
+  }
+
+  tailorAction(x, y) {
+
+    if (y == 'accept') {
+
+      Swal.fire({
+        title: 'Accept Order',
+        text: 'Accept order of "' + x.customer_name + '" ?',
+        icon: 'question',
+        heightAuto: false,
+        showConfirmButton: true,
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonText: 'Yes, Accept',
+        cancelButtonText: 'Cancel',
+        cancelButtonColor: '#d33',
+      }).then((y) => {
+        if (y.isConfirmed) {
+
+          // let temp = {
+          //   no: x.no,
+          //   // id_tail: this.sales.id_tail,
+          // }
+
+          // this.http.post('https://api.nanogapp.com/updatesales', temp).subscribe((s) => {
+
+          let temp2 = {
+            sales_no: x.no,
+            tailor_id: this.uid,
+            log_action: 'Order Accepted',
+            // log_remark: a.value,
+          }
+
+          this.http.post('https://curtain.vsnap.my/inserttailorlog', temp2).subscribe(a => {
+
+            Swal.fire({
+              icon: 'success',
+              title: 'Order Accepted!',
+              timer: 2000,
+              heightAuto: false
+            })
+
+            this.refresher(this.uid)
+
+          })
+
+
+          // })
+        }
+
+      })
+
+    } else {
+
+      Swal.fire({
+        icon: 'question',
+        title: 'Reject Order',
+        text: 'Reject order of "' + x.customer_name + '" ? Please write down a reason.',
+        input: 'text',
+        heightAuto: false,
+        showCancelButton: true,
+        showConfirmButton: true,
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Yes, Reject',
+        reverseButtons: true,
+        cancelButtonColor: '#d33',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      }).then(a => {
+
+        if (a.isConfirmed && a.value == '') {
+
+          Swal.fire({
+            icon: 'error',
+            title: "Error",
+            text: "Remark cannot be empty.",
+            heightAuto: false,
+            showCancelButton: false,
+          })
+
+        } else if (a.isConfirmed) {
+
+          // let temp = {
+          //   no: x.no,
+          //   // id_tail: this.sales.id_tail,
+          // }
+          // this.http.post('https://api.nanogapp.com/updatesales', temp).subscribe((s) => {
+
+          let temp2 = {
+            sales_no: x.no,
+            tailor_id: this.uid,
+            log_action: 'Order Rejected',
+            log_remark: a.value,
+          }
+
+          this.http.post('https://curtain.vsnap.my/inserttailorlog', temp2).subscribe(a => {
+
+            Swal.fire({
+              icon: 'success',
+              title: 'Order Rejected!',
+              timer: 2000,
+              heightAuto: false
+            })
+
+            this.refresher(this.uid)
+
+          })
+
+
+          // })
+
+        }
+
+      })
+
+    }
+
+  }
+
+  installerAction(x, y) {
+
+    if (y == 'accept') {
+
+      Swal.fire({
+        title: 'Accept Order',
+        text: 'Accept order of "' + x.customer_name + '" ?',
+        icon: 'question',
+        heightAuto: false,
+        showConfirmButton: true,
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonText: 'Yes, Accept',
+        cancelButtonText: 'Cancel',
+        cancelButtonColor: '#d33',
+      }).then((y) => {
+        if (y.isConfirmed) {
+
+          // let temp = {
+          //   no: x.no,
+          //   // id_tail: this.sales.id_tail,
+          // }
+
+          // this.http.post('https://api.nanogapp.com/updatesales', temp).subscribe((s) => {
+
+          let temp2 = {
+            sales_no: x.no,
+            installer_id: this.uid,
+            log_action: 'Order Accepted',
+            // log_remark: a.value,
+          }
+
+          this.http.post('https://curtain.vsnap.my/insertinstallerlog', temp2).subscribe(a => {
+
+            Swal.fire({
+              icon: 'success',
+              title: 'Order Accepted!',
+              timer: 2000,
+              heightAuto: false
+            })
+
+            this.refresher(this.uid)
+
+          })
+
+
+          // })
+        }
+
+      })
+
+    } else {
+
+      Swal.fire({
+        icon: 'question',
+        title: 'Reject Order',
+        text: 'Reject order of "' + x.customer_name + '" ? Please write down a reason.',
+        input: 'text',
+        heightAuto: false,
+        showCancelButton: true,
+        showConfirmButton: true,
+        cancelButtonText: 'Cancel',
+        confirmButtonText: 'Yes, Reject',
+        reverseButtons: true,
+        cancelButtonColor: '#d33',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      }).then(a => {
+
+        if (a.isConfirmed && a.value == '') {
+
+          Swal.fire({
+            icon: 'error',
+            title: "Error",
+            text: "Remark cannot be empty.",
+            heightAuto: false,
+            showCancelButton: false,
+          })
+
+        } else if (a.isConfirmed) {
+
+          // let temp = {
+          //   no: x.no,
+          //   // id_tail: this.sales.id_tail,
+          // }
+          // this.http.post('https://api.nanogapp.com/updatesales', temp).subscribe((s) => {
+
+          let temp2 = {
+            sales_no: x.no,
+            installer_id: this.uid,
+            log_action: 'Order Rejected',
+            log_remark: a.value,
+          }
+
+          this.http.post('https://curtain.vsnap.my/insertinstallerlog', temp2).subscribe(a => {
+
+            Swal.fire({
+              icon: 'success',
+              title: 'Order Rejected!',
+              timer: 2000,
+              heightAuto: false
+            })
+
+            this.refresher(this.uid)
+
+          })
+
+
+          // })
+
+        }
+
+      })
+
+    }
+
   }
 
   filtererP(x) {
