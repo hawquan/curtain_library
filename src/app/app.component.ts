@@ -25,11 +25,11 @@ export class AppComponent {
     private fcm: FCM,
   ) {
 
-    let version = '000069' 
+    let version = '000070' 
     // ionic cordova build android --release -- -- --packageType=bundle
     // jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore curtain.jks app-release.aab curtain
     // curtain12345
-    // D:\Sdk\build-tools\32.0.0\zipalign -v 4 app-release.aab curtain0.0.61.aab
+    // D:\Sdk\build-tools\32.0.0\zipalign -v 4 app-release.aab curtain0.0.70.aab
     firebase.initializeApp(firebaseConfig)
     this.platform.ready().then(() => {
       // this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);

@@ -44,7 +44,7 @@ export class TaskDetailReviewPage implements OnInit {
   fabricSheer = []
   fabricLining = []
 
-  BlindsChoice = ''
+  // BlindsChoice = ''
 
   PlainWall = false
   FabricWall = false
@@ -230,14 +230,6 @@ export class TaskDetailReviewPage implements OnInit {
 
   }
 
-  blindsSelection(x) {
-    this.BlindsChoice = x.pleat
-  }
-
-  blindChoice() {
-    return this.BlindsChoice
-  }
-
   wallpaperSelection(x) {
     this.PlainWall = false
     this.FabricWall = false
@@ -300,7 +292,7 @@ export class TaskDetailReviewPage implements OnInit {
         // if (this.item.fabric_lining != null) {
         if (this.item.fabric_type == 'C') {
           if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'pieces_curtain', 'bracket',
-            'hook', 'belt', 'touchfloor', 'sidehook'].every(a => this.checker[a])) {
+            'belt', 'touchfloor', 'sidehook'].every(a => this.checker[a])) {
 
             this.pass()
 
@@ -309,7 +301,7 @@ export class TaskDetailReviewPage implements OnInit {
           }
         } else if (this.item.fabric_type == 'S') {
           if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'pieces_sheer', 'sheer_bracket',
-            'sheer_hook', 'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
+            'sheer_belt', 'sheer_touchfloor', 'sheer_sidehook',].every(a => this.checker[a])) {
 
             this.pass()
 
@@ -322,7 +314,7 @@ export class TaskDetailReviewPage implements OnInit {
           this.item.custom_sheer_belt = true
           this.item.sheer_belt = 'X'
           if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'pieces_curtain', 'pieces_sheer', 'bracket',
-            'hook', 'belt', 'touchfloor', 'sidehook', 'sheer_hook', 'sheer_sidehook',].every(a => this.checker[a])) {
+            'belt', 'touchfloor', 'sidehook', 'sheer_sidehook',].every(a => this.checker[a])) {
             // 'sheer_touchfloor',
             this.pass()
 
@@ -460,7 +452,7 @@ export class TaskDetailReviewPage implements OnInit {
 
     } else {
       if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'bracket',
-        'belt', 'hook'].every(a => this.checker[a])) {
+        'belt'].every(a => this.checker[a])) {
 
         this.pass()
 
@@ -599,7 +591,7 @@ export class TaskDetailReviewPage implements OnInit {
         })
 
       } else if (this.item['type'] == 'Blinds') {
-        this.item.pleat = this.BlindsChoice
+        // this.item.pleat = this.BlindsChoice
 
         for (let i = 0; i < this.instPhoto.photos.length; i++) {
           this.item.photos.push(this.instPhoto.photos[i])
@@ -929,7 +921,7 @@ export class TaskDetailReviewPage implements OnInit {
       }
 
     } else if (this.item['type'] == 'Blinds') {
-      this.item.pleat = this.BlindsChoice
+      // this.item.pleat = this.BlindsChoice
 
       for (let i = 0; i < this.instPhoto.photos.length; i++) {
         this.item.photos.push(this.instPhoto.photos[i])

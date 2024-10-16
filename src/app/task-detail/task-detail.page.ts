@@ -586,7 +586,7 @@ export class TaskDetailPage implements OnInit {
     console.log(this.items.length);
 
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].status_tech == 'Pending') {
+      if (this.items[i].status_tech == 'Pending' && (this.items[i].type == 'Tailor-Made Curtains' || this.items[i].type == 'Blinds')) {
         pass = false
         break
       } else {
