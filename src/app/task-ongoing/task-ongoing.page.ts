@@ -152,7 +152,21 @@ export class TaskOngoingPage implements OnInit {
     })
 
     this.http.post('https://curtain.vsnap.my/getorderlist', { sales_id: this.sales_id }).subscribe(a => {
-      this.items = a['data']
+
+      this.items = a['data'].sort((a, b) => {
+        // First, sort by location alphabetically, with null/empty locations at the end
+        if (!a.location) return 1; // Move null/undefined/empty location to the end
+        if (!b.location) return -1; // Move null/undefined/empty location to the end
+        if (a.location !== b.location) {
+          return a.location.localeCompare(b.location); // Sort by location alphabetically
+        }
+      
+        // If locations are the same, sort by location_ref within the same location
+        const locationRefA = a.location_ref || ''; // Default to empty string if null/undefined
+        const locationRefB = b.location_ref || ''; // Default to empty string if null/undefined
+        return locationRefA.localeCompare(locationRefB);
+      });
+
       // for (let i = 0; i < this.items.length; i++) {
       //   this.calcPrice(i)
       //   console.log(i);
