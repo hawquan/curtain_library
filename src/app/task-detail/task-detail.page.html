@@ -112,8 +112,11 @@
       </div>
     </div>
 
-    <div style="width: 100%; padding: 10px; background-color: #ebd1af; ">
-      <div style="color: #a17635; font-weight: 600; font-size: 12px;"> Product Details</div>
+    <div
+      style="width: 100%; padding: 10px; background-color: #ebd1af; display: flex; align-items: center; justify-content: space-between;">
+      <div style="color: #a17635; font-weight: 600; font-size: 12px;">Product Details</div>
+      <div *ngIf="lengthof(items) > 0" (click)="updateAll()" style="background-color: white; border-radius: 10px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+      color: #a17635; padding: 4px 8px; font-size: 12px;">Update All</div>
     </div>
 
     <div style="width: 100%;padding: 10px;">
@@ -897,8 +900,7 @@
 
     <div style="width: 100%;padding: 10px;">
 
-      <div *ngFor="let x of items; let i = index"
-        style="width: 100%; margin-bottom: 10px;">
+      <div *ngFor="let x of items; let i = index" style="width: 100%; margin-bottom: 10px;">
 
 
         <!-- Type 1 -->
@@ -1388,10 +1390,12 @@
         </div> -->
 
         <!-- Tailor / Blind -->
-        <div *ngIf="x.type == 'Tailor-Made Curtains' || x.type == 'Blinds' " style="padding:10px; border-radius: 5px;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;background: white;">
+        <div *ngIf="x.type == 'Tailor-Made Curtains' || x.type == 'Blinds' "
+          style="padding:10px; border-radius: 5px;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;background: white;">
           <div (click)="show != i ? show = i : show = null"
             style="width: 100%;display: flex;justify-content: space-between;">
-            <div style="font-size: 14px;">{{x.location}}<span *ngIf="x.location_ref"> - {{x.location_ref || ''}}</span></div>
+            <div style="font-size: 14px;">{{x.location}}<span *ngIf="x.location_ref"> - {{x.location_ref || ''}}</span>
+            </div>
 
             <div style="display: flex;">
               <div style="margin-right: 8px;"></div>
@@ -1476,8 +1480,7 @@
 
             <div style="width: 100%; display: flex; justify-content: end; align-items: center; ">
 
-              <ion-button (click)="reviewTask(x)"
-                style="height: 30px; width: 100px; --background: white; --border-radius: 100px; font-weight: 450px; font-size: 12px; 
+              <ion-button (click)="reviewTask(x)" style="height: 30px; width: 100px; --background: white; --border-radius: 100px; font-weight: 450px; font-size: 12px; 
                 color: #a17635; --background-activated: ; padding-left: 5px; text-transform: none">
                 Review
               </ion-button>

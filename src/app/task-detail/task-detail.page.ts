@@ -69,10 +69,16 @@ export class TaskDetailPage implements OnInit {
   fabricCurtain = []
   fabricLining = []
   fabricSheer = []
+  blindTape = []
+  fabricBlind = []
 
   keywordPro = ''
   showSelection = false
   propertyList = ['Apartment', 'Bungalow', 'Condominium', 'Semi-D', 'Terrace', 'Others']
+
+  price: any = 0
+  count = 0
+
   ngOnInit() {
 
     this.actroute.queryParams.subscribe(a => {
@@ -99,6 +105,11 @@ export class TaskDetailPage implements OnInit {
       // console.log(this.blindlist)
     })
 
+    this.http.get('https://curtain.vsnap.my/tapeList').subscribe(a => {
+      this.blindTape = a['data']
+      console.log(this.blindTape);
+    })
+
     this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
       this.fabriclist = s['data']
       // console.log(this.fabriclist)
@@ -106,6 +117,7 @@ export class TaskDetailPage implements OnInit {
       this.fabricCurtain = this.fabriclist.filter(x => x.type == 'Curtain')
       this.fabricSheer = this.fabriclist.filter(x => x.type == 'Sheer')
       this.fabricLining = this.fabriclist.filter(x => x.type == 'Lining')
+      this.fabricBlind = this.fabriclist.filter(x => x.type == 'Blind').sort((a, b) => (a['type_category'] > b['type_category'] ? 1 : -1) && (a['name'] > b['name'] ? 1 : -1) && (a['id'] > b['id'] ? 1 : -1))
 
       this.refreshList()
 
@@ -1292,6 +1304,1400 @@ export class TaskDetailPage implements OnInit {
     }
   }
 
+  updateAll() {
+    Swal.fire({
+      title: 'Update All Order',
+      text: 'Are you sure to update all order to latest price?',
+      heightAuto: false,
+      icon: 'question',
+      showConfirmButton: true,
+      showCancelButton: true,
+      cancelButtonText: 'Cancel',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Update',
+      reverseButtons: true,
+    }).then((y) => {
+
+      if (y.isConfirmed) {
+
+
+        Swal.fire({
+          title: 'Calculating Quotation...',
+          heightAuto: false,
+          icon: 'info',
+          showConfirmButton: false,
+          showCancelButton: false,
+        })
+
+        this.updateFinish()
+
+      }
+
+    })
+
+  }
+
+  updateFinish() {
+    let i = this.count
+    if (this.items[i]['type'] == 'Tailor-Made Curtains' || this.items[i]['type'] == 'Blinds') {
+
+
+      console.log(this.items[i]);
+
+      let curtain = false
+      let curtain_id
+      let lining = false
+      let lining_id
+      let sheer = false
+      let sheer_id
+      let track = false
+      let track_id
+      let track_sheer = false
+      let track_sheer_id
+      let blind = false
+      let blind_id
+      let pleat_id
+      let pleat_sheer_id
+      let belt_hook = false
+      let isRomanBlind = false
+      let tape = false
+      let tape_id
+
+      this.items[i].eyelet_curtain = this.items[i].pleat && (this.items[i].fabric_type == 'C' || this.items[i].fabric_type == 'CS') ? this.items[i].pleat.includes('Eyelet') : false
+      this.items[i].eyelet_sheer = this.items[i].pleat_sheer && (this.items[i].fabric_type == 'S' || this.items[i].fabric_type == 'CS') ? this.items[i].pleat_sheer.includes('Eyelet') : false
+
+      if (this.items[i].motorized_upgrade) {
+        if (!this.items[i].motorized_choice || !this.items[i].motorized_cost || !this.items[i].motorized_power || !this.items[i].motorized_sides || !this.items[i].motorized_pieces) {
+          // this.items[i].motorized_upgrade = false
+          // console.log('upgrade false');
+
+          Swal.fire({
+            title: 'Motorised Not Completed',
+            text: "Please select all required motorise upgrade before continuing or un-tick it",
+            heightAuto: false,
+            icon: 'error',
+            allowOutsideClick: false,
+            showConfirmButton: true,
+            showCancelButton: false,
+          })
+
+          return
+        }
+      }
+
+      if (this.items[i].type != 'Blinds') {
+
+        if (this.items[i].fabric != null) {
+          if (this.items[i].fabric_type == 'C' || this.items[i].fabric_type == 'CS') {
+            curtain = true
+            try {
+              curtain_id = this.fabricCurtain.filter(x => x.name == this.items[i].fabric)[0]['id']
+            } catch (error) {
+              this.calcErrorMsg('Fabric', "curtain's fabric")
+              return
+            }
+          } else {
+            curtain = false
+          }
+        } else {
+          curtain = false
+        }
+
+        if (this.items[i].fabric_lining != null) {
+          if (this.items[i].fabric_type == 'C' || this.items[i].fabric_type == 'CS') {
+            lining = true
+            try {
+              lining_id = this.fabricLining.filter(x => x.name == this.items[i].fabric_lining)[0]['id']
+            } catch (error) {
+              this.calcErrorMsg('Lining', "lining's fabric")
+              return
+            }
+          } else {
+            lining = false
+          }
+        } else {
+          lining = false
+        }
+
+        if (this.items[i].fabric_sheer != null) {
+          if (this.items[i].fabric_type == 'S' || this.items[i].fabric_type == 'CS') {
+            sheer = true
+            try {
+              sheer_id = this.fabricSheer.filter(x => x.name == this.items[i].fabric_sheer)[0]['id']
+            } catch (error) {
+              this.calcErrorMsg('Sheer', "sheer's fabric")
+              return
+            }
+          } else {
+            sheer = false
+          }
+        } else {
+          sheer = false
+        }
+
+        if (this.items[i].track != null) {
+          if (this.items[i].fabric_type == 'C' || this.items[i].fabric_type == 'CS') {
+            track = true
+            try {
+              track_id = this.tracklist.filter(x => x.name == this.items[i].track)[0]['id']
+            } catch (error) {
+              this.calcErrorMsg('Track', "track")
+              return
+            }
+          } else {
+            track = false
+          }
+        } else {
+          track = false
+        }
+
+        if (this.items[i].track_sheer != null) {
+          if (this.items[i].fabric_type == 'S' || this.items[i].fabric_type == 'CS') {
+            track_sheer = true
+            try {
+              track_sheer_id = this.tracklist.filter(x => x.name == this.items[i].track_sheer)[0]['id']
+            } catch (error) {
+              this.calcErrorMsg("Sheer's Track", "sheer's track")
+              return
+            }
+          } else {
+            track_sheer = false
+          }
+        } else {
+          track_sheer = false
+        }
+
+        if (this.items[i].pleat != null && this.items[i].pleat != '') {
+          try {
+            pleat_id = this.pleatlist.filter(x => x.name == this.items[i].pleat)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg("Pleat", "pleat")
+            return
+          }
+        }
+
+        if (this.items[i].pleat_sheer != null && this.items[i].pleat_sheer != '') {
+          try {
+            pleat_sheer_id = this.pleatlist.filter(x => x.name == this.items[i].pleat_sheer)[0]['id']
+          } catch (error) {
+            this.calcErrorMsg("Sheer's Pleat", "sheer's pleat")
+            return
+          }
+        }
+
+        if ((this.items[i].sidehook == 'Yes' && (this.items[i].belt != 'No' || this.items[i].belt)) || (this.items[i].sheer_sidehook == 'Yes' && (this.items[i].sheer_belt != 'No' || this.items[i].sheer_belt))) {
+          belt_hook = true
+        }
+
+        console.log(curtain_id, sheer_id, track_id, pleat_id, pleat_sheer_id);
+
+      } else {
+        if (this.items[i].pleat == 'Roman Blind') {
+          // curtain = true
+          sheer = false
+          track = false
+          track_sheer = false
+          // lining = false
+          blind = true
+          isRomanBlind = true
+          belt_hook = false
+          console.log('blindcurtain');
+
+          if (this.items[i].fabric_blind != null) {
+            blind = true
+            try {
+              blind_id = this.fabricBlind.filter(x => x.name == this.items[i].fabric_blind)[0]['id']
+            } catch (error) {
+              this.calcErrorMsg('Blind', "blind's fabric")
+              return
+            }
+          }
+
+          if (this.items[i].fabric != null) {
+            curtain = true
+            try {
+              curtain_id = this.fabricCurtain.filter(x => x.name == this.items[i].fabric)[0]['id']
+            } catch (error) {
+              this.calcErrorMsg('Fabric', "curtain's fabric")
+              return
+            }
+          } else {
+            curtain = false
+          }
+
+          if (this.items[i].fabric_lining != null) {
+            lining = true
+            try {
+              lining_id = this.fabricLining.filter(x => x.name == this.items[i].fabric_lining)[0]['id']
+            } catch (error) {
+              this.calcErrorMsg('Lining', "lining's fabric")
+              return
+            }
+          } else {
+            lining = false
+          }
+
+        } else {
+          curtain = false
+          sheer = false
+          track = false
+          track_sheer = false
+          lining = false
+          belt_hook = false
+          isRomanBlind = false
+          blind = true
+          console.log('blind');
+
+          if (this.items[i].fabric_blind != null && this.items[i].fabric_blind != '') {
+            try {
+              blind_id = this.fabricBlind.filter(x => x.name == this.items[i].fabric_blind)[0]['id']
+            } catch (error) {
+              this.calcErrorMsg('Blind', "blind's fabric")
+              return
+            }
+          }
+
+          if (this.items[i].pleat == 'Wooden Blind' || this.items[i].pleat == 'Venetian Blinds') {
+            if (this.items[i].blind_tape) {
+              tape = true
+              try {
+                tape_id = (this.blindTape.filter(x => x.name == this.items[i].blind_tape))[0]['id']
+              } catch (error) {
+                this.calcErrorMsg('Tape', "blind's tape")
+                return
+              }
+            }
+          }
+        }
+        // if (this.items[i].pleat != null && this.items[i].pleat != '') {
+        //   pleat_id = this.blindlist.filter(x => x.name == this.items[i].pleat)[0]['id']
+        // }
+      }
+
+      if (this.items[i].height > 180) {
+        this.items[i].need_scaftfolding = true
+        console.log('yes');
+
+      } else if (this.items[i].height >= 156 && this.items[i].height <= 180) {
+        this.items[i].need_ladder = true
+      } else {
+        this.items[i].need_scaftfolding = false
+        this.items[i].need_ladder = false
+        console.log('no');
+
+      }
+
+      let temp = {
+        width: parseFloat(this.items[i].width), height: parseFloat(this.items[i].height), curtain: curtain, lining: lining, lining_id: lining_id,
+        curtain_id: curtain_id, sheer: sheer, sheer_id: sheer_id, track: track, track_id: track_id, track_sheer: track_sheer, track_sheer_id: track_sheer_id, pleat_id: pleat_id, pleat_sheer_id: pleat_sheer_id, blind: blind, blind_id: blind_id,
+        pieces_curtain: this.items[i].pieces_curtain || 0, pieces_sheer: this.items[i].pieces_sheer || 0, pieces_blind: this.items[i].pieces_blind || 0,
+        promo_curtain: this.items[i].promo_curtain || 0, promo_lining: this.items[i].promo_lining || 0, promo_sheer: this.items[i].promo_sheer || 0, promo_blind: this.items[i].promo_blind || 0,
+        motorized: this.items[i].motorized_upgrade, motorized_cost: this.items[i].motorized_cost, motorized_power: this.items[i].motorized_power, motorized_choice: this.items[i].motorized_choice, motorized_pieces: this.items[i].motorized_pieces, motorized_lift: this.items[i].motorized_lift,
+        belt_hook: belt_hook, isRomanBlind: isRomanBlind, tape: tape, tape_id: tape_id, blind_spring: this.items[i].blind_spring, blind_tube: this.items[i].blind_tube, blind_easylift: this.items[i].blind_easylift, blind_monosys: this.items[i].blind_monosys,
+        eyelet_curtain: this.items[i].eyelet_curtain, eyelet_sheer: this.items[i].eyelet_sheer
+      }
+
+      console.log(temp);
+
+      this.http.post('https://curtain.vsnap.my/calcPrice', temp).subscribe(a => {
+
+        console.log(a);
+
+        if (this.items[i].type == 'Blinds') {
+          this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['climbing_price']
+          // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
+        } else {
+          if (this.items[i].motorized_upgrade) {
+            this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['motorized']['install'] + a['data']['motorized']['lift'] + a['data']['install']['climbing_price']
+            // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['motorized']['install'] + a['data']['motorized']['lift'] + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
+            if (this.items[i].eyelet_curtain) {
+              this.price += a['data']['curtain']['eyelet_curtain']
+            }
+            if (this.items[i].eyelet_sheer) {
+              this.price += a['data']['sheer']['eyelet_sheer']
+            }
+          } else {
+            // this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['install']['ladder_price'] + a['data']['install']['scaftfolding_price']
+            this.price = <any>Object.values(a['data'] || []).reduce((x: number, y: number) => (x + (y['total'] || 0)), 0) + a['data']['install']['belt_hook'] + a['data']['install']['climbing_price']
+            if (this.items[i].eyelet_curtain) {
+              this.price += a['data']['curtain']['eyelet_curtain']
+            }
+            if (this.items[i].eyelet_sheer) {
+              this.price += a['data']['sheer']['eyelet_sheer']
+            }
+          }
+
+        }
+
+        this.items[i].price = this.price
+
+        this.updateItem()
+
+
+      })
+
+    } else {
+
+      if (this.count == (this.items.length - 1)) {
+        Swal.fire({
+          title: 'Update Completed',
+          heightAuto: false,
+          icon: 'info',
+          showCancelButton: false,
+          timer: 3000
+        })
+        this.count = 0
+      } else {
+        this.count++
+        this.updateFinish()
+      }
+
+    }
+
+  }
+
+  updateItem() {
+
+    let i = this.count
+
+    // if (this.items[i].fabric_type == 'C' || this.items[i].fabric_type == 'CS') {
+    //   this.items[i].hook = null
+    //   this.items[i].custom_hook = null
+
+    //   if (this.items[i].motorized_upgrade && this.items[i].pleat == 'Fake Double Pleat') {
+    //     this.items[i].hook = '104'
+
+    //     if (this.items[i].fabric_type == 'CS') {
+    //       this.items[i].sheer_hook = '104'
+    //     }
+
+    //   } else if (this.items[i].track) {
+    //     if (this.items[i].track == 'Super Track' || this.items[i].track == 'Curve' || this.items[i].track.includes('Existing Super Track') || this.items[i].track.includes('Existing Curve')) {
+    //       this.items[i].hook = this.items[i].bracket == 'Wall' ? '101' : this.items[i].bracket == 'Ceiling' ? '101' : this.items[i].bracket == 'Ceiling Pelmet' ? '104' : null
+
+    //       if (this.items[i].fabric_type == 'CS') {
+    //         this.items[i].sheer_hook = '101'
+    //       }
+
+    //     } else if (this.items[i].track == 'Wooden Rod' || this.items[i].track.includes('Wooden Rod') || this.items[i].track.includes('Cubicle')) {
+    //       this.items[i].hook = '104'
+
+    //       if (this.items[i].fabric_type == 'CS') {
+    //         this.items[i].sheer_hook = '104'
+    //       }
+
+    //     }
+    //   }
+
+    // }
+
+    // if (this.items[i].fabric_type == 'S' || this.items[i].fabric_type == 'CS') {
+    //   this.items[i].sheer_hook = null
+    //   this.items[i].custom_sheer_hook = null
+
+    //   if (this.items[i].motorized_upgrade && this.items[i].pleat_sheer == 'Fake Double Pleat') {
+    //     this.items[i].sheer_hook = '104'
+    //   } else if (this.items[i].track_sheer) {
+    //     if (this.items[i].track_sheer == 'Super Track' || this.items[i].track_sheer == 'Curve' || this.items[i].track_sheer.includes('Existing Super Track') || this.items[i].track_sheer.includes('Existing Curve')) {
+    //       this.items[i].sheer_hook = this.items[i].sheer_bracket == 'Wall' ? '101' : this.items[i].sheer_bracket == 'Ceiling' ? '101' : this.items[i].sheer_bracket == 'Ceiling Pelmet' ? '104' : null
+
+    //       if (this.items[i].fabric_type == 'CS') {
+    //         this.items[i].sheer_hook = '104'
+    //       }
+
+    //     } else if (this.items[i].track_sheer == 'Wooden Rod' || this.items[i].track_sheer.includes('Wooden Rod') || this.items[i].track_sheer.includes('Cubicle')) {
+    //       this.items[i].sheer_hook = '104'
+    //     }
+    //   }
+    // }
+
+    if (this.items[i]['type'] == 'Tailor-Made Curtains' || this.items[i]['type'] == 'Motorised Curtains') {
+
+      if (this.items[i].pleat == 'Eyelet Design' || this.items[i].pleat == 'Ripplefold' || this.items[i].pleat == 'Fake Double Pleat') {
+        console.log('C1');
+
+        if (this.items[i].fabric_type == 'C') {
+
+          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pieces_curtain', 'bracket', 'sidehook', 'belt', 'touchfloor', 'fabric'].every(a => this.items[i][a])) {
+
+            let temp = {
+              no: this.items[i].no,
+              sales_id: this.items[i].sales_id,
+              location: this.items[i].location,
+              location_ref: this.items[i].location_ref,
+              height: this.items[i].height,
+              width: this.items[i].width,
+              track: this.items[i].track,
+              type: this.items[i].type,
+              pleat: this.items[i].pleat,
+              pleat_sheer: null,
+              fullness: this.items[i].fullness,
+              eyelet_curtain: this.items[i].eyelet_curtain,
+              eyelet_sheer: this.items[i].eyelet_sheer,
+              pieces_curtain: this.items[i].pieces_curtain,
+              bracket: this.items[i].bracket,
+              hook: this.items[i].hook,
+              sidehook: this.items[i].sidehook,
+              belt: this.items[i].belt,
+              touchfloor: this.items[i].touchfloor,
+              fabric: this.items[i].fabric,
+              fabric_sheer: null,
+              fabric_lining: this.items[i].fabric_lining,
+              code_lining: this.items[i].code_lining,
+              code_curtain: this.items[i].code_curtain,
+              fabric_type: this.items[i].fabric_type,
+              custom_bracket: this.items[i].custom_bracket,
+              custom_belt: this.items[i].custom_belt,
+              price: this.price,
+              status: true,
+              photos: JSON.stringify(this.items[i].photos),
+              remark_sale: this.items[i].remark_sale,
+              remark_curtain: this.items[i].remark_curtain,
+              status_sale: 'Completed',
+              status_tech: 'Pending',
+              need_ladder: this.items[i].need_ladder,
+              need_scaftfolding: this.items[i].need_scaftfolding,
+              step: 2,
+              promo_curtain: this.items[i].promo_curtain || 0,
+              promo_lining: this.items[i].promo_lining || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
+
+              // Additional
+              track_sheer: null,
+              fullness_sheer: null,
+              pieces_sheer: null,
+              sheer_bracket: null,
+              sheer_sidehook: null,
+              sheer_belt: null,
+              sheer_touchfloor: null,
+              code_sheer: null,
+              custom_sheer_bracket: null,
+              custom_sheer_belt: null,
+              remark_sheer: null,
+              promo_sheer: null || 0,
+
+              pieces_blind: null,
+              blind_decoration: null,
+              rope_chain: null,
+              promo_blind: null || 0,
+
+              blind_tape: null,
+              fabric_blind: null,
+              code_blind: null,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
+            }
+
+            if (this.items[i].motorized_upgrade) {
+              temp.motorized_upgrade = this.items[i].motorized_upgrade
+              temp.motorized_power = this.items[i].motorized_power
+              temp.motorized_sides = this.items[i].motorized_sides
+              temp.motorized_cost = this.items[i].motorized_cost
+              temp.motorized_choice = this.items[i].motorized_choice
+              temp.motorized_pieces = this.items[i].motorized_pieces
+              temp.motorized_lift = this.items[i].motorized_lift
+            }
+
+            console.log(temp);
+
+            this.updateOrder(temp)
+
+          } else {
+            console.log('error empty')
+            this.errorEmpty()
+          }
+        } else if (this.items[i].fabric_type == 'S') {
+          console.log('S1');
+          if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_sheer', 'sheer_bracket', 'sheer_sidehook', 'fabric_sheer'].every(a => this.items[i][a])) {
+
+            let temp = {
+              no: this.items[i].no,
+              sales_id: this.items[i].sales_id,
+              location: this.items[i].location,
+              location_ref: this.items[i].location_ref,
+              height: this.items[i].height,
+              width: this.items[i].width,
+              track_sheer: this.items[i].track_sheer,
+              type: this.items[i].type,
+              pleat: null,
+              pleat_sheer: this.items[i].pleat_sheer,
+              fullness_sheer: this.items[i].fullness_sheer,
+              eyelet_curtain: this.items[i].eyelet_curtain,
+              eyelet_sheer: this.items[i].eyelet_sheer,
+              pieces_sheer: this.items[i].pieces_sheer,
+              sheer_bracket: this.items[i].sheer_bracket,
+              sheer_hook: this.items[i].sheer_hook,
+              sheer_sidehook: this.items[i].sheer_sidehook,
+              sheer_belt: this.items[i].sheer_belt,
+              sheer_touchfloor: this.items[i].sheer_touchfloor,
+              fabric: null,
+              fabric_sheer: this.items[i].fabric_sheer,
+              fabric_lining: null,
+              code_sheer: this.items[i].code_sheer,
+              fabric_type: this.items[i].fabric_type,
+              custom_sheer_bracket: this.items[i].custom_sheer_bracket,
+              custom_sheer_belt: this.items[i].custom_sheer_belt,
+              price: this.price,
+              status: true,
+              photos: JSON.stringify(this.items[i].photos),
+              remark_sale: this.items[i].remark_sale,
+              remark_sheer: this.items[i].remark_sheer,
+              status_sale: 'Completed',
+              status_tech: 'Pending',
+              need_ladder: this.items[i].need_ladder,
+              need_scaftfolding: this.items[i].need_scaftfolding,
+              step: 2,
+              promo_sheer: this.items[i].promo_sheer || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
+
+              // Additional
+              track: null,
+              fullness: null,
+              pieces_curtain: null,
+              bracket: null,
+              sidehook: null,
+              belt: null,
+              touchfloor: null,
+              code_lining: null,
+              code_curtain: null,
+              custom_bracket: null,
+              custom_belt: null,
+              remark_curtain: null,
+              promo_curtain: null || 0,
+              promo_lining: null || 0,
+
+              pieces_blind: null,
+              blind_decoration: null,
+              rope_chain: null,
+              promo_blind: null || 0,
+
+              blind_tape: null,
+              fabric_blind: null,
+              code_blind: null,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
+            }
+
+            if (this.items[i].motorized_upgrade) {
+              temp.motorized_upgrade = this.items[i].motorized_upgrade
+              temp.motorized_power = this.items[i].motorized_power
+              temp.motorized_sides = this.items[i].motorized_sides
+              temp.motorized_cost = this.items[i].motorized_cost
+              temp.motorized_choice = this.items[i].motorized_choice
+              temp.motorized_pieces = this.items[i].motorized_pieces
+              temp.motorized_lift = this.items[i].motorized_lift
+            }
+
+            console.log(temp);
+
+            this.updateOrder(temp)
+
+          } else {
+            console.log('error empty')
+            this.errorEmpty()
+          }
+        } else if (this.items[i].fabric_type == 'CS') {
+          console.log('CS1');
+
+          this.items[i].custom_sheer_bracket = this.items[i].custom_bracket
+          this.items[i].sheer_bracket = this.items[i].bracket
+          this.items[i].custom_sheer_belt = true
+          this.items[i].sheer_belt = 'X'
+
+          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pleat_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket', 'sidehook', 'belt', 'touchfloor', 'sheer_sidehook', 'fabric', 'fabric_sheer'].every(a => this.items[i][a])) {
+            // , 'sheer_touchfloor' 'track', 'track_sheer',
+            let temp = {
+              no: this.items[i].no,
+              sales_id: this.items[i].sales_id,
+              location: this.items[i].location,
+              location_ref: this.items[i].location_ref,
+              height: this.items[i].height,
+              width: this.items[i].width,
+              track: this.items[i].track,
+              track_sheer: this.items[i].track_sheer,
+              type: this.items[i].type,
+              pleat: this.items[i].pleat,
+              pleat_sheer: this.items[i].pleat_sheer,
+              eyelet_curtain: this.items[i].eyelet_curtain,
+              eyelet_sheer: this.items[i].eyelet_sheer,
+              fullness: this.items[i].fullness,
+              fullness_sheer: this.items[i].fullness_sheer,
+              pieces_curtain: this.items[i].pieces_curtain,
+              pieces_sheer: this.items[i].pieces_sheer,
+              bracket: this.items[i].bracket,
+              hook: this.items[i].hook,
+              sidehook: this.items[i].sidehook,
+              belt: this.items[i].belt,
+              touchfloor: this.items[i].touchfloor,
+              sheer_bracket: this.items[i].sheer_bracket,
+              sheer_hook: this.items[i].sheer_hook,
+              sheer_sidehook: this.items[i].sheer_sidehook,
+              sheer_belt: this.items[i].sheer_belt,
+              // sheer_touchfloor: this.items[i].sheer_touchfloor,
+              fabric: this.items[i].fabric,
+              fabric_sheer: this.items[i].fabric_sheer,
+              fabric_lining: this.items[i].fabric_lining,
+              code_sheer: this.items[i].code_sheer,
+              code_lining: this.items[i].code_lining,
+              code_curtain: this.items[i].code_curtain,
+              fabric_type: this.items[i].fabric_type,
+              custom_bracket: this.items[i].custom_bracket,
+              custom_belt: this.items[i].custom_belt,
+              custom_sheer_bracket: this.items[i].custom_sheer_bracket,
+              custom_sheer_belt: this.items[i].custom_sheer_belt,
+              price: this.price,
+              status: true,
+              photos: JSON.stringify(this.items[i].photos),
+              remark_sale: this.items[i].remark_sale,
+              remark_curtain: this.items[i].remark_curtain,
+              remark_sheer: this.items[i].remark_sheer,
+              status_sale: 'Completed',
+              status_tech: 'Pending',
+              need_ladder: this.items[i].need_ladder,
+              need_scaftfolding: this.items[i].need_scaftfolding,
+              step: 2,
+              promo_curtain: this.items[i].promo_curtain || 0,
+              promo_lining: this.items[i].promo_lining || 0,
+              promo_sheer: this.items[i].promo_sheer || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
+
+              // Additional
+              sheer_touchfloor: null,
+              pieces_blind: null,
+              blind_decoration: null,
+              rope_chain: null,
+              promo_blind: null || 0,
+
+              blind_tape: null,
+              fabric_blind: null,
+              code_blind: null,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
+            }
+
+            if (this.items[i].motorized_upgrade) {
+              temp.motorized_upgrade = this.items[i].motorized_upgrade
+              temp.motorized_power = this.items[i].motorized_power
+              temp.motorized_sides = this.items[i].motorized_sides
+              temp.motorized_cost = this.items[i].motorized_cost
+              temp.motorized_choice = this.items[i].motorized_choice
+              temp.motorized_pieces = this.items[i].motorized_pieces
+              temp.motorized_lift = this.items[i].motorized_lift
+            }
+
+            console.log(temp);
+
+            this.updateOrder(temp)
+
+          } else {
+            console.log('error empty')
+            this.errorEmpty()
+          }
+        }
+
+      } else {
+        if (this.items[i].fabric_type == 'C') {
+          console.log('C2');
+          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pieces_curtain', 'bracket', 'sidehook', 'belt', 'touchfloor', 'fabric'].every(a => this.items[i][a])) {
+
+            let temp = {
+              no: this.items[i].no,
+              sales_id: this.items[i].sales_id,
+              location: this.items[i].location,
+              location_ref: this.items[i].location_ref,
+              height: this.items[i].height,
+              width: this.items[i].width,
+              track: this.items[i].track,
+              type: this.items[i].type,
+              pleat: this.items[i].pleat,
+              pleat_sheer: null,
+              eyelet_curtain: this.items[i].eyelet_curtain,
+              eyelet_sheer: this.items[i].eyelet_sheer,
+              fullness: this.items[i].fullness,
+              pieces_curtain: this.items[i].pieces_curtain,
+              bracket: this.items[i].bracket,
+              hook: this.items[i].hook,
+              sidehook: this.items[i].sidehook,
+              belt: this.items[i].belt,
+              touchfloor: this.items[i].touchfloor,
+              fabric: this.items[i].fabric,
+              fabric_sheer: null,
+              fabric_lining: this.items[i].fabric_lining,
+              code_lining: this.items[i].code_lining,
+              code_curtain: this.items[i].code_curtain,
+              fabric_type: this.items[i].fabric_type,
+              custom_bracket: this.items[i].custom_bracket,
+              custom_hook: this.items[i].custom_hook,
+              custom_belt: this.items[i].custom_belt,
+              price: this.price,
+              status: true,
+              photos: JSON.stringify(this.items[i].photos),
+              remark_sale: this.items[i].remark_sale,
+              remark_curtain: this.items[i].remark_curtain,
+              status_sale: 'Completed',
+              status_tech: 'Pending',
+              need_ladder: this.items[i].need_ladder,
+              need_scaftfolding: this.items[i].need_scaftfolding,
+              step: 2,
+              promo_curtain: this.items[i].promo_curtain || 0,
+              promo_lining: this.items[i].promo_lining || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
+
+              // Additional
+              track_sheer: null,
+              fullness_sheer: null,
+              pieces_sheer: null,
+              sheer_bracket: null,
+              sheer_sidehook: null,
+              sheer_belt: null,
+              sheer_touchfloor: null,
+              code_sheer: null,
+              custom_sheer_bracket: null,
+              custom_sheer_belt: null,
+              remark_sheer: null,
+              promo_sheer: null || 0,
+
+              pieces_blind: null,
+              blind_decoration: null,
+              rope_chain: null,
+              promo_blind: null || 0,
+
+              blind_tape: null,
+              fabric_blind: null,
+              code_blind: null,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
+            }
+
+            if (this.items[i].motorized_upgrade) {
+              temp.motorized_upgrade = this.items[i].motorized_upgrade
+              temp.motorized_power = this.items[i].motorized_power
+              temp.motorized_sides = this.items[i].motorized_sides
+              temp.motorized_cost = this.items[i].motorized_cost
+              temp.motorized_choice = this.items[i].motorized_choice
+              temp.motorized_pieces = this.items[i].motorized_pieces
+              temp.motorized_lift = this.items[i].motorized_lift
+            }
+
+            console.log(temp);
+
+            this.updateOrder(temp)
+
+          } else {
+            console.log('error empty')
+            this.errorEmpty()
+
+          }
+
+        } else if (this.items[i].fabric_type == 'S') {
+          console.log('S2');
+          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat_sheer', 'pieces_sheer', 'sheer_sidehook', 'fabric_sheer'].every(a => this.items[i][a])) {
+
+            let temp = {
+              no: this.items[i].no,
+              sales_id: this.items[i].sales_id,
+              location: this.items[i].location,
+              location_ref: this.items[i].location_ref,
+              height: this.items[i].height,
+              width: this.items[i].width,
+              track_sheer: this.items[i].track_sheer,
+              type: this.items[i].type,
+              pleat: null,
+              pleat_sheer: this.items[i].pleat_sheer,
+              eyelet_curtain: this.items[i].eyelet_curtain,
+              eyelet_sheer: this.items[i].eyelet_sheer,
+              fullness_sheer: this.items[i].fullness_sheer,
+              pieces_sheer: this.items[i].pieces_sheer,
+              sheer_bracket: this.items[i].sheer_bracket,
+              sheer_hook: this.items[i].sheer_hook,
+              sheer_sidehook: this.items[i].sheer_sidehook,
+              sheer_belt: this.items[i].sheer_belt,
+              sheer_touchfloor: this.items[i].sheer_touchfloor,
+              fabric: null,
+              fabric_sheer: this.items[i].fabric_sheer,
+              fabric_lining: null,
+              code_sheer: this.items[i].code_sheer,
+              fabric_type: this.items[i].fabric_type,
+              custom_sheer_bracket: this.items[i].custom_sheer_bracket,
+              custom_sheer_hook: this.items[i].custom_sheer_hook,
+              custom_sheer_belt: this.items[i].custom_sheer_belt,
+              price: this.price,
+              status: true,
+              photos: JSON.stringify(this.items[i].photos),
+              remark_sale: this.items[i].remark_sale,
+              remark_sheer: this.items[i].remark_sheer,
+              status_sale: 'Completed',
+              status_tech: 'Pending',
+              need_ladder: this.items[i].need_ladder,
+              need_scaftfolding: this.items[i].need_scaftfolding,
+              step: 2,
+              promo_sheer: this.items[i].promo_sheer || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
+
+              // Additional
+              track: null,
+              fullness: null,
+              pieces_curtain: null,
+              bracket: null,
+              sidehook: null,
+              belt: null,
+              touchfloor: null,
+              code_lining: null,
+              code_curtain: null,
+              custom_bracket: null,
+              custom_belt: null,
+              remark_curtain: null,
+              promo_curtain: null || 0,
+              promo_lining: null || 0,
+
+              pieces_blind: null,
+              blind_decoration: null,
+              rope_chain: null,
+              promo_blind: null || 0,
+              blind_tape: null,
+              fabric_blind: null,
+              code_blind: null,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
+            }
+
+            if (this.items[i].motorized_upgrade) {
+              temp.motorized_upgrade = this.items[i].motorized_upgrade
+              temp.motorized_power = this.items[i].motorized_power
+              temp.motorized_sides = this.items[i].motorized_sides
+              temp.motorized_cost = this.items[i].motorized_cost
+              temp.motorized_choice = this.items[i].motorized_choice
+              temp.motorized_pieces = this.items[i].motorized_pieces
+              temp.motorized_lift = this.items[i].motorized_lift
+            }
+
+            console.log(temp);
+
+            this.updateOrder(temp)
+
+          } else {
+            console.log('error empty')
+            this.errorEmpty()
+          }
+        } else if (this.items[i].fabric_type == 'CS') {
+          console.log('CS2');
+
+          this.items[i].custom_sheer_bracket = this.items[i].custom_bracket
+          this.items[i].sheer_bracket = this.items[i].bracket
+          this.items[i].custom_sheer_belt = true
+          this.items[i].sheer_belt = 'X'
+
+          if (['location', 'location_ref', 'width', 'height', 'type', 'pleat', 'pleat_sheer', 'pieces_curtain', 'pieces_sheer', 'bracket', 'sidehook', 'belt', 'touchfloor', 'sheer_sidehook', 'fabric', 'fabric_sheer'].every(a => this.items[i][a])) {
+            // 'sheer_touchfloor', 'track', 'track_sheer',
+            let temp = {
+              no: this.items[i].no,
+              sales_id: this.items[i].sales_id,
+              location: this.items[i].location,
+              location_ref: this.items[i].location_ref,
+              height: this.items[i].height,
+              width: this.items[i].width,
+              track: this.items[i].track,
+              track_sheer: this.items[i].track_sheer,
+              type: this.items[i].type,
+              pleat: this.items[i].pleat,
+              pleat_sheer: this.items[i].pleat_sheer,
+              eyelet_curtain: this.items[i].eyelet_curtain,
+              eyelet_sheer: this.items[i].eyelet_sheer,
+              fullness: this.items[i].fullness,
+              fullness_sheer: this.items[i].fullness_sheer,
+              pieces_curtain: this.items[i].pieces_curtain,
+              pieces_sheer: this.items[i].pieces_sheer,
+              bracket: this.items[i].bracket,
+              hook: this.items[i].hook,
+              sidehook: this.items[i].sidehook,
+              belt: this.items[i].belt,
+              touchfloor: this.items[i].touchfloor,
+              sheer_bracket: this.items[i].sheer_bracket,
+              sheer_hook: this.items[i].sheer_hook,
+              sheer_sidehook: this.items[i].sheer_sidehook,
+              sheer_belt: this.items[i].sheer_belt,
+              // sheer_touchfloor: this.items[i].sheer_touchfloor,
+              fabric: this.items[i].fabric,
+              fabric_sheer: this.items[i].fabric_sheer,
+              fabric_lining: this.items[i].fabric_lining,
+              code_sheer: this.items[i].code_sheer,
+              code_lining: this.items[i].code_lining,
+              code_curtain: this.items[i].code_curtain,
+              fabric_type: this.items[i].fabric_type,
+              custom_bracket: this.items[i].custom_bracket,
+              custom_hook: this.items[i].custom_hook,
+              custom_belt: this.items[i].custom_belt,
+              custom_sheer_bracket: this.items[i].custom_sheer_bracket,
+              custom_sheer_hook: this.items[i].custom_sheer_hook,
+              custom_sheer_belt: this.items[i].custom_sheer_belt,
+              price: this.price,
+              status: true,
+              photos: JSON.stringify(this.items[i].photos),
+              remark_sale: this.items[i].remark_sale,
+              remark_curtain: this.items[i].remark_curtain,
+              remark_sheer: this.items[i].remark_sheer,
+              status_sale: 'Completed',
+              status_tech: 'Pending',
+              need_ladder: this.items[i].need_ladder,
+              need_scaftfolding: this.items[i].need_scaftfolding,
+              step: 2,
+              promo_curtain: this.items[i].promo_curtain || 0,
+              promo_lining: this.items[i].promo_lining || 0,
+              promo_sheer: this.items[i].promo_sheer || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
+
+              // Additional
+              sheer_touchfloor: null,
+              pieces_blind: null,
+              blind_decoration: null,
+              rope_chain: null,
+              promo_blind: null || 0,
+              blind_tape: null,
+              fabric_blind: null,
+              code_blind: null,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
+            }
+
+            if (this.items[i].motorized_upgrade) {
+              temp.motorized_upgrade = this.items[i].motorized_upgrade
+              temp.motorized_power = this.items[i].motorized_power
+              temp.motorized_sides = this.items[i].motorized_sides
+              temp.motorized_cost = this.items[i].motorized_cost
+              temp.motorized_choice = this.items[i].motorized_choice
+              temp.motorized_pieces = this.items[i].motorized_pieces
+              temp.motorized_lift = this.items[i].motorized_lift
+            }
+
+            console.log(temp);
+
+            this.updateOrder(temp)
+
+          } else {
+            console.log('error empty')
+            this.errorEmpty()
+          }
+        }
+
+      }
+
+    } else if (this.items[i]['type'] == 'Blinds') {
+
+      if (this.items[i].pleat == 'Roman Blind') {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_blind', 'fabric', 'bracket', 'rope_chain'].every(a => this.items[i][a])) {
+
+          let temp = {
+            no: this.items[i].no,
+            sales_id: this.items[i].sales_id,
+            location: this.items[i].location,
+            location_ref: this.items[i].location_ref,
+            height: this.items[i].height,
+            width: this.items[i].width,
+            type: this.items[i].type,
+            pleat: this.items[i].pleat,
+            pieces_blind: this.items[i].pieces_blind,
+            blind_decoration: null,
+            bracket: this.items[i].bracket,
+            rope_chain: this.items[i].rope_chain,
+            // hook: this.items[i].hook,
+            // sidehook: this.items[i].sidehook,
+            // belt: this.items[i].belt,
+            // fabric_blind: this.items[i].fabric_blind,
+            fabric: this.items[i].fabric,
+            fabric_lining: this.items[i].fabric_lining,
+            code_lining: this.items[i].code_lining,
+            code_curtain: this.items[i].code_curtain,
+            custom_bracket: this.items[i].custom_bracket,
+            // custom_hook: this.items[i].custom_hook,
+            // custom_belt: this.items[i].custom_belt,
+            price: this.price,
+            status: true,
+            photos: JSON.stringify(this.items[i].photos),
+            remark_sale: this.items[i].remark_sale,
+            status_sale: 'Completed',
+            status_tech: 'Pending',
+            need_ladder: this.items[i].need_ladder,
+            need_scaftfolding: this.items[i].need_scaftfolding,
+            step: 2,
+            promo_lining: this.items[i].promo_lining || 0,
+            promo_blind: this.items[i].promo_blind || 0,
+
+            // Additional
+            track: null,
+            pleat_sheer: null,
+            eyelet_curtain: null,
+            eyelet_sheer: null,
+            fullness: null,
+            pieces_curtain: null,
+            sidehook: null,
+            belt: null,
+            touchfloor: null,
+            fabric_sheer: null,
+            fabric_type: null,
+            custom_belt: null,
+            remark_curtain: null,
+            promo_curtain: null || 0,
+            motorized_upgrade: null,
+            motorized_power: null,
+            motorized_sides: null,
+            motorized_cost: null,
+            motorized_choice: null,
+            motorized_pieces: null,
+            motorized_lift: null,
+
+            track_sheer: null,
+            fullness_sheer: null,
+            pieces_sheer: null,
+            sheer_bracket: null,
+            sheer_sidehook: null,
+            sheer_belt: null,
+            sheer_touchfloor: null,
+            code_sheer: null,
+            custom_sheer_bracket: null,
+            custom_sheer_belt: null,
+            remark_sheer: null,
+            promo_sheer: null || 0,
+
+            blind_tape: null,
+            fabric_blind: null,
+            code_blind: null,
+            blind_spring: null,
+            blind_tube: null,
+            blind_easylift: null,
+            blind_monosys: null,
+          }
+
+          if (this.info['show_decoration']) {
+            temp.blind_decoration = this.items[i].blind_decoration
+          }
+
+          console.log(temp);
+
+          this.updateOrder(temp)
+
+
+        } else {
+          console.log('error empty')
+          this.errorEmpty()
+        }
+      } else if (this.items[i].pleat == 'Zebra Blind' || this.items[i].pleat == 'Roller Blind' || this.items[i].pleat == 'Wooden Blind' || this.items[i].pleat == 'Venetian Blinds') {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'rope_chain', 'pieces_blind', 'fabric_blind', 'bracket'].every(a => this.items[i][a])) {
+
+
+          if (this.items[i].pleat == 'Wooden Blind' && ((this.items[i].blind_decoration && !this.items[i].blind_tape) || (!this.items[i].blind_decoration && this.items[i].blind_tape))) {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top',
+              showConfirmButton: false,
+              timer: 1500,
+              timerProgressBar: true,
+            })
+
+            Toast.fire({
+              icon: 'error',
+              title: 'Decorations or Tape is empty.'
+            })
+          } else {
+
+            let temp = {
+              no: this.items[i].no,
+              sales_id: this.items[i].sales_id,
+              location: this.items[i].location,
+              location_ref: this.items[i].location_ref,
+              height: this.items[i].height,
+              width: this.items[i].width,
+              type: this.items[i].type,
+              pleat: this.items[i].pleat,
+              pieces_blind: this.items[i].pieces_blind,
+              blind_decoration: null,
+              blind_tape: null,
+              bracket: this.items[i].bracket,
+              rope_chain: this.items[i].rope_chain,
+              // hook: this.items[i].hook,
+              // sidehook: this.items[i].sidehook,
+              // belt: this.items[i].belt,
+              fabric_blind: this.items[i].fabric_blind,
+              code_blind: this.items[i].code_blind,
+              custom_bracket: this.items[i].custom_bracket,
+              // custom_hook: this.items[i].custom_hook,
+              // custom_belt: this.items[i].custom_belt,
+              price: this.price,
+              status: true,
+              photos: JSON.stringify(this.items[i].photos),
+              remark_sale: this.items[i].remark_sale,
+              status_sale: 'Completed',
+              status_tech: 'Pending',
+              need_ladder: this.items[i].need_ladder,
+              need_scaftfolding: this.items[i].need_scaftfolding,
+              step: 2,
+              promo_blind: this.items[i].promo_blind || 0,
+              blind_spring: null,
+              blind_tube: null,
+              blind_easylift: null,
+              blind_monosys: null,
+
+              // Additional
+              track: null,
+              pleat_sheer: null,
+              eyelet_curtain: null,
+              eyelet_sheer: null,
+              fullness: null,
+              pieces_curtain: null,
+              sidehook: null,
+              belt: null,
+              touchfloor: null,
+              fabric: null,
+              fabric_sheer: null,
+              fabric_lining: null,
+              code_lining: null,
+              code_curtain: null,
+              fabric_type: null,
+              custom_belt: null,
+              remark_curtain: null,
+              promo_curtain: null || 0,
+              promo_lining: null || 0,
+              motorized_upgrade: null,
+              motorized_power: null,
+              motorized_sides: null,
+              motorized_cost: null,
+              motorized_choice: null,
+              motorized_pieces: null,
+              motorized_lift: null,
+
+              track_sheer: null,
+              fullness_sheer: null,
+              pieces_sheer: null,
+              sheer_bracket: null,
+              sheer_sidehook: null,
+              sheer_belt: null,
+              sheer_touchfloor: null,
+              code_sheer: null,
+              custom_sheer_bracket: null,
+              custom_sheer_belt: null,
+              remark_sheer: null,
+              promo_sheer: null || 0,
+            }
+
+            if (this.items[i].pleat == 'Zebra Blind') {
+              temp.blind_tube = this.items[i].blind_tube
+            }
+            if (this.items[i].pleat == 'Roller Blind') {
+              temp.blind_spring = this.items[i].blind_spring
+              temp.blind_tube = this.items[i].blind_tube
+            }
+            if (this.items[i].pleat == 'Wooden Blind') {
+              temp.blind_easylift = this.items[i].blind_easylift
+              temp.blind_monosys = this.items[i].blind_monosys
+            }
+            if (this.items[i].pleat == 'Wooden Blind' || this.items[i].pleat == 'Venetian Blinds') {
+              temp.blind_tape = this.items[i].blind_tape
+            }
+
+            if (this.info['show_decoration']) {
+              temp.blind_decoration = this.items[i].blind_decoration
+            }
+            console.log(temp);
+
+            this.updateOrder(temp)
+          }
+
+
+        } else {
+          console.log('error empty')
+          this.errorEmpty()
+        }
+      } else {
+        if (['location', 'location_ref', 'width', 'height', 'type', 'pieces_blind', 'rope_chain', 'fabric_blind', 'bracket'].every(a => this.items[i][a])) {
+
+          let temp = {
+            no: this.items[i].no,
+            sales_id: this.items[i].sales_id,
+            location: this.items[i].location,
+            location_ref: this.items[i].location_ref,
+            height: this.items[i].height,
+            width: this.items[i].width,
+            type: this.items[i].type,
+            pleat: this.items[i].pleat,
+            pieces_blind: this.items[i].pieces_blind,
+            bracket: this.items[i].bracket,
+            rope_chain: this.items[i].rope_chain,
+            // hook: this.items[i].hook,
+            // sidehook: this.items[i].sidehook,
+            // belt: this.items[i].belt,
+            fabric_blind: this.items[i].fabric_blind,
+            code_blind: this.items[i].code_blind,
+            custom_bracket: this.items[i].custom_bracket,
+            // custom_hook: this.items[i].custom_hook,
+            // custom_belt: this.items[i].custom_belt,
+            price: this.price,
+            status: true,
+            photos: JSON.stringify(this.items[i].photos),
+            remark_sale: this.items[i].remark_sale,
+            status_sale: 'Completed',
+            status_tech: 'Pending',
+            need_ladder: this.items[i].need_ladder,
+            need_scaftfolding: this.items[i].need_scaftfolding,
+            step: 2,
+            promo_blind: this.items[i].promo_blind || 0,
+
+            // Additional
+            track: null,
+            pleat_sheer: null,
+            eyelet_curtain: null,
+            eyelet_sheer: null,
+            fullness: null,
+            pieces_curtain: null,
+            sidehook: null,
+            belt: null,
+            touchfloor: null,
+            fabric: null,
+            fabric_sheer: null,
+            fabric_lining: null,
+            code_lining: null,
+            code_curtain: null,
+            fabric_type: null,
+            custom_belt: null,
+            remark_curtain: null,
+            promo_curtain: null || 0,
+            promo_lining: null || 0,
+            motorized_upgrade: null,
+            motorized_power: null,
+            motorized_sides: null,
+            motorized_cost: null,
+            motorized_choice: null,
+            motorized_pieces: null,
+            motorized_lift: null,
+            track_sheer: null,
+            fullness_sheer: null,
+            pieces_sheer: null,
+            sheer_bracket: null,
+            sheer_sidehook: null,
+            sheer_belt: null,
+            sheer_touchfloor: null,
+            code_sheer: null,
+            custom_sheer_bracket: null,
+            custom_sheer_belt: null,
+            remark_sheer: null,
+            promo_sheer: null || 0,
+
+            blind_decoration: null,
+            blind_tape: null,
+            blind_spring: null,
+            blind_tube: null,
+            blind_easylift: null,
+            blind_monosys: null,
+          }
+          console.log(temp);
+
+          this.updateOrder(temp)
+
+
+        } else {
+          console.log('error empty')
+          this.errorEmpty()
+        }
+      }
+
+    }
+
+  }
+
+  updateOrder(temp) {
+    this.http.post('https://curtain.vsnap.my/updateorders', temp).subscribe(a => {
+      if (this.count == (this.items.length - 1)) {
+
+        Swal.fire({
+          title: 'Update Completed',
+          heightAuto: false,
+          icon: 'info',
+          showCancelButton: false,
+          timer: 3000
+        })
+
+        this.count = 0
+      } else {
+        this.count++
+        this.updateFinish()
+      }
+    })
+  }
+
+  errorEmpty() {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top',
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+    })
+
+    Toast.fire({
+      icon: 'error',
+      title: 'Please Fill in all fields.'
+    })
+  }
+
+  calcErrorMsg(x, y) {
+    Swal.fire({
+      title: x + ' Error',
+      // text: "Please check the curtain's fabric?",
+      html: "Please check the " + y + ", possible issues:<br>- " + x + " Availability<br>- " + x + " Name Changed<br>(Try reselect the " + y + ")",
+      heightAuto: false,
+      icon: 'error',
+      allowOutsideClick: false,
+      showConfirmButton: true,
+      showCancelButton: false,
+    })
+  }
+
   isEditCancel() {
     this.isEdit = false
     this.refreshList()
@@ -1299,6 +2705,10 @@ export class TaskDetailPage implements OnInit {
 
   back() {
     this.nav.pop()
+  }
+
+  lengthof(x) {
+    return x ? Object.keys(x).length : 0
   }
 
 }
