@@ -440,7 +440,7 @@ export class TaskDetailReviewPage implements OnInit {
           this.emptychecker()
         }
       } else {
-        if (['area', 'area_ref', 'tech_width', 'tech_height', 'pleat', 'rope_chain', 'product', 'pieces_blind', 'fabric', 'bracket'].every(a => this.checker[a])) {
+        if (['area', 'area_ref', 'tech_width', 'tech_height', 'product', 'pieces_blind', 'bracket', 'rope_chain'].every(a => this.checker[a])) {
 
           this.pass()
 
