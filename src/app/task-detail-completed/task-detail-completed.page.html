@@ -20,7 +20,7 @@
 
 <ion-content style="--background: #FAF7F2">
 
-  <div style="width: 100vw;">
+  <div *ngIf="user.position != 'Tailor'" style="width: 100vw;">
 
     <div style="width: 100%; padding: 10px; background-color: #ebd1af; ">
       <div style="color: #a17635; font-weight: 600; font-size: 12px;"> Client Details</div>
@@ -197,6 +197,101 @@
 
         </div>
 
+      </div>
+
+      <div
+        style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 50px;">
+        <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+        <div style="width: 100px;font-size: 12px;color: #999;text-align: center;">Total {{items.length}} items</div>
+        <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="user.position == 'Tailor'" style="width: 100vw;">
+
+    <div
+      style="width: 100%; padding: 10px; background-color: #ebd1af; display: flex; align-items: center; justify-content: space-between; ">
+      <div style="color: #a17635; font-weight: 600; font-size: 13px;"> Product Details</div>
+    </div>
+
+    <div style="width: 100%;padding: 10px;">
+
+      <div
+        style="width: 100%; padding:10px; border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: white; margin-bottom: 10px;">
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+
+          <div *ngFor="let x of items; let i = index"
+            style="border-radius: 5px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; background: #FAF7F2; position: relative; display: flex; flex-direction: column;">
+
+            <div (click)="reviewTaskCompleted(x)" style="display: flex; flex-direction: column; flex-grow: 1;">
+
+              <!-- Description -->
+              <div
+                style="padding: 10px 10px 0 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+
+                <div style="font-weight: 600; color: #000;">
+                  <div *ngIf="x.type == 'Tailor-Made Curtains' || x.type == 'Blinds'" style="font-size: 14px;">
+                    {{x.location}} {{x.location_ref || ''}}</div>
+                  <div *ngIf="x.type == '1'" style="font-size: 14px;">A La Carte - Supply Fabrics Only</div>
+                  <div *ngIf="x.type == '2'" style="font-size: 14px;">A La Carte - Supply Track Only</div>
+                  <div *ngIf="x.type == '3'" style="font-size: 14px;">A La Carte - Supply Accessories Only</div>
+                  <div *ngIf="x.type == '4'" style="font-size: 14px;">A La Carte - Supply & Install Motor Track</div>
+                  <div *ngIf="x.type == '5'" style="font-size: 14px;">A La Carte - Sewing Only</div>
+                  <div *ngIf="x.type == '6'" style="font-size: 14px;">A La Carte - Supply Wallpaper Only</div>
+
+                </div>
+
+                <!-- Pushes the following content to the bottom -->
+                <div>
+
+                  <!-- Schedule Date -->
+                  <div style="display: flex; flex-direction: column; align-items: end; margin-top: 10px;">
+                    <div *ngIf="x.type == 'Tailor-Made Curtains' || x.type == 'Blinds'">{{x.type}}</div>
+                    <div *ngIf="x.type == '1'">Fabrics Only</div>
+                    <div *ngIf="x.type == '2'">Track Only</div>
+                    <div *ngIf="x.type == '3'">Accessories Only</div>
+                    <div *ngIf="x.type == '4'">Supply & Install Motor Track</div>
+                    <div *ngIf="x.type == '5'">Sewing Only</div>
+                    <div *ngIf="x.type == '6'">Wallpaper Only</div>
+                    <div *ngIf="x.tailor_schedule" style="color: green;">
+                      {{x.tailor_schedule | date: 'dd MMM yyyy'}}
+                    </div>
+                    <div *ngIf="!x.tailor_schedule" style="color: tomato;">
+                      Not Scheduled
+                    </div>
+                    <div [ngStyle]="{'color': x.tailor_status_no == 1 ? '#46b846' : '#f58c0a' }">
+                      {{x.tailor_status_text}}
+                    </div>
+                  </div>
+
+                  <!-- View / Update -->
+                  <div style="width: 100%; padding: 5px 0; border-top: 1px solid #eeeeee; margin-top: 5px; ">
+                    <div style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                      <div style="font-size: 12px; font-weight: 500; color: #888888;">View / Update</div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Pop-Up -->
+            <div *ngIf="!x.tailor_schedule_status" (click)="checkTailorAction(x)"
+              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #b8b8b8ba; backdrop-filter: blur(1px); display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+              <div style="color: #fff; font-size: 16px; font-weight: bold;">
+                Not Scheduled
+              </div>
+            </div>
+
+          </div>
+
+        </div>
       </div>
 
       <div

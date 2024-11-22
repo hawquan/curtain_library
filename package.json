@@ -1,6 +1,6 @@
 {
   "name": "curtain_library",
-  "version": "0.0.73",
+  "version": "0.0.74",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -22,6 +22,7 @@
     "@awesome-cordova-plugins/camera": "^6.3.0",
     "@awesome-cordova-plugins/core": "^6.3.0",
     "@awesome-cordova-plugins/safari-view-controller": "^6.2.0",
+    "@capacitor/core": "6.2.0",
     "@ionic-native/camera": "^5.36.0",
     "@ionic-native/core": "^5.36.0",
     "@ionic-native/file": "^5.36.0",

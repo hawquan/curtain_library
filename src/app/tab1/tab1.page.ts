@@ -229,8 +229,8 @@ export class Tab1Page implements OnInit {
             this.sortSalesC = true
             // this.sortSalesV = true
             // this.filterPendingList()
-            // this.filterOnGoingList()
-            // this.filterCompletedList()
+            this.filterOnGoingList()
+            this.filterCompletedList()
             console.log(this.salesList, this.salesListOngoing, this.salesListCompleted, this.salesListVoid);
 
           })
@@ -298,7 +298,7 @@ export class Tab1Page implements OnInit {
     } else if (this.user.position == 'Technician') {
       this.salesListOngoing = this.salesListOngoing.filter(x => x.step >= 3 && x.step < 5)
     } else if (this.user.position == 'Tailor') {
-      this.salesListOngoing = this.salesListOngoing.filter(x => x.step >= 4 && x.step < 5)
+      this.salesListOngoing = this.salesListOngoing.filter(x => x.step < 4)
     }
     // else if (type == 'installer') {
     //   return this.pendingListInstaller.filter(x => x.step >= 4 && x.step < 5)
@@ -315,7 +315,12 @@ export class Tab1Page implements OnInit {
     // } else if (type == 'installer') {
     //   return this.salesList.filter(x => x.step == 5)
     // }
-    this.salesListCompleted = this.salesListCompleted.filter(x => x.step == 5)
+    if (this.user.position != 'Tailor') {
+      this.salesListCompleted = this.salesListCompleted.filter(x => x.step == 5)
+    } else {
+      this.salesListCompleted = this.salesListCompleted.filter(x => x.step >= 4)
+
+    }
   }
 
   sortListP() {

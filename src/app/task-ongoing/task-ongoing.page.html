@@ -939,94 +939,96 @@
 
     <div style="width: 100%;padding: 10px;">
 
-      <div *ngFor="let x of items; let i = index"
-        style="width: 100%; padding:10px; border-radius: 5px;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;background: white;margin-bottom: 10px;">
-        <div (click)="show != i ? show = i : show = null"
-          style="width: 100%;display: flex;justify-content: space-between;">
-          <div>{{x.location}}</div>
+      <div *ngFor="let x of items; let i = index" style="width: 100%; margin-bottom: 10px;">
+        
+        <div *ngIf="x.type == 'Tailor-Made Curtains' || x.type == 'Blinds' "
+          style="padding:10px; border-radius: 5px;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;background: white;margin-bottom: 10px;">
+          <div (click)="show != i ? show = i : show = null"
+            style="width: 100%;display: flex;justify-content: space-between;">
+            <div>{{x.location}}</div>
 
-          <div style="display: flex;">
-            <div style="margin-right: 8px;"></div>
+            <div style="display: flex;">
+              <div style="margin-right: 8px;"></div>
+              <div
+                [ngClass]="x.status_tech == 'Approved' ? 'approve' : (x.status_tech == 'Revisited' ? 'approve' :(x.status_tech == 'Rejected' ? 'reject' : ''))"
+                style="margin-right: 15px;">
+                {{x.status_tech}}
+              </div>
+              <ion-icon [ngStyle]="{'transform': show == i ? 'rotate(180deg)' : ''}" name="chevron-down-outline">
+              </ion-icon>
+            </div>
+
+          </div>
+
+          <div [ngClass]="show == i ? 'show' : 'hide'"
+            style="width: 100%;display: flex;flex-direction: column; align-items: center;">
+
             <div
-              [ngClass]="x.status_tech == 'Approved' ? 'approve' : (x.status_tech == 'Revisited' ? 'approve' :(x.status_tech == 'Rejected' ? 'reject' : ''))"
-              style="margin-right: 15px;">
-              {{x.status_tech}}
-            </div>
-            <ion-icon [ngStyle]="{'transform': show == i ? 'rotate(180deg)' : ''}" name="chevron-down-outline">
-            </ion-icon>
-          </div>
-
-        </div>
-
-        <div [ngClass]="show == i ? 'show' : 'hide'"
-          style="width: 100%;display: flex;flex-direction: column; align-items: center;">
-
-          <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;padding-top: 10px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Width (inch)
-            </div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <div
-                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;padding: 7px 10px;border-radius: 2px;">
-                {{x.width_tech || x.width}}
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;padding-top: 10px;">
+              <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Width (inch)
+              </div>
+              <div style="display: flex;align-items: center;margin-top: 5px;">
+                <div
+                  style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;padding: 7px 10px;border-radius: 2px;">
+                  {{x.width_tech || x.width}}
+                </div>
               </div>
             </div>
-          </div>
 
-          <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Height (inch)</div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <div
-                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;padding: 7px 10px;border-radius: 2px;">
-                {{x.height_tech || x.height}}
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+              <div style="font-size: 12px; color: #636161; font-weight: 500;">Curtain Height (inch)</div>
+              <div style="display: flex;align-items: center;margin-top: 5px;">
+                <div
+                  style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;padding: 7px 10px;border-radius: 2px;">
+                  {{x.height_tech || x.height}}
+                </div>
               </div>
             </div>
-          </div>
 
 
-          <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Product Type
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+              <div style="font-size: 12px; color: #636161; font-weight: 500;">Product Type
+              </div>
+              <div style="display: flex;align-items: center;margin-top: 5px;">
+                <ion-input [(ngModel)]="x.type" readonly
+                  style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
+                </ion-input>
+              </div>
             </div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <ion-input [(ngModel)]="x.type" readonly
-                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
-              </ion-input>
-            </div>
-          </div>
 
-          <div
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Pleat Type
+            <div
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+              <div style="font-size: 12px; color: #636161; font-weight: 500;">Pleat Type
+              </div>
+              <div style="display: flex;align-items: center;margin-top: 5px;">
+                <ion-input [(ngModel)]="x.pleat" readonly
+                  style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
+                </ion-input>
+              </div>
             </div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <ion-input [(ngModel)]="x.pleat" readonly
-                style="background-color: #eeeeee;width: 140px; height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;border-radius: 2px;">
-              </ion-input>
-            </div>
-          </div>
 
-          <div *ngIf="x['type'] == 'Wallpaper'"
-            style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
-            <div style="font-size: 12px; color: #636161; font-weight: 500;">Pleat Type <span
-                style="color: red;">*</span>
-            </div>
-            <div style="display: flex;align-items: center;margin-top: 5px;">
-              <ion-select class="ion-no-padding" [(ngModel)]="x['pleat']" placeholder="Select a pleat type"
-                interface="popover" md="ios" (ionChange)="typeChanged()"
-                [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="height: 30px; margin-right: 10px;font-size: 13px;
+            <div *ngIf="x['type'] == 'Wallpaper'"
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+              <div style="font-size: 12px; color: #636161; font-weight: 500;">Pleat Type <span
+                  style="color: red;">*</span>
+              </div>
+              <div style="display: flex;align-items: center;margin-top: 5px;">
+                <ion-select class="ion-no-padding" [(ngModel)]="x['pleat']" placeholder="Select a pleat type"
+                  interface="popover" md="ios" (ionChange)="typeChanged()"
+                  [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}" style="height: 30px; margin-right: 10px;font-size: 13px;
              padding: 0 10px; border-radius: 2px;background: #eeeeee;" disabled>
-                <ion-select-option value="Plain">Plain</ion-select-option>
-                <ion-select-option value="Fabric">Fabric</ion-select-option>
-                <ion-select-option value="Non-Woven">Non-Woven</ion-select-option>
-                <ion-select-option value="Patterned">Patterned</ion-select-option>
-                <ion-select-option value="Vinyl">Vinyl</ion-select-option>
-              </ion-select>
+                  <ion-select-option value="Plain">Plain</ion-select-option>
+                  <ion-select-option value="Fabric">Fabric</ion-select-option>
+                  <ion-select-option value="Non-Woven">Non-Woven</ion-select-option>
+                  <ion-select-option value="Patterned">Patterned</ion-select-option>
+                  <ion-select-option value="Vinyl">Vinyl</ion-select-option>
+                </ion-select>
+              </div>
             </div>
-          </div>
 
-          <!-- <div
+            <!-- <div
             style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
 
             <div style="font-size: 12px; color: #636161; font-weight: 500;">Item Price</div>
@@ -1039,20 +1041,22 @@
 
           </div> -->
 
-          <div style="width: 100%;display: flex;justify-content: space-between;align-items: center;margin: 5px 0;">
+            <div style="width: 100%;display: flex;justify-content: space-between;align-items: center;margin: 5px 0;">
 
-            <div style="display: flex;align-items: center;justify-content: center;">
+              <div style="display: flex;align-items: center;justify-content: center;">
 
-              <div (click)="ongoingViewDetails(x)"
-                style="text-align: center; font-weight: 600; font-size: 12px;letter-spacing: 0.7px;color: green;">
-                View Details
+                <div (click)="ongoingViewDetails(x)"
+                  style="text-align: center; font-weight: 600; font-size: 12px;letter-spacing: 0.7px;color: green;">
+                  View Details
+                </div>
               </div>
-            </div>
 
-            <!-- <div (click)="quotationSingle(x,i)"
+              <!-- <div (click)="quotationSingle(x,i)"
               style="color: #a17635;font-weight: 600; font-size: 12px;letter-spacing: 0.7px;padding-right: 10px;">
               View Quotation
             </div> -->
+
+            </div>
 
           </div>
 

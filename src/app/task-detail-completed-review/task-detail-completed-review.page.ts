@@ -59,6 +59,8 @@ export class TaskDetailCompletedReviewPage implements OnInit {
   tracks = [
     "Bendable", "Curve", "Rod", "Cubicle", "Motorised (Battery)", "Motorised (Power Point)"
   ]
+  updateList
+  rejectList
 
   ngOnInit() {
     this.item = this.navparam.get('item')
@@ -67,6 +69,26 @@ export class TaskDetailCompletedReviewPage implements OnInit {
 
     this.price = this.item.price
     this.pleatSelection()
+
+    if (this.position == 'Tailor') {
+      this.http.get('https://curtain.vsnap.my/getalltailorstatus').subscribe(s => {
+
+        this.updateList = s['data'].filter(a => a.type == 'update')
+        this.rejectList = s['data'].filter(a => a.type == 'reject')
+
+        console.log(this.updateList, this.rejectList);
+
+      })
+    } else if (this.position == 'Installer') {
+      this.http.get('https://curtain.vsnap.my/getallinstallerstatus').subscribe(s => {
+
+        this.updateList = s['data'].filter(a => a.type == 'update')
+        this.rejectList = s['data'].filter(a => a.type == 'reject')
+
+        console.log(this.updateList, this.rejectList);
+
+      })
+    }
 
     this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
       this.misclist = s['data'].filter(a => a.status)

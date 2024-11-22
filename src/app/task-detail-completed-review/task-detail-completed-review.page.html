@@ -17,7 +17,7 @@
 
 <ion-content style="--background: #FAF7F2">
 
-  <div style="width: 100%; padding:10px;">
+  <div *ngIf="position != 'Tailor'" style="width: 100%; padding:10px;">
 
     <!-- Step 1 -->
     <div style="color: #888888;font-weight: 600;margin-bottom: 10px;margin-top: 15px;">Step 1</div>
@@ -1051,11 +1051,193 @@
     </div> -->
   </div>
 
+  <div *ngIf="position == 'Tailor'" style="width: 100%; padding:10px;">
+
+    <!-- Task Details -->
+    <div style="color: #888888;font-weight: 600;margin-bottom: 10px;margin-top: 15px;">Task Details</div>
+
+    <div>
+
+      <!-- Area -->
+      <div *ngIf="item.type == 'Tailor-Made Curtains' || item.type == 'Blinds' || item.type == '4'"
+        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; ">
+        <div style="min-width: 70px; color: #999999">Area</div>
+        <div style="height: 30px; display: flex; align-items: center;">
+          <div>{{item.location}} {{item.location_ref}}</div>
+        </div>
+      </div>
+
+      <!-- Width/Height -->
+      <div *ngIf="item.type == 'Tailor-Made Curtains' || item.type == 'Blinds' || item.pleat == 'Roman Blind'"
+        style="width: 100%;display: flex;align-items: center;">
+        <div
+          style="width: 50%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 70px; color: #999999">Width</div>
+          <div style="width: calc(100% - 70px); height: 30px; display: flex; align-items: center;">
+            <span *ngIf="item.width_tech == null">{{item.width}}"</span>
+            <span *ngIf="item.width_tech != null">{{item.width_tech}}"</span>
+          </div>
+        </div>
+
+        <div
+          style="width: 50%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 70px; color: #999999">Height</div>
+          <div style="width: calc(100% - 70px); height: 30px; display: flex; align-items: center;">
+            <span *ngIf="item.height_tech == null">{{item.height}}"</span>
+            <span *ngIf="item.height_tech != null">{{item.height_tech}}"</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Product -->
+      <div *ngIf="item.type == 'Tailor-Made Curtains' || item.type == 'Blinds' || item.type == '4'"
+        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; ">
+        <div style="min-width: 70px; color: #999999">Product</div>
+        <div style="height: 30px; display: flex; align-items: center;">
+          <div *ngIf="item.type == 'Tailor-Made Curtains' || item.type == 'Blinds'">{{item.type}}</div>
+          <div *ngIf="item.type == '1'">A La Carte - Supply Fabrics Only</div>
+          <div *ngIf="item.type == '2'">A La Carte - Supply Track Only</div>
+          <div *ngIf="item.type == '3'">A La Carte - Supply Accessories Only</div>
+          <div *ngIf="item.type == '4'">A La Carte - Supply & Install Motor Track</div>
+          <div *ngIf="item.type == '5'">A La Carte - Sewing Only</div>
+          <div *ngIf="item.type == '6'">A La Carte - Supply Wallpaper Only</div>
+        </div>
+      </div>
+
+      <!-- Fabric -->
+      <div *ngIf="item.type == 'Tailor-Made Curtains'"
+        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; ">
+        <div style="min-width: 70px; color: #999999">Fabric</div>
+        <div style="height: 30px; display: flex; align-items: center;">
+          <div *ngIf="item.fabric && !item.fabric_lining && !item.fabric_sheer">Curtain</div>
+          <div *ngIf="item.fabric && item.fabric_lining && !item.fabric_sheer">Curtain + Lining</div>
+          <div *ngIf="!item.fabric && item.fabric_sheer">Sheer</div>
+          <div *ngIf="item.fabric && !item.fabric_lining && item.fabric_sheer">Curtain + Sheer</div>
+          <div *ngIf="item.fabric && item.fabric_lining && item.fabric_sheer">Curtain + Lining + Sheer</div>
+        </div>
+      </div>
+
+      <!-- Fabric -->
+      <div *ngIf="item.type == 'Blinds'"
+        style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; ">
+        <div style="min-width: 70px; color: #999999">Fabric</div>
+        <div style="height: 30px; display: flex; align-items: center;">
+          <div>{{item.pleat}}</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Update Status -->
+    <div style="color: #888888;font-weight: 600; margin-top: 15px;">Update Status</div>
+
+    <!-- Update / Reject -->
+    <ion-radio-group [(ngModel)]="item.tailor_status"  style="max-width: 300px; display: flex; flex-wrap: wrap;">
+
+      <div style="width: 100%; height: 35px; display: flex; align-items: center; ">
+
+        <div style="display: flex; align-items: center; ">
+          <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
+            value="1" [disabled]="true"></ion-radio>
+          <ion-label style="font-size: 0.75rem; padding-left: 5px;">Update Order</ion-label>
+        </div>
+
+        <div style="display: flex; align-items: center; margin-left: 20px;">
+          <ion-radio class="ion-no-margin" style="color: #a17635;transform: scale(0.75);" slot="start" mode="md"
+            value="2" [disabled]="true"></ion-radio>
+          <ion-label style="font-size: 0.75rem; padding-left: 5px;">Reject Order</ion-label>
+        </div>
+
+      </div>
+
+    </ion-radio-group>
+
+    <!-- Update List -->
+    <div *ngIf="item.tailor_status == '1'" style="display: flex; flex-wrap: wrap; ">
+      <div *ngFor="let x of updateList" 
+        [ngStyle]="{'color': item.tailor_status_no == x.no ? 'white' : 'black', 'background-color' : item.tailor_status_no == x.no ? '#a17635' : 'white'}"
+        style="box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px; border-radius: 5px; padding: 5px 7px; margin-right: 5px; margin-bottom: 5px; display: flex; align-items: center;">
+        <div>{{x.name}}</div>
+        <ion-icon *ngIf="item.tailor_status_no == x.no" name="checkmark-outline"
+          style="font-size: 16px; color: white; margin-left: 5px;"></ion-icon>
+      </div>
+    </div>
+
+    <!-- Reject List -->
+    <div *ngIf="item.tailor_status == '2'" style="display: flex; flex-wrap: wrap; ">
+      <div *ngFor="let x of rejectList" 
+        [ngStyle]="{'color': item.tailor_status_no == x.no ? 'white' : 'black', 'background-color' : item.tailor_status_no == x.no ? '#a17635' : 'white'}"
+        style="box-shadow: rgba(0, 0, 0, 0.20) 0px 1px 2px 0px; border-radius: 5px; padding: 5px 7px; margin-right: 5px; margin-bottom: 5px; display: flex; align-items: center;">
+        <div>{{x.name}}</div>
+        <ion-icon *ngIf="item.tailor_status_no == x.no" name="checkmark-outline"
+          style="font-size: 16px; color: white; margin-left: 5px;"></ion-icon>
+      </div>
+    </div>
+
+    <!-- Remark Sales -->
+    <div style="margin-top: 25px;color: #333333;font-weight: 600;">
+      <div style="min-width: 56px;font-weight: 500;color: #999999">Remark Sales:</div>
+      <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_sale" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+           border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
+    </div>
+
+    <!-- Remark Tech -->
+    <div style="margin-top: 15px;color: #333333;font-weight: 600;">
+      <div style="min-width: 56px;font-weight: 500;color: #999999">Remark Tech:</div>
+      <ion-textarea readonly auto-grow="true" placeholder="-" row="4" [(ngModel)]="item.remark_tech" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+           border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
+    </div>
+
+    <!-- Remark Tailor -->
+    <div style="margin-top: 15px;color: #333333;font-weight: 600;">
+      <div style="min-width: 56px;font-weight: 500;color: #999999">Your Remark:</div>
+      <ion-textarea readonly auto-grow="true" placeholder="Enter additional remark... (If Any)" row="4"
+        [(ngModel)]="item.remark_tail" style="min-height: 65px;font-weight: 400;--padding-start: 10px;--padding-end: 10px;
+           border-radius: 5px;border: 1px solid #eaeaea;margin-top: 5px;"></ion-textarea>
+    </div>
+
+    <!-- Old Picture -->
+    <div style="margin-top: 15px;min-width: 56px;font-weight: 500;">Other's Images : <span
+        style="font-size: 12px;color: #8080808d;">(Click image to view)</span></div>
+    <div *ngIf="item.photos.length > 0"
+      style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));height: 100%; margin-top: 10px;  ">
+
+      <div *ngFor="let x of item.photos; let i = index"
+        style="height: 100%;padding: 5px;display: flex;justify-content: center;">
+
+        <img (click)="openPic(x)"
+          style="border-radius: 5px; height: 100px;min-width: 100px;max-width: 100px; object-fit: cover;"
+          src="{{x || ''}}" alt="">
+
+      </div>
+
+    </div>
+
+    <!-- Tailor Picture -->
+    <div *ngIf="item.photos_tailor.length > 0" style="margin-top: 15px;min-width: 56px;font-weight: 500;">Tailor Images
+      : <span style="font-size: 12px;color: #8080808d;">(Click image to view)</span></div>
+    <div *ngIf="item.photos_tailor.length > 0"
+      style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));height: 100%; margin-top: 10px;  ">
+
+      <div *ngFor="let x of item.photos_tailor; let i = index"
+        style="height: 100%;padding: 5px;display: flex;justify-content: center;">
+
+        <img (click)="openPic(x)"
+          style="border-radius: 5px; height: 100px;min-width: 100px;max-width: 100px; object-fit: cover;"
+          src="{{x || ''}}" alt="">
+
+      </div>
+
+    </div>
+
+  </div>
+
 </ion-content>
 
 <ion-footer>
 
-  <div
+  <div *ngIf="position != 'Tailor'" 
     style="background: #ebd1af;height: 50px; display: flex;padding: 10px 15px;align-items: center;justify-content: space-between;">
 
     <div *ngIf="position == 'Sales'" style="width: 50%;padding-left: 5px;">
