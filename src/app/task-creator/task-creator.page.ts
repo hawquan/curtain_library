@@ -127,6 +127,9 @@ export class TaskCreatorPage implements OnInit {
         }
       }
 
+      console.log(this.sales_no, this.pleatlist, this.blindlist, this.position, this.tracklist);
+
+
       this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
         this.fabriclist = s['data']
 
@@ -135,7 +138,7 @@ export class TaskCreatorPage implements OnInit {
         this.fabricLining = this.fabriclist.filter(x => x.type == 'Lining')
         this.fabricBlind = this.fabriclist.filter(x => x.type == 'Blind').sort((a, b) => (a['type_category'] > b['type_category'] ? 1 : -1) && (a['name'] > b['name'] ? 1 : -1) && (a['id'] > b['id'] ? 1 : -1))
         this.fabricCurtainSheer = this.fabriclist.filter(x => x.type == 'Curtain' || x.type == 'Sheer')
-        console.log(this.sales_no, this.pleatlist, this.blindlist, this.position, this.tracklist, this.fabricBlind);
+        console.log(this.fabricCurtain, this.fabricSheer, this.fabricLining, this.fabricBlind, this.fabricCurtainSheer);
 
       })
       // console.log(this.bracketlist, this.hooklist, this.beltlist, this.otherslist);
@@ -1461,6 +1464,9 @@ export class TaskCreatorPage implements OnInit {
 
   calcPrice(x) {
 
+    console.log(this.item);
+
+
     let curtain = false
     let curtain_id
     let lining = false
@@ -1598,8 +1604,15 @@ export class TaskCreatorPage implements OnInit {
         }
 
         if (this.item.fabric != null) {
+
           curtain = true
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+
+          if (this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]) {
+            curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+          } else {
+            curtain_id = this.fabricSheer.filter(x => x.name == this.item.fabric)[0]['id']
+          }
+
         } else {
           curtain = false
         }

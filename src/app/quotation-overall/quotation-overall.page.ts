@@ -884,7 +884,11 @@ export class QuotationOverallPage implements OnInit {
         if (this.item[i].fabric != null) {
           curtain = true
           try {
-            curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+            if (this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]) {
+              curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+            } else {
+              curtain_id = this.fabricSheer.filter(x => x.name == this.item[i].fabric)[0]['id']
+            }
           } catch (error) {
             this.calcErrorMsg('Fabric', "curtain's fabric", this.item[i].location + " " + this.item[i].location_ref)
             return

@@ -78,7 +78,7 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
         this.info = s['data'][0]
         console.log(this.info);
       })
-      
+
       this.http.get('https://curtain.vsnap.my/tapeList').subscribe(a => {
         this.blindTape = a['data']
         console.log(this.blindTape);
@@ -293,7 +293,11 @@ export class TaskDetailCompletedQuotationPage implements OnInit {
 
         if (this.item[i].fabric != null) {
           curtain = true
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+          if (this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]) {
+            curtain_id = this.fabricCurtain.filter(x => x.name == this.item[i].fabric)[0]['id']
+          } else {
+            curtain_id = this.fabricSheer.filter(x => x.name == this.item[i].fabric)[0]['id']
+          }
         } else {
           curtain = false
         }

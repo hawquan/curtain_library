@@ -462,7 +462,13 @@ export class TaskDetailRejectedReviewPage implements OnInit {
 
         if (this.item.fabric != null) {
           curtain = true
-          curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+
+          if (this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]) {
+            curtain_id = this.fabricCurtain.filter(x => x.name == this.item.fabric)[0]['id']
+          } else {
+            curtain_id = this.fabricSheer.filter(x => x.name == this.item.fabric)[0]['id']
+          }
+          
         } else {
           curtain = false
         }
