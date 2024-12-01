@@ -45,7 +45,14 @@ export class AddSalesPage implements OnInit {
   selectionSales = false
   referenceList = [] as any
 
+  user
+
   ngOnInit() {
+
+    this.user = this.navparam.get('user')
+    console.log(this.user);
+
+    
     this.http.get('https://curtain.vsnap.my/staffList').subscribe(a => {
       this.staffList = a['data']
       console.log(this.staffList);
@@ -330,57 +337,57 @@ export class AddSalesPage implements OnInit {
 
       })
 
-    } else if (!this.sales['customer_address']) {
+    // } else if (!this.sales['customer_address']) {
 
-      Swal.fire({
-        icon: 'error',
-        title: 'Missing Info',
-        text: 'Customer address is missing',
-        timer: 3000,
-        heightAuto: false,
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Missing Info',
+    //     text: 'Customer address is missing',
+    //     timer: 3000,
+    //     heightAuto: false,
 
-      })
+    //   })
 
-    }
-    else if (!this.sales['customer_property']) {
+    // }
+    // else if (!this.sales['customer_property']) {
 
-      Swal.fire({
-        icon: 'error',
-        title: 'Missing Info',
-        text: 'Customer property type is missing',
-        timer: 3000,
-        heightAuto: false,
-      })
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Missing Info',
+    //     text: 'Customer property type is missing',
+    //     timer: 3000,
+    //     heightAuto: false,
+    //   })
 
-    } else if (!this.sales['transport_fee']) {
+    // } else if (!this.sales['transport_fee']) {
 
-      Swal.fire({
-        icon: 'error',
-        title: 'Missing Info',
-        text: 'State/Area is missing',
-        timer: 3000,
-        heightAuto: false,
-      })
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Missing Info',
+    //     text: 'State/Area is missing',
+    //     timer: 3000,
+    //     heightAuto: false,
+    //   })
 
-    } else if (!this.sales['reference']) {
+    // } else if (!this.sales['reference']) {
 
-      Swal.fire({
-        icon: 'error',
-        title: 'Missing Info',
-        text: 'Reference is missing',
-        timer: 3000,
-        heightAuto: false,
-      })
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Missing Info',
+    //     text: 'Reference is missing',
+    //     timer: 3000,
+    //     heightAuto: false,
+    //   })
 
-    } else if (!this.id_sales) {
+    // } else if (!this.id_sales) {
 
-      Swal.fire({
-        icon: 'error',
-        title: 'Missing Info',
-        text: 'Sales Person is missing',
-        timer: 3000,
-        heightAuto: false,
-      })
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Missing Info',
+    //     text: 'Sales Person is missing',
+    //     timer: 3000,
+    //     heightAuto: false,
+    //   })
 
     }
     else {
@@ -413,6 +420,9 @@ export class AddSalesPage implements OnInit {
         status: true,
         show_promo: this.sales.show_promo,
         show_decoration: this.sales.show_decoration,
+        nf_remark: `New Sales created by ` + this.user.name + (this.sales_name != this.user.name ? `, assigned to sales person '` + this.sales_name + `'.`: ``),
+        uid_by: this.user.id,
+        uid_to: this.sales_name ? this.id_sales : null,
       }
 
       console.log(temp);

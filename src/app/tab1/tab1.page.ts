@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
-import { ActionSheetController, ModalController, NavController, Platform, ToastController } from '@ionic/angular';
+import { ActionSheetController, ModalController, NavController, NavParams, Platform, ToastController } from '@ionic/angular';
 import firebase from 'firebase';
 import { TailorTaskDetailPage } from '../tailor-task-detail/tailor-task-detail.page';
 import { TaskDetailCompletedReviewPage } from '../task-detail-completed-review/task-detail-completed-review.page';
@@ -29,7 +29,7 @@ export class Tab1Page implements OnInit {
     private toastController: ToastController,
     private platform: Platform,
     private safariViewController: SafariViewController,
-  ) { }
+    ) { }
 
   user = [] as any
   pleatlist = []
@@ -111,6 +111,7 @@ export class Tab1Page implements OnInit {
   }
 
   ngOnInit() {
+    
     firebase.auth().onAuthStateChanged(a => {
       if (a) {
         console.log(a);
@@ -370,7 +371,8 @@ export class Tab1Page implements OnInit {
   async createNewSales() {
     const modal = await this.modal.create({
       component: AddSalesPage,
-      cssClass: 'fullModal'
+      cssClass: 'fullModal',
+      componentProps: { user: this.user },
     });
 
     await modal.present();
