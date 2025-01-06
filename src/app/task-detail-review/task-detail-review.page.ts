@@ -69,8 +69,11 @@ export class TaskDetailReviewPage implements OnInit {
   updateList
   rejectList
 
+  role
+
   ngOnInit() {
     this.item = this.navparam.get('item')
+    this.role = this.navparam.get('role')
     this.position = this.navparam.get('position')
     this.tracklist = this.navparam.get('tracklist')
 
@@ -88,7 +91,7 @@ export class TaskDetailReviewPage implements OnInit {
         console.log(this.updateList, this.rejectList);
 
       })
-    } else if (this.position == 'Installer') {
+    } else if (this.role == 'inst') {
       this.http.get('https://curtain.vsnap.my/getallinstallerstatus').subscribe(s => {
 
         this.updateList = s['data'].filter(a => a.type == 'update')

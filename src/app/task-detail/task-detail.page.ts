@@ -79,6 +79,8 @@ export class TaskDetailPage implements OnInit {
   price: any = 0
   count = 0
 
+  role
+
   ngOnInit() {
 
     this.actroute.queryParams.subscribe(a => {
@@ -86,6 +88,7 @@ export class TaskDetailPage implements OnInit {
 
       this.sales_id = JSON.parse(a["no"])
       this.user = JSON.parse(a["user"])
+      this.role = a['role']
       console.log(this.sales_id, this.user);
 
     })
@@ -494,6 +497,7 @@ export class TaskDetailPage implements OnInit {
         position: this.user['position'],
         blindlist: this.blindlist,
         tracklist: this.tracklist,
+        role: this.user['position'] == 'Technician' ? this.role : ''
       }
     });
 
@@ -1513,10 +1517,25 @@ export class TaskDetailPage implements OnInit {
             }
           }
 
+          // if (this.items[i].fabric != null) {
+          //   curtain = true
+          //   try {
+          //     curtain_id = this.fabricCurtain.filter(x => x.name == this.items[i].fabric)[0]['id']
+          //   } catch (error) {
+          //     this.calcErrorMsg('Fabric', "curtain's fabric")
+          //     return
+          //   }
+          // } else {
+          //   curtain = false
+          // }
           if (this.items[i].fabric != null) {
             curtain = true
             try {
-              curtain_id = this.fabricCurtain.filter(x => x.name == this.items[i].fabric)[0]['id']
+              if (this.fabricCurtain.filter(x => x.name == this.items[i].fabric)[0]) {
+                curtain_id = this.fabricCurtain.filter(x => x.name == this.items[i].fabric)[0]['id']
+              } else {
+                curtain_id = this.fabricSheer.filter(x => x.name == this.items[i].fabric)[0]['id']
+              }
             } catch (error) {
               this.calcErrorMsg('Fabric', "curtain's fabric")
               return

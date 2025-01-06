@@ -80,6 +80,11 @@ export class QuotationOverallPage implements OnInit {
   checkChangeSO = false
   viewPackage = false
   focMotorised = 0
+  quoteOption = 'option1'
+  option1 = true
+  option2 = false
+  quoteOptionWord = ''
+
 
   ngOnInit() {
 
@@ -364,7 +369,7 @@ export class QuotationOverallPage implements OnInit {
 
 
     const alert = await this.alertController.create({
-      // cssClass: 'my-custom-class',
+      // cssClass: 'custom-alert-text',
       header: 'Create Quotation?',
       // subHeader: 'Default Password: forcar123',
       // inputs: [
@@ -375,6 +380,22 @@ export class QuotationOverallPage implements OnInit {
       //     value: this.ref,
       //   },
       // ],
+      inputs: [
+        {
+          name: 'option1',
+          type: 'radio',
+          label: '100% Payment',
+          value: 'option1',
+          checked: this.option1 // Set this as the default selected option
+        },
+        {
+          name: 'option2',
+          type: 'radio',
+          label: '50% ~ 50% Payment',
+          value: 'option2',
+          checked: this.option2 // Set this as the default selected option
+        }
+      ],
       buttons: [
         {
           text: 'Cancel',
@@ -387,23 +408,19 @@ export class QuotationOverallPage implements OnInit {
           text: 'Confirm',
           handler: (data) => {
             console.log(data)
-            // if (data['ref'] == null || data['ref'] == '') {
 
-            //   Swal.fire({
-            //     title: 'Ref. is Empty',
-            //     text: 'Please enter Reference and try again!',
-            //     icon: 'error',
-            //     timer: 5000,
-            //     heightAuto: false,
-            //   });
+            this.quoteOption = data
 
-            // } else {
-            // let buttoners = {
-            //   Cancel: { name: 'Cancel', value: 'Cancel' },
-            //   Confirm: { name: 'Confirm', value: 'Confirm' }
-            // }
+            if (data == 'option1') {
+              this.option1 = true
+              this.option2 = false
+              this.quoteOptionWord = '100% payment upon confirmation of order.'
+            } else {
+              this.option1 = false
+              this.option2 = true
+              this.quoteOptionWord = '50% downpayment upon confirmation of order, 50% balance before installation.'
+            }
 
-            // console.log(data['ref']);
             this.ref = this.info.reference + '-' + this.salesmaninfo.shortname
 
             this.quoRef = 'QT' + this.datepipe.transform(new Date(), 'yyyyMMdd') + this.ref
@@ -4129,6 +4146,7 @@ export class QuotationOverallPage implements OnInit {
             body: [
               [{ text: 'Payment ', bold: true }],
               [{ text: 'Payment Detail: Ambank Account Number 2442 0220 04795 Crystalace Deco Sdn Bhd', fontSize: 9 }],
+              [{ text: ': ' + this.quoteOptionWord, fontSize: 9 }],
               [{ text: '' }],
               [{ text: 'Delivery ', bold: true }],
               [{ text: ': Within 2 to 4 working weeks after confirmation of order and it is subject to stock availability.', fontSize: 9 }],
@@ -6044,6 +6062,7 @@ export class QuotationOverallPage implements OnInit {
             body: [
               [{ text: 'Payment ', bold: true }],
               [{ text: 'Payment Detail: Ambank Account Number 2442 0220 04795 Crystalace Deco Sdn Bhd', fontSize: 9 }],
+              [{ text: ': ' + this.quoteOptionWord, fontSize: 9 }],
               [{ text: '' }],
               [{ text: 'Delivery ', bold: true }],
               [{ text: ': Within 2 to 4 working weeks after confirmation of order and it is subject to stock availability.', fontSize: 9 }],

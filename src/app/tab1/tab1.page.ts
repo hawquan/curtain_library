@@ -29,7 +29,7 @@ export class Tab1Page implements OnInit {
     private toastController: ToastController,
     private platform: Platform,
     private safariViewController: SafariViewController,
-    ) { }
+  ) { }
 
   user = [] as any
   pleatlist = []
@@ -49,6 +49,11 @@ export class Tab1Page implements OnInit {
   salesListVoid = []
   tailorList = []
   poList = []
+
+  salesListI = []
+  salesListIOngoing = []
+  salesListICompleted = []
+
 
   pendingListTailor = [{
     height: 100,
@@ -71,6 +76,7 @@ export class Tab1Page implements OnInit {
   statusRejected = false
 
   status = 'p'
+  role = 'tech'
   uid = ""
   snapURL = ''
   sortSalesP = true
@@ -111,7 +117,7 @@ export class Tab1Page implements OnInit {
   }
 
   ngOnInit() {
-    
+
     firebase.auth().onAuthStateChanged(a => {
       if (a) {
         console.log(a);
@@ -216,7 +222,8 @@ export class Tab1Page implements OnInit {
             console.log(this.salesList, this.salesListOngoing, this.salesListCompleted, this.salesListVoid);
 
           })
-        } else if (this.user.position == 'Tailor') {
+        }
+        if (this.user.position == 'Tailor') {
 
           this.http.post('https://curtain.vsnap.my/gettailorsaleslist', { id_tail: x }).subscribe((s) => {
             console.log(s);
@@ -236,14 +243,15 @@ export class Tab1Page implements OnInit {
 
           })
 
-        } else if (this.user.position == 'Installer') {
+        }
+        if (this.user.position == 'Technician' || this.user.position == 'Installer') {
 
           this.http.post('https://curtain.vsnap.my/getinstallersaleslist', { id_inst: x }).subscribe((s) => {
             console.log(s);
 
-            this.salesList = s['data'].filter(a => a.status && (a.log_action2?.includes('Pending Accept') || a.log_action2?.includes('Rejected'))).sort((a, b) => a.no - b.no)
-            this.salesListOngoing = s['data'].filter(a => a.status && a.log_action2 && !a.log_action2?.includes('Pending Accept') && !a.log_action2?.includes('Rejected')).sort((a, b) => a.no - b.no)
-            this.salesListCompleted = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+            this.salesListI = s['data'].filter(a => a.status && (a.log_action2?.includes('Pending Accept') || a.log_action2?.includes('Rejected'))).sort((a, b) => a.no - b.no)
+            this.salesListIOngoing = s['data'].filter(a => a.status && a.log_action2 && !a.log_action2?.includes('Pending Accept') && !a.log_action2?.includes('Rejected')).sort((a, b) => a.no - b.no)
+            this.salesListICompleted = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
             // this.salesListVoid = s['data'].filter(a => !a.status).sort((a, b) => a.no - b.no)
             this.sortSalesP = true
             this.sortSalesO = true
@@ -286,6 +294,7 @@ export class Tab1Page implements OnInit {
       this.salesList = this.salesList.filter(x => x.step == 1 && x.rejected != true)
     } else if (this.user.position == 'Technician') {
       this.salesList = this.salesList.filter(x => x.step == 2)
+      this.salesListI = this.salesListI.filter(x => x.step == 4)
     } else if (this.user.position == 'Tailor') {
       this.salesList = this.salesList.filter(x => x.step == 3)
     } else if (this.user.position == 'Installer') {
@@ -320,8 +329,12 @@ export class Tab1Page implements OnInit {
       this.salesListCompleted = this.salesListCompleted.filter(x => x.step == 5)
     } else {
       this.salesListCompleted = this.salesListCompleted.filter(x => x.step >= 4)
-
     }
+
+    if (this.user.position == 'Technician' || this.user.position == 'Installer') {
+      this.salesListICompleted = this.salesListICompleted.filter(x => x.step == 5)
+    }
+
   }
 
   sortListP() {
@@ -364,6 +377,10 @@ export class Tab1Page implements OnInit {
     this.status = x
   }
 
+  selectRole(x) {
+    this.role = x
+  }
+
   toProfile() {
     this.nav.navigateForward('profile?id=' + this.uid)
   }
@@ -391,6 +408,7 @@ export class Tab1Page implements OnInit {
       queryParams: {
         no: JSON.stringify(x.no),
         user: JSON.stringify(this.user),
+        role: this.user.position == 'Technician' ? this.role : ''
       }
     }
     this.nav.navigateForward(['task-detail'], navExtra)

@@ -587,7 +587,14 @@
             <h3
               style="margin: 0; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; width: calc(100% - 20px); text-align: end;">
               {{user['name']}}</h3>
-            <p style="font-size: 10px;">{{user['position'] || 'Salesman'}}</p>
+            <p style="font-size: 10px; display: flex; align-items: center;">
+              <!-- <span *ngIf="user['position'] == 'Technician' || user['position'] == 'Installer'">
+                <ion-icon name="swap-horizontal-outline"
+                  style="margin-right: 2px; margin-top: 4px; font-size: 12px;"></ion-icon>
+              </span> -->
+              <span>{{user['position'] || 'Salesman'}}<span
+                  *ngIf="user['position'] == 'Technician' || user['position'] == 'Installer'"> & Installer</span></span>
+            </p>
           </ion-label>
         </ion-item>
       </div>
@@ -1014,181 +1021,201 @@
   <!-- Technician -->
   <div *ngIf="user.position == 'Technician'" style="width: 100vw;">
 
-    <div style="width: 100%; padding: 10px 20px ; display: flex; flex-direction: column; ">
+    <div>
 
-      <div style="width: 100%;display: flex; align-items: center; justify-content: center; margin-bottom: 10px; ">
-        <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff; border-right: 1px solid #eeeeee;">
-          <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
-            <div style="font-size: 20px; font-weight: 600;  margin-bottom: 5px;">12</div>
-            <div style="font-size: 12px; ">Leads</div>
-          </div>
+      <div style="width: 100%; display: flex; align-items: center; justify-content: center; margin-top: 15px;">
+
+        <div (click)="selectRole('tech')" style="width: 45%;text-align: center;">
+          <div [ngClass]="role == 'tech'? 'selected' : 'selectedx'">Technician</div>
         </div>
 
-        <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff;">
-          <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
-            <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">{{salesList.length}}
-            </div>
-            <div style="font-size: 12px; ">Appointments</div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 10px;">
-        <div style="font-weight: 600; color: #000000;">Appointments ({{salesList.length}})</div>
-        <div (click)="refresher(uid)" style="display: flex;align-items: center;">
-          <ion-icon style="color: #a17635;margin-right: 5px;" name="refresh-outline"></ion-icon>
-          <div style="color: #a17635;font-size: 12px;display: flex;align-items: center;">Refresh List</div>
-        </div>
-      </div>
-
-      <div style="width: 100%; display: flex;align-items: center;">
-
-        <div (click)="selectTab('p')" style="width: 33.3%;text-align: center;">
-          <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Pending</div>
-        </div>
-
-        <div (click)="selectTab('o')" style="width: 33.3%;text-align: center;;">
-          <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">On-Going</div>
-        </div>
-
-        <div (click)="selectTab('c')" style="width: 33.3%;text-align: center;;">
-          <div [ngClass]="status == 'c'? 'selected' : 'selectedx'">Completed</div>
+        <div (click)="selectRole('inst')" style="width: 45%;text-align: center;;">
+          <div [ngClass]="role == 'inst'? 'selected' : 'selectedx'">Installer</div>
         </div>
 
       </div>
 
-      <div *ngIf="status == 'p'" style="width: 100%; margin: 15px 0;">
+      <!-- Technician -->
+      <div *ngIf="role == 'tech'" style="width: 100%; padding: 10px 20px ; display: flex; flex-direction: column; ">
 
-        <div *ngIf="salesList.length > 0"
-          style="font-size: 13px;color: #a17635;font-weight: 500;display: flex;align-items: center;justify-content: space-between;">
-
-          <div style="border-bottom: 2px solid #d2d2d2a9; border-radius: 5px;">
-            <div style="display: flex; align-items: center; width: 160px;">
-              <ion-icon style="color: #d2d2d2a9; font-size: 14px; padding-left: 5px;" name="search"></ion-icon>
-              <ion-input clearInput class="ion-no-padding" [(ngModel)]="keywordP" placeholder="Search"
-                style="font-size: 13px; color: #000000; --placeholder-color: #999999;margin-left: 10px;">
-              </ion-input>
+        <!-- <div style="width: 100%;display: flex; align-items: center; justify-content: center; margin-bottom: 10px; ">
+          <div
+            style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff; border-right: 1px solid #eeeeee;">
+            <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+              <div style="font-size: 20px; font-weight: 600;  margin-bottom: 5px;">12</div>
+              <div style="font-size: 12px; ">Leads</div>
             </div>
           </div>
 
-          <div style="display: flex;align-items: center;">
-            <div (click)="sortListP('sales')">Sort Order</div>
-            <ion-icon name="swap-vertical-outline"></ion-icon>
+          <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff;">
+            <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+              <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">{{salesList.length}}
+              </div>
+              <div style="font-size: 12px; ">Appointments</div>
+            </div>
+          </div>
+        </div> -->
+
+        <div
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 10px;">
+          <div style="font-weight: 600; color: #000000;">Appointments
+            <span *ngIf="status == 'p'">({{salesList.length}})</span>
+            <span *ngIf="status == 'o'">({{salesListOngoing.length}})</span>
+            <span *ngIf="status == 'c'">({{salesListCompleted.length}})</span>
+          </div>
+          <div (click)="refresher(uid)" style="display: flex;align-items: center;">
+            <ion-icon style="color: #a17635;margin-right: 5px;" name="refresh-outline"></ion-icon>
+            <div style="color: #a17635;font-size: 12px;display: flex;align-items: center;">Refresh List</div>
+          </div>
+        </div>
+
+        <div style="width: 100%; display: flex;align-items: center;">
+
+          <div (click)="selectTab('p')" style="width: 33.3%;text-align: center;">
+            <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Pending</div>
+          </div>
+
+          <div (click)="selectTab('o')" style="width: 33.3%;text-align: center;;">
+            <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">On-Going</div>
+          </div>
+
+          <div (click)="selectTab('c')" style="width: 33.3%;text-align: center;;">
+            <div [ngClass]="status == 'c'? 'selected' : 'selectedx'">Completed</div>
           </div>
 
         </div>
 
-        <div *ngIf="salesList.length == 0"
-          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
-          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
-          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-        </div>
+        <div *ngIf="status == 'p'" style="width: 100%; margin: 15px 0;">
 
-        <div *ngFor="let x of filtererP(salesList); let i = index;"
-          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px;margin-top: 10px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
+          <div *ngIf="salesList.length > 0"
+            style="font-size: 13px;color: #a17635;font-weight: 500;display: flex;align-items: center;justify-content: space-between;">
 
-          <div (click)="toDetail(x,i)"
-            style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
-            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
-
-            <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Contact:
+            <div style="border-bottom: 2px solid #d2d2d2a9; border-radius: 5px;">
+              <div style="display: flex; align-items: center; width: 160px;">
+                <ion-icon style="color: #d2d2d2a9; font-size: 14px; padding-left: 5px;" name="search"></ion-icon>
+                <ion-input clearInput class="ion-no-padding" [(ngModel)]="keywordP" placeholder="Search"
+                  style="font-size: 13px; color: #000000; --placeholder-color: #999999;margin-left: 10px;">
+                </ion-input>
               </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_phone}}</div>
             </div>
 
-            <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Address:
-              </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
-            </div>
-
-            <div
-              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
-
-              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
-                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
-              </div>
-
+            <div style="display: flex;align-items: center;">
+              <div (click)="sortListP('sales')">Sort Order</div>
+              <ion-icon name="swap-vertical-outline"></ion-icon>
             </div>
 
           </div>
 
-          <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
+          <div *ngIf="salesList.length == 0"
+            style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+            <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+            <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+            <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          </div>
+
+          <div *ngFor="let x of filtererP(salesList); let i = index;"
+            style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px;margin-top: 10px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
+
+            <div (click)="toDetail(x,i)"
+              style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+              <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                  Contact:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_phone}}</div>
+              </div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                  Address:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+              </div>
+
+              <div
+                style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+                <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                  <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
             font-size: 12px;padding: 3px 5px;">Navigate</div>
 
-        </div>
-      </div>
-
-      <div *ngIf="status == 'o'" style="width: 100%; margin: 15px 0;">
-
-        <div *ngIf="salesListOngoing.length > 0"
-          style="font-size: 13px;color: #a17635;font-weight: 500;display: flex;align-items: center;justify-content: space-between;">
-
-          <div style="border-bottom: 2px solid #d2d2d2a9; border-radius: 5px;">
-            <div style="display: flex; align-items: center; width: 160px;">
-              <ion-icon style="color: #d2d2d2a9; font-size: 14px; padding-left: 5px;" name="search"></ion-icon>
-              <ion-input clearInput class="ion-no-padding" [(ngModel)]="keywordO" placeholder="Search"
-                style="font-size: 13px; color: #000000; --placeholder-color: #999999;margin-left: 10px;">
-              </ion-input>
-            </div>
           </div>
-
-          <div style="display: flex;align-items: center;">
-            <div (click)="sortListO('ongoing')">Sort Order</div>
-            <ion-icon name="swap-vertical-outline"></ion-icon>
-          </div>
-
         </div>
 
-        <div *ngIf="salesListOngoing.length == 0"
-          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
-          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
-          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-        </div>
+        <div *ngIf="status == 'o'" style="width: 100%; margin: 15px 0;">
 
-        <div *ngFor="let x of filtererO(salesListOngoing); let i = index;"
-          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px;margin-top: 10px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
+          <div *ngIf="salesListOngoing.length > 0"
+            style="font-size: 13px;color: #a17635;font-weight: 500;display: flex;align-items: center;justify-content: space-between;">
 
-          <div (click)="toOngoing(x,i)"
-            style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
-            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
-
-            <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Contact:
+            <div style="border-bottom: 2px solid #d2d2d2a9; border-radius: 5px;">
+              <div style="display: flex; align-items: center; width: 160px;">
+                <ion-icon style="color: #d2d2d2a9; font-size: 14px; padding-left: 5px;" name="search"></ion-icon>
+                <ion-input clearInput class="ion-no-padding" [(ngModel)]="keywordO" placeholder="Search"
+                  style="font-size: 13px; color: #000000; --placeholder-color: #999999;margin-left: 10px;">
+                </ion-input>
               </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_phone}}</div>
             </div>
 
-            <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Address:
-              </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
-            </div>
-
-            <div
-              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
-
-              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
-                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
-              </div>
-
+            <div style="display: flex;align-items: center;">
+              <div (click)="sortListO('ongoing')">Sort Order</div>
+              <ion-icon name="swap-vertical-outline"></ion-icon>
             </div>
 
           </div>
 
-          <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;
+          <div *ngIf="salesListOngoing.length == 0"
+            style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+            <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+            <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+            <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          </div>
+
+          <div *ngFor="let x of filtererO(salesListOngoing); let i = index;"
+            style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px;margin-top: 10px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
+
+            <div (click)="toOngoing(x,i)"
+              style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+              <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                  Contact:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_phone}}</div>
+              </div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                  Address:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+              </div>
+
+              <div
+                style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+                <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                  <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;
             font-size: 12px;padding: 3px 5px;">Navigate</div>
-        </div>
+          </div>
 
-        <!-- <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+          <!-- <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
           <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.client}}</div>
 
           <div style="width: 100%; display: flex; align-items: flex-start;">
@@ -1216,71 +1243,333 @@
 
         </div> -->
 
+        </div>
+
+        <div *ngIf="status == 'c'" style="width: 100%; margin: 15px 0;">
+
+          <div *ngIf="salesListCompleted.length > 0"
+            style="font-size: 13px;color: #a17635;font-weight: 500;display: flex;align-items: center;justify-content: space-between;">
+
+            <div style="border-bottom: 2px solid #d2d2d2a9; border-radius: 5px;">
+              <div style="display: flex; align-items: center; width: 160px;">
+                <ion-icon style="color: #d2d2d2a9; font-size: 14px; padding-left: 5px;" name="search"></ion-icon>
+                <ion-input clearInput class="ion-no-padding" [(ngModel)]="keywordC" placeholder="Search"
+                  style="font-size: 13px; color: #000000; --placeholder-color: #999999;margin-left: 10px;">
+                </ion-input>
+              </div>
+            </div>
+
+            <div style="display: flex;align-items: center;">
+              <div (click)="sortListC('completed')">Sort Order</div>
+              <ion-icon name="swap-vertical-outline"></ion-icon>
+            </div>
+
+          </div>
+
+          <div *ngIf="salesListCompleted.length == 0"
+            style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+            <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+            <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+            <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          </div>
+
+          <div *ngFor="let x of filtererC(salesListCompleted); let i = index;"
+            style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px;margin-top: 10px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
+
+            <div (click)="toCompletedDetail(x,i)"
+              style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+              <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                  Contact:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_phone}}</div>
+              </div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                  Address:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+              </div>
+
+              <div
+                style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+                <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                  <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
+            font-size: 12px;padding: 3px 5px;">Navigate</div>
+
+          </div>
+        </div>
+
       </div>
 
-      <div *ngIf="status == 'c'" style="width: 100%; margin: 15px 0;">
+      <!-- Installer -->
+      <div *ngIf="role == 'inst'" style="width: 100%; padding: 10px 20px ; display: flex; flex-direction: column; ">
 
-        <div *ngIf="salesListCompleted.length > 0"
-          style="font-size: 13px;color: #a17635;font-weight: 500;display: flex;align-items: center;justify-content: space-between;">
-
-          <div style="border-bottom: 2px solid #d2d2d2a9; border-radius: 5px;">
-            <div style="display: flex; align-items: center; width: 160px;">
-              <ion-icon style="color: #d2d2d2a9; font-size: 14px; padding-left: 5px;" name="search"></ion-icon>
-              <ion-input clearInput class="ion-no-padding" [(ngModel)]="keywordC" placeholder="Search"
-                style="font-size: 13px; color: #000000; --placeholder-color: #999999;margin-left: 10px;">
-              </ion-input>
+        <!-- <div style="width: 100%;display: flex; align-items: center; justify-content: center; margin-bottom: 10px; ">
+          <div
+            style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff; border-right: 1px solid #eeeeee;">
+            <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+              <div style="font-size: 20px; font-weight: 600;  margin-bottom: 5px;">12</div>
+              <div style="font-size: 12px; ">Leads</div>
             </div>
           </div>
 
-          <div style="display: flex;align-items: center;">
-            <div (click)="sortListC('completed')">Sort Order</div>
-            <ion-icon name="swap-vertical-outline"></ion-icon>
+          <div style="width: calc( 100% / 2); padding: 10px; background-color: #ffffff;">
+            <div style="display: flex; flex-direction: column; align-items: center; margin-left: 5px;">
+              <div style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">
+
+              </div>
+              <div style="font-size: 12px; ">Appointments</div>
+            </div>
+          </div>
+        </div> -->
+
+        <div
+          style="display: flex;justify-content: space-between;align-items: center;margin-top: 20px;margin-bottom: 10px;">
+          <div style="font-weight: 600; color: #000000;">Appointments
+            <span *ngIf="status == 'p'">({{salesListI.length}})</span>
+            <span *ngIf="status == 'o'">({{salesListIOngoing.length}})</span>
+            <span *ngIf="status == 'c'">({{salesListICompleted.length}})</span>
+          </div>
+          <div (click)="refresher(uid)" style="display: flex;align-items: center;">
+            <ion-icon style="color: #a17635;margin-right: 5px;" name="refresh-outline"></ion-icon>
+            <div style="color: #a17635;font-size: 12px;display: flex;align-items: center;">Refresh List</div>
+          </div>
+        </div>
+
+        <div style="width: 100%; display: flex;align-items: center;">
+
+          <div (click)="selectTab('p')" style="width: 33.3%;text-align: center;">
+            <div [ngClass]="status == 'p'? 'selected' : 'selectedx'">Order Assigned</div>
+          </div>
+
+          <div (click)="selectTab('o')" style="width: 33.3%;text-align: center;;">
+            <div [ngClass]="status == 'o'? 'selected' : 'selectedx'">Your Order</div>
+          </div>
+
+          <div (click)="selectTab('c')" style="width: 33.3%;text-align: center;;">
+            <div [ngClass]="status == 'c'? 'selected' : 'selectedx'">Completed</div>
           </div>
 
         </div>
 
-        <div *ngIf="salesListCompleted.length == 0"
-          style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
-          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-          <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
-          <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
-        </div>
+        <div *ngIf="status == 'p'" style="width: 100%; margin: 15px 0;">
 
-        <div *ngFor="let x of filtererC(salesListCompleted); let i = index;"
-          style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px;margin-top: 10px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
+          <div *ngIf="salesListI.length == 0"
+            style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+            <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+            <div style="width: 75px;font-size: 12px;color: #999;text-align: center;">List is Empty </div>
+            <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          </div>
 
-          <div (click)="toCompletedDetail(x,i)"
-            style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
-            <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+          <div *ngFor="let x of salesListI; let i = index;"
+            style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
 
-            <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Contact:
+            <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+              <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+                <div *ngIf="x.log_action2 != 'Order Rejected'"
+                  style="font-size: 11px; font-weight: 600; color: #f58c0a; margin-bottom: 5px;">{{x.log_action2}}
+                </div>
+                <div *ngIf="x.log_action2 == 'Order Rejected'"
+                  style="font-size: 11px; font-weight: 600; color: red; margin-bottom: 5px;">
+                  {{x.log_action2}}
+                </div>
               </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_phone}}</div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-bottom: 5px;">
+                  Contact:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">&nbsp;{{x.customer_phone}}</div>
+              </div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-bottom: 5px;">
+                  Address:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">&nbsp;{{x.customer_address}}</div>
+              </div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start; margin-top: 5px;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-bottom: 5px;">
+                  Schedule:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">
+                  <div *ngFor="let y of x.install_schedule">&nbsp;{{y | date: 'dd MMM yyyy hh:mm a'}}</div>
+                </div>
+              </div>
+
             </div>
 
-            <div style="width: 100%; display: flex; align-items: flex-start;">
-              <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
-                Address:
-              </div>
-              <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+            <div (click)="toDetail(x,i)"
+              style="width: 100%; display: flex; align-items: center; justify-content: center; padding: 10px 0; border-top: 1px solid #eeeeee; margin-top: 5px;">
+              <div style="font-size: 12px; font-weight: 500; color: #888888;">View Order</div>
             </div>
 
             <div
-              style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+              style="width: 100%; display: flex; align-items: center; justify-content: space-between;border-top: 1px solid #eeeeee;">
 
-              <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
-                <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+              <div (click)="installerAction(x, 'reject')"
+                style="width: 47.5%; display: flex; align-items: center; justify-content: center; padding: 10px 0; ">
+                <div style="font-size: 12px; font-weight: 500; color: tomato;">Reject</div>
+              </div>
+              <div style="width: 5%; display: flex; align-items: center; justify-content: center;">
+                <div style="width: 1px; height: 34px; background-color: #eeeeee;"></div>
+              </div>
+              <div (click)="installerAction(x, 'accept')"
+                style="width: 47.5%; display: flex; align-items: center; justify-content: center; padding: 10px 0; ">
+                <div style="font-size: 12px; font-weight: 500; color: rgb(12, 199, 12);">Accept</div>
               </div>
 
             </div>
 
           </div>
+        </div>
 
-          <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
-            font-size: 12px;padding: 3px 5px;">Navigate</div>
+        <div *ngIf="status == 'o'" style="width: 100%; margin: 15px 0;">
 
+          <div *ngIf="salesListIOngoing.length == 0"
+            style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+            <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+            <div style="width: 75px;font-size: 12px;color: #999;text-align: center;">List is Empty </div>
+            <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          </div>
+
+          <div *ngFor="let x of salesListIOngoing; let i = index;" (click)="toDetail(x,i)"
+            style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;">
+
+            <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+              <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+                <div *ngIf="x.log_action2 != 'Order Rejected'"
+                  style="font-size: 11px; font-weight: 600; color: #f58c0a; margin-bottom: 5px;">{{x.log_action2}}
+                </div>
+                <div *ngIf="x.log_action2 == 'Order Rejected'"
+                  style="font-size: 11px; font-weight: 600; color: red; margin-bottom: 5px;">
+                  {{x.log_action2}}
+                </div>
+              </div>
+              <div style="width: 100%; display: flex; align-items: flex-start;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-bottom: 5px;">
+                  Contact:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">&nbsp;{{x.customer_phone}}</div>
+              </div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-bottom: 5px;">
+                  Address:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">&nbsp;{{x.customer_address}}</div>
+              </div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start; margin-top: 5px;">
+                <div style="font-weight: 500; color: #999999; font-size:12px;  margin-bottom: 5px;">
+                  Schedule:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">
+                  <div *ngFor="let y of x.install_schedule">&nbsp;{{y | date: 'dd MMM yyyy hh:mm a'}}</div>
+                </div>
+              </div>
+
+              <div
+                style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+                <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                  <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <!-- <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+          <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.client}}</div>
+
+          <div style="width: 100%; display: flex; align-items: flex-start;">
+            <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+              Contact:
+            </div>
+            <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.contact}}</div>
+          </div>
+
+          <div style="width: 100%; display: flex; align-items: flex-start;">
+            <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+              Address:
+            </div>
+            <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.address}}</div>
+          </div>
+
+          <div
+            style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+            <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+              <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+            </div>
+
+          </div>
+
+        </div> -->
+
+        </div>
+
+        <div *ngIf="status == 'c'" style="width: 100%; margin: 15px 0;">
+
+          <div *ngIf="salesListICompleted.length == 0"
+            style="display: flex;justify-content: space-between;align-items: center;margin-top: 10%;">
+            <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+            <div style="width: 75px;font-size: 12px;color: #999;text-align: center;"> List is Empty </div>
+            <div style="height: 1px;width: 40%;border-bottom: 1px dashed #999;padding: 0 20px;"></div>
+          </div>
+
+          <div *ngFor="let x of salesListICompleted; let i = index;" (click)="toCompletedDetail(x,i)"
+            style="width: 100%;box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px; border-radius: 5px; margin-bottom: 15px; background-color: #ffffff;position: relative;">
+
+            <div style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
+              <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                  Contact:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_phone}}</div>
+              </div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-right: 5px; margin-bottom: 5px;">
+                  Address:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+              </div>
+
+              <div
+                style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
+
+                <div style="display: flex; align-items: center; justify-content: center; width: 100%; ">
+                  <div style="font-size: 12px; font-weight: 500; color: #888888;">View</div>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div (click)="presentActionSheet(x)" style="position: absolute;right: 10px;top: 10px;color: #a17635;background-color: #ebd1af; border-radius: 5px;z-index: 101;
+          font-size: 12px;padding: 3px 5px;">Navigate</div>
+
+          </div>
         </div>
       </div>
 
@@ -1870,8 +2159,9 @@
 
           <div (click)="toDetailPo(x)"
             style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
-            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
-              <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}</div>
+            <div style="width: 100%; display: flex; justify-content: space-between;">
+              <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}<br /><span style="font-size: 13px; font-weight: 600;">SO Num : {{x.so_num}}</span>
+              </div>
               <div style="font-size: 11px; color: #999999; margin-bottom: 5px;">{{x.date_created | date: 'dd MMM yyyy'}}
               </div>
             </div>

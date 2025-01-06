@@ -854,7 +854,7 @@
 
   </div>
 
-  <div *ngIf="user.position == 'Technician'" style="width: 100vw;">
+  <div *ngIf="role == 'tech'" style="width: 100vw;">
 
     <div style="width: 100%; padding: 10px; background-color: #ebd1af;">
       <div style="color: #a17635; font-weight: 600; font-size: 12px;">Client Details</div>
@@ -1631,7 +1631,7 @@
 
   </div>
 
-  <div *ngIf="user.position == 'Installer'" style="width: 100vw;">
+  <div *ngIf="role == 'inst'" style="width: 100vw;">
 
     <div style="width: 100%; padding: 10px; background-color: #ebd1af; ">
       <div style="color: #a17635; font-weight: 600; font-size: 12px;"> Client Details</div>
@@ -1799,7 +1799,7 @@
 
   </div>
 
-  <div *ngIf="user.position == 'Technician'"
+  <div *ngIf="role == 'tech'"
     style="background: #ebd1af; height: 55px;display: flex;padding: 10px 15px;align-items: center;justify-content: space-between;">
 
     <div style="padding-left: 5px;">
@@ -1851,7 +1851,7 @@
 
   </div>
 
-  <div *ngIf="user.position == 'Installer'"
+  <div *ngIf="role == 'inst'"
     style="background: #ebd1af; display: flex;height: 55px;padding: 10px 15px;align-items: center;justify-content: space-between;">
 
     <div style="padding-left: 5px;">

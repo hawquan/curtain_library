@@ -95,12 +95,12 @@ export class PoDetailUpdatePage implements OnInit {
 
     await modal.present()
 
-
     modal.onDidDismiss().then(a => {
       if (a['data']) {
         this.product[this.target].po_signature = a['data']
       }
     })
+
   }
 
   reject() {
@@ -167,6 +167,28 @@ export class PoDetailUpdatePage implements OnInit {
     let text
     let buttonText
 
+    if (!('po_signature' in this.product[this.target])) {
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      })
+
+      Toast.fire({
+        icon: 'error',
+        title: 'Signature is required.'
+      })
+
+      return;
+    }
+
+    // if (this.product[this.target].po_signature) {
+    //   return;
+    // }
+
     if (this.product[this.target].po_status == '1') {
       text = `Are you sure to update this order ?`
       buttonText = `Update`
@@ -174,8 +196,6 @@ export class PoDetailUpdatePage implements OnInit {
       text = `Do you want to 'REJECT' this order ?`
       buttonText = `Reject`
     }
-
-
 
     Swal.fire({
       title: 'Update Order',
@@ -335,7 +355,7 @@ export class PoDetailUpdatePage implements OnInit {
         showConfirmButton: false,
         timer: 2000
       })
-      
+
       // this.imagectype = event.target.files[0].type;
       // EXIF.getData(event.target.files[0], () => {
       // console.log(event.target.files[0]);

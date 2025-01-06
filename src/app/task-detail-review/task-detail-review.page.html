@@ -17,7 +17,7 @@
 
 <ion-content style="--background: #FAF7F2">
 
-  <div *ngIf="position == 'Technician'" style="width: 100%; padding:10px;">
+  <div *ngIf="role == 'tech'" style="width: 100%; padding:10px;">
 
     <!-- Step 1 -->
     <div style="display: flex;align-items: center; justify-content: space-between;">
@@ -2508,7 +2508,7 @@
 
   </div>
 
-  <div *ngIf="position == 'Installer'" style="width: 100%; padding:10px;">
+  <div *ngIf="role == 'inst'" style="width: 100%; padding:10px;">
 
     <!-- Task Details -->
     <div style="color: #888888;font-weight: 600;margin-bottom: 10px;margin-top: 15px;">Task Details</div>
@@ -2749,7 +2749,7 @@
 
 <ion-footer>
 
-  <div *ngIf="position == 'Technician'"
+  <div *ngIf="role == 'tech'"
     style="background: #ebd1af; display: flex;padding: 10px 15px;align-items: center;justify-content: space-between;">
 
     <!-- <div style="width: 50%;padding-left: 5px;">
@@ -2788,7 +2788,7 @@
 
   </div>
 
-  <div *ngIf="position == 'Installer'"
+  <div *ngIf="role == 'inst'"
     style="background: #ebd1af; display: flex;padding: 10px 15px;align-items: center;justify-content: space-between;">
 
     <div style="width: 50%;padding-left: 5px;">
