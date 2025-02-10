@@ -104,7 +104,7 @@ export class TaskDetailPage implements OnInit {
     })
 
     this.http.get('https://curtain.vsnap.my/blindlist').subscribe((s) => {
-      this.blindlist = s['data']
+      this.blindlist = s['data'].filter(a => a.status)
       // console.log(this.blindlist)
     })
 

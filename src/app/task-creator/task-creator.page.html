@@ -363,6 +363,28 @@
 
           </div>
 
+          <!-- Ripplefold Button -->
+          <div *ngIf="item.pleat == 'Ripplefold'"
+            style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
+
+            <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
+              <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">One-Way/Center</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: center;">
+              <ion-select class="ion-no-padding" [(ngModel)]="item.button_curtain" placeholder="Select One Button Type" interface="popover"
+                mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
+                <ion-select-option value="oneway">One Way Open</ion-select-option>
+                <ion-select-option value="center">Center Open</ion-select-option>
+              </ion-select>
+
+              <ion-icon *ngIf="item.button_curtain" (click)="item.button_curtain = null" style="font-size: 16px; color: #a17635;"
+                name="close-outline"></ion-icon>
+            </div>
+
+          </div>
+
           <!-- SideHook / Touch Floor-->
           <div style="width: 100%;display: flex;align-items: center;">
 
@@ -676,6 +698,28 @@
 
           </div>
 
+          <!-- Ripplefold Button -->
+          <div *ngIf="item.pleat_sheer == 'Ripplefold'"
+            style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
+
+            <div style="width: 100%; display: flex; align-items: center; justify-content: space-between">
+              <div style="min-width: 70px; color: #999999;  margin-bottom: 3px;  font-size: 11px">One-Way/Center</div>
+            </div>
+
+            <div style="width: 100%; display: flex; align-items: center;">
+              <ion-select class="ion-no-padding" [(ngModel)]="item.button_sheer" placeholder="Select One Button Type" interface="popover"
+                mode="ios" [interfaceOptions]="{'cssClass': 'mycomponent-wider-popover'}"
+                style="width: 100%;font-size: 14px;height: 30px; padding-right: 5px;">
+                <ion-select-option value="oneway">One Way Open</ion-select-option>
+                <ion-select-option value="center">Center Open</ion-select-option>
+              </ion-select>
+
+              <ion-icon *ngIf="item.button_sheer" (click)="item.button_sheer = null" style="font-size: 16px; color: #a17635;"
+                name="close-outline"></ion-icon>
+            </div>
+
+          </div>
+
           <!-- SideHook / Touch Floor -->
           <div style="width: 100%;display: flex;align-items: center;">
 
@@ -706,6 +750,23 @@
             </div>
 
           </div>
+
+          <!-- Lead Band -->
+          <!-- <div *ngIf="item.pleat_sheer == 'French Pleat' || item.pleat_sheer == 'Fake Double Pleat'"
+            style="width: 100%; border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: flex-start; flex-direction: column;">
+
+            <div style="min-width: 70px; color: #999999;  margin-bottom: 3px; font-size: 11px">Lead Band</div>
+
+            <div style="width: 100%; display: flex; align-items: center; justify-content: space-between;"
+              (click)="item.sheer_leadband = !item.sheer_leadband">
+              <div *ngIf="!item.sheer_leadband">No Lead Band</div>
+              <div *ngIf="item.sheer_leadband">Got Lead Band</div>
+              <ion-checkbox mode="ios" class="ion-no-padding" [(ngModel)]="item.sheer_leadband" style="min-width: 15px; min-height: 15px; width: 15px; height: 15px; margin-left: 5px;
+           --background-checked: #a17635; --border-color-checked: #a17635" (click)="$event.stopPropagation()">
+              </ion-checkbox>
+            </div>
+
+          </div> -->
 
           <!-- Optional -->
           <div style="color: #888888;font-weight: 600;margin: 10px 0 5px 0;">Optional</div>

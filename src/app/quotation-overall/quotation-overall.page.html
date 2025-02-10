@@ -48,7 +48,7 @@
         <div style="display: flex;justify-content: space-between; margin-bottom: 15px;">
           <div style="width: fit-content;font-weight: 500;padding-top: 10px;">
             <div style="font-size: 15px; font-weight: 600; color: #000;border-bottom: 0.5px solid #a17635;">
-              {{x.location}}
+              {{x.location}} {{x.location_ref ? x.location_ref : ''}}
             </div>
           </div>
           <div style="font-size: 10px; color: #888;">No.{{x.no}}</div>
@@ -414,7 +414,7 @@
         <div style="display: flex;justify-content: space-between; margin-bottom: 15px;">
           <div style="width: fit-content;font-weight: 500;padding-top: 10px;">
             <div style="font-size: 15px; font-weight: 600; color: #000;border-bottom: 0.5px solid #a17635;">
-              {{x.location}}
+              {{x.location}} {{x.location_ref ? x.location_ref : ''}}
             </div>
           </div>
           <div style=" font-size: 10px; color: #888;">No.{{x.no}}</div>

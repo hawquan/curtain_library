@@ -101,7 +101,7 @@ export class TaskCreatorPage implements OnInit {
     })
 
     this.http.get('https://curtain.vsnap.my/blindlist').subscribe((s) => {
-      this.blindlist = s['data']
+      this.blindlist = s['data'].filter(a => a.status)
     })
 
 
@@ -495,6 +495,7 @@ export class TaskCreatorPage implements OnInit {
               fabric: this.item.fabric,
               fabric_sheer: null,
               fabric_lining: this.item.fabric_lining,
+              button_curtain: this.item.pleat == 'Ripplefold' ? this.item.button_curtain : null,
               code_lining: this.item.code_lining,
               code_curtain: this.item.code_curtain,
               fabric_type: this.item.fabric_type,
@@ -589,6 +590,7 @@ export class TaskCreatorPage implements OnInit {
               sheer_sidehook: this.item.sheer_sidehook,
               sheer_belt: this.item.sheer_belt,
               sheer_touchfloor: this.item.sheer_touchfloor,
+              button_sheer: this.item.pleat_sheer == 'Ripplefold' ? this.item.button_sheer : null,
               fabric: null,
               fabric_sheer: this.item.fabric_sheer,
               fabric_lining: null,
@@ -614,6 +616,7 @@ export class TaskCreatorPage implements OnInit {
               motorized_choice: null,
               motorized_pieces: null,
               motorized_lift: null,
+              sheer_leadband: this.item.sheer_leadband,
 
               // Additional
               track: null,
@@ -693,6 +696,8 @@ export class TaskCreatorPage implements OnInit {
               hook: this.item.hook,
               sidehook: this.item.sidehook,
               belt: this.item.belt,
+              button_curtain: this.item.pleat == 'Ripplefold' ? this.item.button_curtain : null,
+              button_sheer: this.item.pleat_sheer == 'Ripplefold' ? this.item.button_sheer : null,
               touchfloor: this.item.touchfloor,
               sheer_bracket: this.item.sheer_bracket,
               sheer_sidehook: this.item.sheer_sidehook,
@@ -730,6 +735,7 @@ export class TaskCreatorPage implements OnInit {
               motorized_choice: null,
               motorized_pieces: null,
               motorized_lift: null,
+              sheer_leadband: this.item.sheer_leadband,
 
               // Additional
               sheer_touchfloor: null,
@@ -789,6 +795,7 @@ export class TaskCreatorPage implements OnInit {
               bracket: this.item.bracket,
               hook: this.item.hook,
               sidehook: this.item.sidehook,
+              button_curtain: this.item.pleat == 'Ripplefold' ? this.item.button_curtain : null,
               belt: this.item.belt,
               touchfloor: this.item.touchfloor,
               fabric: this.item.fabric,
@@ -891,6 +898,7 @@ export class TaskCreatorPage implements OnInit {
               sheer_sidehook: this.item.sheer_sidehook,
               sheer_belt: this.item.sheer_belt,
               sheer_touchfloor: this.item.sheer_touchfloor,
+              button_sheer: this.item.pleat_sheer == 'Ripplefold' ? this.item.button_sheer : null,
               fabric: null,
               fabric_sheer: this.item.fabric_sheer,
               fabric_lining: null,
@@ -917,6 +925,7 @@ export class TaskCreatorPage implements OnInit {
               motorized_choice: null,
               motorized_pieces: null,
               motorized_lift: null,
+              sheer_leadband: this.item.sheer_leadband,
 
               // Additional
               track: null,
@@ -1000,6 +1009,8 @@ export class TaskCreatorPage implements OnInit {
               sheer_hook: this.item.sheer_hook,
               sheer_sidehook: this.item.sheer_sidehook,
               sheer_belt: this.item.sheer_belt,
+              button_curtain: this.item.pleat == 'Ripplefold' ? this.item.button_curtain : null,
+              button_sheer: this.item.pleat_sheer == 'Ripplefold' ? this.item.button_sheer : null,
               // sheer_touchfloor: this.item.sheer_touchfloor,
               fabric: this.item.fabric,
               fabric_sheer: this.item.fabric_sheer,
@@ -1035,6 +1046,7 @@ export class TaskCreatorPage implements OnInit {
               motorized_choice: null,
               motorized_pieces: null,
               motorized_lift: null,
+              sheer_leadband: this.item.sheer_leadband,
 
               // Additional
               sheer_touchfloor: null,
@@ -1537,6 +1549,11 @@ export class TaskCreatorPage implements OnInit {
         if (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') {
           sheer = true
           sheer_id = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['id']
+          if (this.item.pleat_sheer == 'French Pleat' || this.item.pleat_sheer == 'Fake Double Pleat' ) {
+            this.item.sheer_leadband = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['lead_band']
+          } else {
+            this.item.sheer_leadband = false
+          }
         } else {
           sheer = false
         }

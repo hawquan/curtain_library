@@ -1635,7 +1635,13 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_curtain || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
+                    {
+                      text: (this.item[i].remark_curtain || '') +
+                        (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') +
+                        ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : '') +
+                        (this.item[i].button_curtain == 'oneway' ? '\n(C) One-Way Open' : this.item[i].button_curtain == 'center' ? '\n(C) Center Open' : ''),
+                      bold: true, fontSize: 8.5
+                    }
                   ],
                 )
               }
@@ -1742,7 +1748,14 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
+                    {
+                      text: (this.item[i].remark_sheer || '') +
+                        (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') +
+                        ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : '') +
+                        (this.item[i].button_sheer == 'oneway' ? '\n(S) One-Way Open' : this.item[i].button_sheer == 'center' ? '\n(S) Center Open' : '') +
+                        (this.item[i].sheer_leadband ? '\n(Inc. Lead Band)' : ''),
+                      bold: true, fontSize: 8.5
+                    }
                   ],
                 )
               } else {
@@ -1760,7 +1773,14 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
+                    {
+                      text: (this.item[i].remark_sheer || '') +
+                        (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') +
+                        ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : '') +
+                        (this.item[i].button_sheer == 'oneway' ? '\n(S) One-Way Open' : this.item[i].button_sheer == 'center' ? '\n(S) Center Open' : '') +
+                        (this.item[i].sheer_leadband ? '\n(Inc. Lead Band)' : ''),
+                      bold: true, fontSize: 8.5
+                    }
                   ],
                 )
               }
@@ -1823,7 +1843,11 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_curtain || ''), fontSize: 8.5 }
+                    {
+                      text: (this.item[i].remark_curtain || '') +
+                        (this.item[i].button_curtain == 'oneway' ? '\n(C) One-Way Open' : this.item[i].button_curtain == 'center' ? '\n(C) Center Open' : ''),
+                      fontSize: 8.5
+                    }
                   ],
                 )
               } else {
@@ -1841,7 +1865,11 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].curtain.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_curtain || ''), fontSize: 8.5 }
+                    {
+                      text: (this.item[i].remark_curtain || '') +
+                        (this.item[i].button_curtain == 'oneway' ? '\n(C) One-Way Open' : this.item[i].button_curtain == 'center' ? '\n(C) Center Open' : ''),
+                      fontSize: 8.5
+                    }
                   ],
                 )
               }
@@ -1930,7 +1958,14 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
+                    {
+                      text: (this.item[i].remark_sheer || '') +
+                        (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') +
+                        ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : '') +
+                        (this.item[i].button_sheer == 'oneway' ? '\n(S) One-Way Open' : this.item[i].button_sheer == 'center' ? '\n(S) Center Open' : '') +
+                        (this.item[i].sheer_leadband ? '\n(Inc. Lead Band)' : ''),
+                      bold: true, fontSize: 8.5
+                    }
                   ],
                 )
               } else {
@@ -1948,7 +1983,14 @@ export class QuotationOverallPage implements OnInit {
                     { text: this.item[i].fullness_sheer, alignment: 'center', fontSize: 8.5 },
                     { text: this.item[i].sheer_hook || 'X', alignment: 'center', fontSize: 8.5 },
                     { text: this.calc[i].sheer.unit.toUpperCase(), alignment: 'center', fontSize: 8.5 },
-                    { text: (this.item[i].remark_sheer || '') + (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') + ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : ''), bold: true, fontSize: 8.5 }
+                    {
+                      text: (this.item[i].remark_sheer || '') +
+                        (this.item[i].remark_sale ? ('\n\n *' + (this.item[i].remark_sale || '')) : '') +
+                        ((this.info.package_addon && this.info.package_location == this.item[i].no) ? ('\n *' + (this.packageApplied.add_name || '')) : '') +
+                        (this.item[i].button_sheer == 'oneway' ? '\n(S) One-Way Open' : this.item[i].button_sheer == 'center' ? '\n(S) Center Open' : '') +
+                        (this.item[i].sheer_leadband ? '\n(Inc. Lead Band)' : ''),
+                      bold: true, fontSize: 8.5
+                    }
                   ],
                 )
               }

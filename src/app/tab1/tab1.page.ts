@@ -199,7 +199,7 @@ export class Tab1Page implements OnInit {
         })
 
         this.http.get('https://curtain.vsnap.my/blindlist').subscribe((s) => {
-          this.blindlist = s['data']
+          this.blindlist = s['data'].filter(a => a.status)
           console.log(this.blindlist)
         })
 
@@ -208,10 +208,10 @@ export class Tab1Page implements OnInit {
           this.http.post('https://curtain.vsnap.my/getsaleslist', { id_sales: x, id_tech: x, id_tail: x, id_inst: x }).subscribe((s) => {
             console.log(s);
 
-            this.salesList = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
-            this.salesListOngoing = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
-            this.salesListCompleted = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
-            this.salesListVoid = s['data'].filter(a => !a.status).sort((a, b) => a.no - b.no)
+            this.salesList = s['data'].filter(a => a.status).sort((a, b) => b.no - a.no)
+            this.salesListOngoing = s['data'].filter(a => a.status).sort((a, b) => b.no - a.no)
+            this.salesListCompleted = s['data'].filter(a => a.status).sort((a, b) => b.no - a.no)
+            this.salesListVoid = s['data'].filter(a => !a.status).sort((a, b) => b.no - a.no)
             this.sortSalesP = true
             this.sortSalesO = true
             this.sortSalesC = true
@@ -228,9 +228,9 @@ export class Tab1Page implements OnInit {
           this.http.post('https://curtain.vsnap.my/gettailorsaleslist', { id_tail: x }).subscribe((s) => {
             console.log(s);
 
-            this.salesList = s['data'].filter(a => a.status && (a.log_action?.includes('Pending Accept') || a.log_action?.includes('Rejected'))).sort((a, b) => a.no - b.no)
-            this.salesListOngoing = s['data'].filter(a => a.status && a.log_action && !a.log_action?.includes('Pending Accept') && !a.log_action?.includes('Rejected')).sort((a, b) => a.no - b.no)
-            this.salesListCompleted = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+            this.salesList = s['data'].filter(a => a.status && (a.log_action?.includes('Pending Accept') || a.log_action?.includes('Rejected'))).sort((a, b) => b.no - a.no)
+            this.salesListOngoing = s['data'].filter(a => a.status && a.log_action && !a.log_action?.includes('Pending Accept') && !a.log_action?.includes('Rejected')).sort((a, b) => b.no - a.no)
+            this.salesListCompleted = s['data'].filter(a => a.status).sort((a, b) => b.no - a.no)
             // this.salesListVoid = s['data'].filter(a => !a.status).sort((a, b) => a.no - b.no)
             this.sortSalesP = true
             this.sortSalesO = true
@@ -249,9 +249,9 @@ export class Tab1Page implements OnInit {
           this.http.post('https://curtain.vsnap.my/getinstallersaleslist', { id_inst: x }).subscribe((s) => {
             console.log(s);
 
-            this.salesListI = s['data'].filter(a => a.status && (a.log_action2?.includes('Pending Accept') || a.log_action2?.includes('Rejected'))).sort((a, b) => a.no - b.no)
-            this.salesListIOngoing = s['data'].filter(a => a.status && a.log_action2 && !a.log_action2?.includes('Pending Accept') && !a.log_action2?.includes('Rejected')).sort((a, b) => a.no - b.no)
-            this.salesListICompleted = s['data'].filter(a => a.status).sort((a, b) => a.no - b.no)
+            this.salesListI = s['data'].filter(a => a.status && (a.log_action2?.includes('Pending Accept') || a.log_action2?.includes('Rejected'))).sort((a, b) => b.no - a.no)
+            this.salesListIOngoing = s['data'].filter(a => a.status && a.log_action2 && !a.log_action2?.includes('Pending Accept') && !a.log_action2?.includes('Rejected')).sort((a, b) => b.no - a.no)
+            this.salesListICompleted = s['data'].filter(a => a.status).sort((a, b) => b.no - a.no)
             // this.salesListVoid = s['data'].filter(a => !a.status).sort((a, b) => a.no - b.no)
             this.sortSalesP = true
             this.sortSalesO = true

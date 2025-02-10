@@ -71,7 +71,7 @@ export class TaskEditorAlacartePage implements OnInit {
     })
 
     await this.http.get('https://curtain.vsnap.my/blindlist').subscribe((s) => {
-      this.blindlist = s['data']
+      this.blindlist = s['data'].filter(a => a.status)
     })
 
     this.http.get('https://curtain.vsnap.my/fabricList').subscribe((s) => {
