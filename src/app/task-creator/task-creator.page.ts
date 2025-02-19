@@ -480,6 +480,7 @@ export class TaskCreatorPage implements OnInit {
               height: this.item.height,
               width: this.item.width,
               track: this.item.track,
+              track_code: (this.item.track.includes('Wooden Rod') || this.item.track.includes('Metal Rod')) ? this.item.track_code : null,
               type: this.item.type,
               pleat: this.item.pleat,
               pleat_sheer: null,
@@ -578,6 +579,7 @@ export class TaskCreatorPage implements OnInit {
               height: this.item.height,
               width: this.item.width,
               track_sheer: this.item.track_sheer,
+              track_sheer_code: (this.item.track_sheer.includes('Wooden Rod') || this.item.track_sheer.includes('Metal Rod')) ? this.item.track_sheer_code : null,
               type: this.item.type,
               pleat: null,
               pleat_sheer: this.item.pleat_sheer,
@@ -683,6 +685,8 @@ export class TaskCreatorPage implements OnInit {
               width: this.item.width,
               track: this.item.track,
               track_sheer: this.item.track_sheer,
+              track_code: (this.item.track.includes('Wooden Rod') || this.item.track.includes('Metal Rod')) ? this.item.track_code : null,
+              track_sheer_code: (this.item.track_sheer.includes('Wooden Rod') || this.item.track_sheer.includes('Metal Rod')) ? this.item.track_sheer_code : null,
               type: this.item.type,
               pleat: this.item.pleat,
               pleat_sheer: this.item.pleat_sheer,
@@ -785,6 +789,7 @@ export class TaskCreatorPage implements OnInit {
               height: this.item.height,
               width: this.item.width,
               track: this.item.track,
+              track_code: (this.item.track.includes('Wooden Rod') || this.item.track.includes('Metal Rod')) ? this.item.track_code : null,
               type: this.item.type,
               pleat: this.item.pleat,
               pleat_sheer: null,
@@ -886,6 +891,7 @@ export class TaskCreatorPage implements OnInit {
               height: this.item.height,
               width: this.item.width,
               track_sheer: this.item.track_sheer,
+              track_sheer_code: (this.item.track_sheer.includes('Wooden Rod') || this.item.track_sheer.includes('Metal Rod')) ? this.item.track_sheer_code : null,
               type: this.item.type,
               pleat: null,
               pleat_sheer: this.item.pleat_sheer,
@@ -991,6 +997,8 @@ export class TaskCreatorPage implements OnInit {
               width: this.item.width,
               track: this.item.track,
               track_sheer: this.item.track_sheer,
+              track_code: (this.item.track.includes('Wooden Rod') || this.item.track.includes('Metal Rod')) ? this.item.track_code : null,
+              track_sheer_code: (this.item.track_sheer.includes('Wooden Rod') || this.item.track_sheer.includes('Metal Rod')) ? this.item.track_sheer_code : null,
               type: this.item.type,
               pleat: this.item.pleat,
               pleat_sheer: this.item.pleat_sheer,
@@ -1849,4 +1857,5 @@ export class TaskCreatorPage implements OnInit {
       alert('Your Current Image Too Large, ' + event.target.files[0].size / (10241024) + 'MB! (Please choose file lesser than 8MB)');
     }
   }
+
 }

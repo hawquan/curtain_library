@@ -184,7 +184,7 @@
           <!-- Curtain Eyelet -->
           <div *ngIf="x.eyelet_curtain" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div style="width: 60%;">
-              Curtain Eyelet Ring (ft)
+              Curtain Eyelet Ring (pcs)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -200,7 +200,7 @@
           <!-- Sheer Eyelet -->
           <div *ngIf="x.eyelet_sheer" style=" display: flex;justify-content: space-between;margin-bottom: 10px;">
             <div style="width: 60%;">
-              Sheer Eyelet Ring (ft)
+              Sheer Eyelet Ring (pcs)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -220,7 +220,7 @@
               (C) {{x.track}} (ft)
             </div>
             <div *ngIf="x.track != 'Super Track' && x.track != 'Existing Super Track '" style="width: 60%;">
-              (C) {{x.track}} Track (ft)
+              (C) {{x.track}} <span *ngIf="x.track?.includes('Wooden Rod') || x.track?.includes('Metal Rod')">- {{x.track_code}}&nbsp;</span>Track (ft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -243,7 +243,7 @@
               (S) {{x.track_sheer}} (ft)
             </div>
             <div *ngIf="x.track_sheer != 'Super Track' && x.track_sheer != 'Existing Super Track '" style="width: 60%;">
-              (S) {{x.track_sheer}} Track (ft)
+              (S) {{x.track_sheer}} <span *ngIf="x.track_sheer?.includes('Wooden Rod') || x.track_sheer?.includes('Metal Rod')">- {{x.track_sheer_code}}&nbsp;</span>Track (ft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -966,7 +966,7 @@
               (C) {{x.track}} (ft)
             </div>
             <div *ngIf="x.track != 'Super Track' && x.track != 'Existing Super Track '" style="width: 60%;">
-              (C) {{x.track}} Track (ft)
+              (C) {{x.track}} <span *ngIf="x.track?.includes('Wooden Rod') || x.track?.includes('Metal Rod')">- {{x.track_code}}&nbsp;</span>Track (ft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -989,7 +989,7 @@
               (S) {{x.track_sheer}} (ft)
             </div>
             <div *ngIf="x.track_sheer != 'Super Track' && x.track_sheer != 'Existing Super Track '" style="width: 60%;">
-              (S) {{x.track_sheer}} Track (ft)
+              (S) {{x.track_sheer}} <span *ngIf="x.track_sheer?.includes('Wooden Rod') || x.track_sheer?.includes('Metal Rod')">- {{x.track_sheer_code}}&nbsp;</span>Track (ft)
             </div>
 
             <div style="width: 40%;display: flex;justify-content: flex-end;">

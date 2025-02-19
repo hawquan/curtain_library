@@ -3482,7 +3482,7 @@ export class QuotationOverallPage implements OnInit {
           items.push(
             [
               '(C) Eyelet Ring',
-              { text: 'ft', alignment: 'center' },
+              { text: 'pcs', alignment: 'center' },
               { text: (this.item[i].type == '5' ? (this.calc[i].install.eyelet_curtain / this.calc[i].install.eyelet_rate) : (this.calc[i].curtain.eyelet_curtain / this.calc[i].curtain.eyelet_rate)), alignment: 'center' },
               { text: (this.item[i].type == '5' ? this.calc[i].install.eyelet_rate : this.calc[i].curtain.eyelet_rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
               { text: (this.item[i].type == '5' ? this.calc[i].install.eyelet_curtain : this.calc[i].curtain.eyelet_curtain).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
@@ -3494,7 +3494,7 @@ export class QuotationOverallPage implements OnInit {
           items.push(
             [
               '(S) Eyelet Ring',
-              { text: 'ft', alignment: 'center' },
+              { text: 'pcs', alignment: 'center' },
               { text: (this.item[i].type == '5' ? (this.calc[i].install.eyelet_sheer / this.calc[i].install.eyelet_rate) : (this.calc[i].sheer.eyelet_sheer / this.calc[i].sheer.eyelet_rate)), alignment: 'center' },
               { text: (this.item[i].type == '5' ? this.calc[i].install.eyelet_rate : this.calc[i].sheer.eyelet_rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
               { text: (this.item[i].type == '5' ? this.calc[i].install.eyelet_sheer : this.calc[i].sheer.eyelet_sheer).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' }
@@ -3581,7 +3581,7 @@ export class QuotationOverallPage implements OnInit {
         if (this.calc[i].track.total > 0) {
           items.push(
             [
-              '(C) ' + this.item[i].track + (this.item[i].track == 'Super Track' ? '' : ' Track'),
+              '(C) ' + this.item[i].track + (this.item[i].track?.includes('Wooden Rod') || this.item[i].track?.includes('Metal Rod') ? ' - ' + this.item[i].track_code : '') + (this.item[i].track?.includes('Super Track') ? '' : ' Track'),
               { text: this.calc[i].track.unit, alignment: 'center' },
               { text: this.calc[i].track.qty, alignment: 'center' },
               { text: (this.calc[i].track.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
@@ -3591,7 +3591,7 @@ export class QuotationOverallPage implements OnInit {
         } else {
           items.push(
             [
-              '(C) ' + this.item[i].track + (this.item[i].track == 'Super Track' ? '' : ' Track'),
+              '(C) ' + this.item[i].track + (this.item[i].track_?.includes('Wooden Rod') || this.item[i].track?.includes('Metal Rod') ? ' - ' + this.item[i].track_code : '') + (this.item[i].track?.includes('Super Track') ? '' : ' Track'),
               { text: this.calc[i].track.unit, alignment: 'center' },
               { text: this.calc[i].track.qty, alignment: 'center' },
               { text: 'WAIVED', alignment: 'right' },
@@ -3627,7 +3627,7 @@ export class QuotationOverallPage implements OnInit {
         if (this.calc[i].track.total > 0) {
           items.push(
             [
-              '(C) ' + this.item[i].track + (this.item[i].track == 'Super Track' ? '' : ' Track'),
+              '(C) ' + this.item[i].track + (this.item[i].track?.includes('Wooden Rod') || this.item[i].track?.includes('Metal Rod') ? ' - ' + this.item[i].track_code : '') + (this.item[i].track?.includes('Super Track') ? '' : ' Track'),
               { text: this.calc[i].track.unit, alignment: 'center' },
               { text: this.calc[i].track.qty, alignment: 'center' },
               { text: (this.calc[i].track.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
@@ -3637,7 +3637,7 @@ export class QuotationOverallPage implements OnInit {
         } else {
           items.push(
             [
-              '(C) ' + this.item[i].track + (this.item[i].track == 'Super Track' ? '' : ' Track'),
+              '(C) ' + this.item[i].track + (this.item[i].track?.includes('Wooden Rod') || this.item[i].track?.includes('Metal Rod') ? ' - ' + this.item[i].track_code : '') + (this.item[i].track?.includes('Super Track') ? '' : ' Track'),
               { text: this.calc[i].track.unit, alignment: 'center' },
               { text: this.calc[i].track.qty, alignment: 'center' },
               { text: 'WAIVED', alignment: 'right' },
@@ -3651,7 +3651,7 @@ export class QuotationOverallPage implements OnInit {
         if (this.calc[i].track_sheer.total > 0) {
           items.push(
             [
-              '(S) ' + this.item[i].track_sheer + (this.item[i].track_sheer == 'Super Track' ? '' : ' Track'),
+              '(S) ' + this.item[i].track_sheer + (this.item[i].track_sheer?.includes('Wooden Rod') || this.item[i].track_sheer?.includes('Metal Rod') ? ' - ' + this.item[i].track_sheer_code : '') + (this.item[i].track_sheer?.includes('Super Track') ? '' : ' Track'),
               { text: this.calc[i].track_sheer.unit, alignment: 'center' },
               { text: this.calc[i].track_sheer.qty, alignment: 'center' },
               { text: (this.calc[i].track_sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
@@ -3661,7 +3661,7 @@ export class QuotationOverallPage implements OnInit {
         } else {
           items.push(
             [
-              '(S) ' + this.item[i].track_sheer + (this.item[i].track_sheer == 'Super Track' ? '' : ' Track'),
+              '(S) ' + this.item[i].track_sheer + (this.item[i].track_sheer?.includes('Wooden Rod') || this.item[i].track_sheer?.includes('Metal Rod') ? ' - ' + this.item[i].track_sheer_code : '') + (this.item[i].track_sheer?.includes('Super Track') ? '' : ' Track'),
               { text: this.calc[i].track_sheer.unit, alignment: 'center' },
               { text: this.calc[i].track_sheer.qty, alignment: 'center' },
               { text: 'WAIVED', alignment: 'right' },
@@ -3673,7 +3673,7 @@ export class QuotationOverallPage implements OnInit {
         if (this.calc[i].track_sheer.total > 0) {
           items.push(
             [
-              '(S) ' + this.item[i].track_sheer + (this.item[i].track_sheer == 'Super Track' ? '' : ' Track'),
+              '(S) ' + this.item[i].track_sheer + (this.item[i].track_sheer?.includes('Wooden Rod') || this.item[i].track_sheer?.includes('Metal Rod') ? ' - ' + this.item[i].track_sheer_code : '') + (this.item[i].track_sheer?.includes('Super Track') ? '' : ' Track'),
               { text: this.calc[i].track_sheer.unit, alignment: 'center' },
               { text: this.calc[i].track_sheer.qty, alignment: 'center' },
               { text: (this.calc[i].track_sheer.rate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }), alignment: 'right' },
@@ -3683,7 +3683,7 @@ export class QuotationOverallPage implements OnInit {
         } else {
           items.push(
             [
-              '(S) ' + this.item[i].track_sheer + (this.item[i].track_sheer == 'Super Track' ? '' : ' Track'),
+              '(S) ' + this.item[i].track_sheer + (this.item[i].track_sheer?.includes('Wooden Rod') || this.item[i].track_sheer?.includes('Metal Rod') ? ' - ' + this.item[i].track_sheer_code : '') + (this.item[i].track_sheer?.includes('Super Track') ? '' : ' Track'),
               { text: this.calc[i].track_sheer.unit, alignment: 'center' },
               { text: this.calc[i].track_sheer.qty, alignment: 'center' },
               { text: 'WAIVED', alignment: 'right' },

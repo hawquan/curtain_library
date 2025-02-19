@@ -200,7 +200,7 @@
             (C) {{item.track}} (ft)
           </div>
           <div *ngIf="item.track != 'Super Track'" style="width: 60%;">
-            (C) {{item.track}} Track (ft)
+            (C) {{item.track}} <span *ngIf="item.track?.includes('Wooden Rod') || item.track?.includes('Metal Rod')">{{item.track_code}}&nbsp;</span>Track (ft)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -223,7 +223,7 @@
             (C) {{item.track_sheer}} (ft)
           </div>
           <div *ngIf="item.track_sheer != 'Super Track'" style="width: 60%;">
-            (C) {{item.track_sheer}} Track (ft)
+            (C) {{item.track_sheer}} <span *ngIf="item.track_sheer?.includes('Wooden Rod') || item.track_sheer?.includes('Metal Rod')">{{item.track_sheer_code}}&nbsp;</span>Track (ft)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -949,7 +949,7 @@
             (C) {{item.track}} (ft)
           </div>
           <div *ngIf="item.track != 'Super Track'" style="width: 60%;">
-            (C) {{item.track}} Track (ft)
+            (C) {{item.track}} <span *ngIf="item.track?.includes('Wooden Rod') || item.track?.includes('Metal Rod')">{{item.track_code}}&nbsp;</span>Track (ft)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">
@@ -972,7 +972,7 @@
             (S) {{item.track_sheer}} (ft)
           </div>
           <div *ngIf="item.track_sheer != 'Super Track'" style="width: 60%;">
-            (S) {{item.track_sheer}} Track (ft)
+            (S) {{item.track_sheer}} <span *ngIf="item.track_sheer?.includes('Wooden Rod') || item.track_sheer?.includes('Metal Rod')">{{item.track_sheer_code}}&nbsp;</span>Track (ft)
           </div>
 
           <div style="width: 40%;display: flex;justify-content: flex-end;">

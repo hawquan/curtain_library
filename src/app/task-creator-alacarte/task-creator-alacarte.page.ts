@@ -672,6 +672,7 @@ export class TaskCreatorAlacartePage implements OnInit {
         sales_id: this.sales_no,
         width: this.item.width,
         track: this.item.track,
+        track_code: (this.item.track.includes('Wooden Rod') || this.item.track.includes('Metal Rod')) ? this.item.track_code : null,
         type: this.item.type,
         bracket: this.item.bracket,
         sidehook: this.item.sidehook,
