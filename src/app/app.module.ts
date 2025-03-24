@@ -17,11 +17,17 @@ import { Camera } from '@awesome-cordova-plugins/camera/ngx';
 import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 import { SafariViewController } from '@awesome-cordova-plugins/safari-view-controller/ngx';
 
+import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
+import { NativeGeocoder } from '@awesome-cordova-plugins/native-geocoder/ngx';
+import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx';
+import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
-  providers: [DatePipe ,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, File, FileOpener,Market,Camera,FCM,SafariViewController],
+  providers: [DatePipe ,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, File, FileOpener,Market,Camera,FCM,SafariViewController,
+    Geolocation, NativeGeocoder, LocationAccuracy,Diagnostic],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

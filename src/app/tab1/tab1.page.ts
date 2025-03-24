@@ -223,6 +223,7 @@ export class Tab1Page implements OnInit {
 
           })
         }
+
         if (this.user.position == 'Tailor') {
 
           this.http.post('https://curtain.vsnap.my/gettailorsaleslist', { id_tail: x }).subscribe((s) => {

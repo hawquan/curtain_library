@@ -1,0 +1,116 @@
+<ion-header *ngIf="platformType().includes('ios')" class="ion-no-padding">
+  <ion-toolbar>
+    <ion-title>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content style="--height:90%">
+  <div style="width: 100%; height: 100%; padding: 0 24px;">
+
+    <div
+      style="width: 100%; display: flex; justify-content:center; align-items: center; padding: 24px 0; position: relative;">
+
+      <ion-icon (click)='back()' style='color:black;font-size:20px; position: absolute; top: 24px; left: 0;'
+        name="chevron-back-outline">
+      </ion-icon>
+
+      <div style="font-weight: 600; font-size:18px;">Check In/Out</div>
+
+      <div style="width:max-content; position: absolute; top: 18px; right: 0;">
+        <!-- <div
+          style="width: max-content; padding: 6px 12px; border-radius: 8px; background-color:#6DAD48 ; color: white;">
+          <ion-icon name="camera-outline"></ion-icon>
+        </div> -->
+      </div>
+
+    </div>
+
+    <!-- Picture -->
+    <div style="margin-top: 15px;color: #333333;font-weight: 600;">
+      Images : <span style="font-size: 12px;color: #8080808d;">(Click image to view)</span></div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); margin: 10px 0 50px 0;  ">
+      <div style="display: flex;justify-content: center;padding: 5px 5px 5px 10px;">
+        <div (click)="opencamera()"
+          style="min-height: 100px; max-height: 100px;min-width: 100px;max-width: 100px; border-radius: 5px;
+          display: flex;align-items: center;justify-content: center;background-color: gray; box-shadow: 0px 3px 6px rgb(0,0,0,0.1);">
+          <ion-icon style="width: 100%; font-size: 15px; color: #ffffff;" name="camera"></ion-icon>
+        </div>
+      </div>
+
+      <div *ngFor="let x of imageurl; let i = index"
+        style="height: 100%;padding: 5px;display: flex;justify-content: center;">
+
+        <img (click)="openPic(x)"
+          style="border-radius: 5px; height: 100px;min-width: 100px;max-width: 100px; object-fit: cover;"
+          src="{{x || ''}}" alt="">
+
+        <div
+          style="height: 15px;width: 15px;background-color: white;border-radius: 100px;margin-left: -20px;margin-top: 5px;display: flex;justify-content: center;align-items: center;">
+          <ion-icon (click)="deletePic(i)" style="font-size: 13px; color: #a17635;" name="close-outline"></ion-icon>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div>
+      <!-- <div style="padding: 8px 0; font-size:20px; font-weight: 600;">{{user.user_name}}</div> -->
+      <!-- <div *ngIf="imageurl" style="padding: 4px 0;">{{checkin.now | date : 'yyyy-MM-dd hh:mm:ss a'}}</div> -->
+      <div style="font-weight: 600;">Address : </div>
+      <div style="padding: 4px 0;">{{addressstring}}</div>
+      <div style="padding: 2px 0; font-size: 12px; color: #CBDF7D">*This displayed address will have small deviation
+      </div>
+      <!-- <div style="padding: 8px 0;">latitude : {{location.latitude}}</div>
+      <div style="padding: 0;">longitude : {{location.longitude}}</div> -->
+    </div>
+
+    <div>
+      <div style="font-weight: 600; margin-top: 30px; margin-bottom: 5px;">Check Log :</div>
+      <div *ngFor="let x of checklog; let i = index" style="font-size: 10px; padding: 3px 0;">
+        <div style="display: flex;">
+          <div style="font-size: 11px; font-weight: 600; padding-right: 3px;">{{i+1}}.</div>
+          <div><div>Check {{x.check_type}}</div>{{x.check_address}}<br /><div style="padding: 4px 0;">{{x.check_time | date : 'dd MMM yyyy h:mm a'}}</div></div>
+        </div>
+        <div style=" display: flex; flex-wrap: wrap; margin-left: 12px;">
+          <div *ngFor="let y of x.check_image">
+            <img (click)="openPic(y)" style="width: 50px; height: 50px;" src="{{y || ''}}" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>
+
+<ion-footer style="--height: 10%;" class="ion-no-border">
+  <div style="width: 100%; display:flex; background-color: #FFFFFF; padding: 16px;">
+
+    <!-- <div (click)="cancel()" style="width: 50%; display: flex; justify-content:center; text-align:center; color: #FFFFFF;">
+    <div style="min-width: max-content; width: 80%; padding: 12px; border-radius: 12px; background: rgb(201, 201, 201);">Cancel</div>
+  </div> -->
+
+    <!-- <div (click)="getall()" style="width: 33.33%; display: flex; justify-content:center; text-align:center; color: #FFFFFF;">
+    <div style="min-width: max-content; width: 80%; padding: 12px; border-radius: 12px; background:#4B8447 ;">Camera</div>
+  </div> -->
+
+    <div (click)="submit()"
+      style="width: 100%; display: flex; justify-content:center; text-align:center; color: #FFFFFF;">
+      <div style="min-width: max-content; width: 90%; padding: 16px 0; border-radius: 12px; background:#d9bd98 ;">Check
+        {{checktype}}</div>
+    </div>
+  </div>
+</ion-footer>
+
+<div *ngIf="pic != ''"
+  style="position: fixed;top: 0; left: 0;z-index: 1000; background: rgba(0, 0, 0, 0.50);display: flex;flex-direction: column;justify-content: center;align-items: center;width: 100%; height: 100%;">
+
+
+  <img style="max-height: 70%;" src="{{pic}}">
+
+  <div
+    style="height: 24px;width: 24px;background-color: white;border-radius: 5px;display: flex;justify-content: flex-end;align-items: center;margin-top: 20px;">
+    <ion-icon (click)="closePic()" style="font-size: 22px; color: #a17635;" name="close-outline"></ion-icon>
+  </div>
+</div>

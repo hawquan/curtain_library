@@ -624,13 +624,13 @@ export class QuotationOverallPage implements OnInit {
     let width = 0 as any
     let height = 0 as any
     if (this.item[i].height_tech != null || this.item[i].width_tech != null) {
-      if (this.item[i].status_tech == 'Approved' && this.item[i].status_sale == 'Completed') {
-        width = this.item[i].width
-        height = this.item[i].height
-      } else {
+      // if (this.item[i].status_tech == 'Approved' && this.item[i].status_sale == 'Completed') {
+      //   width = this.item[i].width
+      //   height = this.item[i].height
+      // } else {
         width = this.item[i].width_tech
         height = this.item[i].height_tech
-      }
+      // }
 
     } else {
       width = this.item[i].width
@@ -1120,13 +1120,13 @@ export class QuotationOverallPage implements OnInit {
     for (let i = 0; i < this.item.length; i++) {
 
       if (this.item[i].height_tech != null || this.item[i].width_tech != null) {
-        if (this.item[i].status_tech == 'Approved' && this.item[i].status_sale == 'Completed') {
-          width = this.item[i].width
-          height = this.item[i].height
-        } else {
+        // if (this.item[i].status_tech == 'Approved' && this.item[i].status_sale == 'Completed') {
+        //   width = this.item[i].width
+        //   height = this.item[i].height
+        // } else {
           width = this.item[i].width_tech
           height = this.item[i].height_tech
-        }
+        // }
 
       } else {
         width = this.item[i].width
@@ -3180,13 +3180,13 @@ export class QuotationOverallPage implements OnInit {
     for (let i = 0; i < this.item.length; i++) {
 
       if (this.item[i].height_tech != null || this.item[i].width_tech != null) {
-        if (this.item[i].status_tech == 'Approved' && this.item[i].status_sale == 'Completed') {
-          width = this.item[i].width
-          height = this.item[i].height
-        } else {
+        // if (this.item[i].status_tech == 'Approved' && this.item[i].status_sale == 'Completed') {
+        //   width = this.item[i].width
+        //   height = this.item[i].height
+        // } else {
           width = this.item[i].width_tech
           height = this.item[i].height_tech
-        }
+        // }
 
       } else {
         width = this.item[i].width
@@ -4302,13 +4302,13 @@ export class QuotationOverallPage implements OnInit {
     for (let i = 0; i < this.item.length; i++) {
 
       if (this.item[i].height_tech != null || this.item[i].width_tech != null) {
-        if (this.item[i].status_tech == 'Approved' && this.item[i].status_sale == 'Completed') {
-          width = this.item[i].width
-          height = this.item[i].height
-        } else {
+        // if (this.item[i].status_tech == 'Approved' && this.item[i].status_sale == 'Completed') {
+        //   width = this.item[i].width
+        //   height = this.item[i].height
+        // } else {
           width = this.item[i].width_tech
           height = this.item[i].height_tech
-        }
+        // }
 
       } else {
         width = this.item[i].width

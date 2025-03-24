@@ -130,6 +130,10 @@ const routes: Routes = [
     path: 'signature',
     loadChildren: () => import('./signature/signature.module').then( m => m.SignaturePageModule)
   },
+  {
+    path: 'task-check-in',
+    loadChildren: () => import('./task-check-in/task-check-in.module').then( m => m.TaskCheckInPageModule)
+  },
 
 ];
 @NgModule({

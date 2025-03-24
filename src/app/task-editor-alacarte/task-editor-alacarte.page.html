@@ -581,6 +581,19 @@
         </ion-input>
       </div>
 
+      
+      <!-- Width/Height -->
+      <!-- <div style="width: 100%;display: flex;align-items: center;">
+        <div
+          style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 60px; color: #999999">Size</div>
+          <ion-input type="number" placeholder="inch" [(ngModel)]="item.width"
+            style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+          </ion-input>
+        </div>
+
+      </div> -->
+
       <div>
 
         <!-- Step 2 -->
@@ -783,6 +796,25 @@
           <ion-select-option value="S">Sheer</ion-select-option>
           <ion-select-option value="CS">Curtain + Sheer</ion-select-option>
         </ion-select>
+      </div>
+
+      <!-- Width/Height -->
+      <div style="width: 100%;display: flex;align-items: center;">
+        <div
+          style="width: 100%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 60px; color: #999999">Size</div>
+          <ion-input type="number" placeholder="inch" [(ngModel)]="item.width"
+            style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+          </ion-input>
+        </div>
+
+        <!-- <div
+          style="width: 50%;  border: 1px solid #e0e0e0; border-radius: 2px; padding: 5px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="min-width: 60px; color: #999999">Height</div>
+          <ion-input type="number" placeholder="inch" [(ngModel)]="item.height"
+            style="width: calc(100% - 60px) ;height: 30px;font-weight: 400;--padding-start: 10px;--padding-end: 10px; font-weight: 500; color: #333333">
+          </ion-input>
+        </div> -->
       </div>
 
       <!-- Step 2 -->

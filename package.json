@@ -1,6 +1,6 @@
 {
   "name": "curtain_library",
-  "version": "0.0.80",
+  "version": "0.0.81",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -16,11 +16,16 @@
     "@angular/common": "^15.0.0",
     "@angular/core": "^15.0.0",
     "@angular/forms": "^15.0.0",
+    "@angular/google-maps": "^15.2.9",
     "@angular/platform-browser": "^15.0.0",
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
     "@awesome-cordova-plugins/camera": "^6.3.0",
     "@awesome-cordova-plugins/core": "^6.3.0",
+    "@awesome-cordova-plugins/diagnostic": "^5.40.0",
+    "@awesome-cordova-plugins/geolocation": "^6.15.0",
+    "@awesome-cordova-plugins/location-accuracy": "^6.15.0",
+    "@awesome-cordova-plugins/native-geocoder": "^6.15.0",
     "@awesome-cordova-plugins/safari-view-controller": "^6.2.0",
     "@capacitor/core": "6.2.0",
     "@ionic-native/camera": "^5.36.0",
@@ -61,6 +66,7 @@
     "@angular/compiler-cli": "^15.0.0",
     "@angular/language-service": "^15.0.0",
     "@ionic/angular-toolkit": "^7.0.0",
+    "@types/google.maps": "^3.58.1",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
@@ -73,6 +79,7 @@
     "cordova-plugin-fcm-with-dependecy-updated": "github:marutifh/cordova-plugin-fcm-with-dependecy-updated",
     "cordova-plugin-file": "^7.0.0",
     "cordova-plugin-file-opener2": "^3.0.5",
+    "cordova-plugin-geolocation": "^5.0.0",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^5.0.0",
     "cordova-plugin-market": "^1.2.0",
@@ -121,12 +128,15 @@
         "ANDROID_GRADLE_TOOLS_VERSION": "4.1.0"
       },
       "cordova-plugin-safariviewcontroller": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-geolocation": {
+        "GPS_REQUIRED": "true"
+      }
     },
     "platforms": [
       "browser",
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

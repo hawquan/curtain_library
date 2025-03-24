@@ -835,6 +835,14 @@
               <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
             </div>
 
+            <div style="display: flex; align-items: center; justify-content: flex-end; font-size: 11px; margin-top: 5px; font-weight: 500;">Measurement :
+              {{x.tech_done}} / {{x.tech_total}}</div>
+
+            <div style="display: flex; align-items: center; justify-content: flex-end; font-size: 11px; font-weight: 500;">
+              <span *ngIf="x.tech_total != x.tech_done" style="color: #f58c0a;">On-Going</span>
+              <span *ngIf="x.tech_total == x.tech_done" style="color: green;">Completed</span>
+            </div>
+
             <div
               style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
 
@@ -1134,6 +1142,15 @@
                 <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
               </div>
 
+              <div style="width: 100%; display: flex; align-items: flex-start; margin-top: 5px;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-bottom: 5px;">
+                  Schedule:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">
+                  <div *ngFor="let y of x.tech_schedule">&nbsp;{{y | date: 'dd MMM yyyy hh:mm a'}}</div>
+                </div>
+              </div>
+
               <div
                 style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding-top: 10px;border-top: 1px solid #eeeeee; margin-top: 15px;">
 
@@ -1198,6 +1215,15 @@
                   Address:
                 </div>
                 <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+              </div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start; margin-top: 5px;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-bottom: 5px;">
+                  Schedule:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">
+                  <div *ngFor="let y of x.tech_schedule">&nbsp;{{y | date: 'dd MMM yyyy hh:mm a'}}</div>
+                </div>
               </div>
 
               <div
@@ -1292,6 +1318,15 @@
                   Address:
                 </div>
                 <div style="font-weight: 500; color: #999999; font-size:12px;">{{x.customer_address}}</div>
+              </div>
+
+              <div style="width: 100%; display: flex; align-items: flex-start; margin-top: 5px;">
+                <div style="font-weight: 500; color: #999999; font-size:12px; margin-bottom: 5px;">
+                  Schedule:
+                </div>
+                <div style="font-weight: 500; color: #999999; font-size:12px;">
+                  <div *ngFor="let y of x.tech_schedule">&nbsp;{{y | date: 'dd MMM yyyy hh:mm a'}}</div>
+                </div>
               </div>
 
               <div
@@ -2160,7 +2195,8 @@
           <div (click)="toDetailPo(x)"
             style="display: flex;flex-direction: column;justify-content: center;padding: 10px 15px; width: 100%;">
             <div style="width: 100%; display: flex; justify-content: space-between;">
-              <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}<br /><span style="font-size: 13px; font-weight: 600;">SO Num : {{x.so_num}}</span>
+              <div style="font-weight: 600;font-size: 15px; margin-bottom: 5px;">{{x.customer_name}}<br /><span
+                  style="font-size: 13px; font-weight: 600;">SO Num : {{x.so_num}}</span>
               </div>
               <div style="font-size: 11px; color: #999999; margin-bottom: 5px;">{{x.date_created | date: 'dd MMM yyyy'}}
               </div>

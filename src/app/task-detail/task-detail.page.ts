@@ -80,6 +80,8 @@ export class TaskDetailPage implements OnInit {
   count = 0
 
   role
+  checklist = {} as any
+  checktype = 'in'
 
   ngOnInit() {
 
@@ -90,6 +92,23 @@ export class TaskDetailPage implements OnInit {
       this.user = JSON.parse(a["user"])
       this.role = a['role']
       console.log(this.sales_id, this.user);
+
+      this.http.post('https://curtain.vsnap.my/getlatestcheckin', { sales_id: this.sales_id }).subscribe(a => {
+
+        this.checklist = a['data']
+        console.log(this.checklist);
+
+        if (this.checklist) {
+          if (this.checklist.check_type == 'in') {
+            this.checktype = 'out'
+          } else {
+            this.checktype = 'in'
+          }
+        } else {
+          this.checktype = 'in'
+        }
+
+      })
 
     })
 
@@ -489,24 +508,40 @@ export class TaskDetailPage implements OnInit {
 
   async reviewTask(x) {
 
-    const modal = await this.modal.create({
-      cssClass: 'task',
-      component: TaskDetailReviewPage,
-      componentProps: {
-        item: x,
-        position: this.user['position'],
-        blindlist: this.blindlist,
-        tracklist: this.tracklist,
-        role: this.user['position'] == 'Technician' ? this.role : ''
-      }
-    });
+    // if (this.checktype == 'in') {
+    //   const Toast = Swal.mixin({
+    //     toast: true,
+    //     position: 'top',
+    //     showConfirmButton: false,
+    //     timer: 3000,
+    //     timerProgressBar: true,
+    //   })
 
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    if (data == 1) {
-      // x = data
-      this.refreshList()
-    }
+    //   Toast.fire({
+    //     icon: 'error',
+    //     title: 'Please Check-In before you proceed to review task.'
+    //   })
+    // } else {
+      const modal = await this.modal.create({
+        cssClass: 'task',
+        component: TaskDetailReviewPage,
+        componentProps: {
+          item: x,
+          position: this.user['position'],
+          blindlist: this.blindlist,
+          tracklist: this.tracklist,
+          role: this.user['position'] == 'Technician' ? this.role : ''
+        }
+      });
+
+      await modal.present();
+      const { data } = await modal.onWillDismiss();
+      if (data == 1) {
+        // x = data
+        this.refreshList()
+      }
+    // }
+
   }
 
   async reviewTaskCompleted(x) {
@@ -2715,6 +2750,10 @@ export class TaskDetailPage implements OnInit {
       showConfirmButton: true,
       showCancelButton: false,
     })
+  }
+
+  checkin() {
+    this.nav.navigateForward('task-check-in?id=' + this.sales_id + '&role=' + this.role)
   }
 
   isEditCancel() {

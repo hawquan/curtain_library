@@ -44,6 +44,8 @@ export class TaskCreatorPage implements OnInit {
   blindlist = []
   tracklist = []
   misclist = []
+  decolist = []
+  decolistorigin = []
   bracketlist = []
   bracketlistblind = [{ name: 'Wall' }, { name: 'Ceiling' }, { name: 'Ceiling Pelmet' }]
   hooklist = []
@@ -104,6 +106,10 @@ export class TaskCreatorPage implements OnInit {
       this.blindlist = s['data'].filter(a => a.status)
     })
 
+    this.http.get('https://curtain.vsnap.my/decorationListApp').subscribe((s) => {
+      this.decolist = s['data'].filter(a => a.status)
+      this.decolistorigin = s['data'].filter(a => a.status)
+    })
 
     this.http.get('https://curtain.vsnap.my/miscList').subscribe((s) => {
       this.misclist = s['data'].filter(a => a.status)
@@ -180,6 +186,14 @@ export class TaskCreatorPage implements OnInit {
   blindChanged() {
     this.item.blind_decoration = null
     this.item.fabric_blind = null
+
+    if (this.item.pleat == 'Zebra Blind') {
+      this.decolist = this.decolistorigin.filter(a => a.type == 'Zebra Blind')
+    } else if (this.item.pleat == 'Roller Blind') {
+      this.decolist = this.decolistorigin.filter(a => a.type == 'Roller Blind')
+    } else if (this.item.pleat == 'Wooden Blind') {
+      this.decolist = this.decolistorigin.filter(a => a.type == 'Wooden Blind')
+    }
   }
 
   pleatSelection() {
@@ -1557,7 +1571,7 @@ export class TaskCreatorPage implements OnInit {
         if (this.item.fabric_type == 'S' || this.item.fabric_type == 'CS') {
           sheer = true
           sheer_id = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['id']
-          if (this.item.pleat_sheer == 'French Pleat' || this.item.pleat_sheer == 'Fake Double Pleat' ) {
+          if (this.item.pleat_sheer == 'French Pleat' || this.item.pleat_sheer == 'Fake Double Pleat') {
             this.item.sheer_leadband = this.fabricSheer.filter(x => x.name == this.item.fabric_sheer)[0]['lead_band']
           } else {
             this.item.sheer_leadband = false

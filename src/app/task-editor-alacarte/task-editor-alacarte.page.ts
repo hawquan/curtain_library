@@ -727,6 +727,7 @@ export class TaskEditorAlacartePage implements OnInit {
 
       let temp = {
         no: this.item.no,
+        width: this.item.width,
         sales_id: this.sales_no,
         location: this.item.location,
         location_ref: this.item.location_ref,

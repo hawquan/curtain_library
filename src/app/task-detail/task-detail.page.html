@@ -894,8 +894,15 @@
 
     </div>
 
-    <div style="width: 100%; padding: 10px; background-color: #ebd1af; ">
+    <div
+      style="width: 100%; padding: 5px 10px; background-color: #ebd1af; display: flex; align-items: center; justify-content: space-between; ">
       <div style="color: #a17635; font-weight: 600; font-size: 12px;"> Product Details</div>
+      <!-- <div *ngIf="lengthof(items) > 0" (click)="checkin()" style="background-color: white; border-radius: 100px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+        color: #a17635; padding: 7px 30px; font-size: 12px;">Check-{{checktype}}</div> -->
+      <ion-button *ngIf="lengthof(items) > 0" (click)="checkin()"
+        style="height: 28px; width: 130px;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 450px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;text-transform: none">
+        Check-{{checktype}}
+      </ion-button>
     </div>
 
     <div style="width: 100%;padding: 10px;">
@@ -1673,9 +1680,15 @@
     </div>
 
     <div
-      style="width: 100%; padding: 10px; background-color: #ebd1af; display: flex; align-items: center; justify-content: space-between; ">
-      <div style="color: #a17635; font-weight: 600; font-size: 13px;"> Product Details</div>
-    </div>
+    style="width: 100%; padding: 5px 10px; background-color: #ebd1af; display: flex; align-items: center; justify-content: space-between; ">
+    <div style="color: #a17635; font-weight: 600; font-size: 12px;"> Product Details</div>
+    <!-- <div *ngIf="lengthof(items) > 0" (click)="checkin()" style="background-color: white; border-radius: 100px; box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+      color: #a17635; padding: 7px 30px; font-size: 12px;">Check-{{checktype}}</div> -->
+    <ion-button *ngIf="lengthof(items) > 0" (click)="checkin()"
+      style="height: 28px; width: 130px;max-width: 150px;--background: white;--border-radius: 100px;font-weight: 450px;font-size: 12px;letter-spacing: 0.7px;color: #a17635;--background-activated: ;padding-left: 5px;text-transform: none">
+      Check-{{checktype}}
+    </ion-button>
+  </div>
 
     <div style="width: 100%;padding: 10px;">
 
