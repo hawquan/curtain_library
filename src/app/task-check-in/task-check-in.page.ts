@@ -47,7 +47,7 @@ export class TaskCheckInPage implements OnInit {
 
   //Images
   photo = [] as any
-  imageurl = ['https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg'] as any
+  imageurl = [] as any
 
   sales_id
   role
