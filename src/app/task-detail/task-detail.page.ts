@@ -2014,6 +2014,7 @@ export class TaskDetailPage implements OnInit {
               custom_bracket: this.items[i].custom_bracket,
               custom_belt: this.items[i].custom_belt,
               custom_sheer_bracket: this.items[i].custom_sheer_bracket,
+              custom_sheer_hook: this.items[i].custom_sheer_hook,
               custom_sheer_belt: this.items[i].custom_sheer_belt,
               price: this.price,
               status: true,
