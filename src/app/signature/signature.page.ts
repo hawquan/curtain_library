@@ -102,7 +102,7 @@ export class SignaturePage implements OnInit {
         let body = new URLSearchParams()
         body.set('image', base64)
 
-        this.http.post('https://forcar.vsnap.my/upload', { image: base64, folder: 'goalgame', userid: Date.now() }).subscribe((res) => {
+        this.http.post('https://api.nanogapp.com/upload', { image: base64, folder: 'goalgame', userid: Date.now() }).subscribe((res) => {
           this.imageurl = res['imageURL']
           // this.http.post('https://api.nanogapp.com/updateSubSubSign', {
           //   sub_sub_sign: temp,

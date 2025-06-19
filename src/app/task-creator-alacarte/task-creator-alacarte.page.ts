@@ -1506,7 +1506,7 @@ export class TaskCreatorAlacartePage implements OnInit {
 
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-      this.http.post('https://forcar.vsnap.my/upload', { image: base64Image, folder: 'goalgame', userid: Date.now() }).subscribe((link) => {
+      this.http.post('https://api.nanogapp.com/upload', { image: base64Image, folder: 'goalgame', userid: Date.now() }).subscribe((link) => {
         console.log(link['imageURL']);
         this.item['photos'][this.lengthof(this.item['photos']) - 1] = link['imageURL']
         console.log(this.item['photos']);
@@ -1556,7 +1556,7 @@ export class TaskCreatorAlacartePage implements OnInit {
         // event.target.value = '';
         this.item['photos'].push('https://i.pinimg.com/originals/a2/dc/96/a2dc9668f2cf170fe3efeb263128b0e7.gif');
 
-        this.http.post('https://forcar.vsnap.my/upload', { image: this.imagec, folder: 'goalgame', userid: Date.now() }).subscribe((link) => {
+        this.http.post('https://api.nanogapp.com/upload', { image: this.imagec, folder: 'goalgame', userid: Date.now() }).subscribe((link) => {
           console.log(link['imageURL']);
           this.item['photos'][this.lengthof(this.item['photos']) - 1] = link['imageURL']
           console.log(this.item['photos']);

@@ -3062,7 +3062,7 @@ export class QuotationOverallPage implements OnInit {
 
       this.toBase64(blob).then(data => {
         console.log(data)
-        this.http.post('https://forcar.vsnap.my/uploadPDF', { base64: data }).subscribe((link) => {
+        this.http.post('https://api.nanogapp.com/uploadFilePDF', { base64: data }).subscribe((link) => {
           console.log(link['imageURL']);
 
           this.info.so_pdf.push({ name: (this.info.so_pdf.length + 1) + '_' + this.soNum + ' ' + this.datepipe.transform(new Date(), 'dd/MM/yyyy hh:mm:ss a'), link: link['imageURL'] })
@@ -6194,7 +6194,7 @@ export class QuotationOverallPage implements OnInit {
 
       this.toBase64(blob).then(data => {
         console.log(data)
-        this.http.post('https://forcar.vsnap.my/uploadPDF', { base64: data }).subscribe((link) => {
+        this.http.post('https://api.nanogapp.com/uploadFilePDF', { base64: data }).subscribe((link) => {
           console.log(link['imageURL']);
 
           if (x == 1) {
